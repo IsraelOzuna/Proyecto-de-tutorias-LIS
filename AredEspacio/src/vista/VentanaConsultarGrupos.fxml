@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="1120.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1" fx:controller="controlador.ConsultarGruposController">
+    <children>
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      <TableView layoutX="60.0" layoutY="79.0" prefHeight="460.0" prefWidth="1000.0">
+        <columns>
+          <TableColumn prefWidth="497.0" text="Nombre" />
+          <TableColumn prefWidth="502.0" text="Alumnos" />
+        </columns>
+      </TableView>
+      <Label layoutX="487.0" layoutY="31.0" text="Grupos Existentes">
+         <font>
+            <Font name="Gill Sans MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <Button layoutX="920.0" layoutY="563.0" mnemonicParsing="false" text="Crear Grupo">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+    </children>
+</AnchorPane>
