@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1420.0" style="-fx-background-image: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaMenuDirectorController">
+   <children>
+      <Pane prefHeight="52.0" prefWidth="1421.0" style="-fx-background-color: #740808;">
+         <children>
+            <Label layoutX="31.0" layoutY="11.0" text="Ared Espacio" textFill="WHITE">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="27.0" />
+               </font>
+            </Label>
+            <Button layoutX="1277.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: #740808;">
+               <graphic>
+                  <FontAwesomeIconView fill="#d4ac0d" glyphName="BELL" size="20">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIconView>
+               </graphic>
+            </Button>
+         </children>
+      </Pane>
+      <JFXButton fx:id="botonGrupos" contentDisplay="TOP" layoutX="55.0" layoutY="118.0" text="Grupos">
+         <graphic>
+            <FontAwesomeIconView fill="#740808" glyphName="USERS" size="60">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+         </graphic>
+         <font>
+            <Font name="Gill Sans MT" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="botonAlumnos" contentDisplay="TOP" layoutX="50.0" layoutY="334.0" text="Alumnos">
+         <graphic>
+            <FontAwesomeIconView fill="#740808" glyphName="GRADUATION_CAP" size="60">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+         </graphic>
+         <font>
+            <Font name="Gill Sans MT" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="botonRecursosReportes" contentDisplay="TOP" layoutX="30.0" layoutY="558.0" text="Recursos y reportes">
+         <graphic>
+            <FontAwesomeIconView fill="#740808" glyphName="MONEY" size="60.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+         </graphic>
+         <font>
+            <Font name="Gill Sans MT" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="botonMaestros" contentDisplay="TOP" layoutX="64.0" layoutY="223.0" text="Maestros">
+         <graphic>
+            <FontAwesomeIconView fill="#740808" glyphName="USER" size="60">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+         </graphic>
+         <font>
+            <Font name="Gill Sans MT" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="botonRenta" contentDisplay="TOP" layoutX="63.0" layoutY="450.0" text="Rentas">
+         <graphic>
+            <FontAwesomeIconView fill="#740808" glyphName="USER_SECRET" size="60">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </FontAwesomeIconView>
+         </graphic>
+         <font>
+            <Font name="Gill Sans MT" size="14.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+   </children>
+</AnchorPane>
