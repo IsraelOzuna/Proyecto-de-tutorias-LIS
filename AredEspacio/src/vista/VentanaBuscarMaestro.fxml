@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" focusTraversable="true" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaBuscarMaestroController">
+   <children>
+      <Separator layoutX="44.0" layoutY="55.0" prefHeight="8.0" prefWidth="1033.0" style="-fx-background-color: #000000;" />
+      <JFXButton layoutX="994.0" layoutY="22.0" text="Buscar">
+         <graphic>
+            <FontAwesomeIconView glyphName="SEARCH" />
+         </graphic>
+         <font>
+            <Font name="Gill Sans MT Bold" size="12.0" />
+         </font>
+      </JFXButton>
+      <TextField layoutX="845.0" layoutY="22.0" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="398.0" prefWidth="347.0" style="-fx-background-color: #EDEDED;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="controlador.VentanaRegistrarPagoMaestroController">
+   <children>
+      <ImageView fx:id="imagenPerfil" fitHeight="115.0" fitWidth="139.0" layoutX="104.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="etiquetaTelefono1" layoutX="63.0" layoutY="189.0" prefHeight="20.0" prefWidth="222.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiquetaMontoAPagar" layoutX="65.0" layoutY="240.0" prefHeight="20.0" prefWidth="100.0" text="Monto a pagar:">
+         <font>
+            <Font name="Gill Sans MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="campoCantidadPagada" layoutX="174.0" layoutY="238.0" prefHeight="25.0" prefWidth="117.0" />
+      <JFXButton fx:id="botonAceptar" layoutX="192.0" layoutY="304.0" style="-fx-background-color: #CDCDCD;" text="Registrar">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="botonCancelar" layoutX="76.0" layoutY="304.0" style="-fx-background-color: #CDCDCD;" text="Cancelar">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
