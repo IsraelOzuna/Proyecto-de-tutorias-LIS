@@ -18,6 +18,11 @@
                   <Font name="Gill Sans MT Bold" size="27.0" />
                </font>
             </Label>
+            <Label fx:id="etiquetaNombreUsuario" layoutX="1078.0" layoutY="21.0" prefHeight="16.0" prefWidth="186.0" textFill="WHITE">
+               <font>
+                  <Font name="Gill Sans MT" size="14.0" />
+               </font>
+            </Label>
             <Button layoutX="1277.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: #740808;">
                <graphic>
                   <FontAwesomeIconView fill="#d4ac0d" glyphName="BELL" size="20">
@@ -29,7 +34,7 @@
             </Button>
          </children>
       </Pane>
-      <JFXButton fx:id="botonGrupos" contentDisplay="TOP" layoutX="55.0" layoutY="118.0" text="Grupos">
+      <JFXButton fx:id="botonGrupos" contentDisplay="TOP" layoutX="55.0" layoutY="118.0" onAction="#desplegarVentanaBusquedaGrupos" text="Grupos">
          <graphic>
             <FontAwesomeIconView fill="#740808" glyphName="USERS" size="60">
                <cursor>
@@ -44,7 +49,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="botonAlumnos" contentDisplay="TOP" layoutX="50.0" layoutY="334.0" text="Alumnos">
+      <JFXButton fx:id="botonAlumnos" contentDisplay="TOP" layoutX="50.0" layoutY="334.0" onAction="#desplegarVentanaBusquedaAlumno" text="Alumnos">
          <graphic>
             <FontAwesomeIconView fill="#740808" glyphName="GRADUATION_CAP" size="60">
                <cursor>
@@ -74,7 +79,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="botonMaestros" contentDisplay="TOP" layoutX="64.0" layoutY="223.0" text="Maestros">
+      <JFXButton fx:id="botonMaestros" contentDisplay="TOP" layoutX="64.0" layoutY="223.0" onAction="#desplegarVentanaBusquedaMaestro" text="Maestros">
          <graphic>
             <FontAwesomeIconView fill="#740808" glyphName="USER" size="60">
                <cursor>
@@ -89,7 +94,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="botonRenta" contentDisplay="TOP" layoutX="63.0" layoutY="450.0" text="Rentas">
+      <JFXButton fx:id="botonRenta" contentDisplay="TOP" layoutX="63.0" layoutY="450.0" onAction="#desplegarVentanaBusquedaRenta" text="Rentas">
          <graphic>
             <FontAwesomeIconView fill="#740808" glyphName="USER_SECRET" size="60">
                <cursor>
@@ -104,5 +109,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
+      <Pane fx:id="panelPrincipal" layoutX="207.0" layoutY="86.0" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #CDCDCD;" />
    </children>
 </AnchorPane>

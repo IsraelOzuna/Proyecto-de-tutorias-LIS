@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="252.0" prefWidth="261.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaRegistrarMensualidadController">
+   <children>
+      <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="91.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="etiquetaNombreAlumno" layoutX="32.0" layoutY="102.0" prefHeight="16.0" prefWidth="198.0">
+         <font>
+            <Font name="Gill Sans MT Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiquetaMonto" layoutX="32.0" layoutY="145.0" prefHeight="16.0" prefWidth="94.0" text="Monto a pagar:">
+         <font>
+            <Font name="Gill Sans MT" size="14.0" />
+         </font>
+      </Label>
+      <TextField layoutX="126.0" layoutY="141.0" prefHeight="25.0" prefWidth="103.0" />
+      <JFXButton fx:id="botonCancelar" layoutX="32.0" layoutY="204.0" style="-fx-background-color: #CDCDCD;" text="Cancelar">
+         <font>
+            <Font name="Gill Sans MT Bold" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="botonAceptar" layoutX="156.0" layoutY="204.0" style="-fx-background-color: #CDCDCD;" text="Aceptar">
+         <font>
+            <Font name="Gill Sans MT Bold" size="14.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
