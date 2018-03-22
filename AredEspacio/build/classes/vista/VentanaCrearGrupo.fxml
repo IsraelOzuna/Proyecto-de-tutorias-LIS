@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -9,47 +9,37 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.CrearGrupoController">
+<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.CrearGrupoController">
    <children>
-      <Label layoutX="524.0" layoutY="43.0" text="Crear Grupo">
+      <Label fx:id="etiquetaCrearGrupo" layoutX="524.0" layoutY="43.0" text="Crear Grupo">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="215.0" layoutY="68.0" text="Nombre">
+      <Label fx:id="etiquetaNombre" layoutX="215.0" layoutY="68.0" text="Nombre">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="182.0" layoutY="125.0" text="Mensualidad">
+      <Label fx:id="etiquetaPrecioMensualidad" layoutX="182.0" layoutY="125.0" text="Mensualidad">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="679.0" layoutY="77.0" text="Maestro(a):">
+      <Label fx:id="etuqietaMaestro" layoutX="679.0" layoutY="77.0" text="Maestro(a):">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="682.0" layoutY="125.0" text="Inscripción">
+      <Label fx:id="etiquetaInscripción" layoutX="682.0" layoutY="125.0" text="Inscripción">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <Button layoutX="459.0" layoutY="540.0" mnemonicParsing="false" text="Guardar">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
-      <Button layoutX="586.0" layoutY="540.0" mnemonicParsing="false" text="Cancelar">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
-      <TextField layoutX="337.0" layoutY="71.0" />
-      <TextField layoutX="337.0" layoutY="123.0" />
-      <TextField layoutX="810.0" layoutY="123.0" prefHeight="25.0" prefWidth="173.0" />
-      <TableView layoutX="61.0" layoutY="178.0" prefHeight="312.0" prefWidth="998.0">
+      <TextField fx:id="campoTexto" layoutX="337.0" layoutY="71.0" />
+      <TextField fx:id="campoMensualidad" layoutX="337.0" layoutY="123.0" />
+      <TextField fx:id="campoInscripcion" layoutX="810.0" layoutY="123.0" prefHeight="25.0" prefWidth="173.0" />
+      <TableView fx:id="tablaHorario" layoutX="61.0" layoutY="178.0" prefHeight="312.0" prefWidth="998.0">
         <columns>
           <TableColumn prefWidth="89.00003051757812" text="Horario" />
           <TableColumn prefWidth="120.0" text="Domingo" />
@@ -61,6 +51,16 @@
             <TableColumn minWidth="0.0" prefWidth="140.0" text="Sabado" />
         </columns>
       </TableView>
-      <ComboBox layoutX="809.0" layoutY="75.0" prefHeight="25.0" prefWidth="173.0" />
+      <ComboBox fx:id="comoBoxMaestro" layoutX="809.0" layoutY="75.0" prefHeight="25.0" prefWidth="173.0" />
+      <JFXButton fx:id="botonGurdar" layoutX="524.0" layoutY="543.0" style="-fx-background-color: #CDCDCD;" text="Guardar">
+         <font>
+            <Font name="Gill Sans MT" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="botonCancelar" layoutX="611.0" layoutY="543.0" style="-fx-background-color: #CDCDCD;" text="Cancelar">
+         <font>
+            <Font name="Gill Sans MT" size="14.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
