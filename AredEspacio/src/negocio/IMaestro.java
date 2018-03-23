@@ -11,4 +11,6 @@ package negocio;
  */
 public interface IMaestro {
     
+    public boolean registrarMaestro(Maestro maestro);
+    
 }

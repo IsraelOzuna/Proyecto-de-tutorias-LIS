@@ -7,6 +7,7 @@ package persistencia;
 
 import aredespacio.exceptions.IllegalOrphanException;
 import aredespacio.exceptions.NonexistentEntityException;
+import aredespacio.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -14,11 +15,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import persistencia.Cuenta;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import persistencia.Grupo;
 import persistencia.Maestro;
 
 /**
@@ -36,49 +35,41 @@ public class MaestroJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Maestro maestro) {
-        if (maestro.getCuentaCollection() == null) {
-            maestro.setCuentaCollection(new ArrayList<Cuenta>());
+    public void create(Maestro maestro) throws IllegalOrphanException, PreexistingEntityException, Exception {
+        List<String> illegalOrphanMessages = null;
+        Cuenta cuentaOrphanCheck = maestro.getCuenta();
+        if (cuentaOrphanCheck != null) {
+            Maestro oldMaestroOfCuenta = cuentaOrphanCheck.getMaestro();
+            if (oldMaestroOfCuenta != null) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("The Cuenta " + cuentaOrphanCheck + " already has an item of type Maestro whose cuenta column cannot be null. Please make another selection for the cuenta field.");
+            }
         }
-        if (maestro.getGrupoCollection() == null) {
-            maestro.setGrupoCollection(new ArrayList<Grupo>());
+        if (illegalOrphanMessages != null) {
+            throw new IllegalOrphanException(illegalOrphanMessages);
         }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Collection<Cuenta> attachedCuentaCollection = new ArrayList<Cuenta>();
-            for (Cuenta cuentaCollectionCuentaToAttach : maestro.getCuentaCollection()) {
-                cuentaCollectionCuentaToAttach = em.getReference(cuentaCollectionCuentaToAttach.getClass(), cuentaCollectionCuentaToAttach.getUsuario());
-                attachedCuentaCollection.add(cuentaCollectionCuentaToAttach);
+            Cuenta cuenta = maestro.getCuenta();
+            if (cuenta != null) {
+                cuenta = em.getReference(cuenta.getClass(), cuenta.getUsuario());
+                maestro.setCuenta(cuenta);
             }
-            maestro.setCuentaCollection(attachedCuentaCollection);
-            Collection<Grupo> attachedGrupoCollection = new ArrayList<Grupo>();
-            for (Grupo grupoCollectionGrupoToAttach : maestro.getGrupoCollection()) {
-                grupoCollectionGrupoToAttach = em.getReference(grupoCollectionGrupoToAttach.getClass(), grupoCollectionGrupoToAttach.getNombreGrupo());
-                attachedGrupoCollection.add(grupoCollectionGrupoToAttach);
-            }
-            maestro.setGrupoCollection(attachedGrupoCollection);
             em.persist(maestro);
-            for (Cuenta cuentaCollectionCuenta : maestro.getCuentaCollection()) {
-                Maestro oldIdMaestroOfCuentaCollectionCuenta = cuentaCollectionCuenta.getIdMaestro();
-                cuentaCollectionCuenta.setIdMaestro(maestro);
-                cuentaCollectionCuenta = em.merge(cuentaCollectionCuenta);
-                if (oldIdMaestroOfCuentaCollectionCuenta != null) {
-                    oldIdMaestroOfCuentaCollectionCuenta.getCuentaCollection().remove(cuentaCollectionCuenta);
-                    oldIdMaestroOfCuentaCollectionCuenta = em.merge(oldIdMaestroOfCuentaCollectionCuenta);
-                }
-            }
-            for (Grupo grupoCollectionGrupo : maestro.getGrupoCollection()) {
-                Maestro oldIdMaestroOfGrupoCollectionGrupo = grupoCollectionGrupo.getIdMaestro();
-                grupoCollectionGrupo.setIdMaestro(maestro);
-                grupoCollectionGrupo = em.merge(grupoCollectionGrupo);
-                if (oldIdMaestroOfGrupoCollectionGrupo != null) {
-                    oldIdMaestroOfGrupoCollectionGrupo.getGrupoCollection().remove(grupoCollectionGrupo);
-                    oldIdMaestroOfGrupoCollectionGrupo = em.merge(oldIdMaestroOfGrupoCollectionGrupo);
-                }
+            if (cuenta != null) {
+                cuenta.setMaestro(maestro);
+                cuenta = em.merge(cuenta);
             }
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findMaestro(maestro.getUsuario()) != null) {
+                throw new PreexistingEntityException("Maestro " + maestro + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -91,73 +82,40 @@ public class MaestroJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Maestro persistentMaestro = em.find(Maestro.class, maestro.getIdMaestro());
-            Collection<Cuenta> cuentaCollectionOld = persistentMaestro.getCuentaCollection();
-            Collection<Cuenta> cuentaCollectionNew = maestro.getCuentaCollection();
-            Collection<Grupo> grupoCollectionOld = persistentMaestro.getGrupoCollection();
-            Collection<Grupo> grupoCollectionNew = maestro.getGrupoCollection();
+            Maestro persistentMaestro = em.find(Maestro.class, maestro.getUsuario());
+            Cuenta cuentaOld = persistentMaestro.getCuenta();
+            Cuenta cuentaNew = maestro.getCuenta();
             List<String> illegalOrphanMessages = null;
-            for (Cuenta cuentaCollectionOldCuenta : cuentaCollectionOld) {
-                if (!cuentaCollectionNew.contains(cuentaCollectionOldCuenta)) {
+            if (cuentaNew != null && !cuentaNew.equals(cuentaOld)) {
+                Maestro oldMaestroOfCuenta = cuentaNew.getMaestro();
+                if (oldMaestroOfCuenta != null) {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Cuenta " + cuentaCollectionOldCuenta + " since its idMaestro field is not nullable.");
-                }
-            }
-            for (Grupo grupoCollectionOldGrupo : grupoCollectionOld) {
-                if (!grupoCollectionNew.contains(grupoCollectionOldGrupo)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain Grupo " + grupoCollectionOldGrupo + " since its idMaestro field is not nullable.");
+                    illegalOrphanMessages.add("The Cuenta " + cuentaNew + " already has an item of type Maestro whose cuenta column cannot be null. Please make another selection for the cuenta field.");
                 }
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
             }
-            Collection<Cuenta> attachedCuentaCollectionNew = new ArrayList<Cuenta>();
-            for (Cuenta cuentaCollectionNewCuentaToAttach : cuentaCollectionNew) {
-                cuentaCollectionNewCuentaToAttach = em.getReference(cuentaCollectionNewCuentaToAttach.getClass(), cuentaCollectionNewCuentaToAttach.getUsuario());
-                attachedCuentaCollectionNew.add(cuentaCollectionNewCuentaToAttach);
+            if (cuentaNew != null) {
+                cuentaNew = em.getReference(cuentaNew.getClass(), cuentaNew.getUsuario());
+                maestro.setCuenta(cuentaNew);
             }
-            cuentaCollectionNew = attachedCuentaCollectionNew;
-            maestro.setCuentaCollection(cuentaCollectionNew);
-            Collection<Grupo> attachedGrupoCollectionNew = new ArrayList<Grupo>();
-            for (Grupo grupoCollectionNewGrupoToAttach : grupoCollectionNew) {
-                grupoCollectionNewGrupoToAttach = em.getReference(grupoCollectionNewGrupoToAttach.getClass(), grupoCollectionNewGrupoToAttach.getNombreGrupo());
-                attachedGrupoCollectionNew.add(grupoCollectionNewGrupoToAttach);
-            }
-            grupoCollectionNew = attachedGrupoCollectionNew;
-            maestro.setGrupoCollection(grupoCollectionNew);
             maestro = em.merge(maestro);
-            for (Cuenta cuentaCollectionNewCuenta : cuentaCollectionNew) {
-                if (!cuentaCollectionOld.contains(cuentaCollectionNewCuenta)) {
-                    Maestro oldIdMaestroOfCuentaCollectionNewCuenta = cuentaCollectionNewCuenta.getIdMaestro();
-                    cuentaCollectionNewCuenta.setIdMaestro(maestro);
-                    cuentaCollectionNewCuenta = em.merge(cuentaCollectionNewCuenta);
-                    if (oldIdMaestroOfCuentaCollectionNewCuenta != null && !oldIdMaestroOfCuentaCollectionNewCuenta.equals(maestro)) {
-                        oldIdMaestroOfCuentaCollectionNewCuenta.getCuentaCollection().remove(cuentaCollectionNewCuenta);
-                        oldIdMaestroOfCuentaCollectionNewCuenta = em.merge(oldIdMaestroOfCuentaCollectionNewCuenta);
-                    }
-                }
+            if (cuentaOld != null && !cuentaOld.equals(cuentaNew)) {
+                cuentaOld.setMaestro(null);
+                cuentaOld = em.merge(cuentaOld);
             }
-            for (Grupo grupoCollectionNewGrupo : grupoCollectionNew) {
-                if (!grupoCollectionOld.contains(grupoCollectionNewGrupo)) {
-                    Maestro oldIdMaestroOfGrupoCollectionNewGrupo = grupoCollectionNewGrupo.getIdMaestro();
-                    grupoCollectionNewGrupo.setIdMaestro(maestro);
-                    grupoCollectionNewGrupo = em.merge(grupoCollectionNewGrupo);
-                    if (oldIdMaestroOfGrupoCollectionNewGrupo != null && !oldIdMaestroOfGrupoCollectionNewGrupo.equals(maestro)) {
-                        oldIdMaestroOfGrupoCollectionNewGrupo.getGrupoCollection().remove(grupoCollectionNewGrupo);
-                        oldIdMaestroOfGrupoCollectionNewGrupo = em.merge(oldIdMaestroOfGrupoCollectionNewGrupo);
-                    }
-                }
+            if (cuentaNew != null && !cuentaNew.equals(cuentaOld)) {
+                cuentaNew.setMaestro(maestro);
+                cuentaNew = em.merge(cuentaNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = maestro.getIdMaestro();
+                String id = maestro.getUsuario();
                 if (findMaestro(id) == null) {
                     throw new NonexistentEntityException("The maestro with id " + id + " no longer exists.");
                 }
@@ -170,7 +128,7 @@ public class MaestroJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(String id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -178,27 +136,14 @@ public class MaestroJpaController implements Serializable {
             Maestro maestro;
             try {
                 maestro = em.getReference(Maestro.class, id);
-                maestro.getIdMaestro();
+                maestro.getUsuario();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The maestro with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            Collection<Cuenta> cuentaCollectionOrphanCheck = maestro.getCuentaCollection();
-            for (Cuenta cuentaCollectionOrphanCheckCuenta : cuentaCollectionOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Maestro (" + maestro + ") cannot be destroyed since the Cuenta " + cuentaCollectionOrphanCheckCuenta + " in its cuentaCollection field has a non-nullable idMaestro field.");
-            }
-            Collection<Grupo> grupoCollectionOrphanCheck = maestro.getGrupoCollection();
-            for (Grupo grupoCollectionOrphanCheckGrupo : grupoCollectionOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This Maestro (" + maestro + ") cannot be destroyed since the Grupo " + grupoCollectionOrphanCheckGrupo + " in its grupoCollection field has a non-nullable idMaestro field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
+            Cuenta cuenta = maestro.getCuenta();
+            if (cuenta != null) {
+                cuenta.setMaestro(null);
+                cuenta = em.merge(cuenta);
             }
             em.remove(maestro);
             em.getTransaction().commit();
@@ -233,7 +178,7 @@ public class MaestroJpaController implements Serializable {
         }
     }
 
-    public Maestro findMaestro(Integer id) {
+    public Maestro findMaestro(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Maestro.class, id);

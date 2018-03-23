@@ -11,4 +11,8 @@ package negocio;
  */
 public interface ICuenta {
     
+    public boolean crearCuenta(Cuenta cuenta);
+    public boolean verificarNombreUsuarioRepetido(String nombreUsuario);
+    
+    
 }

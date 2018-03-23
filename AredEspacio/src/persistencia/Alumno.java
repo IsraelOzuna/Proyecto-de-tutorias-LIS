@@ -143,7 +143,7 @@ public class Alumno implements Serializable {
 
     @Override
     public String toString() {
-        return "aredespacio.Alumno[ idAlumno=" + idAlumno + " ]";
+        return "persistencia.Alumno[ idAlumno=" + idAlumno + " ]";
     }
     
 }

@@ -6,16 +6,19 @@
 package persistencia;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,9 +43,10 @@ public class Cuenta implements Serializable {
     private String contrasena;
     @Column(name = "tipoCuenta")
     private String tipoCuenta;
-    @JoinColumn(name = "idMaestro", referencedColumnName = "idMaestro")
-    @ManyToOne(optional = false)
-    private Maestro idMaestro;
+    @OneToMany(mappedBy = "usuario")
+    private Collection<Grupo> grupoCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "cuenta")
+    private Maestro maestro;
 
     public Cuenta() {
     }
@@ -75,12 +79,21 @@ public class Cuenta implements Serializable {
         this.tipoCuenta = tipoCuenta;
     }
 
-    public Maestro getIdMaestro() {
-        return idMaestro;
+    @XmlTransient
+    public Collection<Grupo> getGrupoCollection() {
+        return grupoCollection;
     }
 
-    public void setIdMaestro(Maestro idMaestro) {
-        this.idMaestro = idMaestro;
+    public void setGrupoCollection(Collection<Grupo> grupoCollection) {
+        this.grupoCollection = grupoCollection;
+    }
+
+    public Maestro getMaestro() {
+        return maestro;
+    }
+
+    public void setMaestro(Maestro maestro) {
+        this.maestro = maestro;
     }
 
     @Override
@@ -105,7 +118,7 @@ public class Cuenta implements Serializable {
 
     @Override
     public String toString() {
-        return "aredespacio.Cuenta[ usuario=" + usuario + " ]";
+        return "persistencia.Cuenta[ usuario=" + usuario + " ]";
     }
     
 }

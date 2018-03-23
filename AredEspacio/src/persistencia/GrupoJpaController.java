@@ -15,8 +15,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import persistencia.Cuenta;
 import persistencia.Grupo;
-import persistencia.Maestro;
 
 /**
  *
@@ -38,15 +38,15 @@ public class GrupoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Maestro idMaestro = grupo.getIdMaestro();
-            if (idMaestro != null) {
-                idMaestro = em.getReference(idMaestro.getClass(), idMaestro.getIdMaestro());
-                grupo.setIdMaestro(idMaestro);
+            Cuenta usuario = grupo.getUsuario();
+            if (usuario != null) {
+                usuario = em.getReference(usuario.getClass(), usuario.getUsuario());
+                grupo.setUsuario(usuario);
             }
             em.persist(grupo);
-            if (idMaestro != null) {
-                idMaestro.getGrupoCollection().add(grupo);
-                idMaestro = em.merge(idMaestro);
+            if (usuario != null) {
+                usuario.getGrupoCollection().add(grupo);
+                usuario = em.merge(usuario);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -67,20 +67,20 @@ public class GrupoJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Grupo persistentGrupo = em.find(Grupo.class, grupo.getNombreGrupo());
-            Maestro idMaestroOld = persistentGrupo.getIdMaestro();
-            Maestro idMaestroNew = grupo.getIdMaestro();
-            if (idMaestroNew != null) {
-                idMaestroNew = em.getReference(idMaestroNew.getClass(), idMaestroNew.getIdMaestro());
-                grupo.setIdMaestro(idMaestroNew);
+            Cuenta usuarioOld = persistentGrupo.getUsuario();
+            Cuenta usuarioNew = grupo.getUsuario();
+            if (usuarioNew != null) {
+                usuarioNew = em.getReference(usuarioNew.getClass(), usuarioNew.getUsuario());
+                grupo.setUsuario(usuarioNew);
             }
             grupo = em.merge(grupo);
-            if (idMaestroOld != null && !idMaestroOld.equals(idMaestroNew)) {
-                idMaestroOld.getGrupoCollection().remove(grupo);
-                idMaestroOld = em.merge(idMaestroOld);
+            if (usuarioOld != null && !usuarioOld.equals(usuarioNew)) {
+                usuarioOld.getGrupoCollection().remove(grupo);
+                usuarioOld = em.merge(usuarioOld);
             }
-            if (idMaestroNew != null && !idMaestroNew.equals(idMaestroOld)) {
-                idMaestroNew.getGrupoCollection().add(grupo);
-                idMaestroNew = em.merge(idMaestroNew);
+            if (usuarioNew != null && !usuarioNew.equals(usuarioOld)) {
+                usuarioNew.getGrupoCollection().add(grupo);
+                usuarioNew = em.merge(usuarioNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -111,10 +111,10 @@ public class GrupoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The grupo with id " + id + " no longer exists.", enfe);
             }
-            Maestro idMaestro = grupo.getIdMaestro();
-            if (idMaestro != null) {
-                idMaestro.getGrupoCollection().remove(grupo);
-                idMaestro = em.merge(idMaestro);
+            Cuenta usuario = grupo.getUsuario();
+            if (usuario != null) {
+                usuario.getGrupoCollection().remove(grupo);
+                usuario = em.merge(usuario);
             }
             em.remove(grupo);
             em.getTransaction().commit();

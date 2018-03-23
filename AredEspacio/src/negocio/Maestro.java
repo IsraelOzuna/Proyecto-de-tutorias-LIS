@@ -2,24 +2,34 @@ package negocio;
 
 import java.util.Date;
 
-
 public class Maestro {
 
-    private int idMaestro;
     private String nombre;
     private String apellidos;
-    private String correoElectrónico;
+    private String correoElectronico;
     private String telefono;
     private int estaActivo;
     private Date fechaCorte;
     private String rutaFoto;
+    private Double mensualidad;
+    private String usuario;
 
-    public int getIdMaestro() {
-        return idMaestro;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setIdMaestro(int idMaestro) {
-        this.idMaestro = idMaestro;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+
+
+    public Double getMensualidad() {
+        return mensualidad;
+    }
+
+    public void setMensualidad(Double mensualidad) {
+        this.mensualidad = mensualidad;
     }
 
     public String getNombre() {
@@ -38,12 +48,12 @@ public class Maestro {
         this.apellidos = apellidos;
     }
 
-    public String getCorreoElectrónico() {
-        return correoElectrónico;
+    public String getCorreoElectronico() {
+        return correoElectronico;
     }
 
-    public void setCorreoElectrónico(String correoElectrónico) {
-        this.correoElectrónico = correoElectrónico;
+    public void setCorreoElectronico(String correoElectrónico) {
+        this.correoElectronico = correoElectrónico;
     }
 
     public String getTelefono() {
@@ -77,7 +87,5 @@ public class Maestro {
     public void setRutaFoto(String rutaFoto) {
         this.rutaFoto = rutaFoto;
     }
-    
-    
 
 }

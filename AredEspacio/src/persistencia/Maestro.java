@@ -6,23 +6,19 @@
 package persistencia;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,22 +29,18 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Maestro.findAll", query = "SELECT m FROM Maestro m"),
-    @NamedQuery(name = "Maestro.findByIdMaestro", query = "SELECT m FROM Maestro m WHERE m.idMaestro = :idMaestro"),
     @NamedQuery(name = "Maestro.findByNombre", query = "SELECT m FROM Maestro m WHERE m.nombre = :nombre"),
     @NamedQuery(name = "Maestro.findByApellidos", query = "SELECT m FROM Maestro m WHERE m.apellidos = :apellidos"),
     @NamedQuery(name = "Maestro.findByCorreoElectronico", query = "SELECT m FROM Maestro m WHERE m.correoElectronico = :correoElectronico"),
     @NamedQuery(name = "Maestro.findByTelefono", query = "SELECT m FROM Maestro m WHERE m.telefono = :telefono"),
     @NamedQuery(name = "Maestro.findByEstaActivo", query = "SELECT m FROM Maestro m WHERE m.estaActivo = :estaActivo"),
     @NamedQuery(name = "Maestro.findByFechaCorte", query = "SELECT m FROM Maestro m WHERE m.fechaCorte = :fechaCorte"),
-    @NamedQuery(name = "Maestro.findByRutaFoto", query = "SELECT m FROM Maestro m WHERE m.rutaFoto = :rutaFoto")})
+    @NamedQuery(name = "Maestro.findByRutaFoto", query = "SELECT m FROM Maestro m WHERE m.rutaFoto = :rutaFoto"),
+    @NamedQuery(name = "Maestro.findByMensualidad", query = "SELECT m FROM Maestro m WHERE m.mensualidad = :mensualidad"),
+    @NamedQuery(name = "Maestro.findByUsuario", query = "SELECT m FROM Maestro m WHERE m.usuario = :usuario")})
 public class Maestro implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idMaestro")
-    private Integer idMaestro;
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "apellidos")
@@ -64,24 +56,22 @@ public class Maestro implements Serializable {
     private Date fechaCorte;
     @Column(name = "rutaFoto")
     private String rutaFoto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMaestro")
-    private Collection<Cuenta> cuentaCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMaestro")
-    private Collection<Grupo> grupoCollection;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "mensualidad")
+    private Double mensualidad;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "usuario")
+    private String usuario;
+    @JoinColumn(name = "usuario", referencedColumnName = "usuario", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Cuenta cuenta;
 
     public Maestro() {
     }
 
-    public Maestro(Integer idMaestro) {
-        this.idMaestro = idMaestro;
-    }
-
-    public Integer getIdMaestro() {
-        return idMaestro;
-    }
-
-    public void setIdMaestro(Integer idMaestro) {
-        this.idMaestro = idMaestro;
+    public Maestro(String usuario) {
+        this.usuario = usuario;
     }
 
     public String getNombre() {
@@ -140,28 +130,34 @@ public class Maestro implements Serializable {
         this.rutaFoto = rutaFoto;
     }
 
-    @XmlTransient
-    public Collection<Cuenta> getCuentaCollection() {
-        return cuentaCollection;
+    public Double getMensualidad() {
+        return mensualidad;
     }
 
-    public void setCuentaCollection(Collection<Cuenta> cuentaCollection) {
-        this.cuentaCollection = cuentaCollection;
+    public void setMensualidad(Double mensualidad) {
+        this.mensualidad = mensualidad;
     }
 
-    @XmlTransient
-    public Collection<Grupo> getGrupoCollection() {
-        return grupoCollection;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setGrupoCollection(Collection<Grupo> grupoCollection) {
-        this.grupoCollection = grupoCollection;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public Cuenta getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Cuenta cuenta) {
+        this.cuenta = cuenta;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idMaestro != null ? idMaestro.hashCode() : 0);
+        hash += (usuario != null ? usuario.hashCode() : 0);
         return hash;
     }
 
@@ -172,7 +168,7 @@ public class Maestro implements Serializable {
             return false;
         }
         Maestro other = (Maestro) object;
-        if ((this.idMaestro == null && other.idMaestro != null) || (this.idMaestro != null && !this.idMaestro.equals(other.idMaestro))) {
+        if ((this.usuario == null && other.usuario != null) || (this.usuario != null && !this.usuario.equals(other.usuario))) {
             return false;
         }
         return true;
@@ -180,7 +176,7 @@ public class Maestro implements Serializable {
 
     @Override
     public String toString() {
-        return "aredespacio.Maestro[ idMaestro=" + idMaestro + " ]";
+        return "persistencia.Maestro[ usuario=" + usuario + " ]";
     }
     
 }

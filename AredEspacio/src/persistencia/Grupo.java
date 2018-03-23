@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Grupo.findAll", query = "SELECT g FROM Grupo g"),
     @NamedQuery(name = "Grupo.findByNombreGrupo", query = "SELECT g FROM Grupo g WHERE g.nombreGrupo = :nombreGrupo"),
     @NamedQuery(name = "Grupo.findByFechaPago", query = "SELECT g FROM Grupo g WHERE g.fechaPago = :fechaPago"),
-    @NamedQuery(name = "Grupo.findByCantidad", query = "SELECT g FROM Grupo g WHERE g.cantidad = :cantidad")})
+    @NamedQuery(name = "Grupo.findByMensualidad", query = "SELECT g FROM Grupo g WHERE g.mensualidad = :mensualidad")})
 public class Grupo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,11 +43,11 @@ public class Grupo implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaPago;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "cantidad")
-    private Double cantidad;
-    @JoinColumn(name = "idMaestro", referencedColumnName = "idMaestro")
-    @ManyToOne(optional = false)
-    private Maestro idMaestro;
+    @Column(name = "mensualidad")
+    private Double mensualidad;
+    @JoinColumn(name = "usuario", referencedColumnName = "usuario")
+    @ManyToOne
+    private Cuenta usuario;
 
     public Grupo() {
     }
@@ -72,20 +72,20 @@ public class Grupo implements Serializable {
         this.fechaPago = fechaPago;
     }
 
-    public Double getCantidad() {
-        return cantidad;
+    public Double getMensualidad() {
+        return mensualidad;
     }
 
-    public void setCantidad(Double cantidad) {
-        this.cantidad = cantidad;
+    public void setMensualidad(Double mensualidad) {
+        this.mensualidad = mensualidad;
     }
 
-    public Maestro getIdMaestro() {
-        return idMaestro;
+    public Cuenta getUsuario() {
+        return usuario;
     }
 
-    public void setIdMaestro(Maestro idMaestro) {
-        this.idMaestro = idMaestro;
+    public void setUsuario(Cuenta usuario) {
+        this.usuario = usuario;
     }
 
     @Override
@@ -110,7 +110,7 @@ public class Grupo implements Serializable {
 
     @Override
     public String toString() {
-        return "aredespacio.Grupo[ nombreGrupo=" + nombreGrupo + " ]";
+        return "persistencia.Grupo[ nombreGrupo=" + nombreGrupo + " ]";
     }
     
 }
