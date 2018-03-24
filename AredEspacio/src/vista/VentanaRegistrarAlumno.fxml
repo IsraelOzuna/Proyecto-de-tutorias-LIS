@@ -2,13 +2,12 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaRegistrarAlumnoController">
    <children>
@@ -50,22 +49,7 @@
       <TextField fx:id="campoApellidos" layoutX="642.0" layoutY="190.0" prefHeight="25.0" prefWidth="223.0" />
       <TextField fx:id="campoCorreo" layoutX="642.0" layoutY="368.0" prefHeight="25.0" prefWidth="223.0" />
       <TextField fx:id="campoTelefono" layoutX="642.0" layoutY="458.0" prefHeight="25.0" prefWidth="223.0" />
-      <ComboBox layoutX="642.0" layoutY="278.0" prefHeight="25.0" prefWidth="64.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ComboBox>
-      <ComboBox layoutX="722.0" layoutY="278.0" prefHeight="25.0" prefWidth="64.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ComboBox>
-      <ComboBox layoutX="801.0" layoutY="278.0" prefHeight="25.0" prefWidth="64.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ComboBox>
-      <JFXButton layoutX="401.0" layoutY="550.0" style="-fx-background-color: #CDCDCD;" text="Cancelar">
+      <JFXButton fx:id="botonCancelar" layoutX="401.0" layoutY="550.0" style="-fx-background-color: #CDCDCD;" text="Cancelar">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
@@ -73,7 +57,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton layoutX="623.0" layoutY="550.0" style="-fx-background-color: #CDCDCD;" text="Registrar">
+      <JFXButton fx:id="botonRegistrar" layoutX="623.0" layoutY="550.0" onAction="#registrarNuevoAlumno" style="-fx-background-color: #CDCDCD;" text="Registrar">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
@@ -81,5 +65,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
+      <DatePicker fx:id="campoFechaNacimiennto" editable="false" layoutX="635.0" layoutY="281.0" prefHeight="25.0" prefWidth="223.0" />
    </children>
 </AnchorPane>
