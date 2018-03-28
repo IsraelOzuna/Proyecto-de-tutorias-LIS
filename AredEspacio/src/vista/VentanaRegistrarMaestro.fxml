@@ -25,7 +25,7 @@
       <TextField fx:id="campoCantidadAPagar" layoutX="274.0" layoutY="376.0" prefHeight="25.0" prefWidth="75.0" />
       <TextField fx:id="campoApellidos" layoutX="274.0" layoutY="193.0" prefHeight="25.0" prefWidth="223.0" />
       <Separator layoutX="568.0" layoutY="37.0" orientation="VERTICAL" prefHeight="378.0" prefWidth="5.0" style="-fx-background-color: #000000;" />
-      <JFXButton fx:id="botonSeleccionarImagen" layoutX="774.0" layoutY="251.0" style="-fx-background-color: #CDCDCD;" text="Seleccionar imagen">
+      <JFXButton fx:id="botonSeleccionarImagen" layoutX="774.0" layoutY="251.0" onAction="#elegirImagen" style="-fx-background-color: #CDCDCD;" text="Seleccionar imagen">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></JFXButton>

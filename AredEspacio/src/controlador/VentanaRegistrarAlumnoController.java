@@ -89,7 +89,6 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     @FXML
     public void seleccionarImagen(ActionEvent event){
         FileChooser exploradorArchivos = new FileChooser();         
-        File imagen = exploradorArchivos.showDialog(null);
     }
         
     public boolean existenCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono, DatePicker campoFechaNacimiento) {

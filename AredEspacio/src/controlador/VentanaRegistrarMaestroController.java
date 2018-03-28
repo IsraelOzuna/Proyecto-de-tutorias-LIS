@@ -1,11 +1,12 @@
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
+import java.io.File;
+
+import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,17 +14,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javax.swing.JFileChooser;
 import negocio.CuentaDAO;
 import negocio.Maestro;
 import negocio.MaestroDAO;
 import negocio.Utileria;
-import persistencia.Cuenta;
+import negocio.Cuenta;
 
-/**
- * FXML Controller class
- *
- * @author Irdevelo
- */
 public class VentanaRegistrarMaestroController implements Initializable {
 
     @FXML
@@ -67,61 +66,66 @@ public class VentanaRegistrarMaestroController implements Initializable {
     @FXML
     private PasswordField campoContraseña;
 
+    String rutaImagen = null;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
     }
 
     @FXML
-    private void realizarRegistro(ActionEvent event) {
+    private void realizarRegistro(ActionEvent event) throws NoSuchAlgorithmException {
         CuentaDAO cuentaDAO = new CuentaDAO();
-        
+        Maestro maestro = new Maestro();
+        MaestroDAO maestroDAO = new MaestroDAO();
+        Cuenta cuenta = new Cuenta();
 
         if (verificarCamposVacios(campoNombre, campoApellidos, campoCorreoElectronico, campoTelefono, campoCantidadAPagar, campoUsuario, campoContraseña)) {
-            System.out.println("Campos Vacios");
+            DialogosController.mostrarMensajeInformacion("Campo vacio", "Algún campo esta vacío", "Debe llenar todos los campos requeridos");
         } else if (verificarLongitudExcedida(campoNombre, campoApellidos, campoCorreoElectronico, campoTelefono, campoUsuario)) {
-            System.out.println("Algún campo excede el límite de caracteres permitidos");
+            DialogosController.mostrarMensajeInformacion("Campos excedidos", "Algún campo excede el límite de caracteres", "Revise el límite de caracteres permitidos");
         } else if (Utileria.validarCorreo(campoCorreoElectronico.getText())) {
             if (!cuentaDAO.verificarNombreUsuarioRepetido(campoUsuario.getText())) {
 
-                Maestro maestro = new Maestro();
-                MaestroDAO maestroDAO = new MaestroDAO();
-                Cuenta cuenta = new Cuenta();
+                cuenta.setTipoCuenta("Maestro");
+                cuenta.setUsuario(campoUsuario.getText());
+                cuenta.setContraseña(Utileria.cifrarContrasena(campoContraseña.getText()));
+                if (cuentaDAO.crearCuenta(cuenta)) {
 
-                maestro.setNombre(campoNombre.getText());
-                maestro.setApellidos(campoApellidos.getText());
-                maestro.setCorreoElectronico(campoCorreoElectronico.getText());
-                maestro.setTelefono(campoTelefono.getText());
-                maestro.setEstaActivo(0);
-                maestro.setFechaCorte(null);
-                maestro.setRutaFoto(null);
-                maestro.setMensualidad(Double.parseDouble(campoCantidadAPagar.getText()));
-                maestro.setUsuario(campoUsuario.getText());
-                
-                if(maestroDAO.registrarMaestro(maestro)){
-                    
-                    System.out.println("El maestro ha sido creado exitosamente");
-                    cuenta.setUsuario(campoUsuario.getText());
-                    try {
-                        cuenta.setContrasena(Utileria.cifrarContrasena(campoContraseña.getText()));
-                    } catch (NoSuchAlgorithmException ex) {
-                        Logger.getLogger(VentanaRegistrarMaestroController.class.getName()).log(Level.SEVERE, null, ex);
+                    maestro.setNombre(campoNombre.getText());
+                    maestro.setApellidos(campoApellidos.getText());
+                    maestro.setCorreoElectronico(campoCorreoElectronico.getText());
+                    maestro.setTelefono(campoTelefono.getText());
+                    maestro.setEstaActivo(0);
+                    maestro.setFechaCorte(null);
+                    maestro.setRutaFoto(rutaImagen);
+                    maestro.setMensualidad(Double.parseDouble(campoCantidadAPagar.getText()));
+                    maestro.setUsuario(campoUsuario.getText());
+
+                    if (maestroDAO.registrarMaestro(maestro)) {
+                        DialogosController.mostrarMensajeInformacion("Registro exitoso", "El maestro se ha registrado correctamente", "El maestro se ha registrado correctamente");
+                        campoApellidos.clear();
+                        campoCantidadAPagar.clear();
+                        campoContraseña.clear();
+                        campoCorreoElectronico.clear();
+                        campoNombre.clear();
+                        campoTelefono.clear();
+                        campoUsuario.clear();
+
+                    } else {
+                        DialogosController.mostrarMensajeInformacion("", "Registro no exitoso", "El maestro no se ha registrado correctamente");
                     }
-                    cuenta.setTipoCuenta("Maestro");
-                    
-                    //Invertir, primero cuenta y después registrar maestro
-                    
-                    
-                }else{
-                    System.out.println("Hubo un problema con el registro");
+
+                } else {
+                    DialogosController.mostrarMensajeInformacion("", "Registro no exitoso", "El maestro no se ha registrado correctamente");
                 }
 
             } else {
-                System.out.println("El nombre de usuario que desea ya existe");
+                DialogosController.mostrarMensajeInformacion("Usuario existente", "El nombre de usuario elegido ya se encuentra en uso", "El nombre de usuario elegido ya se encuentra en uso");
             }
 
         } else {
-            System.out.println("El formato de correo no es válido");
+            DialogosController.mostrarMensajeInformacion("", "Correo no válido", "El correo ingresado no tiene un formato válido");
         }
 
     }
@@ -143,4 +147,28 @@ public class VentanaRegistrarMaestroController implements Initializable {
         return longitudExcedida;
     }
 
+    @FXML
+    private String elegirImagen(ActionEvent event) throws IOException {
+        FileChooser explorador = new FileChooser();
+        explorador.getExtensionFilters().addAll(new ExtensionFilter("*.png", "*.jpg"));
+        File archivoSeleccionado = explorador.showOpenDialog(null);
+
+        //   int opcion1 = 128;
+        //   if (opcion1 == JFileChooser.ABORT) {
+        //   } else {
+        String rutaNueva = "C:\\Users\\irdev\\OneDrive\\Documentos\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\imagenesMaestros";
+        String rutaOrigen = archivoSeleccionado.getAbsolutePath();
+        String nombreArchivo = archivoSeleccionado.getName();
+        StringBuilder comando = new StringBuilder();
+        comando.append("move ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+        builder.redirectErrorStream(true);
+        System.out.println('"' + archivoSeleccionado.getAbsolutePath() + '"');
+        System.out.println('"' + rutaNueva + '"');
+        Process process = builder.start();
+        rutaImagen = rutaNueva + "\\" + nombreArchivo;
+        // }
+
+        return rutaImagen;
+    }
 }

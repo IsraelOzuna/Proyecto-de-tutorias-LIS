@@ -13,7 +13,6 @@ public class Cuenta {
     
     private String usuario;
     private String contraseña;
-    private int idMaestro;
     private String tipoCuenta;
 
     public String getUsuario() {
@@ -30,14 +29,6 @@ public class Cuenta {
 
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
-    }
-
-    public int getIdMaestro() {
-        return idMaestro;
-    }
-
-    public void setIdMaestro(int idMaestro) {
-        this.idMaestro = idMaestro;
     }
 
     public String getTipoCuenta() {

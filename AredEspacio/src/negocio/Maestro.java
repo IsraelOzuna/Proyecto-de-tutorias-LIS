@@ -22,8 +22,6 @@ public class Maestro {
         this.usuario = usuario;
     }
 
-
-
     public Double getMensualidad() {
         return mensualidad;
     }
