@@ -1,5 +1,6 @@
 package negocio;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Alumno {
@@ -57,5 +58,9 @@ public class Alumno {
 
     public void setRutaFoto(String rutaFoto) {
         this.rutaFoto = rutaFoto;
-    }            
+    }     
+    
+    public Date convertirFechaNacimiento(LocalDate fechaNacimiento){
+        return java.sql.Date.valueOf(fechaNacimiento);
+    }
 }

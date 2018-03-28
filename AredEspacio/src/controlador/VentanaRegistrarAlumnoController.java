@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -14,11 +10,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
+import negocio.Alumno;
+import negocio.AlumnoDAO;
 
 /**
  * FXML Controller class
  *
- * @author iro19
+ * @author Israel Reyes Ozuna
  */
 public class VentanaRegistrarAlumnoController implements Initializable {
 
@@ -61,13 +60,38 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     public void registrarNuevoAlumno(ActionEvent event) {
         if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono, campoFechaNacimiennto)) {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
+                AlumnoDAO nuevoAlumnoDAO = new AlumnoDAO();
+                Alumno nuevoAlumno = new Alumno();
 
+                nuevoAlumno.setNombre(campoNombre.getText());
+                nuevoAlumno.setApellidos(campoApellidos.getText());
+                nuevoAlumno.setCorreoElectronico(campoCorreo.getText());
+                nuevoAlumno.setFechaNacimiento(nuevoAlumno.convertirFechaNacimiento(campoFechaNacimiennto.getValue()));
+                nuevoAlumno.setTelefono(campoTelefono.getText());
+                nuevoAlumno.setRutaFoto(null);
+
+                if (nuevoAlumnoDAO.registrarAlumno(nuevoAlumno)) {
+                    DialogosController.mostrarMensajeInformacion("Guardado", "Alumno registrado", "El alumno ha sido registrado exitosamente");
+                    campoApellidos.setText("");
+                    campoCorreo.setText("");
+                    campoFechaNacimiennto.setValue(null);
+                    campoNombre.setText("");
+                    campoTelefono.setText("");
+                } else {
+                    DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "Ha ocurrido un error. No se pudo registrar");
+                }
             }
         } else {
             DialogosController.mostrarMensajeInformacion("Campo vacio", "Alugún campo esta vacío", "Debe llenar todos los campos requeridos");
         }
     }
-
+    
+    @FXML
+    public void seleccionarImagen(ActionEvent event){
+        FileChooser exploradorArchivos = new FileChooser();         
+        File imagen = exploradorArchivos.showDialog(null);
+    }
+        
     public boolean existenCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono, DatePicker campoFechaNacimiento) {
         boolean camposVacios = false;
 
@@ -89,7 +113,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     public boolean existenCamposExcedidos(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono) {
         boolean campoExcedido = false;
 
-        if (campoNombre.getText().length() > 30) {            
+        if (campoNombre.getText().length() > 30) {
             campoExcedido = true;
             DialogosController.mostrarMensajeInformacion("Campo excedido", "Campo nombre excedido", "El campo de nombre no puede contener mas de 30 caracteres");
         } else if (campoApellidos.getText().length() > 30) {
