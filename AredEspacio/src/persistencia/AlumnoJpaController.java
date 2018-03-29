@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package persistencia;
 
 import aredespacio.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -134,5 +130,16 @@ public class AlumnoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public List<Alumno> obtenerAlumnos(String nombre) {        
+        List<persistencia.Alumno> alumnos;
+        String consulta = "Select a from Alumno a where a.nombre = :nombre";
+        EntityManager em = getEntityManager();
+        try {
+            alumnos = em.createQuery(consulta).setParameter("nombre", nombre).getResultList();
+        } finally {
+            em.close();
+        }        
+        return alumnos;
+    }    
 }
