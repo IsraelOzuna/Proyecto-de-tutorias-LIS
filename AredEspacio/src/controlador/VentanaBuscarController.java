@@ -15,6 +15,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import negocio.Alumno;
 import negocio.AlumnoDAO;
+import negocio.MaestroDAO;
+import persistencia.Maestro;
 
 public class VentanaBuscarController implements Initializable {
 
@@ -72,41 +74,95 @@ public class VentanaBuscarController implements Initializable {
     @FXML
     public void buscarCoincidencias() throws IOException {
         if (!campoBusqueda.getText().isEmpty()) {
-            AlumnoDAO alumnoDAO = new AlumnoDAO();
-            Alumno alumno = new Alumno();
-            List<persistencia.Alumno> alumnos = null;
-            alumnos = alumnoDAO.buscarAlumno(campoBusqueda.getText());
-            persistencia.Alumno alumnoCoincidencia;
-            Pane panelAnterior = new Pane();
 
-            int contadorCoincidencias = 0;
-            if (alumnos.size() > 0) {
-                for (int i = 0; i < alumnos.size(); i++) {
-                    FXMLLoader loader;
-                    Parent root;
-                    loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/PanelCoincidencia.fxml"));
-                    panelCoincidencia = (Pane) loader.load();
-                    PanelCoincidenciaController coincidenciasEncontradas = loader.getController();   
-                    
-                    if (contadorCoincidencias < 3) {                          
-                        if (contadorCoincidencias == 0) {
-                            panelCoincidencia.setLayoutX(45);
-                            panelCoincidencia.setLayoutY(110);
-                            
-                        } else {
-                            panelCoincidencia.relocate(panelAnterior.getLayoutX() + 380, 110);
+            switch (seccion) {
+                case "Alumnos":
+                    AlumnoDAO alumnoDAO = new AlumnoDAO();
+                    Alumno alumno = new Alumno();
+                    List<persistencia.Alumno> alumnos = null;
+                    alumnos = alumnoDAO.buscarAlumno(campoBusqueda.getText());
+                   
+                    persistencia.Alumno alumnoCoincidencia;
+                    Pane panelAnterior = new Pane();
+
+                    int contadorCoincidencias = 0;
+                    if (alumnos.size() > 0) {
+                        for (int i = 0; i < alumnos.size(); i++) {
+                            FXMLLoader loader;
+                            Parent root;
+                            loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/PanelCoincidencia.fxml"));
+                            panelCoincidencia = (Pane) loader.load();
+                            PanelCoincidenciaController coincidenciasEncontradas = loader.getController();
+
+                            if (contadorCoincidencias < 3) {
+                                if (contadorCoincidencias == 0) {
+                                    panelCoincidencia.setLayoutX(45);
+                                    panelCoincidencia.setLayoutY(110);
+
+                                } else {
+                                    panelCoincidencia.relocate(panelAnterior.getLayoutX() + 380, 110);
+                                }
+                                contadorCoincidencias++;
+                            } else {
+                                contadorCoincidencias = 1;
+                                panelCoincidencia.relocate(45, panelAnterior.getLayoutY() + 200);
+                            }
+                            panelPrincipal.getChildren().add(panelCoincidencia);
+                            panelAnterior = panelCoincidencia;
                         }
-                        contadorCoincidencias++;
                     } else {
-                        contadorCoincidencias = 1;
-                        panelCoincidencia.relocate(45, panelAnterior.getLayoutY() + 200);
+                        System.out.println("No coincidencia");
                     }
-                    panelPrincipal.getChildren().add(panelCoincidencia);
-                    panelAnterior = panelCoincidencia;                    
-                }
-            } else {
-                System.out.println("No coincidencia");
+                    break;
+
+                case "Maestros":
+                    MaestroDAO maestroDAO = new MaestroDAO();
+                    Maestro maestro = new Maestro();
+                    List<persistencia.Maestro> maestros = null;
+                    maestros = maestroDAO.buscarMaestro(campoBusqueda.getText());
+                  
+                    persistencia.Maestro maestroCoincidencia;
+                    Pane panel = new Pane();
+                  
+                    int contadorCoincidenciasEncontradas = 0;
+                    if (maestros.size() > 0) {
+                        for (int i = 0; i < maestros.size(); i++) {
+                            FXMLLoader loader;
+                            Parent root;
+                            loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/PanelCoincidencia.fxml"));
+                            panelCoincidencia = (Pane) loader.load();
+                            PanelCoincidenciaController coincidencias = loader.getController();
+
+                            if (contadorCoincidenciasEncontradas < 3) {
+                                if (contadorCoincidenciasEncontradas == 0) {
+                                    panelCoincidencia.setLayoutX(45);
+                                    panelCoincidencia.setLayoutY(110);
+
+                                } else {
+                                    panelCoincidencia.relocate(panel.getLayoutX() + 380, 110);
+                                }
+                                contadorCoincidenciasEncontradas++;
+                            } else {
+                                contadorCoincidenciasEncontradas = 1;
+                                panelCoincidencia.relocate(45, panel.getLayoutY() + 200);
+                            }
+                            panelPrincipal.getChildren().add(panelCoincidencia);
+                            panel = panelCoincidencia;
+                        }
+                    } else {
+                        System.out.println("No coincidencia");
+                    }
+
+                    break;
+
+                case "Rentas":
+                    break;
+
+                default:
+                    break;
+
             }
+
         }
     }
 }

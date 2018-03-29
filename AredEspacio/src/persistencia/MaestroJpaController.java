@@ -200,4 +200,16 @@ public class MaestroJpaController implements Serializable {
         }
     }
     
+        public List<Maestro> obtenerMaestros(String nombre) {        
+        List<persistencia.Maestro> maestros;
+        String consulta = "Select a from Maestro a where a.nombre = :nombre";
+        EntityManager em = getEntityManager();
+        try {
+            maestros = em.createQuery(consulta).setParameter("nombre", nombre).getResultList();
+        } finally {
+            em.close();
+        }        
+        return maestros;
+    }  
+    
 }

@@ -5,6 +5,8 @@
  */
 package negocio;
 
+import java.util.List;
+
 /**
  *
  * @author Irdevelo
@@ -12,5 +14,7 @@ package negocio;
 public interface IMaestro {
     
     public boolean registrarMaestro(Maestro maestro);
+    
+    public List<persistencia.Maestro> buscarMaestro(String nombre); 
     
 }
