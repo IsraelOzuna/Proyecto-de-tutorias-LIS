@@ -24,17 +24,15 @@ public class VentanaBuscarController implements Initializable {
     private JFXButton botonRegistrarNuevo;
     @FXML
     private Label etiquetaIdentidicador;
-
-    private String seccion = "";
-
-    private Pane panelPrincipal;
     @FXML
     private AnchorPane panelBuscar;
     @FXML
     private JFXButton botonBuscar;
     @FXML
     private TextField campoBusqueda;
+    private String seccion = "";
     private Pane panelCoincidencia;
+    private Pane panelPrincipal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -81,7 +79,7 @@ public class VentanaBuscarController implements Initializable {
                     Alumno alumno = new Alumno();
                     List<persistencia.Alumno> alumnos = null;
                     alumnos = alumnoDAO.buscarAlumno(campoBusqueda.getText());
-                   
+
                     persistencia.Alumno alumnoCoincidencia;
                     Pane panelAnterior = new Pane();
 
@@ -107,6 +105,7 @@ public class VentanaBuscarController implements Initializable {
                                 contadorCoincidencias = 1;
                                 panelCoincidencia.relocate(45, panelAnterior.getLayoutY() + 200);
                             }
+                            coincidenciasEncontradas.llenarDatos(alumnos.get(i));
                             panelPrincipal.getChildren().add(panelCoincidencia);
                             panelAnterior = panelCoincidencia;
                         }
@@ -120,10 +119,10 @@ public class VentanaBuscarController implements Initializable {
                     Maestro maestro = new Maestro();
                     List<persistencia.Maestro> maestros = null;
                     maestros = maestroDAO.buscarMaestro(campoBusqueda.getText());
-                  
+
                     persistencia.Maestro maestroCoincidencia;
                     Pane panel = new Pane();
-                  
+
                     int contadorCoincidenciasEncontradas = 0;
                     if (maestros.size() > 0) {
                         for (int i = 0; i < maestros.size(); i++) {
