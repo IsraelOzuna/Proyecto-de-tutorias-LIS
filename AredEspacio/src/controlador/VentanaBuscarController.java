@@ -131,7 +131,7 @@ public class VentanaBuscarController implements Initializable {
                             loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/PanelCoincidencia.fxml"));
                             panelCoincidencia = (Pane) loader.load();
                             PanelCoincidenciaController coincidencias = loader.getController();
-
+                            coincidencias.obtenerSeccion(seccion, panelPrincipal);
                             if (contadorCoincidenciasEncontradas < 3) {
                                 if (contadorCoincidenciasEncontradas == 0) {
                                     panelCoincidencia.setLayoutX(45);
@@ -145,9 +145,12 @@ public class VentanaBuscarController implements Initializable {
                                 contadorCoincidenciasEncontradas = 1;
                                 panelCoincidencia.relocate(45, panel.getLayoutY() + 200);
                             }
+                            coincidencias.llenarDatosMaestro(maestros.get(i));
                             panelPrincipal.getChildren().add(panelCoincidencia);
                             panel = panelCoincidencia;
+                            
                         }
+                                                                       
                     } else {
                         System.out.println("No coincidencia");
                     }

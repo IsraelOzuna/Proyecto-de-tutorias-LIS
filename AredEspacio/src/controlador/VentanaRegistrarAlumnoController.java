@@ -2,6 +2,7 @@ package controlador;
 
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -48,6 +49,8 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     @FXML
     private JFXButton botonRegistrar;
 
+    String rutaImagen = null;
+
     /**
      * Initializes the controller class.
      */
@@ -85,12 +88,33 @@ public class VentanaRegistrarAlumnoController implements Initializable {
             DialogosController.mostrarMensajeInformacion("Campo vacio", "Alugún campo esta vacío", "Debe llenar todos los campos requeridos");
         }
     }
-    
+
     @FXML
-    public void seleccionarImagen(ActionEvent event){
-        FileChooser exploradorArchivos = new FileChooser();         
+    public String seleccionarImagen(ActionEvent event) throws IOException {
+        FileChooser explorador = new FileChooser();
+        explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
+        File archivoSeleccionado = explorador.showOpenDialog(null);
+
+        //   int opcion1 = 128;
+        //   if (opcion1 == JFileChooser.ABORT) {
+        //   } else {
+        String rutaNueva = "C:\\Users\\irdev\\OneDrive\\Documentos\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\imagenesMaestros";
+        String rutaOrigen = archivoSeleccionado.getAbsolutePath();
+        String nombreArchivo = archivoSeleccionado.getName();
+        StringBuilder comando = new StringBuilder();
+        comando.append("move ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+        builder.redirectErrorStream(true);
+        System.out.println('"' + archivoSeleccionado.getAbsolutePath() + '"');
+        System.out.println('"' + rutaNueva + '"');
+        Process process = builder.start();
+        rutaImagen = rutaNueva + "\\" + nombreArchivo;
+        // }
+
+        return rutaImagen;
+
     }
-        
+
     public boolean existenCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono, DatePicker campoFechaNacimiento) {
         boolean camposVacios = false;
 

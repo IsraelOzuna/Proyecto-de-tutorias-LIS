@@ -2,57 +2,57 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="462.0" prefWidth="347.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaMostrarInformacionMaestroController">
+<AnchorPane id="AnchorPane" prefHeight="462.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaMostrarInformacionMaestroController">
    <children>
-      <Label fx:id="etiquetaTelefono" layoutX="67.0" layoutY="302.0" prefHeight="20.0" prefWidth="222.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="imagenPerfil" fitHeight="115.0" fitWidth="139.0" layoutX="108.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" />
-      <JFXButton fx:id="botonCerrar" layoutX="142.0" layoutY="403.0" style="-fx-background-color: #CDCDCD;" text="Cerrar">
+      <JFXButton fx:id="botonCerrar" layoutX="149.0" layoutY="403.0" style="-fx-background-color: #CDCDCD;" text="Cerrar">
          <font>
             <Font name="System Bold" size="14.0" />
-         </font></JFXButton>
-      <Button fx:id="botonRegistrarPago" layoutX="12.0" layoutY="16.0" mnemonicParsing="false" style="-fx-background-color: #E8E8E8;" text="Registrar pago" textFill="#0400ff" underline="true">
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
+      <Button fx:id="botonRegistrarPago" layoutX="12.0" layoutY="16.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Registrar pago" textFill="#0400ff" underline="true">
          <font>
             <Font name="Gill Sans MT" size="14.0" />
-         </font></Button>
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
       <Button fx:id="botonEditar" layoutX="297.0" layoutY="17.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="20.0" style="-fx-background-color: #000000;">
          <graphic>
             <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" text="" />
          </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </Button>
-      <Label fx:id="etiquetaNombre" layoutX="63.0" layoutY="176.0" prefHeight="20.0" prefWidth="222.0">
+      <Label fx:id="etiquetaNombre" layoutX="69.0" layoutY="175.0" prefHeight="20.0" prefWidth="222.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaFechaNacimiento" layoutX="67.0" layoutY="221.0" prefHeight="20.0" prefWidth="222.0">
+      <Label fx:id="etiquetaCorreo" layoutX="69.0" layoutY="231.0" prefHeight="20.0" prefWidth="222.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaCorreo" layoutX="63.0" layoutY="262.0" prefHeight="20.0" prefWidth="222.0">
+      <Label fx:id="etiquetaTelefono" layoutX="69.0" layoutY="282.0" prefHeight="20.0" prefWidth="222.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaTelefono" layoutX="63.0" layoutY="302.0" prefHeight="20.0" prefWidth="222.0">
+      <Label fx:id="etiquetaMontoAPagar" layoutX="67.0" layoutY="333.0" prefHeight="20.0" prefWidth="222.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaMontoAPagar" layoutX="63.0" layoutY="347.0" prefHeight="20.0" prefWidth="222.0">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
+      <ImageView fx:id="imagenPerfil" fitHeight="115.0" fitWidth="139.0" layoutX="123.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
