@@ -8,16 +8,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane fx:id="panelConsultarAlumno" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="347.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaInformacionAlumnosController">
+<AnchorPane fx:id="panelInformacionAlumno" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaInformacionAlumnosController">
    <children>
       <ImageView fx:id="imagenPerfil" fitHeight="115.0" fitWidth="139.0" layoutX="118.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true" />
-      <JFXButton fx:id="botonCerrar" layoutX="154.0" layoutY="375.0" style="-fx-background-color: #CDCDCD;" text="Cerrar">
+      <JFXButton fx:id="botonCerrar" layoutX="157.0" layoutY="377.0" onAction="#cerrarDetalles" style="-fx-background-color: #CDCDCD;" text="Cerrar">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </JFXButton>
-      <Button fx:id="botonDarBaja" layoutX="22.0" layoutY="26.0" mnemonicParsing="false" style="-fx-background-color: #E8E8E8;" text="Dar de baja" textFill="#0400ff" underline="true">
+      <Button fx:id="botonDarBaja" layoutX="22.0" layoutY="26.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Dar de baja" textFill="#0400ff" underline="true">
          <font>
             <Font name="Gill Sans MT" size="14.0" />
          </font>
@@ -27,22 +26,22 @@
             <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" text="" />
          </graphic>
       </Button>
-      <Label fx:id="etiquetaNombre" layoutX="73.0" layoutY="186.0" prefHeight="20.0" prefWidth="222.0">
+      <Label fx:id="etiquetaNombre" alignment="CENTER" contentDisplay="CENTER" layoutY="186.0" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaFechaNacimiento" layoutX="77.0" layoutY="231.0" prefHeight="20.0" prefWidth="222.0">
+      <Label fx:id="etiquetaFechaNacimiento" alignment="CENTER" contentDisplay="CENTER" layoutY="231.0" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaCorreo" layoutX="73.0" layoutY="272.0" prefHeight="20.0" prefWidth="222.0">
+      <Label fx:id="etiquetaCorreo" alignment="CENTER" contentDisplay="CENTER" layoutY="272.0" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaTelefono" layoutX="73.0" layoutY="312.0" prefHeight="20.0" prefWidth="222.0">
+      <Label fx:id="etiquetaTelefono" alignment="CENTER" contentDisplay="CENTER" layoutY="312.0" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font>

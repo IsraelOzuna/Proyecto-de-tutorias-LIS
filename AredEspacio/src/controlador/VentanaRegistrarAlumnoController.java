@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import negocio.Alumno;
 import negocio.AlumnoDAO;
+import negocio.Utileria;
 
 /**
  * FXML Controller class
@@ -49,7 +50,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     @FXML
     private JFXButton botonRegistrar;
 
-    String rutaImagen = null;
+    String rutaFoto = "";
 
     /**
      * Initializes the controller class.
@@ -63,25 +64,29 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     public void registrarNuevoAlumno(ActionEvent event) {
         if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono, campoFechaNacimiennto)) {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
-                AlumnoDAO nuevoAlumnoDAO = new AlumnoDAO();
-                Alumno nuevoAlumno = new Alumno();
+                if (Utileria.validarCorreo(campoCorreo.getText())) {
+                    AlumnoDAO nuevoAlumnoDAO = new AlumnoDAO();
+                    Alumno nuevoAlumno = new Alumno();
 
-                nuevoAlumno.setNombre(campoNombre.getText());
-                nuevoAlumno.setApellidos(campoApellidos.getText());
-                nuevoAlumno.setCorreoElectronico(campoCorreo.getText());
-                nuevoAlumno.setFechaNacimiento(nuevoAlumno.convertirFechaNacimiento(campoFechaNacimiennto.getValue()));
-                nuevoAlumno.setTelefono(campoTelefono.getText());
-                nuevoAlumno.setRutaFoto(null);
+                    nuevoAlumno.setNombre(campoNombre.getText());
+                    nuevoAlumno.setApellidos(campoApellidos.getText());
+                    nuevoAlumno.setCorreoElectronico(campoCorreo.getText());
+                    nuevoAlumno.setFechaNacimiento(nuevoAlumno.convertirFechaNacimiento(campoFechaNacimiennto.getValue()));
+                    nuevoAlumno.setTelefono(campoTelefono.getText());
+                    nuevoAlumno.setRutaFoto(rutaFoto);
 
-                if (nuevoAlumnoDAO.registrarAlumno(nuevoAlumno)) {
-                    DialogosController.mostrarMensajeInformacion("Guardado", "Alumno registrado", "El alumno ha sido registrado exitosamente");
-                    campoApellidos.setText("");
-                    campoCorreo.setText("");
-                    campoFechaNacimiennto.setValue(null);
-                    campoNombre.setText("");
-                    campoTelefono.setText("");
-                } else {
-                    DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "Ha ocurrido un error. No se pudo registrar");
+                    if (nuevoAlumnoDAO.registrarAlumno(nuevoAlumno)) {
+                        DialogosController.mostrarMensajeInformacion("Guardado", "Alumno registrado", "El alumno ha sido registrado exitosamente");
+                        campoApellidos.setText("");
+                        campoCorreo.setText("");
+                        campoFechaNacimiennto.setValue(null);
+                        campoNombre.setText("");
+                        campoTelefono.setText("");
+                    } else {
+                        DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "Ha ocurrido un error. No se pudo registrar");
+                    }
+                }else{
+                    DialogosController.mostrarMensajeInformacion("", "Correo no válido", "El correo ingresado no tiene un formato válido");
                 }
             }
         } else {
@@ -95,24 +100,18 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
 
-        //   int opcion1 = 128;
-        //   if (opcion1 == JFileChooser.ABORT) {
-        //   } else {
-        String rutaNueva = "C:\\Users\\irdev\\OneDrive\\Documentos\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\imagenesMaestros";
-        String rutaOrigen = archivoSeleccionado.getAbsolutePath();
-        String nombreArchivo = archivoSeleccionado.getName();
-        StringBuilder comando = new StringBuilder();
-        comando.append("move ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-        builder.redirectErrorStream(true);
-        System.out.println('"' + archivoSeleccionado.getAbsolutePath() + '"');
-        System.out.println('"' + rutaNueva + '"');
-        Process process = builder.start();
-        rutaImagen = rutaNueva + "\\" + nombreArchivo;
-        // }
-
-        return rutaImagen;
-
+        if (archivoSeleccionado != null) {
+            String rutaOrigen = archivoSeleccionado.getAbsolutePath();
+            String nombreArchivo = archivoSeleccionado.getName();
+            String rutaNueva = "C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesAlumnos";
+            StringBuilder comando = new StringBuilder();
+            comando.append("move ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+            builder.redirectErrorStream(true);
+            Process process = builder.start();
+            rutaFoto = nombreArchivo;
+        }
+        return rutaFoto;
     }
 
     public boolean existenCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono, DatePicker campoFechaNacimiento) {

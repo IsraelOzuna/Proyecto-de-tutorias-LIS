@@ -65,8 +65,9 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
         etiquetaCorreo.setText(maestro.getCorreoElectronico());
         etiquetaMontoAPagar.setText(Double.toString(maestro.getMensualidad()));
         etiquetaTelefono.setText(maestro.getTelefono());
-        Image foto = new Image("file:" + '"' + maestro.getRutaFoto() + '"');
-        imagenPerfil.setImage(foto);
-
+        if (maestro.getRutaFoto() != null) {
+            Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, true, true);            
+            imagenPerfil.setImage(foto);
+        }
     }
 }

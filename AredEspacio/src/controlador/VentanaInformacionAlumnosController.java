@@ -1,19 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import persistencia.Alumno;
 
 /**
  * FXML Controller class
@@ -22,8 +21,6 @@ import javafx.scene.layout.AnchorPane;
  */
 public class VentanaInformacionAlumnosController implements Initializable {
 
-    @FXML
-    private AnchorPane panelConsultarAlumno;
     @FXML
     private ImageView imagenPerfil;
     @FXML
@@ -40,13 +37,40 @@ public class VentanaInformacionAlumnosController implements Initializable {
     private Label etiquetaCorreo;
     @FXML
     private Label etiquetaTelefono;
+    @FXML
+    private AnchorPane panelInformacionAlumno;
 
-    /**
-     * Initializes the controller class.
-     */
+    private Alumno alumno;
+    private Pane panelPrincipal;
+    
+
+    public void obtenerAlumno(Alumno alumno) {
+        this.alumno = alumno;
+    }
+
+    public void obtenerPanel(Pane panelPrincipal) {
+        this.panelPrincipal = panelPrincipal;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+
+    }
+
+    @FXML
+    public void cerrarDetalles(ActionEvent event) {
+        panelInformacionAlumno.setVisible(false);
+        panelPrincipal.setVisible(true);
+    }
+
+    public void llenarCamposInformacion() {
+        etiquetaNombre.setText(alumno.getNombre() + " " + alumno.getApellidos());
+        etiquetaCorreo.setText(alumno.getCorreoElectronico());
+        etiquetaTelefono.setText(alumno.getTelefono());
+        etiquetaFechaNacimiento.setText(String.valueOf(alumno.getFechaNacimiento()));
+        if (alumno.getRutaFoto() != null) {
+            Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, true, true);
+            imagenPerfil.setImage(foto);
+        }
+    }
 }

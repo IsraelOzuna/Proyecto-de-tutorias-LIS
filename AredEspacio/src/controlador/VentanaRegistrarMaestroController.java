@@ -153,21 +153,18 @@ public class VentanaRegistrarMaestroController implements Initializable {
         explorador.getExtensionFilters().addAll(new ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
 
-        //   int opcion1 = 128;
-        //   if (opcion1 == JFileChooser.ABORT) {
-        //   } else {
-        String rutaNueva = "C:\\Users\\irdev\\OneDrive\\Documentos\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\imagenesMaestros";
-        String rutaOrigen = archivoSeleccionado.getAbsolutePath();
-        String nombreArchivo = archivoSeleccionado.getName();
-        StringBuilder comando = new StringBuilder();
-        comando.append("move ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-        builder.redirectErrorStream(true);
-        System.out.println('"' + archivoSeleccionado.getAbsolutePath() + '"');
-        System.out.println('"' + rutaNueva + '"');
-        Process process = builder.start();
-        rutaImagen = rutaNueva + "\\" + nombreArchivo;
-        // }
+        if (archivoSeleccionado != null) {
+            String rutaOrigen = archivoSeleccionado.getAbsolutePath();
+            String nombreArchivo = archivoSeleccionado.getName();
+            String rutaNueva = "C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesMaestros";
+            StringBuilder comando = new StringBuilder();
+            comando.append("move ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+            builder.redirectErrorStream(true);
+            System.out.println('"' + archivoSeleccionado.getAbsolutePath() + '"');
+            Process process = builder.start();
+            rutaImagen = nombreArchivo;
+        }
 
         return rutaImagen;
     }

@@ -8,10 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="269.0" style="-fx-background-color: #F4F4F4;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.PanelCoincidenciaController">
+<AnchorPane fx:id="panelCoincidencia" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="269.0" style="-fx-background-color: #F4F4F4;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.PanelCoincidenciaController">
    <children>
-      <ImageView fx:id="imagenUsuario" fitHeight="100.0" fitWidth="100.0" layoutX="14.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="etiquetaNombre" layoutX="113.0" layoutY="67.0" prefHeight="17.0" prefWidth="152.0">
+      <Label fx:id="etiquetaNombre" alignment="CENTER" contentDisplay="CENTER" layoutX="113.0" layoutY="67.0" prefHeight="17.0" prefWidth="152.0" textAlignment="CENTER">
          <font>
             <Font name="Gill Sans MT Bold" size="12.0" />
          </font>
@@ -24,5 +23,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
+      <ImageView fx:id="fotoPerfil" fitHeight="100.0" fitWidth="100.0" layoutX="6.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
