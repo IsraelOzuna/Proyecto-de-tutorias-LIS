@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Irdevelo
+ * @author Equipo
  */
 @Entity
 @Table(name = "grupo")
@@ -33,6 +33,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Grupo.findByFechaPago", query = "SELECT g FROM Grupo g WHERE g.fechaPago = :fechaPago"),
     @NamedQuery(name = "Grupo.findByMensualidad", query = "SELECT g FROM Grupo g WHERE g.mensualidad = :mensualidad")})
 public class Grupo implements Serializable {
+
+    @Column(name = "inscripcion")
+    private Double inscripcion;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -111,6 +114,14 @@ public class Grupo implements Serializable {
     @Override
     public String toString() {
         return "persistencia.Grupo[ nombreGrupo=" + nombreGrupo + " ]";
+    }
+
+    public Double getInscripcion() {
+        return inscripcion;
+    }
+
+    public void setInscripcion(Double inscripcion) {
+        this.inscripcion = inscripcion;
     }
     
 }
