@@ -13,8 +13,8 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import persistencia.exceptions.NonexistentEntityException;
-import persistencia.exceptions.PreexistingEntityException;
+import aredespacio.exceptions.NonexistentEntityException;
+import aredespacio.exceptions.PreexistingEntityException;
 
 /**
  *

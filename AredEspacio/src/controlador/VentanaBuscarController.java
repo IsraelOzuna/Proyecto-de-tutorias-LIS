@@ -110,7 +110,7 @@ public class VentanaBuscarController implements Initializable {
                             panelAnterior = panelCoincidencia;
                         }
                     } else {
-                        System.out.println("No coincidencia");
+                        DialogosController.mostrarMensajeAdvertencia("Sin coincidencias", "No se han encontrado resultados con ese nombre", "Asegurese de escribir bien el nombre de la persona");
                     }
                     break;
 
@@ -148,11 +148,11 @@ public class VentanaBuscarController implements Initializable {
                             coincidencias.llenarDatosMaestro(maestros.get(i));
                             panelPrincipal.getChildren().add(panelCoincidencia);
                             panel = panelCoincidencia;
-                            
+
                         }
-                                                                       
+
                     } else {
-                        System.out.println("No coincidencia");
+                        DialogosController.mostrarMensajeAdvertencia("Sin coincidencias", "No se han encontrado resultados con ese nombre", "Asegurese de escribir bien el nombre de la persona");
                     }
 
                     break;
