@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package persistencia;
 
+import aredespacio.exceptions.NonexistentEntityException;
+import aredespacio.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -13,12 +10,12 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import aredespacio.exceptions.NonexistentEntityException;
-import aredespacio.exceptions.PreexistingEntityException;
+import persistencia.Cuenta;
+import persistencia.Grupo;
 
 /**
  *
- * @author Equipo
+ * @author Irdevelo
  */
 public class GrupoJpaController implements Serializable {
 
@@ -43,7 +40,7 @@ public class GrupoJpaController implements Serializable {
             }
             em.persist(grupo);
             if (usuario != null) {
-                usuario.getGrupoList().add(grupo);
+                usuario.getGrupoCollection().add(grupo);
                 usuario = em.merge(usuario);
             }
             em.getTransaction().commit();
@@ -73,11 +70,11 @@ public class GrupoJpaController implements Serializable {
             }
             grupo = em.merge(grupo);
             if (usuarioOld != null && !usuarioOld.equals(usuarioNew)) {
-                usuarioOld.getGrupoList().remove(grupo);
+                usuarioOld.getGrupoCollection().remove(grupo);
                 usuarioOld = em.merge(usuarioOld);
             }
             if (usuarioNew != null && !usuarioNew.equals(usuarioOld)) {
-                usuarioNew.getGrupoList().add(grupo);
+                usuarioNew.getGrupoCollection().add(grupo);
                 usuarioNew = em.merge(usuarioNew);
             }
             em.getTransaction().commit();
@@ -111,7 +108,7 @@ public class GrupoJpaController implements Serializable {
             }
             Cuenta usuario = grupo.getUsuario();
             if (usuario != null) {
-                usuario.getGrupoList().remove(grupo);
+                usuario.getGrupoCollection().remove(grupo);
                 usuario = em.merge(usuario);
             }
             em.remove(grupo);

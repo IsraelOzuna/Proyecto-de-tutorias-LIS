@@ -15,7 +15,7 @@ public class GrupoDAO implements IGrupo{
         
         
         List<Grupo> listaGrupos=null;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);/////////Cambiar a AredEspacioPU
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("EscuelaAredPU", null);/////////Cambiar a AredEspacioPU
         GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         persistencia.Grupo grupo = new persistencia.Grupo();
         grupo.setUsuario(usuario);
@@ -51,7 +51,7 @@ public class GrupoDAO implements IGrupo{
     @Override
     public List<Cuenta> adquirirCuentas() {
         List<Cuenta> listaCuentas=null;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("EscuelaAredPU", null);/////////Cambiar a AredEspacioPU
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);/////////Cambiar a AredEspacioPU
         CuentaJpaController cuentaJpaController = new CuentaJpaController(entityManagerFactory);
         //persistencia.Cuenta cuenta = new persistencia.Cuenta();
         try{
@@ -65,7 +65,7 @@ public class GrupoDAO implements IGrupo{
     @Override
     public Grupo adquirirGrupo(String nombreGrupo) {
         Grupo grupoEncontrado=new Grupo();
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("EscuelaAredPU", null);//Cambiar a "AredEspacioPU"
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
         GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         try{
             grupoEncontrado=grupoJpaController.findGrupo(nombreGrupo);
@@ -73,6 +73,21 @@ public class GrupoDAO implements IGrupo{
             Logger.getLogger(GrupoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return grupoEncontrado;
+    }
+
+    @Override
+    public boolean eliminarGrupo(Grupo grupoEliminar) {
+        boolean grupoEliminado=false;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
+        GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
+        try{
+            grupoJpaController.destroy(grupoEliminar.getNombreGrupo());
+            grupoEliminado=true;
+        }catch (Exception ex){
+            grupoEliminado=false;
+            Logger.getLogger(GrupoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return grupoEliminado;
     }
     
 }
