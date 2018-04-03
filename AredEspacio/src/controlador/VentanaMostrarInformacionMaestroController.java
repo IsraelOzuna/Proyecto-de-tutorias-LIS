@@ -10,12 +10,14 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import persistencia.Maestro;
 
@@ -46,6 +48,8 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
     private Maestro maestro;
 
     private Pane panelPrincipal;
+    @FXML
+    private AnchorPane panelInformacionMaestro;
 
     public void obtenerMaestro(Maestro maestro) {
         this.maestro = maestro;
@@ -66,8 +70,13 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
         etiquetaMontoAPagar.setText(Double.toString(maestro.getMensualidad()));
         etiquetaTelefono.setText(maestro.getTelefono());
         if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, true, true);            
+            Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
+    }
+
+    @FXML
+    private void cerrarVentanaInformacionMaestro(ActionEvent event) {
+        panelInformacionMaestro.setVisible(false);
     }
 }

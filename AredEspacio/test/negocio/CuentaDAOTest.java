@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package negocio;
 
 import org.junit.After;
@@ -12,10 +7,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Irdevelo
- */
 public class CuentaDAOTest {
 
     public CuentaDAOTest() {
@@ -39,7 +30,7 @@ public class CuentaDAOTest {
 
     @Test
     public void testCrearCuenta() {
-        System.out.println("crearCuenta");
+        System.out.println("crearCuentaExitoso");
         Cuenta cuenta = new Cuenta();
         cuenta.setUsuario("Julian");
         cuenta.setContraseña("AS87SDJH7SA9KJ67");
@@ -52,7 +43,7 @@ public class CuentaDAOTest {
 
     @Test
     public void testCrearCuentaFallido() {
-        System.out.println("crearCuenta");
+        System.out.println("crearCuentaFallido");
         Cuenta cuenta = new Cuenta();
         CuentaDAO instance = new CuentaDAO();
         boolean expResult = false;
@@ -62,7 +53,7 @@ public class CuentaDAOTest {
 
     @Test
     public void testVerificarNombreUsuarioRepetido() {
-        System.out.println("verificarNombreUsuarioRepetido");
+        System.out.println("verificarNombreUsuarioRepetidoExitoso");
         String nombreUsuario = "elrevo";
         CuentaDAO instance = new CuentaDAO();
         boolean expResult = true;
@@ -72,7 +63,7 @@ public class CuentaDAOTest {
 
     @Test
     public void testVerificarNombreUsuarioRepetidoFallido() {
-        System.out.println("verificarNombreUsuarioRepetido");
+        System.out.println("verificarNombreUsuarioRepetidoFallido");
         String nombreUsuario = "Luis";
         CuentaDAO instance = new CuentaDAO();
         boolean expResult = false;

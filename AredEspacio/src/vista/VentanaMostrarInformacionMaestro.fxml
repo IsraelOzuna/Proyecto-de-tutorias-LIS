@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="462.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaMostrarInformacionMaestroController">
+<AnchorPane id="AnchorPane" fx:id="panelInformacionMaestro" prefHeight="462.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaMostrarInformacionMaestroController">
    <children>
-      <JFXButton fx:id="botonCerrar" layoutX="149.0" layoutY="403.0" style="-fx-background-color: #CDCDCD;" text="Cerrar">
+      <JFXButton fx:id="botonCerrar" layoutX="149.0" layoutY="403.0" onAction="#cerrarVentanaInformacionMaestro" style="-fx-background-color: #CDCDCD;" text="Cerrar">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
@@ -33,26 +33,26 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="etiquetaNombre" layoutX="69.0" layoutY="175.0" prefHeight="20.0" prefWidth="222.0">
+      <Label fx:id="etiquetaNombre" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="175.0" prefHeight="20.0" prefWidth="347.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaCorreo" layoutX="69.0" layoutY="231.0" prefHeight="20.0" prefWidth="222.0">
+      <Label fx:id="etiquetaCorreo" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="231.0" prefHeight="20.0" prefWidth="347.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaTelefono" layoutX="69.0" layoutY="282.0" prefHeight="20.0" prefWidth="222.0">
+      <Label fx:id="etiquetaTelefono" alignment="CENTER" contentDisplay="CENTER" layoutY="282.0" prefHeight="20.0" prefWidth="347.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaMontoAPagar" layoutX="67.0" layoutY="333.0" prefHeight="20.0" prefWidth="222.0">
+      <Label fx:id="etiquetaMontoAPagar" alignment="CENTER" contentDisplay="CENTER" layoutY="333.0" prefHeight="20.0" prefWidth="347.0">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <ImageView fx:id="imagenPerfil" fitHeight="115.0" fitWidth="139.0" layoutX="123.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="imagenPerfil" fitHeight="100.0" fitWidth="100.0" layoutX="124.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
