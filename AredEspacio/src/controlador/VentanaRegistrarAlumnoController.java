@@ -11,6 +11,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import negocio.Alumno;
 import negocio.AlumnoDAO;
@@ -49,8 +51,11 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     private JFXButton botonCancelar;
     @FXML
     private JFXButton botonRegistrar;
+    @FXML
+    private ImageView fotoSeleccionada;
 
-    String rutaFoto = "";
+    private String nombreFoto = "";
+    private Alumno nuevoAlumno = new Alumno();
 
     /**
      * Initializes the controller class.
@@ -66,14 +71,14 @@ public class VentanaRegistrarAlumnoController implements Initializable {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreo.getText())) {
                     AlumnoDAO nuevoAlumnoDAO = new AlumnoDAO();
-                    Alumno nuevoAlumno = new Alumno();
 
+                    nuevoAlumno = new Alumno();
                     nuevoAlumno.setNombre(campoNombre.getText());
                     nuevoAlumno.setApellidos(campoApellidos.getText());
                     nuevoAlumno.setCorreoElectronico(campoCorreo.getText());
                     nuevoAlumno.setFechaNacimiento(nuevoAlumno.convertirFechaNacimiento(campoFechaNacimiennto.getValue()));
                     nuevoAlumno.setTelefono(campoTelefono.getText());
-                    nuevoAlumno.setRutaFoto(rutaFoto);
+                    nuevoAlumno.setRutaFoto(nombreFoto);
 
                     if (nuevoAlumnoDAO.registrarAlumno(nuevoAlumno)) {
                         DialogosController.mostrarMensajeInformacion("Guardado", "Alumno registrado", "El alumno ha sido registrado exitosamente");
@@ -85,7 +90,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
                     } else {
                         DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "Ha ocurrido un error. No se pudo registrar");
                     }
-                }else{
+                } else {
                     DialogosController.mostrarMensajeInformacion("", "Correo no válido", "El correo ingresado no tiene un formato válido");
                 }
             }
@@ -102,16 +107,21 @@ public class VentanaRegistrarAlumnoController implements Initializable {
 
         if (archivoSeleccionado != null) {
             String rutaOrigen = archivoSeleccionado.getAbsolutePath();
-            String nombreArchivo = archivoSeleccionado.getName();
+            nombreFoto = archivoSeleccionado.getName();
             String rutaNueva = "C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesAlumnos";
             StringBuilder comando = new StringBuilder();
-            comando.append("move ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+            comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
             ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
             builder.redirectErrorStream(true);
-            Process process = builder.start();
-            rutaFoto = nombreArchivo;
+            Process process = builder.start();            
+            nuevoAlumno.setRutaFoto(nombreFoto);
         }
-        return rutaFoto;
+
+        if (nuevoAlumno.getRutaFoto() != null) {
+            Image foto = new Image("imagenesAlumnos/" + nuevoAlumno.getRutaFoto(), 140, 140, false, true, true);
+            fotoSeleccionada.setImage(foto);
+        }
+        return nombreFoto;
     }
 
     public boolean existenCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono, DatePicker campoFechaNacimiento) {
@@ -128,7 +138,6 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         } else if (campoFechaNacimiento.getValue() == null) {
             camposVacios = true;
         }
-
         return camposVacios;
     }
 
@@ -148,7 +157,6 @@ public class VentanaRegistrarAlumnoController implements Initializable {
             campoExcedido = true;
             DialogosController.mostrarMensajeInformacion("Campo excedido", "Campo telefono excedido", "El campo de telefono no puede contener mas de 10 caracteres");
         }
-
         return campoExcedido;
     }
 }

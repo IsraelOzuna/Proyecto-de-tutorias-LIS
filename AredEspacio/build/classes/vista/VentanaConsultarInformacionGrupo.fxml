@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaConsultarInformacionGrupoController">
    <children>
       <TableView fx:id="tablaAlumnos" layoutX="43.0" layoutY="48.0" prefHeight="200.0" prefWidth="200.0">
         <columns>
@@ -45,5 +45,8 @@
          </graphic>
       </JFXButton>
       <JFXButton fx:id="botonRegresar" layoutX="511.0" layoutY="361.0" style="-fx-background-color: #CDCDCD;" text="Regresar" />
+      <Label fx:id="etiquetaPrecioInscripcion" layoutX="464.0" layoutY="296.0" prefHeight="17.0" prefWidth="79.0" text="precioInscripcion" />
+      <Label fx:id="etiquetaPrecioMensualidad" layoutX="464.0" layoutY="323.0" prefHeight="17.0" prefWidth="62.0" text="precioMensualidad" />
+      <Label fx:id="etiquetaNombreMaestro" layoutX="136.0" layoutY="16.0" prefHeight="17.0" prefWidth="92.0" text="nombreMaestro" />
    </children>
 </Pane>

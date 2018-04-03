@@ -37,5 +37,10 @@
             <Font name="Gill Sans MT Bold" size="16.0" />
          </font>
       </Label>
+      <Label fx:id="etiquetaNoCoincidencias" alignment="CENTER" contentDisplay="CENTER" layoutX="355.0" layoutY="261.0" prefHeight="17.0" prefWidth="341.0" textAlignment="CENTER">
+         <font>
+            <Font name="Gill Sans MT Bold" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

@@ -59,8 +59,7 @@ public class VentanaInformacionAlumnosController implements Initializable {
 
     @FXML
     public void cerrarDetalles(ActionEvent event) {
-        panelInformacionAlumno.setVisible(false);
-        panelPrincipal.setVisible(true);
+        panelInformacionAlumno.setVisible(false);        
     }
 
     public void llenarCamposInformacion() {
@@ -69,7 +68,7 @@ public class VentanaInformacionAlumnosController implements Initializable {
         etiquetaTelefono.setText(alumno.getTelefono());
         etiquetaFechaNacimiento.setText(String.valueOf(alumno.getFechaNacimiento()));
         if (alumno.getRutaFoto() != null) {
-            Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, true, true);
+            Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
     }

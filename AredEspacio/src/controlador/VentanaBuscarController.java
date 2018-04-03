@@ -30,6 +30,8 @@ public class VentanaBuscarController implements Initializable {
     private JFXButton botonBuscar;
     @FXML
     private TextField campoBusqueda;
+    @FXML
+    private Label etiquetaNoCoincidencias;
     private String seccion = "";
     private Pane panelCoincidencia;
     private Pane panelPrincipal;
@@ -71,15 +73,14 @@ public class VentanaBuscarController implements Initializable {
 
     @FXML
     public void buscarCoincidencias() throws IOException {
+        etiquetaNoCoincidencias.setText("");
         if (!campoBusqueda.getText().isEmpty()) {
-
             switch (seccion) {
                 case "Alumnos":
                     AlumnoDAO alumnoDAO = new AlumnoDAO();
                     Alumno alumno = new Alumno();
                     List<persistencia.Alumno> alumnos = null;
                     alumnos = alumnoDAO.buscarAlumno(campoBusqueda.getText());
-
                     persistencia.Alumno alumnoCoincidencia;
                     Pane panelAnterior = new Pane();
 
@@ -96,7 +97,6 @@ public class VentanaBuscarController implements Initializable {
                                 if (contadorCoincidencias == 0) {
                                     panelCoincidencia.setLayoutX(45);
                                     panelCoincidencia.setLayoutY(110);
-
                                 } else {
                                     panelCoincidencia.relocate(panelAnterior.getLayoutX() + 380, 110);
                                 }
@@ -110,7 +110,7 @@ public class VentanaBuscarController implements Initializable {
                             panelAnterior = panelCoincidencia;
                         }
                     } else {
-                        DialogosController.mostrarMensajeAdvertencia("Sin coincidencias", "No se han encontrado resultados con ese nombre", "Asegurese de escribir bien el nombre de la persona");
+                        etiquetaNoCoincidencias.setText("Alumno no encontrado");
                     }
                     break;
 
@@ -148,13 +148,10 @@ public class VentanaBuscarController implements Initializable {
                             coincidencias.llenarDatosMaestro(maestros.get(i));
                             panelPrincipal.getChildren().add(panelCoincidencia);
                             panel = panelCoincidencia;
-
                         }
-
                     } else {
-                        DialogosController.mostrarMensajeAdvertencia("Sin coincidencias", "No se han encontrado resultados con ese nombre", "Asegurese de escribir bien el nombre de la persona");
+                        etiquetaNoCoincidencias.setText("Maestro no encontrado");
                     }
-
                     break;
 
                 case "Rentas":

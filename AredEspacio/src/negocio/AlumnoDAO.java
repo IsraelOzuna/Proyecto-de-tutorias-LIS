@@ -11,25 +11,27 @@ public class AlumnoDAO implements IAlumno {
 
     @Override
     public boolean registrarAlumno(Alumno alumno) {
-        boolean alumnoRegistradoExitosamente = true;
+        boolean alumnoRegistradoExitosamente = false;
+        if (alumno != null) {
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+            AlumnoJpaController alumnoJpaController = new AlumnoJpaController(entityManagerFactory);
 
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
-        AlumnoJpaController alumnoJpaController = new AlumnoJpaController(entityManagerFactory);
+            persistencia.Alumno nuevoAlumno = new persistencia.Alumno();
 
-        persistencia.Alumno nuevoAlumno = new persistencia.Alumno();
+            nuevoAlumno.setNombre(alumno.getNombre());
+            nuevoAlumno.setApellidos(alumno.getApellidos());
+            nuevoAlumno.setCorreoElectronico(alumno.getCorreoElectronico());
+            nuevoAlumno.setFechaNacimiento(alumno.getFechaNacimiento());
+            nuevoAlumno.setTelefono(alumno.getTelefono());
+            nuevoAlumno.setRutaFoto(alumno.getRutaFoto());
 
-        nuevoAlumno.setNombre(alumno.getNombre());
-        nuevoAlumno.setApellidos(alumno.getApellidos());
-        nuevoAlumno.setCorreoElectronico(alumno.getCorreoElectronico());
-        nuevoAlumno.setFechaNacimiento(alumno.getFechaNacimiento());
-        nuevoAlumno.setTelefono(alumno.getTelefono());
-        nuevoAlumno.setRutaFoto(alumno.getRutaFoto());
-
-        try {
-            alumnoJpaController.create(nuevoAlumno);
-        } catch (Exception ex) {
-            alumnoRegistradoExitosamente = false;
-            Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                alumnoJpaController.create(nuevoAlumno);
+                alumnoRegistradoExitosamente = true;
+            } catch (Exception ex) {
+                alumnoRegistradoExitosamente = false;
+                Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return alumnoRegistradoExitosamente;
     }
@@ -42,15 +44,15 @@ public class AlumnoDAO implements IAlumno {
         AlumnoJpaController alumnoJpaController = new AlumnoJpaController(entityManagerFactory);
 
         persistencia.Alumno alumno = new persistencia.Alumno();
-        
+
         alumno.setNombre(nombre);
-        
-        try{
+
+        try {
             alumnosEncontrados = alumnoJpaController.obtenerAlumnos(nombre);
-                        
-        }catch(Exception ex){            
+
+        } catch (Exception ex) {
             Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }                
+        }
         return alumnosEncontrados;
     }
 

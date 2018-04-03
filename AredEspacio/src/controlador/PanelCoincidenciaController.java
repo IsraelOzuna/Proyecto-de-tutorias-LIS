@@ -35,6 +35,8 @@ public class PanelCoincidenciaController implements Initializable {
     private String seccion = "";
     private Maestro maestro;
     private Alumno alumno;
+    @FXML
+    private AnchorPane panelCoincidencia;
 
     /**
      * Initializes the controller class.
@@ -87,7 +89,7 @@ public class PanelCoincidenciaController implements Initializable {
         String apellidos = alumno.getApellidos();
         etiquetaNombre.setText(nombre + " " + apellidos);
         if (alumno.getRutaFoto() != null) {
-            Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, true, true);
+            Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
             fotoPerfil.setImage(foto);
         }
     }
@@ -98,7 +100,7 @@ public class PanelCoincidenciaController implements Initializable {
         String apellidos = maestro.getApellidos();
         etiquetaNombre.setText(nombre + " " + apellidos);
         if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, true, true);
+            Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
             fotoPerfil.setImage(foto);
         }
     }
