@@ -15,7 +15,7 @@ public class GrupoDAO implements IGrupo{
         
         
         List<Grupo> listaGrupos=null;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("EscuelaAredPU", null);/////////Cambiar a AredEspacioPU
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);/////////Cambiar a AredEspacioPU
         GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         persistencia.Grupo grupo = new persistencia.Grupo();
         grupo.setUsuario(usuario);

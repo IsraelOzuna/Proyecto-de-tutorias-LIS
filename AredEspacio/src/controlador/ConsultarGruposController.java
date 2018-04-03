@@ -64,14 +64,11 @@ public class ConsultarGruposController implements Initializable {
     
     private void inicializarTablaGrupos(){
         columnaNombre.setCellValueFactory(new PropertyValueFactory<Grupo, String>("nombreGrupo"));
-        //columnaAlumnos.setCellValueFactory(new PropertyValueFactory<Grupo, String>("nombreGrupo"));
         grupos = FXCollections.observableArrayList();
-        //alumnos = FXCollections.observableArrayList();
         tablaGrupos.setItems(grupos);
     }
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void iniciarVentana(){
         GrupoDAO grupoDAO = new GrupoDAO();
         Grupo grupo = new Grupo();
         List<Grupo> listaGrupos=null;
@@ -106,12 +103,18 @@ public class ConsultarGruposController implements Initializable {
                 }   
             });
     }
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+    }
 
     @FXML
     private void desplegarNuevoGrupo(ActionEvent event) throws IOException{
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaCrearGrupo.fxml"));
         Parent root = (Parent) loader.load();
         CrearGrupoController crearGrupo = loader.getController();
+        crearGrupo.iniciarVentana();
         //ventanaBuscar.obtenerSeccion("Alumnos", panelGrupos);
         panelConsultarGrupos.getChildren().add(root);
         
@@ -121,3 +124,4 @@ public class ConsultarGruposController implements Initializable {
     
     
 }
+

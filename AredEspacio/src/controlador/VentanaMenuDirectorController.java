@@ -78,7 +78,9 @@ public class VentanaMenuDirectorController implements Initializable {
     public void desplegarVentanaBusquedaGrupos(ActionEvent event) throws IOException{
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
         Parent root = (Parent) loader.load();
-        ConsultarGruposController ventanaConsultarGruposGrupos = loader.getController();        
+        ConsultarGruposController ventanaConsultarGruposController = loader.getController();  
+        ventanaConsultarGruposController.iniciarVentana();
         panelPrincipal.getChildren().add(root); 
+        
     }
 }

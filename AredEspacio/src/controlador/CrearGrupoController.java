@@ -40,6 +40,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 import persistencia.Cuenta;
 import persistencia.Grupo;
+import persistencia.Horario;
 import persistencia.Maestro;
 
 /**
@@ -54,7 +55,7 @@ public class CrearGrupoController implements Initializable {
     @FXML
     private JFXButton botonCancelar;
     @FXML
-    private TableView<String> tablaHorario;
+    private TableView<Horario> tablaHorario;
     @FXML
     private Label etiquetaCrearGrupo;
     @FXML
@@ -70,9 +71,9 @@ public class CrearGrupoController implements Initializable {
     @FXML
     private TextField campoInscripcion;
     @FXML
-    private TableColumn<String, String> columnaHorario;
+    private TableColumn columnaHorario;
     @FXML
-    private TableColumn <String, String> columnaDomingo;
+    private TableColumn columnaDomingo;
     @FXML
     private TableColumn columnaLunes;
     @FXML
@@ -91,13 +92,25 @@ public class CrearGrupoController implements Initializable {
     private ComboBox<String> comboBoxMaestro;
     @FXML
     private AnchorPane panelCrearGrupos;
- 
-
     
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    ObservableList<Horario> horarios;
+ 
+    public void inicializarTablaHorario(){
+        columnaHorario.setCellValueFactory(new PropertyValueFactory<Horario, String>("hora"));
+        columnaDomingo.setCellValueFactory(new PropertyValueFactory<Horario, String>("domingo"));
+        columnaLunes.setCellValueFactory(new PropertyValueFactory<Horario, String>("lunes"));
+        ColumnaMartes.setCellValueFactory(new PropertyValueFactory<Horario, String>("martes"));
+        columnaMiercoles.setCellValueFactory(new PropertyValueFactory<Horario, String>("miercoles"));
+        columnaJueves.setCellValueFactory(new PropertyValueFactory<Horario, String>("jueves"));
+        columnaViernes.setCellValueFactory(new PropertyValueFactory<Horario, String>("viernes"));
+        columnaSabado.setCellValueFactory(new PropertyValueFactory<Horario, String>("sabado"));
+        horarios = FXCollections.observableArrayList();
+        //alumnos = FXCollections.observableArrayList();
+        tablaHorario.setItems(horarios);
         
+    }
+    
+    public void iniciarVentana(){
         ObservableList<String> maestros =FXCollections.observableArrayList();
         List<Cuenta> listaCuentas=null;
         GrupoDAO grupoDAO = new GrupoDAO();
@@ -109,7 +122,60 @@ public class CrearGrupoController implements Initializable {
         }
         comboBoxMaestro.setItems(maestros);
         
-        columnaHorario.setCellValueFactory(datoHorario-> new ReadOnlyStringWrapper(datoHorario.getValue()));
+        this.inicializarTablaHorario();
+        
+        for (int i = 0; i < 12; i++) {
+            Horario h1 = new Horario();
+            switch(i){
+                case 0:
+                    h1.setHora("8:00-9:00");
+                break;
+                case 1:
+                    h1.setHora("9:00-10:00");
+                break;
+                case 2:
+                    h1.setHora("10:00-11:00");
+                break;
+                case 3:
+                    h1.setHora("11:00-12:00");
+                break;
+                case 4:
+                    h1.setHora("12:00-13:00");
+                break;
+                case 5:
+                    h1.setHora("13:00-14:00");
+                break;
+                case 6:
+                    h1.setHora("14:00-15:00");
+                break;
+                case 7:
+                    h1.setHora("15:00-16:00");
+                break;
+                case 8:
+                    h1.setHora("16:00-17:00");
+                break;
+                case 9:
+                    h1.setHora("17:00-18:00");
+                break;
+                case 10:
+                    h1.setHora("18:00-19:00");
+                break;
+                case 11:
+                    h1.setHora("19:00-20:00");
+                break;
+            }
+            h1.setLunes("Disponible");
+            h1.setMartes("Disponible");
+            h1.setMiercoles("Disponible");
+            h1.setJueves("Disponible");
+            h1.setViernes("Disponible");
+            h1.setSabado("Disponible");
+            horarios.add(h1);
+        }
+        
+        
+        
+        /*columnaHorario.setCellValueFactory(datoHorario-> new ReadOnlyStringWrapper(datoHorario.getValue()));
         //columnaDomingo.setCellValueFactory(datoDomingo-> new ReadOnlyStringWrapper(datoDomingo.getValue()));
 
         tablaHorario.getItems().add("8:00-9:00");
@@ -123,7 +189,7 @@ public class CrearGrupoController implements Initializable {
         tablaHorario.getItems().add("16:00-17:00");
         tablaHorario.getItems().add("17:00-18:00");
         tablaHorario.getItems().add("18:00-19:00");
-        tablaHorario.getItems().add("19:00-20:00");
+        tablaHorario.getItems().add("19:00-20:00");*/
         
         /*Collection<String> listaHoras = new ArrayList<>();
         listaHoras.add("string1");
@@ -134,6 +200,15 @@ public class CrearGrupoController implements Initializable {
         listaHoras.add("cadena");
         ObservableList<String> detalles = FXCollections.observableArrayList(listaHoras);
         tablaHorario.getColumns().addAll(columnaHorario);*/
+        
+    
+    }
+    
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+        
         
         
     }    
@@ -152,7 +227,8 @@ public class CrearGrupoController implements Initializable {
         if(nuevoGrupoDAO.crearGrupo(nuevoGrupo)){
             FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
             Parent root = (Parent) loader.load();
-            ConsultarGruposController ventanaConsultarGrupos = loader.getController();        
+            ConsultarGruposController ventanaConsultarGruposController = loader.getController();
+            ventanaConsultarGruposController.iniciarVentana();
             panelCrearGrupos.getChildren().add(root); 
         }
     }
@@ -161,7 +237,8 @@ public class CrearGrupoController implements Initializable {
     private void cancelarRegistro(ActionEvent event) throws IOException {
             FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
             Parent root = (Parent) loader.load();
-            ConsultarGruposController ventanaConsultarGruposGrupos = loader.getController();        
+            ConsultarGruposController ventanaConsultarGruposController = loader.getController();
+            ventanaConsultarGruposController.iniciarVentana();
             panelCrearGrupos.getChildren().add(root); 
     }
     
