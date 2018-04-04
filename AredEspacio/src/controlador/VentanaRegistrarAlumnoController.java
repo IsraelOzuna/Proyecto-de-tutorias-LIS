@@ -113,7 +113,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
             comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
             ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
             builder.redirectErrorStream(true);
-            Process process = builder.start();            
+            Process process = builder.start();
             nuevoAlumno.setRutaFoto(nombreFoto);
         }
 

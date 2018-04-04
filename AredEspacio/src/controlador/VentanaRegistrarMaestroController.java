@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -67,6 +68,7 @@ public class VentanaRegistrarMaestroController implements Initializable {
     private PasswordField campoContraseña;
 
     String rutaImagen = null;
+    Maestro maestro = new Maestro();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -76,7 +78,7 @@ public class VentanaRegistrarMaestroController implements Initializable {
     @FXML
     private void realizarRegistro(ActionEvent event) throws NoSuchAlgorithmException {
         CuentaDAO cuentaDAO = new CuentaDAO();
-        Maestro maestro = new Maestro();
+        
         MaestroDAO maestroDAO = new MaestroDAO();
         Cuenta cuenta = new Cuenta();
 
@@ -161,9 +163,14 @@ public class VentanaRegistrarMaestroController implements Initializable {
             comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
             ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
             builder.redirectErrorStream(true);
-            System.out.println('"' + archivoSeleccionado.getAbsolutePath() + '"');
             Process process = builder.start();
             rutaImagen = nombreArchivo;
+            maestro.setRutaFoto(rutaImagen);
+        }
+        
+                if (maestro.getRutaFoto() != null) {
+            Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 140, 140, false, true, true);
+            imagenPerfil.setImage(foto);
         }
 
         return rutaImagen;
