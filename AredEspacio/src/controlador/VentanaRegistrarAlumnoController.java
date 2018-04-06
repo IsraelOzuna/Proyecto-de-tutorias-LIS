@@ -7,12 +7,15 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import negocio.Alumno;
 import negocio.AlumnoDAO;
@@ -53,6 +56,8 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     private JFXButton botonRegistrar;
     @FXML
     private ImageView fotoSeleccionada;
+    @FXML
+    private AnchorPane panelPrincipal;
 
     private String nombreFoto = "";
     private Alumno nuevoAlumno = new Alumno();
@@ -66,7 +71,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     }
 
     @FXML
-    public void registrarNuevoAlumno(ActionEvent event) {
+    public void registrarNuevoAlumno(ActionEvent event) throws IOException {
         if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono, campoFechaNacimiennto)) {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreo.getText())) {
@@ -87,6 +92,8 @@ public class VentanaRegistrarAlumnoController implements Initializable {
                         campoFechaNacimiennto.setValue(null);
                         campoNombre.setText("");
                         campoTelefono.setText("");
+                        fotoSeleccionada.setImage(null);
+                        desplegarVentanaBusquedaAlumno();
                     } else {
                         DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "Ha ocurrido un error. No se pudo registrar");
                     }
@@ -96,6 +103,17 @@ public class VentanaRegistrarAlumnoController implements Initializable {
             }
         } else {
             DialogosController.mostrarMensajeInformacion("Campo vacio", "Alugún campo esta vacío", "Debe llenar todos los campos requeridos");
+        }
+    }
+    
+    @FXML
+    public void cancelarRegistro(ActionEvent event) throws IOException{
+        if(existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono, campoFechaNacimiennto)){
+            desplegarVentanaBusquedaAlumno();
+        }else{
+            if(DialogosController.mostrarMensajeCambios("Salir", "La información se perderá", "La información en los campos que ingresó se perderá")){
+              desplegarVentanaBusquedaAlumno();
+            }                 
         }
     }
 
@@ -128,9 +146,9 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         boolean camposVacios = false;
 
         if (campoNombre.getText().isEmpty()) {
-            camposVacios = true;
+            camposVacios = true;            
         } else if (campoApellidos.getText().isEmpty()) {
-            camposVacios = true;
+            camposVacios = true;            
         } else if (campoCorreo.getText().isEmpty()) {
             camposVacios = true;
         } else if (campoTelefono.getText().isEmpty()) {
@@ -158,5 +176,13 @@ public class VentanaRegistrarAlumnoController implements Initializable {
             DialogosController.mostrarMensajeInformacion("Campo excedido", "Campo telefono excedido", "El campo de telefono no puede contener mas de 10 caracteres");
         }
         return campoExcedido;
+    }
+
+    public void desplegarVentanaBusquedaAlumno() throws IOException {
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaBuscarController ventanaBuscar = loader.getController();
+        ventanaBuscar.obtenerSeccion("Alumnos", panelPrincipal);
+        panelPrincipal.getChildren().add(root);
     }
 }

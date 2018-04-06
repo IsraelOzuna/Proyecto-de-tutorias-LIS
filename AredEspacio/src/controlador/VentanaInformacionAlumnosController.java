@@ -39,10 +39,12 @@ public class VentanaInformacionAlumnosController implements Initializable {
     private Label etiquetaTelefono;
     @FXML
     private AnchorPane panelInformacionAlumno;
-
+    @FXML
+    private AnchorPane panelTrasero;
+    @FXML
+    private Button botonRegistrarPago;
     private Alumno alumno;
-    private Pane panelPrincipal;
-    
+    private Pane panelPrincipal;        
 
     public void obtenerAlumno(Alumno alumno) {
         this.alumno = alumno;
@@ -59,7 +61,7 @@ public class VentanaInformacionAlumnosController implements Initializable {
 
     @FXML
     public void cerrarDetalles(ActionEvent event) {
-        panelInformacionAlumno.setVisible(false);        
+        panelTrasero.setVisible(false);        
     }
 
     public void llenarCamposInformacion() {

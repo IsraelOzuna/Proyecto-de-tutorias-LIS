@@ -5,50 +5,102 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="panelInformacionAlumno" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="431.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaInformacionAlumnosController">
+<AnchorPane fx:id="panelTrasero" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaInformacionAlumnosController">
    <children>
-      <ImageView fx:id="imagenPerfil" fitHeight="115.0" fitWidth="139.0" layoutX="118.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true" />
-      <JFXButton fx:id="botonCerrar" layoutX="150.0" layoutY="377.0" onAction="#cerrarDetalles" style="-fx-background-color: #CDCDCD;" text="Cerrar">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <Button fx:id="botonDarBaja" layoutX="22.0" layoutY="26.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Dar de baja" textFill="#0400ff" underline="true">
-         <font>
-            <Font name="Gill Sans MT" size="14.0" />
-         </font>
-      </Button>
-      <Button fx:id="botonEditar" layoutX="307.0" layoutY="27.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="20.0" style="-fx-background-color: #000000;">
-         <graphic>
-            <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" text="" />
-         </graphic>
-      </Button>
-      <Label fx:id="etiquetaNombre" alignment="CENTER" contentDisplay="CENTER" layoutY="186.0" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="etiquetaFechaNacimiento" alignment="CENTER" contentDisplay="CENTER" layoutY="231.0" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="etiquetaCorreo" alignment="CENTER" contentDisplay="CENTER" layoutY="272.0" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="etiquetaTelefono" alignment="CENTER" contentDisplay="CENTER" layoutY="312.0" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
+      <AnchorPane fx:id="panelInformacionAlumno" layoutX="350.0" layoutY="100.0" prefHeight="431.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF;">
+         <children>
+            <GridPane prefHeight="43.0" prefWidth="299.0" AnchorPane.bottomAnchor="388.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="0.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="106.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="109.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="84.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Button fx:id="botonDarBaja" mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Dar de baja" textFill="#0400ff" underline="true">
+                     <font>
+                        <Font name="Gill Sans MT" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="botonEditar" mnemonicParsing="false" prefHeight="24.0" prefWidth="20.0" style="-fx-background-color: #000000;" GridPane.columnIndex="2">
+                     <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" text="" />
+                     </graphic>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="botonRegistrarPago" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #FFFFFF;" text="Registrar pago" textFill="#0400ff" underline="true" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Gill Sans MT" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </GridPane>
+            <GridPane prefHeight="381.0" prefWidth="347.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="51.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="181.0" minHeight="10.0" prefHeight="123.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="181.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="181.0" minHeight="8.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="233.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="289.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="289.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fx:id="imagenPerfil" fitHeight="115.0" fitWidth="139.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="etiquetaNombre" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="etiquetaFechaNacimiento" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="etiquetaCorreo" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="etiquetaTelefono" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <JFXButton fx:id="botonCerrar" onAction="#cerrarDetalles" style="-fx-background-color: #CDCDCD;" text="Cerrar" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
    </children>
+   <effect>
+      <ColorAdjust />
+   </effect>
 </AnchorPane>

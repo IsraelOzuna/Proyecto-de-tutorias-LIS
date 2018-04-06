@@ -23,7 +23,7 @@ public class AredEspacio extends Application {
         
         Scene scene = new Scene(root);
         
-        stage.setScene(scene);
+        stage.setScene(scene);        
         stage.show();
     }
 

@@ -1,6 +1,6 @@
 package controlador;
 
-import java.util.ResourceBundle;
+import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -38,5 +38,28 @@ public class DialogosController {
         ButtonType botonOK = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
         advertencia.getButtonTypes().setAll(botonOK);
         advertencia.showAndWait();
+    }
+    
+     /**
+     * Muestra un mensaje para hacer saber al usuario que lo ingresado se perderá
+     * 
+     * @param titulo nombre de la advertencia mostrada
+     * @param encabezado un pequeño mensaje 
+     * @param contenido mayor retroalimentación      
+     * @return una badera la cual indica si el usuario desea salir de la pantalla        
+     */
+    public static boolean mostrarMensajeCambios(String titulo, String encabezado, String contenido){
+        boolean salir;
+        Alert cambios = new Alert(Alert.AlertType.CONFIRMATION);
+        cambios.setTitle(titulo);
+        cambios.setHeaderText(encabezado);
+        cambios.setContentText(contenido);
+        Optional<ButtonType> botonPresionado = cambios.showAndWait();
+        if(botonPresionado.get() == ButtonType.OK){
+            salir = true;
+        }else{
+            salir = false;
+        }        
+        return salir;        
     }
 }

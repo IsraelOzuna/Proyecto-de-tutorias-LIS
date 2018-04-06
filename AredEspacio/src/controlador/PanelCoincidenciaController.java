@@ -30,13 +30,13 @@ public class PanelCoincidenciaController implements Initializable {
     private Button botonVerDetalle;
     @FXML
     private ImageView fotoPerfil;
-
+    @FXML
+    private AnchorPane panelCoincidencia;
+    private AnchorPane panelDetalles;
     Pane panelPrincipal = new Pane();
     private String seccion = "";
     private Maestro maestro;
     private Alumno alumno;
-    @FXML
-    private AnchorPane panelCoincidencia;
 
     /**
      * Initializes the controller class.
@@ -48,7 +48,7 @@ public class PanelCoincidenciaController implements Initializable {
 
     public void obtenerSeccion(String seccion, Pane panelPrincipal) {
         this.seccion = seccion;
-        this.panelPrincipal = panelPrincipal;
+        this.panelPrincipal = panelPrincipal;        
     }
 
     @FXML
@@ -59,8 +59,7 @@ public class PanelCoincidenciaController implements Initializable {
             case "Alumnos":
                 loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaInformacionAlumnos.fxml"));
                 root = (Parent) loader.load();
-                VentanaInformacionAlumnosController ventanaMostrarInformacionAlumno = loader.getController();
-                root.relocate(350, 100);
+                VentanaInformacionAlumnosController ventanaMostrarInformacionAlumno = loader.getController();                
                 ventanaMostrarInformacionAlumno.obtenerAlumno(alumno);
                 ventanaMostrarInformacionAlumno.obtenerPanel(panelPrincipal);
                 ventanaMostrarInformacionAlumno.llenarCamposInformacion();
@@ -69,8 +68,7 @@ public class PanelCoincidenciaController implements Initializable {
             case "Maestros":
                 loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaMostrarInformacionMaestro.fxml"));
                 root = (Parent) loader.load();
-                VentanaMostrarInformacionMaestroController ventanaMostrarInformacionMaestro = loader.getController();
-                root.relocate(350, 100);
+                VentanaMostrarInformacionMaestroController ventanaMostrarInformacionMaestro = loader.getController();                
                 ventanaMostrarInformacionMaestro.obtenerMaestro(maestro);
                 ventanaMostrarInformacionMaestro.obtenerPanel(panelPrincipal);
                 ventanaMostrarInformacionMaestro.llenarCamposInformacion();
@@ -80,7 +78,7 @@ public class PanelCoincidenciaController implements Initializable {
                 break;
             default:
                 break;
-        }               
+        }
     }
 
     public void llenarDatosAlumno(Alumno alumno) {
