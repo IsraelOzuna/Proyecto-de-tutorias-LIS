@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
@@ -12,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaRegistrarMaestroController">
+<AnchorPane id="AnchorPane" fx:id="panelPrincipal" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaRegistrarMaestroController">
    <children>
       <GridPane layoutX="579.0" layoutY="26.0" prefHeight="596.0" prefWidth="385.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="579.0" AnchorPane.rightAnchor="156.0" AnchorPane.topAnchor="26.0">
         <columnConstraints>
@@ -36,6 +37,9 @@
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
             <Label fx:id="etiquetaUsuario" alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="270.0" text="Usuario:" GridPane.rowIndex="2">
                <font>
@@ -65,6 +69,9 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
          </children>
       </GridPane>
@@ -118,10 +125,13 @@
                   <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
             </Label>
-            <JFXButton fx:id="botonCancelar" alignment="CENTER" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <JFXButton fx:id="botonCancelar" alignment="CENTER" onAction="#desplegarVentanaBuscar" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.columnIndex="1" GridPane.rowIndex="6">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
          </children>
       </GridPane>

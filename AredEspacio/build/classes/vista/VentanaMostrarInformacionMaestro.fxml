@@ -69,7 +69,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="botonRegistrarPago" mnemonicParsing="false" prefHeight="26.0" prefWidth="103.0" style="-fx-background-color: #FFFFFF;" text="Registrar pago" textFill="#0400ff" underline="true">
+                  <Button fx:id="botonRegistrarPago" mnemonicParsing="false" onAction="#desplegarVentanaRegistrarPago" prefHeight="26.0" prefWidth="103.0" style="-fx-background-color: #FFFFFF;" text="Registrar pago" textFill="#0400ff" underline="true">
                      <font>
                         <Font name="Gill Sans MT" size="14.0" />
                      </font>

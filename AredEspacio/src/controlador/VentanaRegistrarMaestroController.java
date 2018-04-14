@@ -9,12 +9,15 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javax.swing.JFileChooser;
@@ -69,6 +72,8 @@ public class VentanaRegistrarMaestroController implements Initializable {
 
     String rutaImagen = null;
     Maestro maestro = new Maestro();
+    @FXML
+    private AnchorPane panelPrincipal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -78,7 +83,7 @@ public class VentanaRegistrarMaestroController implements Initializable {
     @FXML
     private void realizarRegistro(ActionEvent event) throws NoSuchAlgorithmException {
         CuentaDAO cuentaDAO = new CuentaDAO();
-        
+
         MaestroDAO maestroDAO = new MaestroDAO();
         Cuenta cuenta = new Cuenta();
 
@@ -113,6 +118,7 @@ public class VentanaRegistrarMaestroController implements Initializable {
                         campoNombre.clear();
                         campoTelefono.clear();
                         campoUsuario.clear();
+                        imagenPerfil.setImage(null);
 
                     } else {
                         DialogosController.mostrarMensajeInformacion("", "Registro no exitoso", "El maestro no se ha registrado correctamente");
@@ -167,12 +173,21 @@ public class VentanaRegistrarMaestroController implements Initializable {
             rutaImagen = nombreArchivo;
             maestro.setRutaFoto(rutaImagen);
         }
-        
-                if (maestro.getRutaFoto() != null) {
+
+        if (maestro.getRutaFoto() != null) {
             Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 140, 140, false, true, true);
             imagenPerfil.setImage(foto);
         }
 
         return rutaImagen;
+    }
+
+    @FXML
+    private void desplegarVentanaBuscar(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaBuscarController ventanaBuscar = loader.getController();
+        ventanaBuscar.obtenerSeccion("Maestros", panelPrincipal);
+        panelPrincipal.getChildren().add(root);
     }
 }
