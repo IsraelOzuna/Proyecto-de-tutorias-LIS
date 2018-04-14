@@ -58,9 +58,5 @@ public class Alumno {
 
     public void setRutaFoto(String rutaFoto) {
         this.rutaFoto = rutaFoto;
-    }     
-    
-    public Date convertirFechaNacimiento(LocalDate fechaNacimiento){
-        return java.sql.Date.valueOf(fechaNacimiento);
-    }
+    }             
 }

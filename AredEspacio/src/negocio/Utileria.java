@@ -7,6 +7,9 @@ package negocio;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,6 +36,13 @@ public class Utileria {
         Matcher matcher = patron.matcher(correo);
         return matcher.matches();
     }
+        
+    public static Date convertirFechaNacimiento(LocalDate fechaNacimiento){
+        return java.sql.Date.valueOf(fechaNacimiento);
+    }
     
-    
+    public static LocalDate mostrarFechaNacimiento(Date fechaNacimiento){
+        LocalDate fecha = fechaNacimiento.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return fecha;
+    }
 }

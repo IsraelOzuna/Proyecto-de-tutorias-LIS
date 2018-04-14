@@ -35,7 +35,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="botonEditar" mnemonicParsing="false" prefHeight="24.0" prefWidth="20.0" style="-fx-background-color: #000000;" GridPane.columnIndex="2">
+                  <Button fx:id="botonEditar" mnemonicParsing="false" onAction="#desplegarVentanaEditar" prefHeight="24.0" prefWidth="20.0" style="-fx-background-color: #000000;" GridPane.columnIndex="2">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" text="" />
                      </graphic>

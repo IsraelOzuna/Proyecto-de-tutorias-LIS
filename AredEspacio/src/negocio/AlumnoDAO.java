@@ -35,6 +35,33 @@ public class AlumnoDAO implements IAlumno {
         }
         return alumnoRegistradoExitosamente;
     }
+    
+    
+    @Override
+    public boolean editarAlumno(persistencia.Alumno alumno) {
+        boolean datosModificacdosExitosamente = false;
+        if(alumno != null){
+           EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+           AlumnoJpaController alumnoJpaController = new AlumnoJpaController(entityManagerFactory);
+           
+           persistencia.Alumno alumnoEditado = alumno;
+           
+           alumnoEditado.setNombre(alumno.getNombre());
+           alumnoEditado.setApellidos(alumno.getApellidos());
+           alumnoEditado.setCorreoElectronico(alumno.getCorreoElectronico());
+           alumnoEditado.setFechaNacimiento(alumno.getFechaNacimiento());
+           alumnoEditado.setTelefono(alumno.getTelefono());
+           alumnoEditado.setRutaFoto(alumno.getRutaFoto());
+           
+           try{
+               alumnoJpaController.edit(alumnoEditado);
+               datosModificacdosExitosamente = true;
+           } catch (Exception ex) {
+                Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return datosModificacdosExitosamente;
+    }
 
     @Override
     public List<persistencia.Alumno> buscarAlumno(String nombre) {
@@ -55,5 +82,4 @@ public class AlumnoDAO implements IAlumno {
         }
         return alumnosEncontrados;
     }
-
 }

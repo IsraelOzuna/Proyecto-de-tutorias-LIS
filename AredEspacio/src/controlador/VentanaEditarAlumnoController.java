@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,50 +18,50 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import negocio.Alumno;
 import negocio.AlumnoDAO;
 import negocio.Utileria;
+import persistencia.Alumno;
 
 /**
  * FXML Controller class
  *
  * @author Israel Reyes Ozuna
  */
-public class VentanaRegistrarAlumnoController implements Initializable {
+public class VentanaEditarAlumnoController implements Initializable {
 
-    @FXML
-    private JFXButton botonSeleccionarImagen;
     @FXML
     private Label etiquetaNombre;
     @FXML
+    private TextField campoNombre;
+    @FXML
     private Label etiquetaApellidos;
+    @FXML
+    private TextField campoApellidos;
+    @FXML
+    private DatePicker campoFechaNacimiennto;
     @FXML
     private Label etiquetaFechaNacimiento;
     @FXML
     private Label etiquetaCorreo;
     @FXML
-    private Label etiquetaTelefono;
-    @FXML
-    private TextField campoNombre;
-    @FXML
-    private TextField campoApellidos;
-    @FXML
     private TextField campoCorreo;
+    @FXML
+    private Label etiquetaTelefono;
     @FXML
     private TextField campoTelefono;
     @FXML
-    private DatePicker campoFechaNacimiennto;
+    private JFXButton botonGuardar;
     @FXML
     private JFXButton botonCancelar;
     @FXML
-    private JFXButton botonRegistrar;
-    @FXML
     private ImageView fotoSeleccionada;
+    @FXML
+    private JFXButton botonSeleccionarImagen;
     @FXML
     private AnchorPane panelPrincipal;
 
-    private String nombreFoto = "";
-    private Alumno nuevoAlumno = new Alumno();
+    private Alumno alumno;
+    private String nombreFoto;
 
     /**
      * Initializes the controller class.
@@ -71,25 +72,24 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     }
 
     @FXML
-    public void registrarNuevoAlumno(ActionEvent event) throws IOException {
+    public void guardarNuevosDatos(ActionEvent event) throws IOException {
         if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono, campoFechaNacimiennto)) {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreo.getText())) {
-                    AlumnoDAO nuevoAlumnoDAO = new AlumnoDAO();
+                    AlumnoDAO nuevosDatosAlumno = new AlumnoDAO();
 
-                    nuevoAlumno = new Alumno();
-                    nuevoAlumno.setNombre(campoNombre.getText());
-                    nuevoAlumno.setApellidos(campoApellidos.getText());
-                    nuevoAlumno.setCorreoElectronico(campoCorreo.getText());
-                    nuevoAlumno.setFechaNacimiento(Utileria.convertirFechaNacimiento(campoFechaNacimiennto.getValue()));
-                    nuevoAlumno.setTelefono(campoTelefono.getText());
-                    nuevoAlumno.setRutaFoto(nombreFoto);
+                    alumno.setNombre(campoNombre.getText());
+                    alumno.setApellidos(campoApellidos.getText());
+                    alumno.setCorreoElectronico(campoCorreo.getText());
+                    alumno.setFechaNacimiento(Date.valueOf(campoFechaNacimiennto.getValue()));
+                    alumno.setTelefono(campoTelefono.getText());
+                    alumno.setRutaFoto(alumno.getRutaFoto());
 
-                    if (nuevoAlumnoDAO.registrarAlumno(nuevoAlumno)) {
-                        DialogosController.mostrarMensajeInformacion("Guardado", "Alumno registrado", "El alumno ha sido registrado exitosamente");
+                    if (nuevosDatosAlumno.editarAlumno(alumno)) {
+                        DialogosController.mostrarMensajeInformacion("Guardado", "Alumno modificado", "El alumno ha sido modificado exitosamente");
                         desplegarVentanaBusquedaAlumno();
                     } else {
-                        DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "Ha ocurrido un error. No se pudo registrar");
+                        DialogosController.mostrarMensajeAdvertencia("Error", "Error al modificar", "Ha ocurrido un error. No se pudo modificar");
                     }
                 } else {
                     DialogosController.mostrarMensajeInformacion("", "Correo no válido", "El correo ingresado no tiene un formato válido");
@@ -99,9 +99,9 @@ public class VentanaRegistrarAlumnoController implements Initializable {
             DialogosController.mostrarMensajeInformacion("Campo vacio", "Alugún campo esta vacío", "Debe llenar todos los campos requeridos");
         }
     }
-    
+
     @FXML
-    public void cancelarRegistro(ActionEvent event) throws IOException{
+    public void cancelarRegistro(ActionEvent event) throws IOException {
         if(existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono, campoFechaNacimiennto)){
             desplegarVentanaBusquedaAlumno();
         }else{
@@ -126,23 +126,36 @@ public class VentanaRegistrarAlumnoController implements Initializable {
             ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
             builder.redirectErrorStream(true);
             Process process = builder.start();
-            nuevoAlumno.setRutaFoto(nombreFoto);
+            alumno.setRutaFoto(nombreFoto);
         }
 
-        if (nuevoAlumno.getRutaFoto() != null) {
-            Image foto = new Image("imagenesAlumnos/" + nuevoAlumno.getRutaFoto(), 140, 140, false, true, true);
+        if (alumno.getRutaFoto() != null) {
+            Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 140, 140, false, true, true);
             fotoSeleccionada.setImage(foto);
         }
         return nombreFoto;
+    }
+    
+    public void llenarCampos(Alumno alumno){
+        this.alumno = alumno;
+        campoNombre.setText(alumno.getNombre());
+        campoApellidos.setText(alumno.getApellidos());
+        campoCorreo.setText(alumno.getCorreoElectronico());
+        campoFechaNacimiennto.setValue(Utileria.mostrarFechaNacimiento(alumno.getFechaNacimiento()));
+        campoTelefono.setText(alumno.getTelefono());
+        if (alumno.getRutaFoto() != null) {
+            Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
+            fotoSeleccionada.setImage(foto);
+        }
     }
 
     public boolean existenCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono, DatePicker campoFechaNacimiento) {
         boolean camposVacios = false;
 
         if (campoNombre.getText().isEmpty()) {
-            camposVacios = true;            
+            camposVacios = true;
         } else if (campoApellidos.getText().isEmpty()) {
-            camposVacios = true;            
+            camposVacios = true;
         } else if (campoCorreo.getText().isEmpty()) {
             camposVacios = true;
         } else if (campoTelefono.getText().isEmpty()) {
