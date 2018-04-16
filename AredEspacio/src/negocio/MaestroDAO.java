@@ -92,7 +92,6 @@ public class MaestroDAO implements IMaestro {
         return listaMaestros;
     }
 
-    /*
     @Override
     public List<Alumno> obtenerAlumnos(String nombreGrupo) {
         List<persistencia.Alumno> listaAlumnos=null;
@@ -100,11 +99,6 @@ public class MaestroDAO implements IMaestro {
         MaestroJpaController maestroJpaController = new MaestroJpaController(entityManagerFactory);
         listaAlumnos=maestroJpaController.obtenerListaAlumnos(nombreGrupo);
         return listaAlumnos;
-    }
-     */
-    @Override
-    public List<Alumno> obtenerAlumnos(String nombreGrupo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

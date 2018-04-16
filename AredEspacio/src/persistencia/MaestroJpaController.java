@@ -214,7 +214,6 @@ public class MaestroJpaController implements Serializable {
     
     public List<Alumno> obtenerListaAlumnos(String nombreGrupo){
         List<persistencia.Alumno> listaAlumnos=null;
-      //  List<persistencia.Pertenece>  listaPertenece;
         String consulta =   "select distinct a from Alumno a join a.grupoCollection g where g.nombreGrupo = :nombreGrupo";
         EntityManager em = getEntityManager();
         try {

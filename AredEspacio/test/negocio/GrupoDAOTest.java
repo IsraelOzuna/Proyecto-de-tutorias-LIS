@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package negocio;
 
+import java.util.Date;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -40,77 +36,132 @@ public class GrupoDAOTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of adquirirGrupos method, of class GrupoDAO.
-     */
-    /*@Test  No hay un Valor esperado, la idea es que la prueba funcione sin necesidad de alterar, consultar o eliminar elementos 
-    de la base de datos, se espera que la prueba sea exitosa sin importar los cambios que se hagan a la base de datos, dichos criterios
-    no aplican aqui
-    public void testAdquirirGrupos() {
-        System.out.println("adquirirGrupos");
-        Cuenta usuario = null;
-        GrupoDAO instance = new GrupoDAO();
-        List<Grupo> expResult = null;
-        List<Grupo> result = instance.adquirirGrupos(usuario);
-        assertEquals(expResult, result);
-    }*/
-
-    /**
-     * Test of crearGrupo method, of class GrupoDAO.
-     */
     @Test
     public void testCrearGrupoExitoso() {
         System.out.println("crearGrupo");
         Cuenta usuario = new Cuenta();
         usuario.setUsuario("Renato");
-        //usuario.setContrasena("renato123");
         Grupo nuevoGrupo = new Grupo();
         nuevoGrupo.setNombreGrupo("GrupoDePrueba");
         nuevoGrupo.setUsuario(usuario);
         nuevoGrupo.setMensualidad(3200.0);
         nuevoGrupo.setInscripcion(340.0);
+        nuevoGrupo.setFechaPago(new Date());
         GrupoDAO instance = new GrupoDAO();
         boolean expResult = true;
         boolean result = instance.crearGrupo(nuevoGrupo);
+        //System.out.println(expResult+" "+ result);
         assertEquals(expResult, result);
+        instance.eliminarGrupo(nuevoGrupo);
     }
     
     @Test
     public void testAdquirirGrupoExitoso() {
-        System.out.println("adquirirGrupo");
+        System.out.println("adquirirGrupoExitoso");
         String nombreGrupo = "GrupoDePrueba";
+        
+        Cuenta usuario = new Cuenta();
+        usuario.setUsuario("Renato");
+        
+        Grupo nuevoGrupo = new Grupo();
+        nuevoGrupo.setNombreGrupo("GrupoDePrueba");
+        nuevoGrupo.setUsuario(usuario);
+        nuevoGrupo.setMensualidad(3200.0);
+        nuevoGrupo.setInscripcion(340.0);
+        
+        
+        
         Grupo compararGrupo = new Grupo();
         compararGrupo.setNombreGrupo("GrupoDePrueba");
+        compararGrupo.setUsuario(usuario);
+        compararGrupo.setMensualidad(3200.0);
+        compararGrupo.setInscripcion(340.0);
+        
         GrupoDAO instance = new GrupoDAO();
         Grupo expResult = compararGrupo;
+        instance.crearGrupo(nuevoGrupo);
         Grupo result = instance.adquirirGrupo(nombreGrupo);
         assertEquals(expResult, result);
-        instance.eliminarGrupo(compararGrupo);
+        instance.eliminarGrupo(nuevoGrupo);
     }
-    
-
     
     @Test
     public void testCrearGrupoFallido() {
-        System.out.println("crearGrupo");
+        System.out.println("crearGrupoFallido");
         Grupo nuevoGrupo = new Grupo();
         GrupoDAO instance = new GrupoDAO();
         boolean expResult = false;
         boolean result = instance.crearGrupo(nuevoGrupo);
+        //System.out.println(expResult+" "+ result);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+    }
+    
+    @Test 
+    public void testEliminarGrupoExitoso(){
+        System.out.println("eliminarGrupoExitoso");
+        String nombreGrupo="GrupoDePrueba";
+        
+        Cuenta usuario = new Cuenta();
+        usuario.setUsuario("Renato");
+        
+        Grupo grupoEliminar = new Grupo();
+        grupoEliminar.setUsuario(usuario);
+        grupoEliminar.setMensualidad(3200.0);
+        grupoEliminar.setInscripcion(340.0);
+        grupoEliminar.setNombreGrupo(nombreGrupo);
+        
+        GrupoDAO instance = new GrupoDAO();
+        boolean expResult = true;
+        instance.crearGrupo(grupoEliminar);
+        boolean result = instance.eliminarGrupo(grupoEliminar);
+        assertEquals(expResult, result);
     }
     
     @Test
     public void testAdquirirGrupoFallido() {
-        System.out.println("adquirirGrupo");
+        System.out.println("adquirirGrupoFallido");
         String nombreGrupo = "";
         GrupoDAO instance = new GrupoDAO();
         Grupo expResult = null;
         Grupo result = instance.adquirirGrupo(nombreGrupo);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
     }
     
+    @Test
+    public void testEditarGrupoExitoso() {
+        System.out.println("editarGrupoExitoso");
+        Cuenta usuario = new Cuenta();
+        usuario.setUsuario("Renato");
+        Grupo nuevoGrupo = new Grupo();
+        nuevoGrupo.setNombreGrupo("GrupoDePrueba");
+        nuevoGrupo.setUsuario(usuario);
+        nuevoGrupo.setMensualidad(3200.0);
+        nuevoGrupo.setInscripcion(340.0);
+        nuevoGrupo.setFechaPago(new Date());
+        GrupoDAO instance = new GrupoDAO();
+        boolean expResult = true;
+        instance.crearGrupo(nuevoGrupo);
+        nuevoGrupo.setMensualidad(20.0);
+        boolean result = instance.editarGrupo(nuevoGrupo);
+        assertEquals(expResult, result);
+        instance.eliminarGrupo(nuevoGrupo);
+    }  
+    
+    @Test
+    public void testEditarGrupoFallido() {
+        System.out.println("editarGrupoExitoso");
+        Cuenta usuario = new Cuenta();
+        usuario.setUsuario("Renato");
+        Grupo nuevoGrupo = new Grupo();
+        nuevoGrupo.setNombreGrupo("GrupoDePrueba");
+        nuevoGrupo.setUsuario(usuario);
+        nuevoGrupo.setMensualidad(3200.0);
+        nuevoGrupo.setInscripcion(340.0);
+        nuevoGrupo.setFechaPago(new Date());
+        GrupoDAO instance = new GrupoDAO();
+        boolean expResult = false;
+        nuevoGrupo.setMensualidad(20.0);
+        boolean result = instance.editarGrupo(nuevoGrupo);
+        assertEquals(expResult, result);
+    }
 }

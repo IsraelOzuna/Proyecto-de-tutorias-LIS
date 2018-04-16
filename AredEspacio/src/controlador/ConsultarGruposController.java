@@ -36,10 +36,6 @@ import javafx.stage.Stage;
 import negocio.GrupoDAO;
 import persistencia.Cuenta;
 
-/**
- *
- * @author Equipo
- */
 public class ConsultarGruposController implements Initializable {
 
     @FXML
@@ -53,7 +49,6 @@ public class ConsultarGruposController implements Initializable {
     ObservableList<Grupo> grupos;
     @FXML
     private Button botonCrearGrupo;
-
     @FXML
     private AnchorPane panelConsultarGrupos;
 
@@ -93,17 +88,6 @@ public class ConsultarGruposController implements Initializable {
                     }catch(IOException ex){
                         Logger.getLogger (ConsultarGruposController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
-                    /*Parent p = loader.getRoot();
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(p));
-                    stage.show();*/
-                    
-                    //FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaCrearGrupo.fxml"));
-
-                    
-                    
-                    
 
                 }
             }   
@@ -116,16 +100,13 @@ public class ConsultarGruposController implements Initializable {
     }
 
     @FXML
-    private void desplegarNuevoGrupo(ActionEvent event) throws IOException {
+    private void desplegarVentanaCrearGrupo(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaCrearGrupo.fxml"));
         Parent root = (Parent) loader.load();
         CrearGrupoController crearGrupo = loader.getController();
         crearGrupo.iniciarVentana();
         panelConsultarGrupos.getChildren().add(root);
-    }
-    
-
-    
+    } 
 }
 
 

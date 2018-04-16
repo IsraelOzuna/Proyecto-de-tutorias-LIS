@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -20,10 +20,10 @@
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="botonCrearGrupo" layoutX="940.0" layoutY="576.0" mnemonicParsing="false" onAction="#desplegarNuevoGrupo" text="Crear Grupo">
+      <JFXButton fx:id="botonCrearGrupo" layoutX="951.0" layoutY="575.0" onAction="#desplegarVentanaCrearGrupo" style="-fx-background-color: #cdcdcd;" text="Crear Grupo">
          <font>
-            <Font size="14.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
-      </Button>
+      </JFXButton>
    </children>
 </AnchorPane>
