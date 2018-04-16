@@ -12,10 +12,8 @@ public class GrupoDAO implements IGrupo{
 
     @Override
     public List<Grupo> adquirirGrupos(persistencia.Cuenta usuario) {
-        
-        
         List<Grupo> listaGrupos=null;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);/////////Cambiar a AredEspacioPU
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
         GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         persistencia.Grupo grupo = new persistencia.Grupo();
         grupo.setUsuario(usuario);
@@ -89,5 +87,22 @@ public class GrupoDAO implements IGrupo{
         }
         return grupoEliminado;
     }
+
+    @Override
+    public boolean editarGrupo(Grupo grupoEditar) {
+        boolean grupoEditado=true;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
+        GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
+        try{
+            grupoJpaController.edit(grupoEditar);
+            grupoEditado=true;
+        }catch (Exception ex){
+            grupoEditado=false;
+            Logger.getLogger(GrupoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return grupoEditado;
+    }
+
     
 }

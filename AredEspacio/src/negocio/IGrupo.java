@@ -7,4 +7,5 @@ public interface IGrupo {
     public List<persistencia.Cuenta> adquirirCuentas ();
     public Grupo adquirirGrupo (String nombreGrupo);
     public boolean eliminarGrupo(Grupo grupoEliminar);
+    public boolean editarGrupo(Grupo grupoEditar);
 }

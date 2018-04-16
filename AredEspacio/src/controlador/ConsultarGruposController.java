@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import java.awt.Insets;
@@ -61,47 +56,58 @@ public class ConsultarGruposController implements Initializable {
 
     @FXML
     private AnchorPane panelConsultarGrupos;
+
+    
     
     private void inicializarTablaGrupos(){
         columnaNombre.setCellValueFactory(new PropertyValueFactory<Grupo, String>("nombreGrupo"));
         grupos = FXCollections.observableArrayList();
         tablaGrupos.setItems(grupos);
+        
     }
     
     public void iniciarVentana(){
+
         GrupoDAO grupoDAO = new GrupoDAO();
         Grupo grupo = new Grupo();
         List<Grupo> listaGrupos=null;
         Cuenta cuentaNueva = new Cuenta();
         listaGrupos=grupoDAO.adquirirGrupos(cuentaNueva);//////////////
-        System.out.println("Lista de Grupos");
-        System.out.println("\t"+listaGrupos);
         this.inicializarTablaGrupos();
         final ObservableList<Grupo> tablaGrupoSel = tablaGrupos.getSelectionModel().getSelectedItems();
-        for(int i=0; i<listaGrupos.size(); i++){
-            //Grupo g1 = new Grupo();
-            //g1.setNombreGrupo("Grupo"+i);
+        if(listaGrupos!=null){
+            for(int i=0; i<listaGrupos.size(); i++){
             grupos.add(listaGrupos.get(i));
+            }
         }
-        
         tablaGrupos.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
+        @Override
+            public void handle(MouseEvent event) {
+                if(tablaGrupos.getSelectionModel().getSelectedItem()!=null){
                     FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarInformacionGrupo.fxml"));
                     try{
-                        loader.load();
+                        Parent root = (Parent) loader.load();
+                        VentanaConsultarInformacionGrupoController ventanaConsultarInformacionGrupoController = loader.getController();
+                        ventanaConsultarInformacionGrupoController.establecerGrupo(tablaGrupos.getSelectionModel().getSelectedItem().getNombreGrupo());////////manejar excepción en caso de estar vacio
+                        panelConsultarGrupos.getChildren().add(root);
                     }catch(IOException ex){
                         Logger.getLogger (ConsultarGruposController.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    VentanaConsultarInformacionGrupoController ventanaConsultarInformacionGrupoController = loader.getController();
-                    ventanaConsultarInformacionGrupoController.establecerGrupo(tablaGrupos.getSelectionModel().getSelectedItem().getNombreGrupo());
-                    Parent p = loader.getRoot();
+                    
+                    /*Parent p = loader.getRoot();
                     Stage stage = new Stage();
                     stage.setScene(new Scene(p));
-                    stage.show();
-                    //System.out.println(tablaGrupos.getSelectionModel().getSelectedItem().getNombreGrupo());
-                }   
-            });
+                    stage.show();*/
+                    
+                    //FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaCrearGrupo.fxml"));
+
+                    
+                    
+                    
+
+                }
+            }   
+        });
     }
     
     @Override
@@ -110,18 +116,18 @@ public class ConsultarGruposController implements Initializable {
     }
 
     @FXML
-    private void desplegarNuevoGrupo(ActionEvent event) throws IOException{
+    private void desplegarNuevoGrupo(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaCrearGrupo.fxml"));
         Parent root = (Parent) loader.load();
         CrearGrupoController crearGrupo = loader.getController();
         crearGrupo.iniciarVentana();
-        //ventanaBuscar.obtenerSeccion("Alumnos", panelGrupos);
         panelConsultarGrupos.getChildren().add(root);
-        
     }
+    
 
     
-    
-    
 }
+
+
+
 

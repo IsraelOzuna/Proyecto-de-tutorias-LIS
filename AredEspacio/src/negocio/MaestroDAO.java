@@ -72,4 +72,31 @@ public class MaestroDAO implements IMaestro {
         return maestrosEncontrados;
     }
 
+    @Override
+    public int obtenerNumeroMaestros() {
+        int numeroMaestros=0;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        MaestroJpaController maestroJpaController = new MaestroJpaController(entityManagerFactory);
+        numeroMaestros = maestroJpaController.getMaestroCount();
+        return numeroMaestros;
+    }
+
+    @Override
+    public List<persistencia.Maestro> adquirirMaestros() {
+        List<persistencia.Maestro> listaMaestros=null;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        MaestroJpaController maestroJpaController = new MaestroJpaController(entityManagerFactory);
+        listaMaestros=maestroJpaController.findMaestroEntities();
+        return listaMaestros;
+    }
+
+    @Override
+    public List<Alumno> obtenerAlumnos(String nombreGrupo) {
+        List<persistencia.Alumno> listaAlumnos=null;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        MaestroJpaController maestroJpaController = new MaestroJpaController(entityManagerFactory);
+        listaAlumnos=maestroJpaController.obtenerListaAlumnos(nombreGrupo);
+        return listaAlumnos;
+    }
+
 }

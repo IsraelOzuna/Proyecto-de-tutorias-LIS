@@ -16,5 +16,11 @@ public interface IMaestro {
     public boolean registrarMaestro(Maestro maestro);
     
     public List<persistencia.Maestro> buscarMaestro(String nombre); 
+
+    public int obtenerNumeroMaestros();
+    
+    public List<persistencia.Maestro> adquirirMaestros();
+    
+    public List<persistencia.Alumno> obtenerAlumnos(String nombreGrupo);
     
 }

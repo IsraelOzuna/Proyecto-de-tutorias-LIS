@@ -5,48 +5,75 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaConsultarInformacionGrupoController">
+<AnchorPane fx:id="panelConsultarInfo" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaConsultarInformacionGrupoController">
    <children>
-      <TableView fx:id="tablaAlumnos" layoutX="43.0" layoutY="48.0" prefHeight="200.0" prefWidth="200.0">
-        <columns>
-          <TableColumn minWidth="0.0" prefWidth="0.0" />
-          <TableColumn prefWidth="199.0" text="Alumnos" />
-        </columns>
-      </TableView>
-      <TableView fx:id="tablaHorario" layoutX="311.0" layoutY="48.0" prefHeight="200.0" prefWidth="200.0">
-        <columns>
-          <TableColumn prefWidth="106.0" text="Dia" />
-          <TableColumn prefWidth="93.0" text="Horario" />
-        </columns>
-      </TableView>
-      <Label fx:id="etiquetaMaestro" layoutX="44.0" layoutY="14.0" text="Maestro: ">
-         <font>
-            <Font name="Gill Sans MT Bold" size="18.0" />
-         </font></Label>
-      <Label fx:id="etiquetaInscripcion" layoutX="340.0" layoutY="294.0" text="Inscripción">
-         <font>
-            <Font name="Gill Sans MT Bold" size="18.0" />
-         </font></Label>
-      <Label fx:id="etiquetaMensualidad" layoutX="330.0" layoutY="320.0" text="Mensualidad">
-         <font>
-            <Font name="Gill Sans MT Bold" size="18.0" />
-         </font></Label>
-      <JFXButton fx:id="botonEditar" contentDisplay="TOP" layoutX="84.0" layoutY="282.0" text="Editar">
-         <graphic>
-            <FontAwesomeIconView glyphName="PENCIL" size="20" wrappingWidth="12.285714149475098" />
-         </graphic>
-      </JFXButton>
-      <JFXButton fx:id="botonEliminar" contentDisplay="TOP" layoutX="150.0" layoutY="282.0" text="Eliminar">
-         <graphic>
-            <FontAwesomeIconView glyphName="CLOSE" size="20" wrappingWidth="12.285714149475098" />
-         </graphic>
-      </JFXButton>
-      <JFXButton fx:id="botonRegresar" layoutX="511.0" layoutY="361.0" style="-fx-background-color: #CDCDCD;" text="Regresar" />
-      <Label fx:id="etiquetaPrecioInscripcion" layoutX="464.0" layoutY="296.0" prefHeight="17.0" prefWidth="79.0" text="precioInscripcion" />
-      <Label fx:id="etiquetaPrecioMensualidad" layoutX="464.0" layoutY="323.0" prefHeight="17.0" prefWidth="62.0" text="precioMensualidad" />
-      <Label fx:id="etiquetaNombreMaestro" layoutX="136.0" layoutY="16.0" prefHeight="17.0" prefWidth="92.0" text="nombreMaestro" />
+      <Pane fx:id="panelConsultarInformacion" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;">
+         <children>
+            <TableView fx:id="tablaAlumnos" layoutX="52.0" layoutY="86.0" prefHeight="293.0" prefWidth="419.0">
+               <columns>
+                  <TableColumn minWidth="0.0" prefWidth="0.0" />
+                  <TableColumn fx:id="columnaAlumnos" prefWidth="199.0" text="Alumnos" />
+               </columns>
+            </TableView>
+            <TableView fx:id="tablaHorario" layoutX="598.0" layoutY="85.0" prefHeight="301.0" prefWidth="416.0">
+               <columns>
+                  <TableColumn fx:id="columnaDia" prefWidth="211.33331298828125" text="Dia" />
+                  <TableColumn fx:id="columnaHora" minWidth="0.0" prefWidth="203.66668701171875" text="Hora" />
+               </columns>
+            </TableView>
+            <Label fx:id="etiquetaMaestro" layoutX="50.0" layoutY="24.0" text="Maestro: ">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="etiquetaInscripcion" layoutX="700.0" layoutY="449.0" text="Inscripción">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="etiquetaMensualidad" layoutX="687.0" layoutY="483.0" text="Mensualidad">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="18.0" />
+               </font>
+            </Label>
+            <JFXButton fx:id="botonEliminar" contentDisplay="TOP" layoutX="250.0" layoutY="444.0" onAction="#eliminarGrupo" prefHeight="81.0" prefWidth="97.0" text="Eliminar">
+               <graphic>
+                  <FontAwesomeIconView glyphName="CLOSE" size="50" wrappingWidth="40.2857141494751" />
+               </graphic>
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="botonRegresar" layoutX="1000.0" layoutY="560.0" style="-fx-background-color: #CDCDCD;" text="Regresar">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </JFXButton>
+            <Label fx:id="etiquetaPrecioInscripcion" layoutX="838.0" layoutY="452.0" prefHeight="20.0" prefWidth="118.0" text="precioInscripcion">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label fx:id="etiquetaPrecioMensualidad" layoutX="833.0" layoutY="486.0" prefHeight="17.0" prefWidth="129.0" text="precioMensualidad">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+            <Label fx:id="etiquetaNombreMaestro" layoutX="128.0" layoutY="16.0" prefHeight="41.0" prefWidth="224.0" text="nombreMaestro">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <JFXButton fx:id="botonEditar" contentDisplay="TOP" layoutX="140.0" layoutY="433.0" onAction="#desplegarVentanaEditar" prefHeight="99.0" prefWidth="97.0" text="Editar">
+               <graphic>
+                  <FontAwesomeIconView glyphName="PENCIL" size="50" wrappingWidth="12.285714149475098" />
+               </graphic>
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </Pane>
    </children>
-</Pane>
+</AnchorPane>
