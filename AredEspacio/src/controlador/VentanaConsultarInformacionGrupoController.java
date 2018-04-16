@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
@@ -139,14 +144,9 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     }
     
     public void llenarTablaAlumnos(String nombreGrupo){
-        MaestroDAO maestroDAO = new MaestroDAO();
+        GrupoDAO grupoDAO = new GrupoDAO();
         List<Alumno> listaAlumnos=null;
-     //   listaAlumnos=maestroDAO.obtenerAlumnos(nombreGrupo);
-        
-        /*Alumno alumno1 = new Alumno();
-        
-        alumno1.setNombre("Juan");
-        alumnos.add(alumno1);*/
+        listaAlumnos=grupoDAO.obtenerAlumnos(nombreGrupo);
         for(int i=0; i<listaAlumnos.size(); i++){
             alumnos.add(listaAlumnos.get(i));
         }
@@ -408,11 +408,11 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaEditarGrupo.fxml"));
         try{
             Parent root = (Parent) loader.load();
-            EditarGrupoController editarGrupoController = loader.getController();
+            VentanaEditarGrupoController editarGrupoController = loader.getController();
             editarGrupoController.establecerGrupo(nombreGrupo);////////manejar excepción en caso de estar vacio
             panelConsultarInfo.getChildren().add(root);
         }catch(IOException ex){
-            Logger.getLogger (ConsultarGruposController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger (VentanaConsultarGruposController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         /*Stage stage = (Stage) panelConsultarInfo.getScene().getWindow();
@@ -430,7 +430,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         if(nuevoGrupoDAO.eliminarGrupo(grupoEliminar)){
             FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
             Parent root = (Parent) loader.load();
-            ConsultarGruposController ventanaConsultarGruposController = loader.getController();
+            VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
             ventanaConsultarGruposController.iniciarVentana();
             panelConsultarInfo.getChildren().add(root); 
         }
@@ -471,5 +471,14 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
                 transformer.transform(source, result);
             }
         }
+    }
+
+    @FXML
+    private void regresarPantallaAnterior(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
+        ventanaConsultarGruposController.iniciarVentana();
+        panelConsultarInfo.getChildren().add(root);
     }
 }

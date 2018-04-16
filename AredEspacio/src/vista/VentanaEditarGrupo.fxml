@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="panelEditarGrupo" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.EditarGrupoController">
+<AnchorPane id="AnchorPane" fx:id="panelEditarGrupo" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaEditarGrupoController">
    <children>
       <Label fx:id="etiquetaEditarGrupo" layoutX="553.0" layoutY="14.0" text="Editar Grupo">
          <font>

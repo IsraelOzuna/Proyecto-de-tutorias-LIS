@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import negocio.MaestroDAO;
 
 /**
  * FXML Controller class
@@ -74,13 +75,17 @@ public class VentanaMenuDirectorController implements Initializable {
         panelPrincipal.getChildren().add(root); 
     }
     
-    @FXML
+     @FXML
     public void desplegarVentanaBusquedaGrupos(ActionEvent event) throws IOException{
-        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
-        Parent root = (Parent) loader.load();
-        ConsultarGruposController ventanaConsultarGruposController = loader.getController();  
-        ventanaConsultarGruposController.iniciarVentana();
-        panelPrincipal.getChildren().add(root); 
-        
+        MaestroDAO maestroDAO = new MaestroDAO();
+        if(maestroDAO.obtenerNumeroMaestros()>0){
+            FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
+            Parent root = (Parent) loader.load();
+            VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();  
+            ventanaConsultarGruposController.iniciarVentana();
+            panelPrincipal.getChildren().add(root); 
+        }else{
+            DialogosController.mostrarMensajeInformacion("No hay maestros registrados", "No hay maestros registrados", "Debe haber al menos un maestro registrado para realizar esta acción");
+        }
     }
 }

@@ -93,15 +93,6 @@ public class MaestroDAO implements IMaestro {
     }
 
     @Override
-    public List<Alumno> obtenerAlumnos(String nombreGrupo) {
-        List<persistencia.Alumno> listaAlumnos=null;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
-        MaestroJpaController maestroJpaController = new MaestroJpaController(entityManagerFactory);
-        listaAlumnos=maestroJpaController.obtenerListaAlumnos(nombreGrupo);
-        return listaAlumnos;
-    }
-
-    @Override
     public boolean editarMaestro(persistencia.Maestro maestro) {
         boolean datosModificacdosExitosamente = true;
 

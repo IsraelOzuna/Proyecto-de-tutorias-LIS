@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="panelCrearGrupos" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.CrearGrupoController">
+<AnchorPane id="AnchorPane" fx:id="panelCrearGrupos" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaCrearGrupoController">
    <children>
       <JFXButton fx:id="botonGurdar" layoutX="486.0" layoutY="531.0" onAction="#registrarGrupo" style="-fx-background-color: #CDCDCD;" text="Guardar">
          <font>
@@ -26,7 +26,7 @@
             <TableColumn fx:id="columnaHorario" prefWidth="89.00003051757812" text="Horario" />
             <TableColumn fx:id="columnaDomingo" prefWidth="120.0" text="Domingo" />
             <TableColumn fx:id="columnaLunes" prefWidth="117.00003051757812" text="Lunes" />
-            <TableColumn fx:id="ColumnaMartes" prefWidth="132.0" text="Martes" />
+            <TableColumn fx:id="columnaMartes" prefWidth="132.0" text="Martes" />
             <TableColumn fx:id="columnaMiercoles" prefWidth="138.0" text="Miercoles" />
             <TableColumn fx:id="columnaJueves" prefWidth="116.0" text="Jueves" />
             <TableColumn fx:id="columnaViernes" prefWidth="145.0" text="Viernes" />
@@ -48,7 +48,7 @@
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="etuqietaMaestro" layoutX="128.0" layoutY="127.0" text="Maestro(a):">
+      <Label fx:id="etiquetaMaestro" layoutX="128.0" layoutY="127.0" text="Maestro(a):">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>

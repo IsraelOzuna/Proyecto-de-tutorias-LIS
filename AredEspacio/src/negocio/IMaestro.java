@@ -23,7 +23,5 @@ public interface IMaestro {
     
     public List<persistencia.Maestro> adquirirMaestros();
     
-    public List<persistencia.Alumno> obtenerAlumnos(String nombreGrupo);
-    
     
 }

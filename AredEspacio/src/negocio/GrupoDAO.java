@@ -8,6 +8,7 @@ import javax.persistence.Persistence;
 import persistencia.Cuenta;
 import persistencia.CuentaJpaController;
 import persistencia.GrupoJpaController;
+import persistencia.MaestroJpaController;
 public class GrupoDAO implements IGrupo{
 
     @Override
@@ -28,19 +29,20 @@ public class GrupoDAO implements IGrupo{
     @Override
     public boolean crearGrupo(Grupo nuevoGrupo) {
         boolean grupoCreadoExitosamente=true;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
-        GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
-        persistencia.Grupo grupoNuevo = new persistencia.Grupo();
-        grupoNuevo.setNombreGrupo(nuevoGrupo.getNombreGrupo());
-        grupoNuevo.setUsuario(nuevoGrupo.getUsuario());
-        grupoNuevo.setMensualidad(nuevoGrupo.getMensualidad());
-        grupoNuevo.setInscripcion(nuevoGrupo.getInscripcion());
-        try{
-            grupoJpaController.create(grupoNuevo);
-        }catch (Exception ex){
+        if(nuevoGrupo.getNombreGrupo()==null){
             grupoCreadoExitosamente=false;
-            Logger.getLogger(GrupoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }else{
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
+            GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
+            
+            try{
+                grupoJpaController.create(nuevoGrupo);
+            }catch (Exception ex){
+                grupoCreadoExitosamente=false;
+                Logger.getLogger(GrupoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        
         
         
         return grupoCreadoExitosamente;
@@ -62,6 +64,9 @@ public class GrupoDAO implements IGrupo{
 
     @Override
     public Grupo adquirirGrupo(String nombreGrupo) {
+        //if(nombreGrupo.equals("")){
+        
+        //}
         Grupo grupoEncontrado=new Grupo();
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
         GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
@@ -102,6 +107,14 @@ public class GrupoDAO implements IGrupo{
         }
         
         return grupoEditado;
+    }
+    @Override
+    public List<persistencia.Alumno> obtenerAlumnos(String nombreGrupo) {
+        List<persistencia.Alumno> listaAlumnos=null;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
+        listaAlumnos=grupoJpaController.obtenerListaAlumnos(nombreGrupo);
+        return listaAlumnos;
     }
 
     

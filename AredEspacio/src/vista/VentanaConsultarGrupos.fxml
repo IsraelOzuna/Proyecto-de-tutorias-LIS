@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="panelConsultarGrupos" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.ConsultarGruposController">
+<AnchorPane id="AnchorPane" fx:id="panelConsultarGrupos" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaConsultarGruposController">
    <children>
       <TableView fx:id="tablaGrupos" layoutX="36.0" layoutY="96.0" prefHeight="460.0" prefWidth="1000.0">
          <columns>

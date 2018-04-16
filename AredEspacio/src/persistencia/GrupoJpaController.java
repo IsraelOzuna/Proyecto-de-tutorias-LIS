@@ -165,5 +165,16 @@ public class GrupoJpaController implements Serializable {
             em.close();
         }
     }
+    public List<Alumno> obtenerListaAlumnos(String nombreGrupo){
+        List<persistencia.Alumno> listaAlumnos=null;
+        String consulta =   "select distinct a from Alumno a join a.grupoCollection g where g.nombreGrupo = :nombreGrupo";
+        EntityManager em = getEntityManager();
+        try {
+            listaAlumnos = em.createQuery(consulta).setParameter("nombreGrupo", nombreGrupo).getResultList();
+        } finally {
+            em.close();
+        }
+        return listaAlumnos;
+    }
     
 }
