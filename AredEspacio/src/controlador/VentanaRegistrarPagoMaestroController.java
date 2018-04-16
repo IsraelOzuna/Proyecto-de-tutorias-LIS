@@ -14,12 +14,16 @@ import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import negocio.PagoMaestro;
+import negocio.PagoMaestroDAO;
+import negocio.Utileria;
 import persistencia.Maestro;
 
 public class VentanaRegistrarPagoMaestroController implements Initializable {
@@ -40,6 +44,8 @@ public class VentanaRegistrarPagoMaestroController implements Initializable {
     private Maestro maestro;
     @FXML
     private AnchorPane panelRegistroPago;
+    @FXML
+    private DatePicker campoFechaPago;
 
     public void obtenerMaestro(Maestro maestro) {
         this.maestro = maestro;
@@ -64,7 +70,7 @@ public class VentanaRegistrarPagoMaestroController implements Initializable {
             Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
-    }      
+    }
 
     @FXML
     private void cerrarVentanaRegistroPago(ActionEvent event) {
@@ -74,21 +80,33 @@ public class VentanaRegistrarPagoMaestroController implements Initializable {
     @FXML
     private void registrarPago(ActionEvent event) {
         boolean cantidadCorrecta = true;
-        if(campoCantidadPagada.getText().isEmpty()){
-         DialogosController.mostrarMensajeInformacion("Campo vacio", "El campo de cantidad esta vacío", "Debe ingresar una cantidad");
-        }else{
-            try{
-        Double.parseDouble(campoCantidadPagada.getText());
-            }catch(NumberFormatException ex){
+        if (campoCantidadPagada.getText().isEmpty() || campoFechaPago.getValue() == null) {
+            DialogosController.mostrarMensajeInformacion("Campo vacio", "Debe llenar todos los campos", "Debe ingresar una cantidad y elegir una fecha de pago");
+        } else {
+            try {
+                Double.parseDouble(campoCantidadPagada.getText());
+            } catch (NumberFormatException ex) {
                 cantidadCorrecta = false;
-             DialogosController.mostrarMensajeInformacion("Dato incorrecto", "Las letras no son una cantidad", "Debe ingresar una cantidad numérica");
+                DialogosController.mostrarMensajeInformacion("Dato incorrecto", "Las letras no son una cantidad", "Debe ingresar una cantidad numérica");
             }
-            
-            if(cantidadCorrecta){
-                System.out.println("Registrar pago");
+            if (cantidadCorrecta) {
+                PagoMaestro pagoMaestro = new PagoMaestro();
+                PagoMaestroDAO pagoMaestroDAO = new PagoMaestroDAO();
+
+                pagoMaestro.setUsuario(maestro.getUsuario());
+                pagoMaestro.setFecha(Utileria.convertirFechaNacimiento(campoFechaPago.getValue()));
+                pagoMaestro.setCantidad(Double.parseDouble(campoCantidadPagada.getText()));
+
+                if (pagoMaestroDAO.registrarPagoMaestro(pagoMaestro)) {
+                    DialogosController.mostrarMensajeInformacion("", "Registro de pago exitoso", "El pago se ha registrado correctamente");
+                    panelRegistroPago.setVisible(false);
+                   
+                } else {
+                    DialogosController.mostrarMensajeInformacion("", "Registro no exitoso", "El pago no se ha registrado correctamente");
+                }
+
             }
         }
     }
 
- 
 }
