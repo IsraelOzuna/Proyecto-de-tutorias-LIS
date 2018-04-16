@@ -93,4 +93,13 @@ public class VentanaInformacionAlumnosController implements Initializable {
             imagenPerfil.setImage(foto);
         }
     }
+    
+    @FXML
+    public void desplegarVentanaRegistrarMensualidad(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRegistrarMensualidadAlumno.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaRegistrarMensualidadAlumnoController ventanaRegistrarMensualidad = loader.getController();
+        //ventanaRegistrarMensualidad.obtenerMaestro(maestro);        
+        panelPrincipal.getChildren().add(root);
+    }
 }

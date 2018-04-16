@@ -141,5 +141,17 @@ public class AlumnoJpaController implements Serializable {
             em.close();
         }        
         return alumnos;
-    }    
+    }   
+    
+    public List<Grupo> obtenerGruposAlumno(int idAlumno) {
+        List<persistencia.Grupo> gruposAlumno = new ArrayList();
+        String consulta = "Select g from Grupo g where g.idAlumno = :idAlumno";
+        EntityManager em = getEntityManager();
+        try {
+            gruposAlumno = em.createQuery(consulta).setParameter("idAlumno", idAlumno).getResultList();
+        } finally {
+            em.close();
+        }
+        return gruposAlumno;
+    }
 }

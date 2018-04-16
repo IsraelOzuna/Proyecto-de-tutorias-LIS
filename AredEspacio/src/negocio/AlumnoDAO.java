@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import persistencia.AlumnoJpaController;
+import persistencia.Grupo;
 
 public class AlumnoDAO implements IAlumno {
 
@@ -81,5 +82,17 @@ public class AlumnoDAO implements IAlumno {
             Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alumnosEncontrados;
+    }
+
+    @Override
+    public List<persistencia.Grupo> encontrarGruposAlumno(int idAlumno) {
+        List<persistencia.Grupo> gruposEncontrados;
+        
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        AlumnoJpaController alumnoJpaController = new AlumnoJpaController(entityManagerFactory);
+                        
+        gruposEncontrados = alumnoJpaController.obtenerGruposAlumno(idAlumno);             
+        
+        return gruposEncontrados;
     }
 }

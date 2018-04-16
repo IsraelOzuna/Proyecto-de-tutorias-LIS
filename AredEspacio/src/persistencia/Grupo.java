@@ -6,19 +6,23 @@
 package persistencia;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,6 +37,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Grupo.findByFechaPago", query = "SELECT g FROM Grupo g WHERE g.fechaPago = :fechaPago"),
     @NamedQuery(name = "Grupo.findByMensualidad", query = "SELECT g FROM Grupo g WHERE g.mensualidad = :mensualidad")})
 public class Grupo implements Serializable {
+
+    @OneToMany(mappedBy = "nombreGrupo")
+    private Collection<Pagoalumno> pagoalumnoCollection;
+
+    @ManyToMany(mappedBy = "grupoCollection")
+    private Collection<Alumno> alumnoCollection;
 
     @Column(name = "inscripcion")
     private Double inscripcion;
@@ -122,6 +132,24 @@ public class Grupo implements Serializable {
 
     public void setInscripcion(Double inscripcion) {
         this.inscripcion = inscripcion;
+    }
+
+    @XmlTransient
+    public Collection<Alumno> getAlumnoCollection() {
+        return alumnoCollection;
+    }
+
+    public void setAlumnoCollection(Collection<Alumno> alumnoCollection) {
+        this.alumnoCollection = alumnoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Pagoalumno> getPagoalumnoCollection() {
+        return pagoalumnoCollection;
+    }
+
+    public void setPagoalumnoCollection(Collection<Pagoalumno> pagoalumnoCollection) {
+        this.pagoalumnoCollection = pagoalumnoCollection;
     }
     
 }
