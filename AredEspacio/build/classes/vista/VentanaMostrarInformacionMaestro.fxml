@@ -77,7 +77,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="botonEditar" mnemonicParsing="false" prefHeight="24.0" prefWidth="9.0" style="-fx-background-color: #000000;" GridPane.columnIndex="1">
+                  <Button fx:id="botonEditar" mnemonicParsing="false" onAction="#desplegarVentanaEditarInformacionMaestro" prefHeight="24.0" prefWidth="9.0" style="-fx-background-color: #000000;" GridPane.columnIndex="1">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" text="" />
                      </graphic>

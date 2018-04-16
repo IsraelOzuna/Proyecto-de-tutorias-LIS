@@ -141,7 +141,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     public void llenarTablaAlumnos(String nombreGrupo){
         MaestroDAO maestroDAO = new MaestroDAO();
         List<Alumno> listaAlumnos=null;
-        listaAlumnos=maestroDAO.obtenerAlumnos(nombreGrupo);
+     //   listaAlumnos=maestroDAO.obtenerAlumnos(nombreGrupo);
         
         /*Alumno alumno1 = new Alumno();
         

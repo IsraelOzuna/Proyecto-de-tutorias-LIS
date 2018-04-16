@@ -91,4 +91,14 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
         ventanaRegistrarPagoMaestro.obtenerPanel(panelPrincipal);
         panelPrincipal.getChildren().add(root);
     }
+
+    @FXML
+    private void desplegarVentanaEditarInformacionMaestro(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaEditarInformacionMaestro.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaEditarInformacionMaestroController ventanaEditarInformacionMaestro = loader.getController();
+        ventanaEditarInformacionMaestro.obtenerMaestro(maestro);
+        ventanaEditarInformacionMaestro.obtenerPanel(panelPrincipal);
+        panelPrincipal.getChildren().add(root);
+    }
 }
