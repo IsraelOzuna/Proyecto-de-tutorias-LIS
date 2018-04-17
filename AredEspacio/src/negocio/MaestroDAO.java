@@ -22,9 +22,10 @@ public class MaestroDAO implements IMaestro {
 
     @Override
     public boolean registrarMaestro(Maestro maestro) {
-        boolean maestroRegistradoExitosamente = true;
+        boolean maestroRegistradoExitosamente = false;
 
-        if (maestro != null) {
+        if (maestro.getUsuario() != null) {
+            maestroRegistradoExitosamente = true;
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
             MaestroJpaController maestroJpaController = new MaestroJpaController(entityManagerFactory);
 
@@ -94,9 +95,10 @@ public class MaestroDAO implements IMaestro {
 
     @Override
     public boolean editarMaestro(persistencia.Maestro maestro) {
-        boolean datosModificacdosExitosamente = true;
+        boolean datosModificacdosExitosamente = false;
 
-        if (maestro != null) {
+        if (maestro.getUsuario() != null) {
+            datosModificacdosExitosamente = true;
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
             MaestroJpaController maestroJpaController = new MaestroJpaController(entityManagerFactory);
 

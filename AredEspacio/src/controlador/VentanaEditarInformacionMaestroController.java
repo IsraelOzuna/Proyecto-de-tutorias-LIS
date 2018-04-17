@@ -95,32 +95,41 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
 
     @FXML
     private void guardarInformacionMaestroEditada(ActionEvent event) throws IOException {
+        boolean cantidadCorrecta = true;
         if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreoElectronico, campoTelefono, campoCantidadAPagar)) {
             if (!verificarLongitudExcedida(campoNombre, campoApellidos, campoCorreoElectronico, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreoElectronico.getText())) {
                     Maestro maestroNuevo = new Maestro();
-                    MaestroDAO maestroDAO = new MaestroDAO();
-
-                    maestroNuevo.setNombre(campoNombre.getText());
-                    maestroNuevo.setApellidos(campoApellidos.getText());
-                    maestroNuevo.setCorreoElectronico(campoCorreoElectronico.getText());
-                    maestroNuevo.setTelefono(campoTelefono.getText());
-                    maestroNuevo.setMensualidad(Double.parseDouble(campoCantidadAPagar.getText()));
-                    maestroNuevo.setRutaFoto(maestro.getRutaFoto());
-                    maestroNuevo.setEstaActivo(maestro.getEstaActivo());
-                    maestroNuevo.setFechaCorte(maestro.getFechaCorte());
-                    maestroNuevo.setUsuario(maestro.getUsuario());
-
-                    if (maestroDAO.editarMaestro(maestroNuevo)) {
-                        DialogosController.mostrarMensajeInformacion("Guardado", "Maestro modificado", "El maestro ha sido modificado exitosamente");
-                        desplegarVentanaBusquedaAlumno();
-                    } else {
-                        DialogosController.mostrarMensajeAdvertencia("Error", "Error al modificar", "Ha ocurrido un error. No se pudo modificar");
+                    try {
+                        maestroNuevo.setMensualidad(Double.parseDouble(campoCantidadAPagar.getText()));
+                    } catch (NumberFormatException ex) {
+                        cantidadCorrecta = false;
+                        DialogosController.mostrarMensajeInformacion("Dato incorrecto", "Las letras no son una cantidad", "Debe ingresar una cantidad numérica");
                     }
+                    if (cantidadCorrecta) {
 
+                        MaestroDAO maestroDAO = new MaestroDAO();
+
+                        maestroNuevo.setNombre(campoNombre.getText());
+                        maestroNuevo.setApellidos(campoApellidos.getText());
+                        maestroNuevo.setCorreoElectronico(campoCorreoElectronico.getText());
+                        maestroNuevo.setTelefono(campoTelefono.getText());
+                        maestroNuevo.setRutaFoto(maestro.getRutaFoto());
+                        maestroNuevo.setEstaActivo(maestro.getEstaActivo());
+                        maestroNuevo.setFechaCorte(maestro.getFechaCorte());
+                        maestroNuevo.setUsuario(maestro.getUsuario());
+
+                        if (maestroDAO.editarMaestro(maestroNuevo)) {
+                            DialogosController.mostrarMensajeInformacion("Guardado", "Maestro modificado", "El maestro ha sido modificado exitosamente");
+                            desplegarVentanaBusquedaAlumno();
+                        } else {
+                            DialogosController.mostrarMensajeAdvertencia("Error", "Error al modificar", "Ha ocurrido un error. No se pudo modificar");
+                        }
+                    }
                 } else {
                     DialogosController.mostrarMensajeInformacion("", "Correo no válido", "El correo ingresado no tiene un formato válido");
                 }
+
             } else {
                 DialogosController.mostrarMensajeInformacion("Campos excedidos", "Algún campo excede el límite de caracteres", "Revise el límite de caracteres permitidos");
             }

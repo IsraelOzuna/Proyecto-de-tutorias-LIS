@@ -19,31 +19,31 @@ import org.junit.Test;
  * @author Irdevelo
  */
 public class MaestroDAOTest {
-    
+
     public MaestroDAOTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
-    
-    @Test
+
+    /*   @Test
     public void testRegistrarMaestro() {
         System.out.println("registrarMaestroExitoso");
         Maestro maestro = new Maestro();
-        
+
         maestro.setNombre("Jose");
         maestro.setApellidos("Arcos");
         maestro.setCorreoElectronico("joseRamon@hotmail.com");
@@ -54,44 +54,53 @@ public class MaestroDAOTest {
         maestro.setMensualidad(600.00);
         maestro.setUsuario("joseRamon");
         MaestroDAO instance = new MaestroDAO();
-        
+
         boolean expResult = true;
         boolean result = instance.registrarMaestro(maestro);
         assertEquals(expResult, result);
     }
-    
+
     @Test
     public void testRegistrarMaestroFallido() {
         System.out.println("registrarMaestroFallido");
         Maestro maestro = new Maestro();
+        maestro.setNombre("Jose");
+        maestro.setApellidos("Arcos");
+        maestro.setCorreoElectronico("joseRamon@hotmail.com");
+        maestro.setTelefono("2291827482");
+        maestro.setFechaCorte(null);
+        maestro.setRutaFoto(null);
+        maestro.setEstaActivo(0);
+        maestro.setMensualidad(600.00);
+        maestro.setUsuario(null);
         MaestroDAO instance = new MaestroDAO();
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = instance.registrarMaestro(maestro);
         assertEquals(expResult, result);
     }
-    
+
     @Test
     public void testBuscarMaestro() {
         System.out.println("buscarMaestroExitoso");
-        String nombre = "Juan Carlos";
+        String nombre = "Roberto";
         persistencia.Maestro maestroNuevo = new persistencia.Maestro();
         maestroNuevo.setNombre(nombre);
-        maestroNuevo.setApellidos("Perez Arriaga");
-        maestroNuevo.setCorreoElectronico("elrevo@hotmail.com");
+        maestroNuevo.setApellidos("Maldonado");
+        maestroNuevo.setCorreoElectronico("robert@hotrmail.com");
         maestroNuevo.setEstaActivo(0);
         maestroNuevo.setFechaCorte(null);
-        maestroNuevo.setRutaFoto("9mle9ePd_400x400.jpg ");
-        maestroNuevo.setMensualidad(500.00);
-        maestroNuevo.setTelefono("228172902");
-        maestroNuevo.setUsuario("elrevo");
+        maestroNuevo.setRutaFoto("senor-lapiz.jpg");
+        maestroNuevo.setMensualidad(400.00);
+        maestroNuevo.setTelefono("2281729482");
+        maestroNuevo.setUsuario("robert");
         MaestroDAO instance = new MaestroDAO();
         List<persistencia.Maestro> expResult = new ArrayList<>();
         expResult.add(maestroNuevo);
         List<persistencia.Maestro> result = instance.buscarMaestro(nombre);
         assertEquals(expResult, result);
-        
+
     }
-    
+
     @Test
     public void testBuscarMaestroFallido() {
         System.out.println("buscarMaestroFallido");
@@ -100,7 +109,49 @@ public class MaestroDAOTest {
         List<persistencia.Maestro> expResult = new ArrayList<persistencia.Maestro>();
         List<persistencia.Maestro> result = instance.buscarMaestro(nombre);
         assertEquals(expResult, result);
-        
+
     }
-    
+
+     */
+    @Test
+    public void testEditarMaestro() {
+        System.out.println("editarMaestroExitoso");
+        persistencia.Maestro maestroEditado = new persistencia.Maestro();
+
+        maestroEditado.setNombre("Francisco");
+        maestroEditado.setApellidos("Maldonado");
+        maestroEditado.setCorreoElectronico("francisco@hotmail.com");
+        maestroEditado.setEstaActivo(0);
+        maestroEditado.setFechaCorte(null);
+        maestroEditado.setRutaFoto("senor-lapiz.jpg");
+        maestroEditado.setMensualidad(400.00);
+        maestroEditado.setTelefono("2281735478");
+        maestroEditado.setUsuario("robert");
+        MaestroDAO instance = new MaestroDAO();
+        boolean expResult = true;
+        boolean result = instance.editarMaestro(maestroEditado);
+        assertEquals(expResult, result);
+
+    }
+
+    @Test
+    public void testEditarMaestroFallido() {
+        System.out.println("editarMaestroFallido");
+        persistencia.Maestro maestroEditado = new persistencia.Maestro();
+
+        maestroEditado.setNombre(null);
+        maestroEditado.setApellidos(null);
+        maestroEditado.setCorreoElectronico("alan@hotmail.com");
+        maestroEditado.setEstaActivo(0);
+        maestroEditado.setFechaCorte(null);
+        maestroEditado.setRutaFoto("senor-lapiz.jpg");
+        maestroEditado.setMensualidad(400.00);
+        maestroEditado.setTelefono("2281729482");
+        maestroEditado.setUsuario(null);
+        MaestroDAO instance = new MaestroDAO();
+        boolean expResult = false;
+        boolean result = instance.editarMaestro(maestroEditado);
+        assertEquals(expResult, result);
+    }
+
 }

@@ -82,8 +82,8 @@ public class VentanaRegistrarMaestroController implements Initializable {
 
     @FXML
     private void realizarRegistro(ActionEvent event) throws NoSuchAlgorithmException {
+        boolean cantidadCorrecta = true;
         CuentaDAO cuentaDAO = new CuentaDAO();
-
         MaestroDAO maestroDAO = new MaestroDAO();
         Cuenta cuenta = new Cuenta();
 
@@ -94,38 +94,48 @@ public class VentanaRegistrarMaestroController implements Initializable {
         } else if (Utileria.validarCorreo(campoCorreoElectronico.getText())) {
             if (!cuentaDAO.verificarNombreUsuarioRepetido(campoUsuario.getText())) {
 
-                cuenta.setTipoCuenta("Maestro");
-                cuenta.setUsuario(campoUsuario.getText());
-                cuenta.setContraseña(Utileria.cifrarContrasena(campoContraseña.getText()));
-                if (cuentaDAO.crearCuenta(cuenta)) {
-
-                    maestro.setNombre(campoNombre.getText());
-                    maestro.setApellidos(campoApellidos.getText());
-                    maestro.setCorreoElectronico(campoCorreoElectronico.getText());
-                    maestro.setTelefono(campoTelefono.getText());
-                    maestro.setEstaActivo(0);
-                    maestro.setFechaCorte(null);
-                    maestro.setRutaFoto(rutaImagen);
+                try {
                     maestro.setMensualidad(Double.parseDouble(campoCantidadAPagar.getText()));
-                    maestro.setUsuario(campoUsuario.getText());
+                } catch (NumberFormatException ex) {
+                    DialogosController.mostrarMensajeInformacion("Dato incorrecto", "Las letras no son una cantidad", "Debe ingresar una cantidad numérica");
+                    cantidadCorrecta = false;
+                }
 
-                    if (maestroDAO.registrarMaestro(maestro)) {
-                        DialogosController.mostrarMensajeInformacion("Registro exitoso", "El maestro se ha registrado correctamente", "El maestro se ha registrado correctamente");
-                        campoApellidos.clear();
-                        campoCantidadAPagar.clear();
-                        campoContraseña.clear();
-                        campoCorreoElectronico.clear();
-                        campoNombre.clear();
-                        campoTelefono.clear();
-                        campoUsuario.clear();
-                        imagenPerfil.setImage(null);
+                if (cantidadCorrecta) {
+
+                    cuenta.setTipoCuenta("Maestro");
+                    cuenta.setUsuario(campoUsuario.getText());
+                    cuenta.setContraseña(Utileria.cifrarContrasena(campoContraseña.getText()));
+                    if (cuentaDAO.crearCuenta(cuenta)) {
+
+                        maestro.setNombre(campoNombre.getText());
+                        maestro.setApellidos(campoApellidos.getText());
+                        maestro.setCorreoElectronico(campoCorreoElectronico.getText());
+                        maestro.setTelefono(campoTelefono.getText());
+                        maestro.setEstaActivo(0);
+                        maestro.setFechaCorte(null);
+                        maestro.setRutaFoto(rutaImagen);
+                        maestro.setUsuario(campoUsuario.getText());
+
+                        if (maestroDAO.registrarMaestro(maestro)) {
+                            DialogosController.mostrarMensajeInformacion("Registro exitoso", "El maestro se ha registrado correctamente", "El maestro se ha registrado correctamente");
+                            campoApellidos.clear();
+                            campoCantidadAPagar.clear();
+                            campoContraseña.clear();
+                            campoCorreoElectronico.clear();
+                            campoNombre.clear();
+                            campoTelefono.clear();
+                            campoUsuario.clear();
+                            imagenPerfil.setImage(null);
+
+                        } else {
+                            DialogosController.mostrarMensajeInformacion("", "Registro no exitoso", "El maestro no se ha registrado correctamente");
+                        }
 
                     } else {
                         DialogosController.mostrarMensajeInformacion("", "Registro no exitoso", "El maestro no se ha registrado correctamente");
                     }
 
-                } else {
-                    DialogosController.mostrarMensajeInformacion("", "Registro no exitoso", "El maestro no se ha registrado correctamente");
                 }
 
             } else {
@@ -172,11 +182,12 @@ public class VentanaRegistrarMaestroController implements Initializable {
             Process process = builder.start();
             rutaImagen = nombreArchivo;
             maestro.setRutaFoto(rutaImagen);
-        }
 
-        if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 140, 140, false, true, true);
-            imagenPerfil.setImage(foto);
+            if (maestro.getRutaFoto() != null) {
+                Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 140, 140, false, true, true);
+                imagenPerfil.setImage(foto);
+            }
+
         }
 
         return rutaImagen;

@@ -21,7 +21,7 @@ public class PagoMaestroDAO implements IPagoMaestro {
     public boolean registrarPagoMaestro(PagoMaestro pagoMaestro) {
         boolean registroPagoExitoso = false;
 
-        if (pagoMaestro != null) {
+        if (pagoMaestro.getUsuario() != null) {
             registroPagoExitoso = true;
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
 
