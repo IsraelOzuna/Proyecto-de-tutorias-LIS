@@ -19,9 +19,10 @@ public class PagoMaestroDAO implements IPagoMaestro {
 
     @Override
     public boolean registrarPagoMaestro(PagoMaestro pagoMaestro) {
-        boolean registroPagoExitoso = true;
+        boolean registroPagoExitoso = false;
 
         if (pagoMaestro != null) {
+            registroPagoExitoso = true;
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
 
             PagomaestroJpaController pagomaestroController = new PagomaestroJpaController(entityManagerFactory);
