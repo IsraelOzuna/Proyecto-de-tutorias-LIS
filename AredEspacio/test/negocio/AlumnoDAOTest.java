@@ -136,7 +136,7 @@ public class AlumnoDAOTest {
     }
     
     @Test
-    public void editarAlumnoExitosoFallido(){
+    public void editarAlumnoFallido(){
         persistencia.Alumno alumno = null;        
         AlumnoDAO alumnoDAO = new AlumnoDAO();
         boolean expResult = false;        
