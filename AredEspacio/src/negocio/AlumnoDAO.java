@@ -1,12 +1,12 @@
 package negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import persistencia.AlumnoJpaController;
-import persistencia.Grupo;
 
 public class AlumnoDAO implements IAlumno {
 
@@ -85,14 +85,19 @@ public class AlumnoDAO implements IAlumno {
     }
 
     @Override
-    public List<persistencia.Grupo> encontrarGruposAlumno(int idAlumno) {
-        List<persistencia.Grupo> gruposEncontrados;
+    public List<String> encontrarGruposAlumno(int idAlumno) {
+        List<persistencia.Grupo> gruposEncontrados;    
+        List<String> gruposAlumno = new ArrayList();
         
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
         AlumnoJpaController alumnoJpaController = new AlumnoJpaController(entityManagerFactory);
                         
-        gruposEncontrados = alumnoJpaController.obtenerGruposAlumno(idAlumno);             
+        gruposEncontrados = alumnoJpaController.obtenerGruposAlumno(idAlumno);  
         
-        return gruposEncontrados;
+        for(int i = 0; i < gruposEncontrados.size(); i ++){
+            gruposAlumno.add(gruposEncontrados.get(i).getNombreGrupo());
+        }
+        
+        return gruposAlumno;
     }
 }

@@ -99,7 +99,7 @@ public class VentanaInformacionAlumnosController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRegistrarMensualidadAlumno.fxml"));
         Parent root = (Parent) loader.load();
         VentanaRegistrarMensualidadAlumnoController ventanaRegistrarMensualidad = loader.getController();
-        //ventanaRegistrarMensualidad.obtenerMaestro(maestro);        
+        ventanaRegistrarMensualidad.llenarDatos(alumno.getRutaFoto(), alumno.getNombre(), alumno.getApellidos(), alumno.getIdAlumno());            
         panelPrincipal.getChildren().add(root);
     }
 }

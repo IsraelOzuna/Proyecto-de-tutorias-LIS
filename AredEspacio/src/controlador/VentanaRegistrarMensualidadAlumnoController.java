@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -12,10 +13,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import negocio.AlumnoDAO;
+import negocio.PagoInscripcionAlumnoDAO;
 import persistencia.Alumno;
-import persistencia.Grupo;
+import negocio.PagoInscripcionAlumno;
 
 /**
  * FXML Controller class
@@ -33,39 +38,84 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
     @FXML
     private Label etiquetaMonto;
     @FXML
-    private JFXComboBox<?> comboGruposAlumno;
+    private JFXComboBox<String> comboGruposAlumno;
     @FXML
     private AnchorPane panelTrasero;
-    private List<persistencia.Grupo> gruposAlumno;
+    @FXML
+    private ImageView imagenPerfil;
+    @FXML
+    private TextField campoMontoPagar;
+    private List<String> gruposAlumno;
+    private int idAlumno;
+    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
     }
 
     @FXML
-    public void cerrarDetalles(ActionEvent event) {
+    private void registrarInscripcion(ActionEvent event) {
+        boolean cantidadValida = true;
+        Date fechaPago = new Date();
+        if (comboGruposAlumno.getSelectionModel().getSelectedItem() != null && !campoMontoPagar.getText().isEmpty()) {
+            try {
+                Double.parseDouble(campoMontoPagar.getText());
+            } catch (NumberFormatException ex) {
+                DialogosController.mostrarMensajeInformacion("Invalido", "Cantidad invalida", "Ingresa una cantidad valida");
+                cantidadValida = false;
+            }
+            if (cantidadValida) {
+                PagoInscripcionAlumno pagoAlumno = new PagoInscripcionAlumno();
+                PagoInscripcionAlumnoDAO pagoInscripcion = new PagoInscripcionAlumnoDAO();
+                
+                pagoAlumno.setCantidad(Double.parseDouble(campoMontoPagar.getText()));
+                pagoAlumno.setFechaPagoInscripcion(fechaPago);
+                pagoAlumno.setIdAlumno(idAlumno);
+                pagoAlumno.setNombreGrupo(comboGruposAlumno.getValue());
+                pagoAlumno.setTipoPago('1');
+                
+                if(pagoInscripcion.registrarInscripcion(pagoAlumno, idAlumno, comboGruposAlumno.getValue())){
+                    DialogosController.mostrarMensajeInformacion("", "Registro de pago exitoso", "El pago se ha registrado correctamente");
+                    panelTrasero.setVisible(false);
+                }
+            }
+
+        }
+    }
+
+    @FXML
+    private void cerrarDetalles(ActionEvent event) {
         panelTrasero.setVisible(false);
     }
-    
-    private void llenarComboGrupo(List<?> grupos){        
-        ObservableList<String> nombreGrupos = FXCollections.observableArrayList();
-        nombreGrupos.addAll(obtenerNombreGrupos(gruposAlumno));
+
+    public void llenarDatos(String rutaFotoAlumno, String nombreAlumno, String apellidosAlumno, int idAlumno) {
+        this.idAlumno = idAlumno;
+        etiquetaNombreAlumno.setText(nombreAlumno + " " + apellidosAlumno);
+        if (rutaFotoAlumno != null) {
+            Image foto = new Image("imagenesAlumnos/" + rutaFotoAlumno, 100, 100, false, true, true);
+            imagenPerfil.setImage(foto);
+        }
+        llenarComboGrupos();
     }
-    
-    private ArrayList<String> obtenerNombreGrupos(List<persistencia.Grupo> gruposAlumno){        
+
+    private ArrayList<String> obtenerNombreGrupos(List<String> gruposAlumno) {
         ArrayList<String> nombreGrupos = new ArrayList();
         AlumnoDAO alumnoDAO = new AlumnoDAO();
-        Alumno alumno = new Alumno();        
-        gruposAlumno = alumnoDAO.encontrarGruposAlumno(alumno.getIdAlumno());
-        for(Grupo grupo:gruposAlumno){
-            nombreGrupos.add(grupo.getNombreGrupo());
+
+        gruposAlumno = alumnoDAO.encontrarGruposAlumno(idAlumno);
+        for (int i = 0; i < gruposAlumno.size(); i++) {
+            nombreGrupos.add(gruposAlumno.get(i));
         }
-        
         return nombreGrupos;
     }
 
+    private void llenarComboGrupos() {
+        ObservableList<String> nombreGrupos = FXCollections.observableArrayList();
+        nombreGrupos.addAll(obtenerNombreGrupos(gruposAlumno));
+        comboGruposAlumno.setItems(nombreGrupos);
+    }
 }

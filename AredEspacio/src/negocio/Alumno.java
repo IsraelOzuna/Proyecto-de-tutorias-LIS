@@ -1,6 +1,5 @@
 package negocio;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class Alumno {
@@ -11,7 +10,7 @@ public class Alumno {
     private String correoElectronico;
     private Date fechaNacimiento;
     private String rutaFoto;
-
+    
     public String getNombre() {
         return nombre;
     }
