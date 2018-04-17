@@ -18,9 +18,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import negocio.AlumnoDAO;
-import negocio.PagoInscripcionAlumnoDAO;
+import negocio.PagoMensualidadAlumnoDAO;
 import persistencia.Alumno;
-import negocio.PagoInscripcionAlumno;
+import negocio.PagoMensualidadAlumno;
 
 /**
  * FXML Controller class
@@ -69,8 +69,8 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
                 cantidadValida = false;
             }
             if (cantidadValida) {
-                PagoInscripcionAlumno pagoAlumno = new PagoInscripcionAlumno();
-                PagoInscripcionAlumnoDAO pagoInscripcion = new PagoInscripcionAlumnoDAO();
+                PagoMensualidadAlumno pagoAlumno = new PagoMensualidadAlumno();
+                PagoMensualidadAlumnoDAO pagoInscripcion = new PagoMensualidadAlumnoDAO();
                 
                 pagoAlumno.setCantidad(Double.parseDouble(campoMontoPagar.getText()));
                 pagoAlumno.setFechaPagoInscripcion(fechaPago);
@@ -78,7 +78,7 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
                 pagoAlumno.setNombreGrupo(comboGruposAlumno.getValue());
                 pagoAlumno.setTipoPago('1');
                 
-                if(pagoInscripcion.registrarInscripcion(pagoAlumno, idAlumno, comboGruposAlumno.getValue())){
+                if(pagoInscripcion.registrarMensualidad(pagoAlumno, idAlumno, comboGruposAlumno.getValue())){
                     DialogosController.mostrarMensajeInformacion("", "Registro de pago exitoso", "El pago se ha registrado correctamente");
                     panelTrasero.setVisible(false);
                 }

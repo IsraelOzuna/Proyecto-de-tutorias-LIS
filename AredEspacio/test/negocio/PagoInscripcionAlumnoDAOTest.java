@@ -44,7 +44,7 @@ public class PagoInscripcionAlumnoDAOTest {
     }
 
     /**
-     * Test of registrarInscripcion method, of class PagoInscripcionAlumnoDAO.
+     * Test of registrarInscripcion method, of class PagoMensualidadAlumnoDAO.
      */
     @Test
     public void testRegistrarInscripcionExitoso() {
@@ -56,7 +56,7 @@ public class PagoInscripcionAlumnoDAOTest {
         } catch (ParseException ex) {
             Logger.getLogger(PagoInscripcionAlumnoDAOTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        PagoInscripcionAlumno pagoAlumno = new PagoInscripcionAlumno();
+        PagoMensualidadAlumno pagoAlumno = new PagoMensualidadAlumno();
         persistencia.Alumno alumno = new persistencia.Alumno();
         alumno.setIdAlumno(17);
         persistencia.Grupo grupo = new persistencia.Grupo();
@@ -67,22 +67,22 @@ public class PagoInscripcionAlumnoDAOTest {
         pagoAlumno.setNombreGrupo(grupo.getNombreGrupo());
         pagoAlumno.setTipoPago('1');
 
-        PagoInscripcionAlumnoDAO pagoInscripcion = new PagoInscripcionAlumnoDAO();
+        PagoMensualidadAlumnoDAO pagoInscripcion = new PagoMensualidadAlumnoDAO();
 
         boolean expResult = true;
-        boolean result = pagoInscripcion.registrarInscripcion(pagoAlumno, alumno.getIdAlumno(), grupo.getNombreGrupo());
+        boolean result = pagoInscripcion.registrarMensualidad(pagoAlumno, alumno.getIdAlumno(), grupo.getNombreGrupo());
         assertEquals(expResult, result);
     }
 
     @Test
     public void testRegistrarInscripcionFallido() {
-        PagoInscripcionAlumno pagoInscripcion = null;
+        PagoMensualidadAlumno pagoInscripcion = null;
         int idAlumno = 0;
         String nombreGrupo = null;
-        PagoInscripcionAlumnoDAO pagoInscripcionAlumnoDAO = new PagoInscripcionAlumnoDAO();
+        PagoMensualidadAlumnoDAO pagoInscripcionAlumnoDAO = new PagoMensualidadAlumnoDAO();
 
         boolean expResult = false;
-        boolean result = pagoInscripcionAlumnoDAO.registrarInscripcion(pagoInscripcion, idAlumno, nombreGrupo);
+        boolean result = pagoInscripcionAlumnoDAO.registrarMensualidad(pagoInscripcion, idAlumno, nombreGrupo);
         assertEquals(expResult, result);
     }
 

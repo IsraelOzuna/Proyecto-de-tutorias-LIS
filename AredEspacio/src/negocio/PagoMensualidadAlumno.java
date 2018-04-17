@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author iro19
  */
-public class PagoInscripcionAlumno {
+public class PagoMensualidadAlumno {
     private Date fechaPagoInscripcion;
     private char tipoPago;
     private Double cantidad;

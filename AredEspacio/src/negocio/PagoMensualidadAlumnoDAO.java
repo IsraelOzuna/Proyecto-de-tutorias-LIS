@@ -14,10 +14,10 @@ import persistencia.GrupoJpaController;
  *
  * @author iro19
  */
-public class PagoInscripcionAlumnoDAO implements IPagoInscripcionAlumno {
+public class PagoMensualidadAlumnoDAO implements IPagoMensualidadAlumno {
 
     @Override
-    public boolean registrarInscripcion(PagoInscripcionAlumno inscripcionAlumno, int idAlumno, String nombreGrupo) {
+    public boolean registrarMensualidad(PagoMensualidadAlumno inscripcionAlumno, int idAlumno, String nombreGrupo) {
         boolean pagoInscripcionExitoso = true;
 
         if (inscripcionAlumno != null) {
@@ -32,7 +32,7 @@ public class PagoInscripcionAlumnoDAO implements IPagoInscripcionAlumno {
                 alumno = encontrarAlumno.findAlumno(idAlumno);
                 grupo = encontrarGrupo.findGrupo(nombreGrupo);
             } catch (Exception ex) {
-                Logger.getLogger(PagoInscripcionAlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PagoMensualidadAlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             persistencia.Pagoalumno pagoNuevo = new persistencia.Pagoalumno();
@@ -45,7 +45,7 @@ public class PagoInscripcionAlumnoDAO implements IPagoInscripcionAlumno {
                 pagoMensualidadController.create(pagoNuevo);
             } catch (Exception ex) {
                 pagoInscripcionExitoso = false;
-                Logger.getLogger(PagoInscripcionAlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PagoMensualidadAlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         } else {

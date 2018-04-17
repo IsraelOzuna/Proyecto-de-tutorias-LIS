@@ -174,7 +174,8 @@ public class VentanaRegistrarMaestroController implements Initializable {
         if (archivoSeleccionado != null) {
             String rutaOrigen = archivoSeleccionado.getAbsolutePath();
             String nombreArchivo = archivoSeleccionado.getName();
-            String rutaNueva = "C:\\Users\\irdev\\OneDrive\\Documentos\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesMaestros";
+            //String rutaNueva = "C:\\Users\\irdev\\OneDrive\\Documentos\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesMaestros";
+            String rutaNueva = "C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesAlumnos";
             StringBuilder comando = new StringBuilder();
             comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
             ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
