@@ -26,26 +26,24 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Equipo
+ * @author Renato
  */
 @Entity
 @Table(name = "grupo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Grupo.findAll", query = "SELECT g FROM Grupo g"),
-    @NamedQuery(name = "Grupo.findByNombreGrupo", query = "SELECT g FROM Grupo g WHERE g.nombreGrupo = :nombreGrupo"),
-    @NamedQuery(name = "Grupo.findByFechaPago", query = "SELECT g FROM Grupo g WHERE g.fechaPago = :fechaPago"),
-    @NamedQuery(name = "Grupo.findByMensualidad", query = "SELECT g FROM Grupo g WHERE g.mensualidad = :mensualidad")})
+    @NamedQuery(name = "Grupo.findAll", query = "SELECT g FROM Grupo g")
+    , @NamedQuery(name = "Grupo.findByNombreGrupo", query = "SELECT g FROM Grupo g WHERE g.nombreGrupo = :nombreGrupo")
+    , @NamedQuery(name = "Grupo.findByFechaPago", query = "SELECT g FROM Grupo g WHERE g.fechaPago = :fechaPago")
+    , @NamedQuery(name = "Grupo.findByMensualidad", query = "SELECT g FROM Grupo g WHERE g.mensualidad = :mensualidad")
+    , @NamedQuery(name = "Grupo.findByInscripcion", query = "SELECT g FROM Grupo g WHERE g.inscripcion = :inscripcion")})
 public class Grupo implements Serializable {
+
+    @Column(name = "estaActivo")
+    private Integer estaActivo;
 
     @OneToMany(mappedBy = "nombreGrupo")
     private Collection<Pagoalumno> pagoalumnoCollection;
-
-    @ManyToMany(mappedBy = "grupoCollection")
-    private Collection<Alumno> alumnoCollection;
-
-    @Column(name = "inscripcion")
-    private Double inscripcion;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -58,6 +56,10 @@ public class Grupo implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "mensualidad")
     private Double mensualidad;
+    @Column(name = "inscripcion")
+    private Double inscripcion;
+    @ManyToMany(mappedBy = "grupoCollection")
+    private Collection<Alumno> alumnoCollection;
     @JoinColumn(name = "usuario", referencedColumnName = "usuario")
     @ManyToOne
     private Cuenta usuario;
@@ -93,6 +95,23 @@ public class Grupo implements Serializable {
         this.mensualidad = mensualidad;
     }
 
+    public Double getInscripcion() {
+        return inscripcion;
+    }
+
+    public void setInscripcion(Double inscripcion) {
+        this.inscripcion = inscripcion;
+    }
+
+    @XmlTransient
+    public Collection<Alumno> getAlumnoCollection() {
+        return alumnoCollection;
+    }
+
+    public void setAlumnoCollection(Collection<Alumno> alumnoCollection) {
+        this.alumnoCollection = alumnoCollection;
+    }
+
     public Cuenta getUsuario() {
         return usuario;
     }
@@ -126,23 +145,6 @@ public class Grupo implements Serializable {
         return "persistencia.Grupo[ nombreGrupo=" + nombreGrupo + " ]";
     }
 
-    public Double getInscripcion() {
-        return inscripcion;
-    }
-
-    public void setInscripcion(Double inscripcion) {
-        this.inscripcion = inscripcion;
-    }
-
-    @XmlTransient
-    public Collection<Alumno> getAlumnoCollection() {
-        return alumnoCollection;
-    }
-
-    public void setAlumnoCollection(Collection<Alumno> alumnoCollection) {
-        this.alumnoCollection = alumnoCollection;
-    }
-
     @XmlTransient
     public Collection<Pagoalumno> getPagoalumnoCollection() {
         return pagoalumnoCollection;
@@ -150,6 +152,14 @@ public class Grupo implements Serializable {
 
     public void setPagoalumnoCollection(Collection<Pagoalumno> pagoalumnoCollection) {
         this.pagoalumnoCollection = pagoalumnoCollection;
+    }
+
+    public Integer getEstaActivo() {
+        return estaActivo;
+    }
+
+    public void setEstaActivo(Integer estaActivo) {
+        this.estaActivo = estaActivo;
     }
     
 }

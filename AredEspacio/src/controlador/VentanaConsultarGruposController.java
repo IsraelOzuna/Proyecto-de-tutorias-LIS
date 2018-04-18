@@ -51,6 +51,7 @@ public class VentanaConsultarGruposController implements Initializable {
     private Button botonCrearGrupo;
     @FXML
     private AnchorPane panelConsultarGrupos;
+    
 
     
     
@@ -72,7 +73,10 @@ public class VentanaConsultarGruposController implements Initializable {
         final ObservableList<Grupo> tablaGrupoSel = tablaGrupos.getSelectionModel().getSelectedItems();
         if(listaGrupos!=null){
             for(int i=0; i<listaGrupos.size(); i++){
-            grupos.add(listaGrupos.get(i));
+                if(listaGrupos.get(i).getEstaActivo()==1){
+                    grupos.add(listaGrupos.get(i));
+                }
+                
             }
         }
         tablaGrupos.setOnMousePressed(new EventHandler<MouseEvent>() {

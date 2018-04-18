@@ -4,16 +4,9 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,20 +15,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import javafx.util.Callback;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.transform.Transformer;
@@ -43,9 +30,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import negocio.CuentaDAO;
 import negocio.GrupoDAO;
-import negocio.MaestroDAO;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -53,7 +38,6 @@ import org.w3c.dom.Element;
 import persistencia.Cuenta;
 import persistencia.Grupo;
 import persistencia.Horario;
-import persistencia.Maestro;
 
 public class VentanaCrearGrupoController implements Initializable {
 
@@ -100,11 +84,10 @@ public class VentanaCrearGrupoController implements Initializable {
     private static int dobleClick=0;
     private static int fila;
     private static int columna;
-    
     ObservableList<Horario> horarios;
-    
     @FXML
     private Label etiquetaMaestro;
+    private String rutaXML="C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\Archivos\\Horarios.xml";
  
     public void inicializarTablaHorario(){
         columnaHorario.setCellValueFactory(new PropertyValueFactory<Horario, String>("hora"));
@@ -126,8 +109,7 @@ public class VentanaCrearGrupoController implements Initializable {
     public void llenarTabla(){
         try{
             //File inputFile = new File("/Archivos/Horarios.xml");
-            //File inputFile = new File("C:\\Users\\Renato\\Documents\\NetBeansProjects\\AredEspacio\\src\\Archivos\\Horarios.xml");
-            File inputFile = new File("C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\Archivos\\Horarios.xml");
+            File inputFile = new File(rutaXML);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
@@ -421,8 +403,10 @@ public class VentanaCrearGrupoController implements Initializable {
                 nuevoGrupo.setInscripcion(Double.parseDouble(campoInscripcion.getText()));
                 nuevoGrupo.setMensualidad(Double.parseDouble(campoMensualidad.getText()));
                 nuevoGrupo.setFechaPago(new Date());
+                nuevoGrupo.setEstaActivo(1);
                 if(nuevoGrupoDAO.crearGrupo(nuevoGrupo)){
                     registrarHorarioGrupo();
+                    DialogosController.mostrarMensajeInformacion("Creado", "El grupo ha sido creado", "Grupo creado exitosamente");
                     FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
                     Parent root = (Parent) loader.load();
                     VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
@@ -474,8 +458,7 @@ public class VentanaCrearGrupoController implements Initializable {
             Horario horarioActualizar= lista.get(i);
            
             try {
-                    //File inputFile = new File("C:\\Users\\Renato\\Documents\\NetBeansProjects\\AredEspacio\\src\\Archivos\\Horarios.xml");
-                    File inputFile = new File("C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\Archivos\\Horarios.xml");
+                    File inputFile = new File(rutaXML);
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                     Document doc = dBuilder.parse(inputFile);
@@ -624,8 +607,7 @@ public class VentanaCrearGrupoController implements Initializable {
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();
                 DOMSource source = new DOMSource(doc);
-                //StreamResult result = new StreamResult(new File("C:\\Users\\Renato\\Documents\\NetBeansProjects\\AredEspacio\\src\\Archivos\\Horarios.xml"));
-                StreamResult result = new StreamResult(new File ("C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\Archivos\\Horarios.xml"));
+                StreamResult result = new StreamResult(new File(rutaXML));
                 transformer.transform(source, result);
             }
         }

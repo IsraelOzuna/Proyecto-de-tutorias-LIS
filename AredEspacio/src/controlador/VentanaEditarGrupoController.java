@@ -91,6 +91,7 @@ public class VentanaEditarGrupoController implements Initializable {
     private static int columna;
     @FXML
     private AnchorPane panelEditarGrupo;
+    private String rutaXML="C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\Archivos\\Horarios.xml";
     
     public void inicializarTablaHorario(){
         columnaHorario.setCellValueFactory(new PropertyValueFactory<Horario, String>("hora"));
@@ -231,8 +232,7 @@ public class VentanaEditarGrupoController implements Initializable {
     
     public void llenarTabla(){
         try{
-            //File inputFile = new File("C:\\Users\\Renato\\Documents\\NetBeansProjects\\AredEspacio\\src\\Archivos\\Horarios.xml");
-            File inputFile = new File("C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\Archivos\\Horarios.xml");
+            File inputFile = new File(rutaXML);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(inputFile);
@@ -409,6 +409,7 @@ public class VentanaEditarGrupoController implements Initializable {
                 grupoEditar.setMensualidad(Double.parseDouble(campoMensualidad.getText()));
                 if(nuevoGrupoDAO.editarGrupo(grupoEditar)){
                     registrarHorarioGrupo();
+                    DialogosController.mostrarMensajeInformacion("Editado", "El grupo ha sido editado", "El grupo fué editado correctamente");
                     FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
                     Parent root = (Parent) loader.load();
                     VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
@@ -444,8 +445,7 @@ public class VentanaEditarGrupoController implements Initializable {
             Horario horarioActualizar= lista.get(i);
            
             try {
-                    //File inputFile = new File("C:\\Users\\Renato\\Documents\\NetBeansProjects\\AredEspacio\\src\\Archivos\\Horarios.xml");
-                    File inputFile = new File("C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\Archivos\\Horarios.xml");
+                    File inputFile = new File(rutaXML);
                     DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                     DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                     Document doc = dBuilder.parse(inputFile);
@@ -593,8 +593,7 @@ public class VentanaEditarGrupoController implements Initializable {
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();
                 DOMSource source = new DOMSource(doc);
-                //StreamResult result = new StreamResult(new File("C:\\Users\\Renato\\Documents\\NetBeansProjects\\AredEspacio\\src\\Archivos\\Horarios.xml"));
-                StreamResult result = new StreamResult(new File("C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\Archivos\\Horarios.xml"));
+                StreamResult result = new StreamResult(new File(rutaXML));
                 transformer.transform(source, result);
             }
         }
