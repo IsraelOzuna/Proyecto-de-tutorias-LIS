@@ -100,6 +100,7 @@ public class GrupoDAO implements IGrupo{
     @Override
     public boolean editarGrupo(Grupo grupoEditar) {
         boolean grupoEditado=true;
+        grupoEditar.setEstaActivo(1);
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
         GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         try{

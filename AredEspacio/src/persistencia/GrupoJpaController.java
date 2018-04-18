@@ -100,28 +100,11 @@ public class GrupoJpaController implements Serializable {
             Grupo persistentGrupo = em.find(Grupo.class, grupo.getNombreGrupo());
             Cuenta usuarioOld = persistentGrupo.getUsuario();
             Cuenta usuarioNew = grupo.getUsuario();
-            Collection<Alumno> alumnoCollectionOld = persistentGrupo.getAlumnoCollection();
-            Collection<Alumno> alumnoCollectionNew = grupo.getAlumnoCollection();
-            Collection<Pagoalumno> pagoalumnoCollectionOld = persistentGrupo.getPagoalumnoCollection();
-            Collection<Pagoalumno> pagoalumnoCollectionNew = grupo.getPagoalumnoCollection();
             if (usuarioNew != null) {
                 usuarioNew = em.getReference(usuarioNew.getClass(), usuarioNew.getUsuario());
                 grupo.setUsuario(usuarioNew);
             }
-            Collection<Alumno> attachedAlumnoCollectionNew = new ArrayList<Alumno>();
-            for (Alumno alumnoCollectionNewAlumnoToAttach : alumnoCollectionNew) {
-                alumnoCollectionNewAlumnoToAttach = em.getReference(alumnoCollectionNewAlumnoToAttach.getClass(), alumnoCollectionNewAlumnoToAttach.getIdAlumno());
-                attachedAlumnoCollectionNew.add(alumnoCollectionNewAlumnoToAttach);
-            }
-            alumnoCollectionNew = attachedAlumnoCollectionNew;
-            grupo.setAlumnoCollection(alumnoCollectionNew);
-            Collection<Pagoalumno> attachedPagoalumnoCollectionNew = new ArrayList<Pagoalumno>();
-            for (Pagoalumno pagoalumnoCollectionNewPagoalumnoToAttach : pagoalumnoCollectionNew) {
-                pagoalumnoCollectionNewPagoalumnoToAttach = em.getReference(pagoalumnoCollectionNewPagoalumnoToAttach.getClass(), pagoalumnoCollectionNewPagoalumnoToAttach.getIdPago());
-                attachedPagoalumnoCollectionNew.add(pagoalumnoCollectionNewPagoalumnoToAttach);
-            }
-            pagoalumnoCollectionNew = attachedPagoalumnoCollectionNew;
-            grupo.setPagoalumnoCollection(pagoalumnoCollectionNew);
+
             grupo = em.merge(grupo);
             if (usuarioOld != null && !usuarioOld.equals(usuarioNew)) {
                 usuarioOld.getGrupoCollection().remove(grupo);
@@ -130,35 +113,6 @@ public class GrupoJpaController implements Serializable {
             if (usuarioNew != null && !usuarioNew.equals(usuarioOld)) {
                 usuarioNew.getGrupoCollection().add(grupo);
                 usuarioNew = em.merge(usuarioNew);
-            }
-            for (Alumno alumnoCollectionOldAlumno : alumnoCollectionOld) {
-                if (!alumnoCollectionNew.contains(alumnoCollectionOldAlumno)) {
-                    alumnoCollectionOldAlumno.getGrupoCollection().remove(grupo);
-                    alumnoCollectionOldAlumno = em.merge(alumnoCollectionOldAlumno);
-                }
-            }
-            for (Alumno alumnoCollectionNewAlumno : alumnoCollectionNew) {
-                if (!alumnoCollectionOld.contains(alumnoCollectionNewAlumno)) {
-                    alumnoCollectionNewAlumno.getGrupoCollection().add(grupo);
-                    alumnoCollectionNewAlumno = em.merge(alumnoCollectionNewAlumno);
-                }
-            }
-            for (Pagoalumno pagoalumnoCollectionOldPagoalumno : pagoalumnoCollectionOld) {
-                if (!pagoalumnoCollectionNew.contains(pagoalumnoCollectionOldPagoalumno)) {
-                    pagoalumnoCollectionOldPagoalumno.setNombreGrupo(null);
-                    pagoalumnoCollectionOldPagoalumno = em.merge(pagoalumnoCollectionOldPagoalumno);
-                }
-            }
-            for (Pagoalumno pagoalumnoCollectionNewPagoalumno : pagoalumnoCollectionNew) {
-                if (!pagoalumnoCollectionOld.contains(pagoalumnoCollectionNewPagoalumno)) {
-                    Grupo oldNombreGrupoOfPagoalumnoCollectionNewPagoalumno = pagoalumnoCollectionNewPagoalumno.getNombreGrupo();
-                    pagoalumnoCollectionNewPagoalumno.setNombreGrupo(grupo);
-                    pagoalumnoCollectionNewPagoalumno = em.merge(pagoalumnoCollectionNewPagoalumno);
-                    if (oldNombreGrupoOfPagoalumnoCollectionNewPagoalumno != null && !oldNombreGrupoOfPagoalumnoCollectionNewPagoalumno.equals(grupo)) {
-                        oldNombreGrupoOfPagoalumnoCollectionNewPagoalumno.getPagoalumnoCollection().remove(pagoalumnoCollectionNewPagoalumno);
-                        oldNombreGrupoOfPagoalumnoCollectionNewPagoalumno = em.merge(oldNombreGrupoOfPagoalumnoCollectionNewPagoalumno);
-                    }
-                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
