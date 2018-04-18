@@ -129,7 +129,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
             nuevoAlumno.setRutaFoto(nombreFoto);
         }
 
-        if (nuevoAlumno.getRutaFoto() != null) {
+        if (nuevoAlumno.getRutaFoto() != null ) {
             Image foto = new Image("imagenesAlumnos/" + nuevoAlumno.getRutaFoto(), 140, 140, false, true, true);
             fotoSeleccionada.setImage(foto);
         }
