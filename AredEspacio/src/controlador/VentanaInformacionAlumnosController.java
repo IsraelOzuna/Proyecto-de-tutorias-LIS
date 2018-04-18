@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import negocio.Utileria;
 import persistencia.Alumno;
 
 /**
@@ -81,13 +82,13 @@ public class VentanaInformacionAlumnosController implements Initializable {
         Calendar fechaNacimiento = Calendar.getInstance();
         fechaNacimiento.setTime(alumno.getFechaNacimiento());
         int dia = fechaNacimiento.get(Calendar.DAY_OF_MONTH);
-        int mes = fechaNacimiento.get(Calendar.MONTH);
+        int mes = fechaNacimiento.get(Calendar.MONTH);        
         int anio = fechaNacimiento.get(Calendar.YEAR);
         
         etiquetaNombre.setText(alumno.getNombre() + " " + alumno.getApellidos());
         etiquetaCorreo.setText(alumno.getCorreoElectronico());
         etiquetaTelefono.setText(alumno.getTelefono());
-        etiquetaFechaNacimiento.setText(dia+"/"+mes+"/"+anio);
+        etiquetaFechaNacimiento.setText(dia+" de "+Utileria.convertirMeses(mes)+" de "+anio);
         if (alumno.getRutaFoto() != null) {
             Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);

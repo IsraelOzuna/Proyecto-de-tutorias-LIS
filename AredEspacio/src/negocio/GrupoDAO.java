@@ -8,7 +8,6 @@ import javax.persistence.Persistence;
 import persistencia.Cuenta;
 import persistencia.CuentaJpaController;
 import persistencia.GrupoJpaController;
-import persistencia.MaestroJpaController;
 public class GrupoDAO implements IGrupo{
 
     @Override

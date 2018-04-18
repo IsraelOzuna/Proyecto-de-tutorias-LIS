@@ -19,7 +19,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import negocio.AlumnoDAO;
 import negocio.PagoMensualidadAlumnoDAO;
-import persistencia.Alumno;
 import negocio.PagoMensualidadAlumno;
 
 /**

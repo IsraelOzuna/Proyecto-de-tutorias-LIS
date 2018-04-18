@@ -141,7 +141,7 @@ public class VentanaEditarAlumnoController implements Initializable {
         campoNombre.setText(alumno.getNombre());
         campoApellidos.setText(alumno.getApellidos());
         campoCorreo.setText(alumno.getCorreoElectronico());
-        campoFechaNacimiennto.setValue(Utileria.mostrarFechaNacimiento(alumno.getFechaNacimiento()));
+        campoFechaNacimiennto.setValue(Utileria.mostrarFechaNacimiento(alumno.getFechaNacimiento()));        
         campoTelefono.setText(alumno.getTelefono());
         if (alumno.getRutaFoto() != null) {
             Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);

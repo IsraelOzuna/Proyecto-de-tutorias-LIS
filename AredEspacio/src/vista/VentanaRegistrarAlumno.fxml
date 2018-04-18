@@ -85,7 +85,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <ImageView fx:id="fotoSeleccionada" fitHeight="140.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="fotoSeleccionada" fitHeight="160.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
             <JFXButton fx:id="botonSeleccionarImagen" onAction="#seleccionarImagen" prefHeight="26.0" prefWidth="186.0" style="-fx-background-color: #CDCDCD;" text="Seleccionar imagen" GridPane.rowIndex="1">
                <font>
                   <Font name="Gill Sans MT Bold" size="14.0" />
