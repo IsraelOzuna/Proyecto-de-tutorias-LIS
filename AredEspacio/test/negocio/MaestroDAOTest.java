@@ -39,7 +39,7 @@ public class MaestroDAOTest {
     public void tearDown() {
     }
 
-    /*   @Test
+    @Test
     public void testRegistrarMaestro() {
         System.out.println("registrarMaestroExitoso");
         Maestro maestro = new Maestro();
@@ -111,22 +111,21 @@ public class MaestroDAOTest {
         assertEquals(expResult, result);
 
     }
-
-     */
+     
     @Test
     public void testEditarMaestro() {
         System.out.println("editarMaestroExitoso");
         persistencia.Maestro maestroEditado = new persistencia.Maestro();
 
-        maestroEditado.setNombre("Francisco");
-        maestroEditado.setApellidos("Maldonado");
+        maestroEditado.setNombre("Alonso");
+        maestroEditado.setApellidos("Tello");
         maestroEditado.setCorreoElectronico("francisco@hotmail.com");
         maestroEditado.setEstaActivo(0);
         maestroEditado.setFechaCorte(null);
         maestroEditado.setRutaFoto("senor-lapiz.jpg");
         maestroEditado.setMensualidad(400.00);
         maestroEditado.setTelefono("2281735478");
-        maestroEditado.setUsuario("robert");
+        maestroEditado.setUsuario("elVitor");
         MaestroDAO instance = new MaestroDAO();
         boolean expResult = true;
         boolean result = instance.editarMaestro(maestroEditado);

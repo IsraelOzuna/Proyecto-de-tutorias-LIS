@@ -80,7 +80,7 @@ public class AlumnoDAOTest {
     @Test
     public void testBuscarAlumnoExitoso() {        
         persistencia.Alumno alumno = new persistencia.Alumno();
-        String fecha = "20/03/2018";
+        String fecha = "01/04/2018";
         DateFormat formato = new SimpleDateFormat("YYYY/MM/DD");
         Date fechaNacimiento = null;
         try {
@@ -88,17 +88,17 @@ public class AlumnoDAOTest {
         } catch (ParseException ex) {
             Logger.getLogger(AlumnoDAOTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        alumno.setIdAlumno(17);
-        alumno.setNombre("Irvin");
-        alumno.setApellidos("Vera");
-        alumno.setCorreoElectronico("irvin@gmail.com");
-        alumno.setTelefono("2281767676");
+        alumno.setIdAlumno(18);
+        alumno.setNombre("Pedro");
+        alumno.setApellidos("Gomez");
+        alumno.setCorreoElectronico("pedro@gmail.com");
+        alumno.setTelefono("2281647283");
         alumno.setFechaNacimiento(fechaNacimiento);       
-        alumno.setRutaFoto("estudiantes-educación-muchacho-en-vidrios-niño-del-alumno-del-alumno-51535682.jpg");
+        alumno.setRutaFoto("alumno.jpg");
         AlumnoDAO alumnoDAO = new AlumnoDAO();
         List<persistencia.Alumno> expResult = new ArrayList<>();
         expResult.add(alumno);
-        List<persistencia.Alumno> result = alumnoDAO.buscarAlumno("Irvin");
+        List<persistencia.Alumno> result = alumnoDAO.buscarAlumno("Pedro");
         assertEquals(expResult, result);
     }
     

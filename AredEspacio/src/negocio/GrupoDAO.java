@@ -79,14 +79,12 @@ public class GrupoDAO implements IGrupo{
 
     @Override
     public boolean eliminarGrupo(Grupo grupoEliminar) {
-        boolean grupoEliminado=false;
-        grupoEliminar.setEstaActivo(0);
+        boolean grupoEliminado=false;        
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
         GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         try{
-            if(editarGrupo(grupoEliminar)){
-                grupoEliminado=true;
-            }
+            grupoJpaController.edit(grupoEliminar);
+            grupoEliminado = true;
             //grupoJpaController.destroy(grupoEliminar.getNombreGrupo());
             
         }catch (Exception ex){

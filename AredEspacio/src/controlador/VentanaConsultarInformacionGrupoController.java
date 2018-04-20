@@ -421,6 +421,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         GrupoDAO nuevoGrupoDAO = new GrupoDAO();
         Grupo grupoEliminar = new Grupo();
         grupoEliminar=nuevoGrupoDAO.adquirirGrupo(nombreGrupo);
+        grupoEliminar.setEstaActivo(0);
         if(nuevoGrupoDAO.eliminarGrupo(grupoEliminar)){
             eliminarHorarioGrupo();
             DialogosController.mostrarMensajeInformacion("Eliminado", "El grupo ha sido eliminado", "El grupo se desactivo corectamente");

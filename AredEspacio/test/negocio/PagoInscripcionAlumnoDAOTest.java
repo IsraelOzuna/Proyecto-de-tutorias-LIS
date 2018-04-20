@@ -58,7 +58,7 @@ public class PagoInscripcionAlumnoDAOTest {
         }
         PagoMensualidadAlumno pagoAlumno = new PagoMensualidadAlumno();
         persistencia.Alumno alumno = new persistencia.Alumno();
-        alumno.setIdAlumno(17);
+        alumno.setIdAlumno(18);
         persistencia.Grupo grupo = new persistencia.Grupo();
         grupo.setNombreGrupo("Danza arabe");
         pagoAlumno.setCantidad(500.00);

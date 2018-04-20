@@ -1,7 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package negocio;
 
 import java.util.Date;
 import java.util.List;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -10,6 +17,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import persistencia.Cuenta;
 import persistencia.Grupo;
+import persistencia.GrupoJpaController;
+import persistencia.exceptions.NonexistentEntityException;
 
 /**
  *
@@ -37,7 +46,9 @@ public class GrupoDAOTest {
     }
 
     @Test
-    public void testCrearGrupoExitoso() {
+    public void testCrearGrupoExitoso() throws NonexistentEntityException {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
+        GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         System.out.println("crearGrupo");
         Cuenta usuario = new Cuenta();
         usuario.setUsuario("Renato");
@@ -50,13 +61,14 @@ public class GrupoDAOTest {
         GrupoDAO instance = new GrupoDAO();
         boolean expResult = true;
         boolean result = instance.crearGrupo(nuevoGrupo);
-        //System.out.println(expResult+" "+ result);
         assertEquals(expResult, result);
-        instance.eliminarGrupo(nuevoGrupo);
+        grupoJpaController.destroy(nuevoGrupo.getNombreGrupo());
     }
     
     @Test
-    public void testAdquirirGrupoExitoso() {
+    public void testAdquirirGrupoExitoso() throws NonexistentEntityException {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
+        GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         System.out.println("adquirirGrupoExitoso");
         String nombreGrupo = "GrupoDePrueba";
         
@@ -66,7 +78,7 @@ public class GrupoDAOTest {
         Grupo nuevoGrupo = new Grupo();
         nuevoGrupo.setNombreGrupo("GrupoDePrueba");
         nuevoGrupo.setUsuario(usuario);
-        nuevoGrupo.setMensualidad(3200.0);
+        nuevoGrupo.setMensualidad(5220.0);
         nuevoGrupo.setInscripcion(340.0);
         
         
@@ -74,7 +86,7 @@ public class GrupoDAOTest {
         Grupo compararGrupo = new Grupo();
         compararGrupo.setNombreGrupo("GrupoDePrueba");
         compararGrupo.setUsuario(usuario);
-        compararGrupo.setMensualidad(3200.0);
+        compararGrupo.setMensualidad(5220.0);
         compararGrupo.setInscripcion(340.0);
         
         GrupoDAO instance = new GrupoDAO();
@@ -82,7 +94,8 @@ public class GrupoDAOTest {
         instance.crearGrupo(nuevoGrupo);
         Grupo result = instance.adquirirGrupo(nombreGrupo);
         assertEquals(expResult, result);
-        instance.eliminarGrupo(nuevoGrupo);
+        grupoJpaController.destroy(nuevoGrupo.getNombreGrupo());
+        
     }
     
     @Test
@@ -94,10 +107,13 @@ public class GrupoDAOTest {
         boolean result = instance.crearGrupo(nuevoGrupo);
         //System.out.println(expResult+" "+ result);
         assertEquals(expResult, result);
+        
     }
     
     @Test 
-    public void testEliminarGrupoExitoso(){
+    public void testEliminarGrupoExitoso() throws NonexistentEntityException{
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
+        GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         System.out.println("eliminarGrupoExitoso");
         String nombreGrupo="GrupoDePrueba";
         
@@ -115,6 +131,7 @@ public class GrupoDAOTest {
         instance.crearGrupo(grupoEliminar);
         boolean result = instance.eliminarGrupo(grupoEliminar);
         assertEquals(expResult, result);
+        grupoJpaController.destroy(grupoEliminar.getNombreGrupo());
     }
     
     @Test
@@ -125,10 +142,13 @@ public class GrupoDAOTest {
         Grupo expResult = null;
         Grupo result = instance.adquirirGrupo(nombreGrupo);
         assertEquals(expResult, result);
+        
     }
     
     @Test
-    public void testEditarGrupoExitoso() {
+    public void testEditarGrupoExitoso() throws NonexistentEntityException {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
+        GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         System.out.println("editarGrupoExitoso");
         Cuenta usuario = new Cuenta();
         usuario.setUsuario("Renato");
@@ -144,7 +164,7 @@ public class GrupoDAOTest {
         nuevoGrupo.setMensualidad(20.0);
         boolean result = instance.editarGrupo(nuevoGrupo);
         assertEquals(expResult, result);
-        instance.eliminarGrupo(nuevoGrupo);
+        grupoJpaController.destroy(nuevoGrupo.getNombreGrupo());
     }  
     
     @Test
@@ -153,7 +173,7 @@ public class GrupoDAOTest {
         Cuenta usuario = new Cuenta();
         usuario.setUsuario("Renato");
         Grupo nuevoGrupo = new Grupo();
-        nuevoGrupo.setNombreGrupo("GrupoDePrueba");
+        nuevoGrupo.setNombreGrupo("GrupoDePrueb");
         nuevoGrupo.setUsuario(usuario);
         nuevoGrupo.setMensualidad(3200.0);
         nuevoGrupo.setInscripcion(340.0);
@@ -163,5 +183,6 @@ public class GrupoDAOTest {
         nuevoGrupo.setMensualidad(20.0);
         boolean result = instance.editarGrupo(nuevoGrupo);
         assertEquals(expResult, result);
+        instance.eliminarGrupo(nuevoGrupo);
     }
 }

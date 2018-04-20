@@ -2,10 +2,10 @@
    <dia nombre="Domingo">
         <ocho-ochoMedia>Salsa</ocho-ochoMedia>
         <ochoMedia-nueve>Salsa</ochoMedia-nueve>
-        <nueve-nueveMedia>Danza arabe</nueve-nueveMedia>
-        <nueveMedia-diez>Danza arabe</nueveMedia-diez>
-        <diez-diezMedia>Danza arabe</diez-diezMedia>
-        <diezMedia-once>Danza arabe</diezMedia-once>
+        <nueve-nueveMedia>Salsa</nueve-nueveMedia>
+        <nueveMedia-diez>Salsa</nueveMedia-diez>
+        <diez-diezMedia>Disponible</diez-diezMedia>
+        <diezMedia-once>Disponible</diezMedia-once>
         <once-onceMedia>Disponible</once-onceMedia>
         <onceMedia-doce>Disponible</onceMedia-doce>
         <doce-doceMedia>Disponible</doce-doceMedia>
@@ -27,10 +27,10 @@
    </dia>
    
    <dia nombre="Lunes">
-        <ocho-ochoMedia>Danza arabe</ocho-ochoMedia>
-        <ochoMedia-nueve>Danza arabe</ochoMedia-nueve>
-        <nueve-nueveMedia>Danza arabe</nueve-nueveMedia>
-        <nueveMedia-diez>Danza arabe</nueveMedia-diez>
+        <ocho-ochoMedia>Disponible</ocho-ochoMedia>
+        <ochoMedia-nueve>Disponible</ochoMedia-nueve>
+        <nueve-nueveMedia>Disponible</nueve-nueveMedia>
+        <nueveMedia-diez>Disponible</nueveMedia-diez>
         <diez-diezMedia>Disponible</diez-diezMedia>
         <diezMedia-once>Disponible</diezMedia-once>
         <once-onceMedia>Disponible</once-onceMedia>
@@ -81,10 +81,10 @@
    </dia>
    
    <dia nombre="Miercoles">
-        <ocho-ochoMedia>Danza arabe</ocho-ochoMedia>
-        <ochoMedia-nueve>Danza arabe</ochoMedia-nueve>
-        <nueve-nueveMedia>Danza arabe</nueve-nueveMedia>
-        <nueveMedia-diez>Danza arabe</nueveMedia-diez>
+        <ocho-ochoMedia>Disponible</ocho-ochoMedia>
+        <ochoMedia-nueve>Disponible</ochoMedia-nueve>
+        <nueve-nueveMedia>Disponible</nueve-nueveMedia>
+        <nueveMedia-diez>Disponible</nueveMedia-diez>
         <diez-diezMedia>Disponible</diez-diezMedia>
         <diezMedia-once>Disponible</diezMedia-once>
         <once-onceMedia>Disponible</once-onceMedia>

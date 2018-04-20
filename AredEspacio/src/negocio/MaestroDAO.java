@@ -49,7 +49,7 @@ public class MaestroDAO implements IMaestro {
         } else {
             maestroRegistradoExitosamente = false;
         }
-        return true;
+        return maestroRegistradoExitosamente;
     }
 
     @Override
