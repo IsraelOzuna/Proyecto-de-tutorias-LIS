@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import negocio.AlumnoDAO;
@@ -62,6 +63,16 @@ public class VentanaEditarAlumnoController implements Initializable {
 
     private Alumno alumno;
     private String nombreFoto;
+    @FXML
+    private Label etiquetaErrorNombre;
+    @FXML
+    private Label etiquetaErrorApellidos;
+    @FXML
+    private Label etiquetaErrorFecha;
+    @FXML
+    private Label etiquetaErrorCorreo;
+    @FXML
+    private Label etiquetaErrorTelefono;
 
     /**
      * Initializes the controller class.
@@ -73,41 +84,42 @@ public class VentanaEditarAlumnoController implements Initializable {
 
     @FXML
     public void guardarNuevosDatos(ActionEvent event) throws IOException {
+        limpiarEtiquetas();
         if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono, campoFechaNacimiennto)) {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreo.getText())) {
-                    AlumnoDAO nuevosDatosAlumno = new AlumnoDAO();
+                    if (esTelefonoValido(campoTelefono.getText())) {
+                        AlumnoDAO nuevosDatosAlumno = new AlumnoDAO();
 
-                    alumno.setNombre(campoNombre.getText());
-                    alumno.setApellidos(campoApellidos.getText());
-                    alumno.setCorreoElectronico(campoCorreo.getText());
-                    alumno.setFechaNacimiento(Date.valueOf(campoFechaNacimiennto.getValue()));
-                    alumno.setTelefono(campoTelefono.getText());
-                    alumno.setRutaFoto(alumno.getRutaFoto());
+                        alumno.setNombre(campoNombre.getText());
+                        alumno.setApellidos(campoApellidos.getText());
+                        alumno.setCorreoElectronico(campoCorreo.getText());
+                        alumno.setFechaNacimiento(Date.valueOf(campoFechaNacimiennto.getValue()));
+                        alumno.setTelefono(campoTelefono.getText());
+                        alumno.setRutaFoto(alumno.getRutaFoto());
 
-                    if (nuevosDatosAlumno.editarAlumno(alumno)) {
-                        DialogosController.mostrarMensajeInformacion("Guardado", "Alumno modificado", "El alumno ha sido modificado exitosamente");
-                        desplegarVentanaBusquedaAlumno();
-                    } else {
-                        DialogosController.mostrarMensajeAdvertencia("Error", "Error al modificar", "Ha ocurrido un error. No se pudo modificar");
+                        if (nuevosDatosAlumno.editarAlumno(alumno)) {
+                            DialogosController.mostrarMensajeInformacion("Guardado", "Alumno modificado", "El alumno ha sido modificado exitosamente");
+                            desplegarVentanaBusquedaAlumno();
+                        } else {
+                            DialogosController.mostrarMensajeAdvertencia("Error", "Error al modificar", "Ha ocurrido un error. No se pudo modificar");
+                        }
                     }
                 } else {
-                    DialogosController.mostrarMensajeInformacion("", "Correo no válido", "El correo ingresado no tiene un formato válido");
+                    etiquetaErrorCorreo.setText("Formato de correo no valido");
                 }
             }
-        } else {
-            DialogosController.mostrarMensajeInformacion("Campo vacio", "Alugún campo esta vacío", "Debe llenar todos los campos requeridos");
         }
     }
 
     @FXML
     public void cancelarRegistro(ActionEvent event) throws IOException {
-        if(existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono, campoFechaNacimiennto)){
+        if (existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono, campoFechaNacimiennto)) {
             desplegarVentanaBusquedaAlumno();
-        }else{
-            if(DialogosController.mostrarMensajeCambios("Salir", "La información se perderá", "La información en los campos que ingresó se perderá")){
-              desplegarVentanaBusquedaAlumno();
-            }                 
+        } else {
+            if (DialogosController.mostrarMensajeCambios("Salir", "La información se perderá", "La información en los campos que ingresó se perderá")) {
+                desplegarVentanaBusquedaAlumno();
+            }
         }
     }
 
@@ -135,13 +147,13 @@ public class VentanaEditarAlumnoController implements Initializable {
         }
         return nombreFoto;
     }
-    
-    public void llenarCampos(Alumno alumno){
+
+    public void llenarCampos(Alumno alumno) {
         this.alumno = alumno;
         campoNombre.setText(alumno.getNombre());
         campoApellidos.setText(alumno.getApellidos());
         campoCorreo.setText(alumno.getCorreoElectronico());
-        campoFechaNacimiennto.setValue(Utileria.mostrarFechaNacimiento(alumno.getFechaNacimiento()));        
+        campoFechaNacimiennto.setValue(Utileria.mostrarFechaNacimiento(alumno.getFechaNacimiento()));
         campoTelefono.setText(alumno.getTelefono());
         if (alumno.getRutaFoto() != null) {
             Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
@@ -154,14 +166,23 @@ public class VentanaEditarAlumnoController implements Initializable {
 
         if (campoNombre.getText().isEmpty()) {
             camposVacios = true;
-        } else if (campoApellidos.getText().isEmpty()) {
+            etiquetaErrorNombre.setText("Campo obligatorio");
+        }
+        if (campoApellidos.getText().isEmpty()) {
             camposVacios = true;
-        } else if (campoCorreo.getText().isEmpty()) {
+            etiquetaErrorApellidos.setText("Campo obligatorio");
+        }
+        if (campoCorreo.getText().isEmpty()) {
             camposVacios = true;
-        } else if (campoTelefono.getText().isEmpty()) {
+            etiquetaErrorCorreo.setText("Campo obligatorio");
+        }
+        if (campoTelefono.getText().isEmpty()) {
             camposVacios = true;
-        } else if (campoFechaNacimiento.getValue() == null) {
+            etiquetaErrorTelefono.setText("Campo obligatorio");
+        }
+        if (campoFechaNacimiento.getValue() == null) {
             camposVacios = true;
+            etiquetaErrorFecha.setText("Campo obligatorio");
         }
         return camposVacios;
     }
@@ -171,18 +192,33 @@ public class VentanaEditarAlumnoController implements Initializable {
 
         if (campoNombre.getText().length() > 30) {
             campoExcedido = true;
-            DialogosController.mostrarMensajeInformacion("Campo excedido", "Campo nombre excedido", "El campo de nombre no puede contener mas de 30 caracteres");
-        } else if (campoApellidos.getText().length() > 30) {
+            etiquetaErrorNombre.setText("No puede contener más de 30 caracteres");
+        }
+        if (campoApellidos.getText().length() > 30) {
             campoExcedido = true;
-            DialogosController.mostrarMensajeInformacion("Campo excedido", "Campo apellidos excedido", "El campo de apellidos no puede contener mas de 30 caracteres");
-        } else if (campoCorreo.getText().length() > 320) {
+            etiquetaErrorApellidos.setText("No puede contener más de 30 caracteres");
+        }
+        if (campoCorreo.getText().length() > 320) {
             campoExcedido = true;
-            DialogosController.mostrarMensajeInformacion("Campo excedido", "Campo correo excedido", "El campo de correo no puede contener mas de 320 caracteres");
-        } else if (campoTelefono.getText().length() > 10) {
+            etiquetaErrorCorreo.setText("No puede contener más de 320 caracteres");
+        }
+        if (campoTelefono.getText().length() > 10) {
             campoExcedido = true;
-            DialogosController.mostrarMensajeInformacion("Campo excedido", "Campo telefono excedido", "El campo de telefono no puede contener mas de 10 caracteres");
+            etiquetaErrorTelefono.setText("No puede contener más de 10 digitos");
         }
         return campoExcedido;
+    }
+
+    private boolean esTelefonoValido(String telefono) {
+        boolean telefonoValido = true;
+        for (int i = 0; i < telefono.length(); i++) {
+            char caracter = telefono.charAt(i);
+            if (!Character.isDigit(caracter)) {
+                telefonoValido = false;
+                etiquetaErrorTelefono.setText("El telefono no puede contener letras");
+            }
+        }
+        return telefonoValido;
     }
 
     public void desplegarVentanaBusquedaAlumno() throws IOException {
@@ -191,5 +227,45 @@ public class VentanaEditarAlumnoController implements Initializable {
         VentanaBuscarController ventanaBuscar = loader.getController();
         ventanaBuscar.obtenerSeccion("Alumnos", panelPrincipal);
         panelPrincipal.getChildren().add(root);
+    }
+
+    private void limpiarEtiquetas() {
+        etiquetaErrorApellidos.setText("");
+        etiquetaErrorCorreo.setText("");
+        etiquetaErrorFecha.setText("");
+        etiquetaErrorNombre.setText("");
+        etiquetaErrorTelefono.setText("");
+    }
+
+    @FXML
+    private void limitarNombre(KeyEvent event) {
+        char caracter = event.getCharacter().charAt(0);
+        if (campoNombre.getText().length() >= 30 || !(Character.isLetter(caracter) || Character.isSpaceChar(caracter))) {
+            event.consume();
+        }
+    }
+
+    @FXML
+    private void limitarApellidos(KeyEvent event) {
+        char caracter = event.getCharacter().charAt(0);
+        if (campoApellidos.getText().length() >= 30 || !(Character.isLetter(caracter) || Character.isSpaceChar(caracter))) {
+            event.consume();
+        }
+    }
+
+    @FXML
+    private void limitarCorreo(KeyEvent event) {
+        if (campoCorreo.getText().length() >= 320) {
+            event.consume();
+        }
+    }
+
+    @FXML
+    private void limitarTelefono(KeyEvent event) {
+        char caracter = event.getCharacter().charAt(0);
+
+        if (campoTelefono.getText().length() >= 10 || !Character.isDigit(caracter)) {
+            event.consume();
+        }
     }
 }

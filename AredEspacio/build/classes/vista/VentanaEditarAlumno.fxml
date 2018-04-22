@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -33,13 +34,13 @@
                   <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="campoNombre" prefHeight="25.0" prefWidth="223.0" GridPane.columnIndex="1" />
+            <TextField fx:id="campoNombre" onKeyTyped="#limitarNombre" prefHeight="25.0" prefWidth="223.0" GridPane.columnIndex="1" />
             <Label fx:id="etiquetaApellidos" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="170.0" text="Apellidos:" textAlignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="campoApellidos" prefHeight="25.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="campoApellidos" onKeyTyped="#limitarApellidos" prefHeight="25.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <DatePicker fx:id="campoFechaNacimiennto" editable="false" prefHeight="25.0" prefWidth="245.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label fx:id="etiquetaFechaNacimiento" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="181.0" text="Fecha de nacimiento:" textAlignment="CENTER" GridPane.rowIndex="2">
                <font>
@@ -51,13 +52,13 @@
                   <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="campoCorreo" prefHeight="25.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="campoCorreo" onKeyTyped="#limitarCorreo" prefHeight="25.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label fx:id="etiquetaTelefono" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="27.0" prefWidth="170.0" text="Teléfono:" textAlignment="CENTER" GridPane.rowIndex="4">
                <font>
                   <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="campoTelefono" prefHeight="25.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="campoTelefono" onKeyTyped="#limitarTelefono" prefHeight="25.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <JFXButton fx:id="botonGuardar" alignment="CENTER" contentDisplay="CENTER" onAction="#guardarNuevosDatos" style="-fx-background-color: #CDCDCD;" text="Guardar" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font name="Gill Sans MT Bold" size="18.0" />
@@ -74,6 +75,46 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
+            <Label fx:id="etiquetaErrorNombre" prefHeight="17.0" prefWidth="253.0" textFill="RED" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="50.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="etiquetaErrorApellidos" prefHeight="17.0" prefWidth="253.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="50.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="etiquetaErrorFecha" prefHeight="17.0" prefWidth="253.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="50.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="etiquetaErrorCorreo" prefHeight="17.0" prefWidth="253.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="50.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="etiquetaErrorTelefono" prefHeight="17.0" prefWidth="253.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="50.0" />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
       <GridPane layoutX="16.0" layoutY="104.0" prefHeight="530.0" prefWidth="426.0">
