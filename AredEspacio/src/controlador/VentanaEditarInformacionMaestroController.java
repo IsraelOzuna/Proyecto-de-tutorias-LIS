@@ -19,6 +19,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import negocio.MaestroDAO;
@@ -68,6 +69,16 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
     private Pane panelPrincipal;
 
     private String nombreFoto = "";
+    @FXML
+    private Label etiquetaAdvertenciaNombre;
+    @FXML
+    private Label etiquetaAdvertenciaApellido;
+    @FXML
+    private Label etiquetaAdvertenciaCorreo;
+    @FXML
+    private Label etiquetaAdvertenciaTelefono;
+    @FXML
+    private Label etiquetaAdvertenciaCantidad;
 
     public void obtenerMaestro(Maestro maestro) {
         this.maestro = maestro;
@@ -94,7 +105,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
     private void guardarInformacionMaestroEditada(ActionEvent event) throws IOException {
         boolean cantidadCorrecta = true;
         if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreoElectronico, campoTelefono, campoCantidadAPagar)) {
-            if (!verificarLongitudExcedida(campoNombre, campoApellidos, campoCorreoElectronico, campoTelefono)) {
+            if (!verificarLongitudExcedida(campoNombre, campoApellidos, campoCorreoElectronico, campoTelefono, campoCantidadAPagar)) {
                 if (Utileria.validarCorreo(campoCorreoElectronico.getText())) {
                     Maestro maestroNuevo = new Maestro();
                     try {
@@ -126,15 +137,9 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
                 } else {
                     DialogosController.mostrarMensajeInformacion("", "Correo no válido", "El correo ingresado no tiene un formato válido");
                 }
-
-            } else {
-                DialogosController.mostrarMensajeInformacion("Campos excedidos", "Algún campo excede el límite de caracteres", "Revise el límite de caracteres permitidos");
             }
 
-        } else {
-            DialogosController.mostrarMensajeInformacion("Campo vacio", "Alugún campo esta vacío", "Debe llenar todos los campos requeridos");
         }
-
     }
 
     @FXML
@@ -163,29 +168,93 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         return nombreFoto;
     }
 
-    public boolean verificarLongitudExcedida(TextField campoNombre, TextField campoApellidos, TextField campoCorreoElectronico, TextField campoTelefono) {
+    public boolean verificarLongitudExcedida(TextField campoNombre, TextField campoApellidos, TextField campoCorreoElectronico, TextField campoTelefono, TextField campoCantidadAPagar) {
         boolean longitudExcedida = false;
-        if (campoNombre.getText().length() > 30 || campoApellidos.getText().length() > 30
-                || campoCorreoElectronico.getText().length() > 320 || campoTelefono.getText().length() > 10) {
+
+        if (campoNombre.getText().length() > 30) {
+            mandarAdvertencia(etiquetaAdvertenciaNombre);
             longitudExcedida = true;
+        } else {
+            desactivarAdvertencia(etiquetaAdvertenciaNombre);
         }
+
+        if (campoApellidos.getText().length() > 30) {
+            mandarAdvertencia(etiquetaAdvertenciaApellido);
+            longitudExcedida = true;
+        } else {
+            desactivarAdvertencia(etiquetaAdvertenciaApellido);
+        }
+
+        if (campoCorreoElectronico.getText().length() > 320) {
+            mandarAdvertencia(etiquetaAdvertenciaCorreo);
+            longitudExcedida = true;
+        } else {
+            desactivarAdvertencia(etiquetaAdvertenciaCorreo);
+        }
+
+        if (campoTelefono.getText().length() > 10) {
+            mandarAdvertencia(etiquetaAdvertenciaTelefono);
+            longitudExcedida = true;
+        } else {
+            desactivarAdvertencia(etiquetaAdvertenciaTelefono);
+        }
+
+        if (campoCantidadAPagar.getText().length() > 8) {
+            mandarAdvertencia(etiquetaAdvertenciaCantidad);
+            longitudExcedida = true;
+        } else {
+            desactivarAdvertencia(etiquetaAdvertenciaCantidad);
+        }
+
+        if (longitudExcedida) {
+            DialogosController.mostrarMensajeInformacion("Campos excedidos", "Algún campo excede el límite de caracteres", "Revise el límite de caracteres permitidos");
+        }
+
         return longitudExcedida;
     }
 
     public boolean existenCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono, TextField campoCantidadAPagar) {
         boolean camposVacios = false;
 
-        if (campoNombre.getText().isEmpty()) {
+        if (campoNombre.getText().trim().isEmpty()) {
+            mandarAdvertencia(etiquetaAdvertenciaNombre);
             camposVacios = true;
-        } else if (campoApellidos.getText().isEmpty()) {
-            camposVacios = true;
-        } else if (campoCorreo.getText().isEmpty()) {
-            camposVacios = true;
-        } else if (campoTelefono.getText().isEmpty()) {
-            camposVacios = true;
-        } else if (campoCantidadAPagar.getText().isEmpty()) {
-            camposVacios = true;
+        } else {
+            desactivarAdvertencia(etiquetaAdvertenciaNombre);
         }
+
+        if (campoApellidos.getText().trim().isEmpty()) {
+            mandarAdvertencia(etiquetaAdvertenciaApellido);
+            camposVacios = true;
+        } else {
+            desactivarAdvertencia(etiquetaAdvertenciaApellido);
+        }
+
+        if (campoCorreo.getText().trim().isEmpty()) {
+            mandarAdvertencia(etiquetaAdvertenciaCorreo);
+            camposVacios = true;
+        } else {
+            desactivarAdvertencia(etiquetaAdvertenciaCorreo);
+        }
+
+        if (campoTelefono.getText().trim().isEmpty()) {
+            mandarAdvertencia(etiquetaAdvertenciaTelefono);
+            camposVacios = true;
+        } else {
+            desactivarAdvertencia(etiquetaAdvertenciaTelefono);
+        }
+
+        if (campoCantidadAPagar.getText().trim().isEmpty()) {
+            mandarAdvertencia(etiquetaAdvertenciaCantidad);
+            camposVacios = true;
+        } else {
+            desactivarAdvertencia(etiquetaAdvertenciaCantidad);
+        }
+
+        if (camposVacios) {
+            DialogosController.mostrarMensajeInformacion("Campo vacio", "Algún campo esta vacío", "Debe llenar todos los campos requeridos");
+        }
+
         return camposVacios;
     }
 
@@ -209,6 +278,45 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         VentanaBuscarController ventanaBuscar = loader.getController();
         ventanaBuscar.obtenerSeccion("Maestros", panelPrincipal);
         panelPrincipal.getChildren().add(root);
+    }
+
+    public void mandarAdvertencia(Label etiqueta) {
+        etiqueta.setText("*");
+    }
+
+    public void desactivarAdvertencia(Label etiqueta) {
+        etiqueta.setText("");
+    }
+
+    public void limitarCaracteres(KeyEvent event, TextField campo, int caracteresMaximos) {
+        if (campo.getText().length() >= caracteresMaximos) {
+            event.consume();
+        }
+    }
+
+    @FXML
+    private void limitarCaracteresNombre(KeyEvent event) {
+        limitarCaracteres(event, campoNombre, 30);
+    }
+
+    @FXML
+    private void limitarCaracteresApellido(KeyEvent event) {
+        limitarCaracteres(event, campoApellidos, 30);
+    }
+
+    @FXML
+    private void limitarCaracteresCorreo(KeyEvent event) {
+        limitarCaracteres(event, campoCorreoElectronico, 320);
+    }
+
+    @FXML
+    private void limitarCaracteresTelefono(KeyEvent event) {
+        limitarCaracteres(event, campoTelefono, 10);
+    }
+
+    @FXML
+    private void limitarCaracteresCantidad(KeyEvent event) {
+        limitarCaracteres(event, campoCantidadAPagar, 8);
     }
 
 }
