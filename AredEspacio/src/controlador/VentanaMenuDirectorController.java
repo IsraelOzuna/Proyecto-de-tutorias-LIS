@@ -46,46 +46,55 @@ public class VentanaMenuDirectorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
     @FXML
-    public void desplegarVentanaBusquedaAlumno(ActionEvent event) throws IOException{        
+    public void desplegarVentanaBusquedaAlumno(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
         ventanaBuscar.obtenerSeccion("Alumnos", panelPrincipal);
-        panelPrincipal.getChildren().add(root);        
+        panelPrincipal.getChildren().add(root);
     }
-    
+
     @FXML
-    public void desplegarVentanaBusquedaMaestro(ActionEvent event) throws IOException{
+    public void desplegarVentanaBusquedaMaestro(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
         ventanaBuscar.obtenerSeccion("Maestros", panelPrincipal);
-        panelPrincipal.getChildren().add(root); 
-    }    
-   
+        panelPrincipal.getChildren().add(root);
+    }
+
     @FXML
-    public void desplegarVentanaBusquedaRenta(ActionEvent event) throws IOException{
+    public void desplegarVentanaBusquedaRenta(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
         ventanaBuscar.obtenerSeccion("Rentas", panelPrincipal);
-        panelPrincipal.getChildren().add(root); 
+        panelPrincipal.getChildren().add(root);
     }
-    
-     @FXML
-    public void desplegarVentanaBusquedaGrupos(ActionEvent event) throws IOException{
+
+    @FXML
+    public void desplegarVentanaBusquedaGrupos(ActionEvent event) throws IOException {
         MaestroDAO maestroDAO = new MaestroDAO();
-        if(maestroDAO.obtenerNumeroMaestros()>0){
+        if (maestroDAO.obtenerNumeroMaestros() > 0) {
             FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
             Parent root = (Parent) loader.load();
-            VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();  
+            VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
             ventanaConsultarGruposController.iniciarVentana();
-            panelPrincipal.getChildren().add(root); 
-        }else{
+            panelPrincipal.getChildren().add(root);
+        } else {
             DialogosController.mostrarMensajeInformacion("No hay maestros registrados", "No hay maestros registrados", "Debe haber al menos un maestro registrado para realizar esta acción");
         }
+    }
+    
+    @FXML
+    public void desplegarVentanaBusquedaClientes(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaBuscarController ventanaBuscar = loader.getController();
+        ventanaBuscar.obtenerSeccion("Clientes", panelPrincipal);
+        panelPrincipal.getChildren().add(root);
     }
 }

@@ -57,19 +57,20 @@
             </Button>
          </children>
       </Pane>
-      <GridPane layoutY="82.0" prefHeight="624.0" prefWidth="207.0" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1213.0" AnchorPane.topAnchor="82.0">
+      <GridPane layoutY="82.0" prefHeight="625.0" prefWidth="207.0" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1213.0" AnchorPane.topAnchor="82.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <JFXButton fx:id="botonMaestros" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaMaestro" text="Maestros">
+            <JFXButton fx:id="botonMaestros" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaMaestro" text="Maestros">
                <graphic>
                   <FontAwesomeIconView fill="#740808" glyphName="USER" size="60">
                      <cursor>
@@ -84,7 +85,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="botonRecursosReportes" contentDisplay="TOP" text="Recursos y reportes" GridPane.rowIndex="4">
+            <JFXButton fx:id="botonRecursosReportes" alignment="CENTER" contentDisplay="TOP" text="Recursos y reportes" GridPane.rowIndex="5">
                <graphic>
                   <FontAwesomeIconView fill="#740808" glyphName="MONEY" size="60.0">
                      <cursor>
@@ -99,7 +100,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="botonGrupos" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaGrupos" text="Grupos" GridPane.rowIndex="2">
+            <JFXButton fx:id="botonGrupos" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaGrupos" text="Grupos" GridPane.rowIndex="2">
                <graphic>
                   <FontAwesomeIconView fill="#740808" glyphName="USERS" size="60">
                      <cursor>
@@ -114,7 +115,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="botonAlumnos" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaAlumno" text="Alumnos" GridPane.rowIndex="1">
+            <JFXButton fx:id="botonAlumnos" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaAlumno" text="Alumnos" GridPane.rowIndex="1">
                <graphic>
                   <FontAwesomeIconView fill="#740808" glyphName="GRADUATION_CAP" size="60">
                      <cursor>
@@ -129,9 +130,9 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="botonRenta" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaRenta" text="Rentas" GridPane.rowIndex="3">
+            <JFXButton fx:id="botonRenta" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaRenta" text="Rentas" GridPane.rowIndex="3">
                <graphic>
-                  <FontAwesomeIconView fill="#740808" glyphName="USER_SECRET" size="60">
+                  <FontAwesomeIconView fill="#740808" glyphName="BUILDING" size="60">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -140,6 +141,17 @@
                <font>
                   <Font name="Gill Sans MT Bold" size="14.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="botonClientes" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaClientes" text="Clientes" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="#740808" glyphName="USER_SECRET" size="60" />
+               </graphic>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
