@@ -12,8 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="controlador.VentanaRegistrarClienteController">
+<AnchorPane id="AnchorPane" fx:id="panelPrincipal" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaRegistrarClienteController">
    <children>
       <GridPane layoutX="16.0" layoutY="104.0" prefHeight="530.0" prefWidth="426.0">
          <columnConstraints>
@@ -72,7 +71,7 @@
                </font>
             </Label>
             <TextField fx:id="campoTelefono" onKeyTyped="#limitarTelefono" prefHeight="25.0" prefWidth="223.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <JFXButton fx:id="botonRegistrar" alignment="CENTER" contentDisplay="CENTER" onAction="#registrarNuevoAlumno" style="-fx-background-color: #CDCDCD;" text="Registrar" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <JFXButton fx:id="botonRegistrar" alignment="CENTER" contentDisplay="CENTER" onAction="#registrarNuevoCliente" style="-fx-background-color: #CDCDCD;" text="Registrar" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
                <font>
                   <Font name="Gill Sans MT Bold" size="18.0" />
                </font>

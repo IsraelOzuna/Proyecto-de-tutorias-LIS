@@ -2,6 +2,11 @@ package negocio;
 
 import java.util.List;
 
+/**
+ *
+ * @author Israel Reyes Ozuna
+ */
+
 public interface IAlumno {
     public boolean registrarAlumno(Alumno alumno);
     public boolean editarAlumno(persistencia.Alumno alumno);

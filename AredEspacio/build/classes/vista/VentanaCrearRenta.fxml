@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaCrearRentaController">
+   <children>
+      <TableView fx:id="tablaActividades" layoutX="178.0" layoutY="145.0" prefHeight="392.0" prefWidth="796.0">
+        <columns>
+          <TableColumn prefWidth="102.0" text="Horario" />
+          <TableColumn prefWidth="346.0" text="Actividades" />
+        </columns>
+      </TableView>
+      <DatePicker fx:id="campoFecha" layoutX="623.0" layoutY="69.0" />
+      <Label fx:id="etiquetaFecha" layoutX="623.0" layoutY="37.0" text="Fecha:">
+         <font>
+            <Font name="Gill Sans MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiquetaCliente" layoutX="178.0" layoutY="37.0" text="Cliente:">
+         <font>
+            <Font name="Gill Sans MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="etiquetaCantidad" layoutX="383.0" layoutY="37.0" text="Cantidad:">
+         <font>
+            <Font name="Gill Sans MT Bold" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="campoCantidad" layoutX="383.0" layoutY="70.0" />
+      <JFXButton fx:id="botonRegistrar" layoutX="598.0" layoutY="561.0" onAction="#realizarRegistro" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Registrar">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="botonCancelar" alignment="CENTER" layoutX="431.0" layoutY="561.0" onAction="#desplegarVentanaBuscar" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Cancelar">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <Button layoutX="879.0" layoutY="67.0" mnemonicParsing="false" text="Ver horario">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
