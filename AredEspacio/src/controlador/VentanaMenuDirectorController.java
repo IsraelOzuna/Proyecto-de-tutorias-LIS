@@ -68,10 +68,11 @@ public class VentanaMenuDirectorController implements Initializable {
 
     @FXML
     public void desplegarVentanaBusquedaRenta(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRentas.fxml"));
         Parent root = (Parent) loader.load();
-        VentanaBuscarController ventanaBuscar = loader.getController();
-        ventanaBuscar.obtenerSeccion("Rentas", panelPrincipal);
+        VentanaRentasController ventanaRentas = loader.getController();
+        ventanaRentas.obtenerPanel(panelPrincipal);
+        ventanaRentas.llenarTablaRentas();
         panelPrincipal.getChildren().add(root);
     }
 
@@ -88,9 +89,9 @@ public class VentanaMenuDirectorController implements Initializable {
             DialogosController.mostrarMensajeInformacion("No hay maestros registrados", "No hay maestros registrados", "Debe haber al menos un maestro registrado para realizar esta acción");
         }
     }
-    
+
     @FXML
-    public void desplegarVentanaBusquedaClientes(ActionEvent event) throws IOException{
+    public void desplegarVentanaBusquedaClientes(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
