@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,12 +21,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -34,11 +38,13 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import negocio.GrupoDAO;
+import negocio.MaestroDAO;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import persistencia.Alumno;
+import persistencia.Cuenta;
 import persistencia.Grupo;
 import persistencia.Horario;
 
@@ -87,8 +93,8 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     @FXML
     private AnchorPane panelConsultarInfo;
     
-    private String nombreGrupo;
-    private String rutaXML="C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\Archivos\\Horarios.xml";
+    private int idGrupo;
+    private String rutaXML="C:\\Users\\Renato\\Documents\\NetBeansProjects\\AredEspacio\\src\\Archivos\\Horarios.xml";
 
     
 
@@ -379,11 +385,11 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         return etiquetas;
     }
     
-    public void establecerGrupo(String nombreGrupo){
-        this.nombreGrupo=nombreGrupo;
+    public void establecerGrupo(int idGrupo){
+        this.idGrupo=idGrupo;
         GrupoDAO grupoDAO = new GrupoDAO();
         Grupo grupoConsultado= new Grupo();
-        grupoConsultado=grupoDAO.adquirirGrupo(nombreGrupo);
+        grupoConsultado=grupoDAO.adquirirGrupo(idGrupo);
         etiquetaNombreMaestro.setText(grupoConsultado.getUsuario().getUsuario());
         etiquetaPrecioInscripcion.setText(grupoConsultado.getInscripcion().toString());
         etiquetaPrecioMensualidad.setText(grupoConsultado.getMensualidad().toString());
@@ -404,7 +410,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         try{
             Parent root = (Parent) loader.load();
             VentanaEditarGrupoController editarGrupoController = loader.getController();
-            editarGrupoController.establecerGrupo(nombreGrupo);////////manejar excepción en caso de estar vacio
+            editarGrupoController.establecerGrupo(idGrupo);////////manejar excepción en caso de estar vacio
             panelConsultarInfo.getChildren().add(root);
         }catch(IOException ex){
             Logger.getLogger (VentanaConsultarGruposController.class.getName()).log(Level.SEVERE, null, ex);
@@ -420,7 +426,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     private void eliminarGrupo(ActionEvent event) throws IOException {
         GrupoDAO nuevoGrupoDAO = new GrupoDAO();
         Grupo grupoEliminar = new Grupo();
-        grupoEliminar=nuevoGrupoDAO.adquirirGrupo(nombreGrupo);
+        //grupoEliminar=nuevoGrupoDAO.adquirirGrupo(nombreGrupo);
         grupoEliminar.setEstaActivo(0);
         if(nuevoGrupoDAO.eliminarGrupo(grupoEliminar)){
             eliminarHorarioGrupo();
@@ -458,7 +464,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
                 Element eElement = (Element) nNode;
 
 
-                if(eElement.getElementsByTagName(nombreFila).item(0).getTextContent().equals(nombreGrupo)){
+                if(eElement.getElementsByTagName(nombreFila).item(0).getTextContent().equals(idGrupo)){
                     eElement.getElementsByTagName(nombreFila).item(0).setTextContent("Disponible");
                 }
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();

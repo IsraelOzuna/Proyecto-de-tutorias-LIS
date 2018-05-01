@@ -7,7 +7,7 @@ public interface IGrupo {
     
     public boolean crearGrupo (Grupo nuevoGrupo);
     public List<persistencia.Cuenta> adquirirCuentas ();
-    public Grupo adquirirGrupo (String nombreGrupo);
+    public Grupo adquirirGrupo (int idGrupo);
     public boolean eliminarGrupo(Grupo grupoEliminar);
     public boolean editarGrupo(Grupo grupoEditar);
     public List<persistencia.Alumno> obtenerAlumnos(String nombreGrupo);
