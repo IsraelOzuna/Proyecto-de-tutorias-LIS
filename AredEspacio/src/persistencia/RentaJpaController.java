@@ -5,7 +5,6 @@
  */
 package persistencia;
 
-import Archivos.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -14,11 +13,11 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import persistencia.Renta;
+import persistencia.exceptions.NonexistentEntityException;
 
 /**
  *
- * @author Irdevelo
+ * @author iro19
  */
 public class RentaJpaController implements Serializable {
 

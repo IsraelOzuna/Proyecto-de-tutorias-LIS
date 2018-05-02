@@ -5,24 +5,22 @@
  */
 package persistencia;
 
-import aredespacio.exceptions.IllegalOrphanException;
-import aredespacio.exceptions.NonexistentEntityException;
-import aredespacio.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import persistencia.Cuenta;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import persistencia.Maestro;
+import persistencia.exceptions.IllegalOrphanException;
+import persistencia.exceptions.NonexistentEntityException;
+import persistencia.exceptions.PreexistingEntityException;
 
 /**
  *
- * @author Irdevelo
+ * @author iro19
  */
 public class MaestroJpaController implements Serializable {
 
@@ -222,6 +220,5 @@ public class MaestroJpaController implements Serializable {
             em.close();
         }
         return listaAlumnos;
-    }  
-    
+    }
 }

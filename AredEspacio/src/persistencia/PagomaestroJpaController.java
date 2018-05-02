@@ -17,7 +17,7 @@ import persistencia.exceptions.NonexistentEntityException;
 
 /**
  *
- * @author Irdevelo
+ * @author iro19
  */
 public class PagomaestroJpaController implements Serializable {
 

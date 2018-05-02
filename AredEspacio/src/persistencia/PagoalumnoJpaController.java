@@ -40,19 +40,19 @@ public class PagoalumnoJpaController implements Serializable {
                 idAlumno = em.getReference(idAlumno.getClass(), idAlumno.getIdAlumno());
                 pagoalumno.setIdAlumno(idAlumno);
             }
-            Grupo nombreGrupo = pagoalumno.getNombreGrupo();
-            if (nombreGrupo != null) {
-                nombreGrupo = em.getReference(nombreGrupo.getClass(), nombreGrupo.getNombreGrupo());
-                pagoalumno.setNombreGrupo(nombreGrupo);
+            Grupo idGrupo = pagoalumno.getIdGrupo();
+            if (idGrupo != null) {
+                idGrupo = em.getReference(idGrupo.getClass(), idGrupo.getNombreGrupo());
+                pagoalumno.setIdGrupo(idGrupo);
             }
             em.persist(pagoalumno);
             if (idAlumno != null) {
                 idAlumno.getPagoalumnoCollection().add(pagoalumno);
                 idAlumno = em.merge(idAlumno);
             }
-            if (nombreGrupo != null) {
-                nombreGrupo.getPagoalumnoCollection().add(pagoalumno);
-                nombreGrupo = em.merge(nombreGrupo);
+            if (idGrupo != null) {
+                idGrupo.getPagoalumnoCollection().add(pagoalumno);
+                idGrupo = em.merge(idGrupo);
             }
             em.getTransaction().commit();
         } finally {
@@ -70,15 +70,15 @@ public class PagoalumnoJpaController implements Serializable {
             Pagoalumno persistentPagoalumno = em.find(Pagoalumno.class, pagoalumno.getIdPago());
             Alumno idAlumnoOld = persistentPagoalumno.getIdAlumno();
             Alumno idAlumnoNew = pagoalumno.getIdAlumno();
-            Grupo nombreGrupoOld = persistentPagoalumno.getNombreGrupo();
-            Grupo nombreGrupoNew = pagoalumno.getNombreGrupo();
+            Grupo idGrupoOld = persistentPagoalumno.getIdGrupo();
+            Grupo idGrupoNew = pagoalumno.getIdGrupo();
             if (idAlumnoNew != null) {
                 idAlumnoNew = em.getReference(idAlumnoNew.getClass(), idAlumnoNew.getIdAlumno());
                 pagoalumno.setIdAlumno(idAlumnoNew);
             }
-            if (nombreGrupoNew != null) {
-                nombreGrupoNew = em.getReference(nombreGrupoNew.getClass(), nombreGrupoNew.getNombreGrupo());
-                pagoalumno.setNombreGrupo(nombreGrupoNew);
+            if (idGrupoNew != null) {
+                idGrupoNew = em.getReference(idGrupoNew.getClass(), idGrupoNew.getNombreGrupo());
+                pagoalumno.setIdGrupo(idGrupoNew);
             }
             pagoalumno = em.merge(pagoalumno);
             if (idAlumnoOld != null && !idAlumnoOld.equals(idAlumnoNew)) {
@@ -89,13 +89,13 @@ public class PagoalumnoJpaController implements Serializable {
                 idAlumnoNew.getPagoalumnoCollection().add(pagoalumno);
                 idAlumnoNew = em.merge(idAlumnoNew);
             }
-            if (nombreGrupoOld != null && !nombreGrupoOld.equals(nombreGrupoNew)) {
-                nombreGrupoOld.getPagoalumnoCollection().remove(pagoalumno);
-                nombreGrupoOld = em.merge(nombreGrupoOld);
+            if (idGrupoOld != null && !idGrupoOld.equals(idGrupoNew)) {
+                idGrupoOld.getPagoalumnoCollection().remove(pagoalumno);
+                idGrupoOld = em.merge(idGrupoOld);
             }
-            if (nombreGrupoNew != null && !nombreGrupoNew.equals(nombreGrupoOld)) {
-                nombreGrupoNew.getPagoalumnoCollection().add(pagoalumno);
-                nombreGrupoNew = em.merge(nombreGrupoNew);
+            if (idGrupoNew != null && !idGrupoNew.equals(idGrupoOld)) {
+                idGrupoNew.getPagoalumnoCollection().add(pagoalumno);
+                idGrupoNew = em.merge(idGrupoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -131,10 +131,10 @@ public class PagoalumnoJpaController implements Serializable {
                 idAlumno.getPagoalumnoCollection().remove(pagoalumno);
                 idAlumno = em.merge(idAlumno);
             }
-            Grupo nombreGrupo = pagoalumno.getNombreGrupo();
-            if (nombreGrupo != null) {
-                nombreGrupo.getPagoalumnoCollection().remove(pagoalumno);
-                nombreGrupo = em.merge(nombreGrupo);
+            Grupo idGrupo = pagoalumno.getIdGrupo();
+            if (idGrupo != null) {
+                idGrupo.getPagoalumnoCollection().remove(pagoalumno);
+                idGrupo = em.merge(idGrupo);
             }
             em.remove(pagoalumno);
             em.getTransaction().commit();

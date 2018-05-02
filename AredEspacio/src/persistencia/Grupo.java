@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -39,12 +41,15 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Grupo.findByInscripcion", query = "SELECT g FROM Grupo g WHERE g.inscripcion = :inscripcion")})
 public class Grupo implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idGrupo")
+    private Integer idGrupo;
     @Column(name = "estaActivo")
     private Integer estaActivo;
-
     @OneToMany(mappedBy = "nombreGrupo")
     private Collection<Pagoalumno> pagoalumnoCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -119,32 +124,7 @@ public class Grupo implements Serializable {
     public void setUsuario(Cuenta usuario) {
         this.usuario = usuario;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (nombreGrupo != null ? nombreGrupo.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Grupo)) {
-            return false;
-        }
-        Grupo other = (Grupo) object;
-        if ((this.nombreGrupo == null && other.nombreGrupo != null) || (this.nombreGrupo != null && !this.nombreGrupo.equals(other.nombreGrupo))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "persistencia.Grupo[ nombreGrupo=" + nombreGrupo + " ]";
-    }
-
+    
     @XmlTransient
     public Collection<Pagoalumno> getPagoalumnoCollection() {
         return pagoalumnoCollection;
@@ -160,6 +140,43 @@ public class Grupo implements Serializable {
 
     public void setEstaActivo(Integer estaActivo) {
         this.estaActivo = estaActivo;
+    }
+
+    public Grupo(Integer idGrupo) {
+        this.idGrupo = idGrupo;
+    }
+
+    public Integer getIdGrupo() {
+        return idGrupo;
+    }
+
+    public void setIdGrupo(Integer idGrupo) {
+        this.idGrupo = idGrupo;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idGrupo != null ? idGrupo.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Grupo)) {
+            return false;
+        }
+        Grupo other = (Grupo) object;
+        if ((this.idGrupo == null && other.idGrupo != null) || (this.idGrupo != null && !this.idGrupo.equals(other.idGrupo))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "persistencia.Grupo[ idGrupo=" + idGrupo + " ]";
     }
     
 }
