@@ -16,11 +16,10 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import persistencia.exceptions.NonexistentEntityException;
-import persistencia.exceptions.PreexistingEntityException;
 
 /**
  *
- * @author iro19
+ * @author Renato
  */
 public class GrupoJpaController implements Serializable {
 
@@ -33,7 +32,7 @@ public class GrupoJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Grupo grupo) throws PreexistingEntityException, Exception {
+    public void create(Grupo grupo) {
         if (grupo.getAlumnoCollection() == null) {
             grupo.setAlumnoCollection(new ArrayList<Alumno>());
         }
@@ -71,15 +70,15 @@ public class GrupoJpaController implements Serializable {
                 alumnoCollectionAlumno = em.merge(alumnoCollectionAlumno);
             }
             for (Pagoalumno pagoalumnoCollectionPagoalumno : grupo.getPagoalumnoCollection()) {
-                pagoalumnoCollectionPagoalumno.getNombreGrupo().add(grupo);
+                Grupo oldIdGrupoOfPagoalumnoCollectionPagoalumno = pagoalumnoCollectionPagoalumno.getIdGrupo();
+                pagoalumnoCollectionPagoalumno.setIdGrupo(grupo);
                 pagoalumnoCollectionPagoalumno = em.merge(pagoalumnoCollectionPagoalumno);
+                if (oldIdGrupoOfPagoalumnoCollectionPagoalumno != null) {
+                    oldIdGrupoOfPagoalumnoCollectionPagoalumno.getPagoalumnoCollection().remove(pagoalumnoCollectionPagoalumno);
+                    oldIdGrupoOfPagoalumnoCollectionPagoalumno = em.merge(oldIdGrupoOfPagoalumnoCollectionPagoalumno);
+                }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findGrupo(grupo.getNombreGrupo()) != null) {
-                throw new PreexistingEntityException("Grupo " + grupo + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -92,7 +91,7 @@ public class GrupoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Grupo persistentGrupo = em.find(Grupo.class, grupo.getNombreGrupo());
+            Grupo persistentGrupo = em.find(Grupo.class, grupo.getIdGrupo());
             Cuenta usuarioOld = persistentGrupo.getUsuario();
             Cuenta usuarioNew = grupo.getUsuario();
             Collection<Alumno> alumnoCollectionOld = persistentGrupo.getAlumnoCollection();
@@ -140,21 +139,26 @@ public class GrupoJpaController implements Serializable {
             }
             for (Pagoalumno pagoalumnoCollectionOldPagoalumno : pagoalumnoCollectionOld) {
                 if (!pagoalumnoCollectionNew.contains(pagoalumnoCollectionOldPagoalumno)) {
-                    pagoalumnoCollectionOldPagoalumno.getNombreGrupo().remove(grupo);
+                    pagoalumnoCollectionOldPagoalumno.setIdGrupo(null);
                     pagoalumnoCollectionOldPagoalumno = em.merge(pagoalumnoCollectionOldPagoalumno);
                 }
             }
             for (Pagoalumno pagoalumnoCollectionNewPagoalumno : pagoalumnoCollectionNew) {
                 if (!pagoalumnoCollectionOld.contains(pagoalumnoCollectionNewPagoalumno)) {
-                    pagoalumnoCollectionNewPagoalumno.getNombreGrupo().add(grupo);
+                    Grupo oldIdGrupoOfPagoalumnoCollectionNewPagoalumno = pagoalumnoCollectionNewPagoalumno.getIdGrupo();
+                    pagoalumnoCollectionNewPagoalumno.setIdGrupo(grupo);
                     pagoalumnoCollectionNewPagoalumno = em.merge(pagoalumnoCollectionNewPagoalumno);
+                    if (oldIdGrupoOfPagoalumnoCollectionNewPagoalumno != null && !oldIdGrupoOfPagoalumnoCollectionNewPagoalumno.equals(grupo)) {
+                        oldIdGrupoOfPagoalumnoCollectionNewPagoalumno.getPagoalumnoCollection().remove(pagoalumnoCollectionNewPagoalumno);
+                        oldIdGrupoOfPagoalumnoCollectionNewPagoalumno = em.merge(oldIdGrupoOfPagoalumnoCollectionNewPagoalumno);
+                    }
                 }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = grupo.getNombreGrupo();
+                Integer id = grupo.getIdGrupo();
                 if (findGrupo(id) == null) {
                     throw new NonexistentEntityException("The grupo with id " + id + " no longer exists.");
                 }
@@ -167,7 +171,7 @@ public class GrupoJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -175,7 +179,7 @@ public class GrupoJpaController implements Serializable {
             Grupo grupo;
             try {
                 grupo = em.getReference(Grupo.class, id);
-                grupo.getNombreGrupo();
+                grupo.getIdGrupo();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The grupo with id " + id + " no longer exists.", enfe);
             }
@@ -191,7 +195,7 @@ public class GrupoJpaController implements Serializable {
             }
             Collection<Pagoalumno> pagoalumnoCollection = grupo.getPagoalumnoCollection();
             for (Pagoalumno pagoalumnoCollectionPagoalumno : pagoalumnoCollection) {
-                pagoalumnoCollectionPagoalumno.getNombreGrupo().remove(grupo);
+                pagoalumnoCollectionPagoalumno.setIdGrupo(null);
                 pagoalumnoCollectionPagoalumno = em.merge(pagoalumnoCollectionPagoalumno);
             }
             em.remove(grupo);
@@ -227,7 +231,7 @@ public class GrupoJpaController implements Serializable {
         }
     }
 
-    public Grupo findGrupo(String id) {
+    public Grupo findGrupo(Integer id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Grupo.class, id);
@@ -248,10 +252,10 @@ public class GrupoJpaController implements Serializable {
             em.close();
         }
     }
-
-    public List<Alumno> obtenerListaAlumnos(String nombreGrupo) {
-        List<persistencia.Alumno> listaAlumnos = null;
-        String consulta = "select distinct a from Alumno a join a.grupoCollection g where g.nombreGrupo = :nombreGrupo";
+    
+    public List<Alumno> obtenerListaAlumnos(String nombreGrupo){
+        List<persistencia.Alumno> listaAlumnos=null;
+        String consulta =   "select distinct a from Alumno a join a.grupoCollection g where g.nombreGrupo = :nombreGrupo";
         EntityManager em = getEntityManager();
         try {
             listaAlumnos = em.createQuery(consulta).setParameter("nombreGrupo", nombreGrupo).getResultList();
@@ -260,5 +264,5 @@ public class GrupoJpaController implements Serializable {
         }
         return listaAlumnos;
     }
-
+    
 }
