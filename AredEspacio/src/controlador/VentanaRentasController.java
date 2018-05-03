@@ -24,9 +24,19 @@ public class VentanaRentasController implements Initializable {
 
     private Pane panelPrincipal;
     @FXML
-    private JFXButton botonRegistrarNuevo;
-    @FXML
     private TableView<persistencia.Renta> tablaRentas;
+    @FXML
+    private JFXButton botonCrearRenta;
+    @FXML
+    private TableColumn<persistencia.Renta, String> columnaCliente;
+    @FXML
+    private TableColumn<persistencia.Renta, String> columnaFecha;
+    @FXML
+    private TableColumn<persistencia.Renta, String> columnaHoraInicio;
+    @FXML
+    private TableColumn<persistencia.Renta, String> columnaHoraFin;
+    @FXML
+    private TableColumn<persistencia.Renta, Double> columnaCantidad;
 
     public void obtenerPanel(Pane panelPrincipal) {
         this.panelPrincipal = panelPrincipal;
@@ -44,22 +54,16 @@ public class VentanaRentasController implements Initializable {
         List<persistencia.Renta> listaRentas = null;
         listaRentas = rentaDAO.obtenerRentas();
 
-        TableColumn<persistencia.Renta, String> colNombreCliente = new TableColumn("Nombre cliente");
-        colNombreCliente.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, String>("nombreCliente"));
+        columnaCliente.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, String>("nombreCliente"));
 
-        TableColumn<persistencia.Renta, Date> colFecha = new TableColumn("Fecha");
-        colFecha.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, Date>("Fecha"));
+        columnaFecha.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, String>("formatoFecha"));
 
-        TableColumn<persistencia.Renta, Double> colCantidad = new TableColumn("Cantidad");
-        colCantidad.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, Double>("Cantidad"));
+        columnaCantidad.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, Double>("Cantidad"));
 
-        TableColumn<persistencia.Renta, Time> colHoraInicio = new TableColumn("Hora inicio");
-        colHoraInicio.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, Time>("horaInicio"));
+        columnaHoraInicio.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, String>("FormatoHoraInicio"));
 
-        TableColumn<persistencia.Renta, Time> colHoraFin = new TableColumn("Hora Fin");
-        colHoraFin.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, Time>("horaFin"));
+        columnaHoraFin.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, String>("FormatoHoraFin"));
 
-        tablaRentas.getColumns().addAll(colNombreCliente, colFecha, colCantidad, colHoraInicio, colHoraFin);
         tablaRentas.setItems(FXCollections.observableList(listaRentas));
 
     }

@@ -35,29 +35,27 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Grupo.findAll", query = "SELECT g FROM Grupo g")
+    , @NamedQuery(name = "Grupo.findByIdGrupo", query = "SELECT g FROM Grupo g WHERE g.idGrupo = :idGrupo")
     , @NamedQuery(name = "Grupo.findByNombreGrupo", query = "SELECT g FROM Grupo g WHERE g.nombreGrupo = :nombreGrupo")
     , @NamedQuery(name = "Grupo.findByFechaPago", query = "SELECT g FROM Grupo g WHERE g.fechaPago = :fechaPago")
+    , @NamedQuery(name = "Grupo.findByEstaActivo", query = "SELECT g FROM Grupo g WHERE g.estaActivo = :estaActivo")
     , @NamedQuery(name = "Grupo.findByMensualidad", query = "SELECT g FROM Grupo g WHERE g.mensualidad = :mensualidad")
     , @NamedQuery(name = "Grupo.findByInscripcion", query = "SELECT g FROM Grupo g WHERE g.inscripcion = :inscripcion")})
 public class Grupo implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idGrupo")
     private Integer idGrupo;
-    @Column(name = "estaActivo")
-    private Integer estaActivo;
-    @OneToMany(mappedBy = "nombreGrupo")
-    private Collection<Pagoalumno> pagoalumnoCollection;
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
     @Column(name = "nombreGrupo")
     private String nombreGrupo;
     @Column(name = "fechaPago")
     @Temporal(TemporalType.DATE)
     private Date fechaPago;
+    @Column(name = "estaActivo")
+    private Integer estaActivo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "mensualidad")
     private Double mensualidad;
@@ -65,6 +63,8 @@ public class Grupo implements Serializable {
     private Double inscripcion;
     @ManyToMany(mappedBy = "grupoCollection")
     private Collection<Alumno> alumnoCollection;
+    @OneToMany(mappedBy = "idGrupo")
+    private Collection<Pagoalumno> pagoalumnoCollection;
     @JoinColumn(name = "usuario", referencedColumnName = "usuario")
     @ManyToOne
     private Cuenta usuario;
@@ -72,8 +72,16 @@ public class Grupo implements Serializable {
     public Grupo() {
     }
 
-    public Grupo(String nombreGrupo) {
-        this.nombreGrupo = nombreGrupo;
+    public Grupo(Integer idGrupo) {
+        this.idGrupo = idGrupo;
+    }
+
+    public Integer getIdGrupo() {
+        return idGrupo;
+    }
+
+    public void setIdGrupo(Integer idGrupo) {
+        this.idGrupo = idGrupo;
     }
 
     public String getNombreGrupo() {
@@ -90,6 +98,14 @@ public class Grupo implements Serializable {
 
     public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
+    }
+
+    public Integer getEstaActivo() {
+        return estaActivo;
+    }
+
+    public void setEstaActivo(Integer estaActivo) {
+        this.estaActivo = estaActivo;
     }
 
     public Double getMensualidad() {
@@ -117,14 +133,6 @@ public class Grupo implements Serializable {
         this.alumnoCollection = alumnoCollection;
     }
 
-    public Cuenta getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Cuenta usuario) {
-        this.usuario = usuario;
-    }
-    
     @XmlTransient
     public Collection<Pagoalumno> getPagoalumnoCollection() {
         return pagoalumnoCollection;
@@ -134,24 +142,12 @@ public class Grupo implements Serializable {
         this.pagoalumnoCollection = pagoalumnoCollection;
     }
 
-    public Integer getEstaActivo() {
-        return estaActivo;
+    public Cuenta getUsuario() {
+        return usuario;
     }
 
-    public void setEstaActivo(Integer estaActivo) {
-        this.estaActivo = estaActivo;
-    }
-
-    public Grupo(Integer idGrupo) {
-        this.idGrupo = idGrupo;
-    }
-
-    public Integer getIdGrupo() {
-        return idGrupo;
-    }
-
-    public void setIdGrupo(Integer idGrupo) {
-        this.idGrupo = idGrupo;
+    public void setUsuario(Cuenta usuario) {
+        this.usuario = usuario;
     }
 
     @Override

@@ -6,6 +6,7 @@
 package persistencia;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -101,6 +102,22 @@ public class Renta implements Serializable {
         return horaInicio;
     }
 
+    public String getFormatoFecha() {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        return formato.format(fecha);
+
+    }
+
+    public String getFormatoHoraInicio() {
+        SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
+        return formato.format(horaInicio);
+    }
+
+    public String getFormatoHoraFin() {
+        SimpleDateFormat formato = new SimpleDateFormat("HH:mm:ss");
+        return formato.format(horaFin);
+    }
+
     public void setHoraInicio(Date horaInicio) {
         this.horaInicio = horaInicio;
     }
@@ -137,5 +154,5 @@ public class Renta implements Serializable {
     public String toString() {
         return "persistencia.Renta[ idRenta=" + idRenta + " ]";
     }
-    
+
 }

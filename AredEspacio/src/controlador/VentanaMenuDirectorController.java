@@ -72,7 +72,7 @@ public class VentanaMenuDirectorController implements Initializable {
         Parent root = (Parent) loader.load();
         VentanaRentasController ventanaRentas = loader.getController();
         ventanaRentas.obtenerPanel(panelPrincipal);
-        ventanaRentas.llenarTablaRentas();
+       ventanaRentas.llenarTablaRentas();
         panelPrincipal.getChildren().add(root);
     }
 

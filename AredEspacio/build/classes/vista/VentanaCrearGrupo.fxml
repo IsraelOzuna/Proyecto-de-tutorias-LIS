@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="panelCrearGrupos" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaCrearGrupoController">
+   <children>
+      <GridPane layoutX="3.0" layoutY="106.0" prefHeight="517.0" prefWidth="1120.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="106.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="677.0" minWidth="10.0" prefWidth="139.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="677.0" minWidth="10.0" prefWidth="381.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="777.0" minWidth="0.0" prefWidth="54.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="777.0" minWidth="10.0" prefWidth="277.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="777.0" minWidth="10.0" prefWidth="272.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="etiquetaNombre" text="Nombre:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="etiquetaMaestro" text="Maestro(a):" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="campoNombreGrupo" prefHeight="25.0" prefWidth="418.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+            <ComboBox fx:id="comboBoxMaestro" prefHeight="25.0" prefWidth="279.0" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Label fx:id="etiquetaInscripción" text="Inscripción:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="etiquetaPrecioMensualidad" text="Mensualidad:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="campoMensualidad" prefHeight="25.0" prefWidth="173.0" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <TextField fx:id="campoInscripcion" prefHeight="25.0" prefWidth="297.0" GridPane.columnIndex="3" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <JFXButton fx:id="botonGurdar" onAction="#registrarGrupo" style="-fx-background-color: #CDCDCD;" text="Guardar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Gill Sans MT" size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="botonCancelar" onAction="#cancelarRegistro" prefHeight="30.0" prefWidth="88.0" style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.columnIndex="3" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Gill Sans MT" size="14.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </GridPane>
+      <GridPane layoutX="-2.0" layoutY="1.0" prefHeight="114.0" prefWidth="1120.0" AnchorPane.bottomAnchor="509.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="1.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="520.0" minWidth="10.0" prefWidth="190.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="764.0" minWidth="10.0" prefWidth="739.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="470.0" minWidth="10.0" prefWidth="191.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="etiquetaCrearGrupo" prefHeight="27.0" prefWidth="137.0" text="Crear Grupo" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

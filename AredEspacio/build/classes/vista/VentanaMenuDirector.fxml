@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="1420.0" style="-fx-background-image: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaMenuDirectorController">
+   <children>
+      <GridPane layoutX="207.0" layoutY="86.0" prefHeight="624.0" prefWidth="1120.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="207.0" AnchorPane.rightAnchor="93.0" AnchorPane.topAnchor="86.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Pane fx:id="panelPrincipal" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: # #EDEDED;">
+               <children>
+                  <ImageView fitHeight="624.0" fitWidth="1068.0" layoutX="98.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/LogoAred.png" />
+                     </image>
+                  </ImageView>
+               </children></Pane>
+         </children>
+      </GridPane>
+      <Pane prefHeight="52.0" prefWidth="1421.0" style="-fx-background-color: #740808;">
+         <children>
+            <Label layoutX="31.0" layoutY="11.0" text="Ared Espacio" textFill="WHITE">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="27.0" />
+               </font>
+            </Label>
+            <Label fx:id="etiquetaNombreUsuario" layoutX="1078.0" layoutY="21.0" prefHeight="16.0" prefWidth="186.0" textFill="WHITE">
+               <font>
+                  <Font name="Gill Sans MT" size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="1277.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: #740808;">
+               <graphic>
+                  <FontAwesomeIconView fill="#d4ac0d" glyphName="BELL" size="20">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIconView>
+               </graphic>
+            </Button>
+         </children>
+      </Pane>
+      <GridPane layoutY="82.0" prefHeight="625.0" prefWidth="207.0" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1213.0" AnchorPane.topAnchor="82.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <JFXButton fx:id="botonMaestros" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaMaestro" text="Maestros">
+               <graphic>
+                  <FontAwesomeIconView fill="#740808" glyphName="USER" size="60">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIconView>
+               </graphic>
+               <font>
+                  <Font name="Gill Sans MT Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="botonRecursosReportes" alignment="CENTER" contentDisplay="TOP" text="Recursos y reportes" GridPane.rowIndex="5">
+               <graphic>
+                  <FontAwesomeIconView fill="#740808" glyphName="MONEY" size="60.0">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIconView>
+               </graphic>
+               <font>
+                  <Font name="Gill Sans MT Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="botonGrupos" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaGrupos" text="Grupos" GridPane.rowIndex="2">
+               <graphic>
+                  <FontAwesomeIconView fill="#740808" glyphName="USERS" size="60">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIconView>
+               </graphic>
+               <font>
+                  <Font name="Gill Sans MT Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="botonAlumnos" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaAlumno" text="Alumnos" GridPane.rowIndex="1">
+               <graphic>
+                  <FontAwesomeIconView fill="#740808" glyphName="GRADUATION_CAP" size="60">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIconView>
+               </graphic>
+               <font>
+                  <Font name="Gill Sans MT Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="botonRenta" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaRenta" text="Rentas" GridPane.rowIndex="3">
+               <graphic>
+                  <FontAwesomeIconView fill="#740808" glyphName="BUILDING" size="60">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </FontAwesomeIconView>
+               </graphic>
+               <font>
+                  <Font name="Gill Sans MT Bold" size="14.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <JFXButton fx:id="botonClientes" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaClientes" text="Clientes" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Gill Sans MT Bold" size="14.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="#740808" glyphName="USER_SECRET" size="60" />
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

@@ -39,11 +39,11 @@ public class Pagoalumno implements Serializable {
 
     @Column(name = "nombreGrupo")
     private String nombreGrupo;
-    @JoinColumn(name = "idGrupo", referencedColumnName = "idGrupo")
+  // @JoinColumn(name = "idGrupo", referencedColumnName = "idGrupo")
     @ManyToOne
     private Grupo idGrupo;
 
-    @JoinColumn(name = "nombreGrupo", referencedColumnName = "nombreGrupo")
+    //@JoinColumn(name = "nombreGrupo", referencedColumnName = "nombreGrupo")
     @ManyToOne
     private Grupo grupo;
 

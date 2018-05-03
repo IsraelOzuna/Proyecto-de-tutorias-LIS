@@ -30,7 +30,7 @@ public class PagoMensualidadAlumnoDAO implements IPagoMensualidadAlumno {
 
             try {
                 alumno = encontrarAlumno.findAlumno(idAlumno);
-                grupo = encontrarGrupo.findGrupo(nombreGrupo);
+           //    grupo = encontrarGrupo.findGrupo(nombreGrupo);
             } catch (Exception ex) {
                 Logger.getLogger(PagoMensualidadAlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
