@@ -17,12 +17,13 @@ import persistencia.GrupoJpaController;
 public class PagoMensualidadAlumnoDAO implements IPagoMensualidadAlumno {
 
     @Override
-    public boolean registrarMensualidad(PagoMensualidadAlumno inscripcionAlumno, int idAlumno, String nombreGrupo) {
+    public boolean registrarMensualidad(PagoMensualidadAlumno pagoMensualidad, int idAlumno, String nombreGrupo) {
         boolean pagoInscripcionExitoso = true;
 
-        if (inscripcionAlumno != null) {
+        if (pagoMensualidad != null) {
             Alumno alumno = null;
-            Grupo grupo = null;
+            Grupo grupo = null;            
+            int idGrupo;
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
             PagoalumnoJpaController pagoMensualidadController = new PagoalumnoJpaController(entityManagerFactory);
             AlumnoJpaController encontrarAlumno = new AlumnoJpaController(entityManagerFactory);
@@ -30,16 +31,17 @@ public class PagoMensualidadAlumnoDAO implements IPagoMensualidadAlumno {
 
             try {
                 alumno = encontrarAlumno.findAlumno(idAlumno);
-           //    grupo = encontrarGrupo.findGrupo(nombreGrupo);
+                idGrupo = encontrarGrupo.encontrarGrupoAlumno(nombreGrupo);
+                grupo = encontrarGrupo.findGrupo(idGrupo);
             } catch (Exception ex) {
                 Logger.getLogger(PagoMensualidadAlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             persistencia.Pagoalumno pagoNuevo = new persistencia.Pagoalumno();
-            pagoNuevo.setFechaPago(inscripcionAlumno.getFechaPagoInscripcion());
-            pagoNuevo.setCantidad(inscripcionAlumno.getCantidad());
+            pagoNuevo.setFechaPago(pagoMensualidad.getFechaPagoInscripcion());
+            pagoNuevo.setCantidad(pagoMensualidad.getCantidad());
             pagoNuevo.setIdAlumno(alumno);
-            pagoNuevo.setNombreGrupo(grupo);
+            pagoNuevo.setIdGrupo(grupo);
             pagoNuevo.setTipoPago("1");
             try {
                 pagoMensualidadController.create(pagoNuevo);

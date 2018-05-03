@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package persistencia;
 
 import java.io.Serializable;
@@ -42,7 +37,7 @@ public class PagoalumnoJpaController implements Serializable {
             }
             Grupo idGrupo = pagoalumno.getIdGrupo();
             if (idGrupo != null) {
-                idGrupo = em.getReference(idGrupo.getClass(), idGrupo.getNombreGrupo());
+                idGrupo = em.getReference(idGrupo.getClass(), idGrupo.getIdGrupo());
                 pagoalumno.setIdGrupo(idGrupo);
             }
             em.persist(pagoalumno);

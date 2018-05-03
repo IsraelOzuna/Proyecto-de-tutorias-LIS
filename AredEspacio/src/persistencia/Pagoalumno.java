@@ -37,15 +37,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Pagoalumno.findByTipoPago", query = "SELECT p FROM Pagoalumno p WHERE p.tipoPago = :tipoPago")})
 public class Pagoalumno implements Serializable {
 
-    @Column(name = "nombreGrupo")
-    private String nombreGrupo;
-  // @JoinColumn(name = "idGrupo", referencedColumnName = "idGrupo")
+    @JoinColumn(name = "idAlumno", referencedColumnName = "idAlumno")
+    @ManyToOne
+    private Alumno idAlumno;
+    @JoinColumn(name = "idGrupo", referencedColumnName = "idGrupo")
     @ManyToOne
     private Grupo idGrupo;
-
-    //@JoinColumn(name = "nombreGrupo", referencedColumnName = "nombreGrupo")
-    @ManyToOne
-    private Grupo grupo;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -61,9 +58,6 @@ public class Pagoalumno implements Serializable {
     private Double cantidad;
     @Column(name = "tipoPago")
     private String tipoPago;
-    @JoinColumn(name = "idAlumno", referencedColumnName = "idAlumno")
-    @ManyToOne
-    private Alumno idAlumno;
 
     public Pagoalumno() {
     }
@@ -104,14 +98,6 @@ public class Pagoalumno implements Serializable {
         this.tipoPago = tipoPago;
     }
 
-    public Alumno getIdAlumno() {
-        return idAlumno;
-    }
-
-    public void setIdAlumno(Alumno idAlumno) {
-        this.idAlumno = idAlumno;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -137,20 +123,12 @@ public class Pagoalumno implements Serializable {
         return "persistencia.Pagoalumno[ idPago=" + idPago + " ]";
     }
 
-    public Grupo getGrupo() {
-        return grupo;
+    public Alumno getIdAlumno() {
+        return idAlumno;
     }
 
-    public void setNombreGrupo(Grupo grupo) {
-        this.grupo = grupo;
-    }
-
-    public String getNombreGrupo() {
-        return nombreGrupo;
-    }
-
-    public void setNombreGrupo(String nombreGrupo) {
-        this.nombreGrupo = nombreGrupo;
+    public void setIdAlumno(Alumno idAlumno) {
+        this.idAlumno = idAlumno;
     }
 
     public Grupo getIdGrupo() {

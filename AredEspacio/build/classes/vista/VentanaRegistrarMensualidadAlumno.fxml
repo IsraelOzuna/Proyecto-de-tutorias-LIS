@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
@@ -48,13 +49,19 @@
                      <font>
                         <Font name="Gill Sans MT Bold" size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </JFXButton>
-                  <JFXButton fx:id="botonAceptar" onAction="#registrarInscripcion" style="-fx-background-color: #CDCDCD;" text="Aceptar" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <JFXButton fx:id="botonAceptar" onAction="#registrarMensualidad" style="-fx-background-color: #CDCDCD;" text="Aceptar" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font name="Gill Sans MT Bold" size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </JFXButton>
-                  <TextField fx:id="campoMontoPagar" prefHeight="25.0" prefWidth="107.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="campoMontoPagar" onKeyTyped="#limitarCampoMonto" prefHeight="25.0" prefWidth="107.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label fx:id="etiquetaMonto" alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="96.0" text="Monto a pagar:" GridPane.rowIndex="1">
                      <font>
                         <Font name="Gill Sans MT" size="14.0" />
@@ -65,7 +72,10 @@
                         <Font name="Gill Sans MT" size="14.0" />
                      </font>
                   </Label>
-                  <JFXComboBox fx:id="comboGruposAlumno" prefHeight="25.0" prefWidth="139.0" GridPane.columnIndex="1" />
+                  <JFXComboBox fx:id="comboGruposAlumno" prefHeight="25.0" prefWidth="139.0" GridPane.columnIndex="1">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></JFXComboBox>
                </children>
             </GridPane>
          </children>

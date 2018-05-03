@@ -8,7 +8,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import persistencia.Grupo;
 import persistencia.Pagoalumno;
 
-@Generated(value="EclipseLink-2.6.1.v20150605-rNA", date="2018-05-03T13:50:53")
+@Generated(value="EclipseLink-2.6.1.v20150605-rNA", date="2018-05-03T16:44:28")
 @StaticMetamodel(Alumno.class)
 public class Alumno_ { 
 

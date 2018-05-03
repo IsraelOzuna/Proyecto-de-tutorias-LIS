@@ -46,7 +46,7 @@ public class Alumno implements Serializable {
 
     @JoinTable(name = "pertenece", joinColumns = {
         @JoinColumn(name = "idAlumno", referencedColumnName = "idAlumno")}, inverseJoinColumns = {
-        @JoinColumn(name = "nombreGrupo", referencedColumnName = "nombreGrupo")})
+        @JoinColumn(name = "idGrupo", referencedColumnName = "idGrupo")})
     @ManyToMany
     private Collection<Grupo> grupoCollection;
     @OneToMany(mappedBy = "idAlumno")

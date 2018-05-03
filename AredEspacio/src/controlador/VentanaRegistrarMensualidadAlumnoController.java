@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import negocio.AlumnoDAO;
 import negocio.PagoMensualidadAlumnoDAO;
@@ -57,7 +58,7 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
     }
 
     @FXML
-    private void registrarInscripcion(ActionEvent event) {
+    private void registrarMensualidad(ActionEvent event) {
         boolean cantidadValida = true;
         Date fechaPago = new Date();
         if (comboGruposAlumno.getSelectionModel().getSelectedItem() != null && !campoMontoPagar.getText().isEmpty()) {
@@ -82,7 +83,8 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
                     panelTrasero.setVisible(false);
                 }
             }
-
+        }else{
+            DialogosController.mostrarMensajeAdvertencia("", "Campos vacios", "Llene ambos campos");
         }
     }
 
@@ -116,5 +118,14 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
         ObservableList<String> nombreGrupos = FXCollections.observableArrayList();
         nombreGrupos.addAll(obtenerNombreGrupos(gruposAlumno));
         comboGruposAlumno.setItems(nombreGrupos);
+    }
+
+    @FXML
+    private void limitarCampoMonto(KeyEvent event) {
+        char caracter = event.getCharacter().charAt(0);
+
+        if (campoMontoPagar.getText().length() >= 10 || !Character.isDigit(caracter)) {
+            event.consume();
+        }
     }
 }

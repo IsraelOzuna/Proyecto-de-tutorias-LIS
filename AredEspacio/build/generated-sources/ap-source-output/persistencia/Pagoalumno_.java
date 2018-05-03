@@ -7,14 +7,12 @@ import javax.persistence.metamodel.StaticMetamodel;
 import persistencia.Alumno;
 import persistencia.Grupo;
 
-@Generated(value="EclipseLink-2.6.1.v20150605-rNA", date="2018-05-03T14:03:08")
+@Generated(value="EclipseLink-2.6.1.v20150605-rNA", date="2018-05-03T17:25:38")
 @StaticMetamodel(Pagoalumno.class)
 public class Pagoalumno_ { 
 
-    public static volatile SingularAttribute<Pagoalumno, String> nombreGrupo;
     public static volatile SingularAttribute<Pagoalumno, Alumno> idAlumno;
     public static volatile SingularAttribute<Pagoalumno, Integer> idPago;
-    public static volatile SingularAttribute<Pagoalumno, Grupo> grupo;
     public static volatile SingularAttribute<Pagoalumno, String> tipoPago;
     public static volatile SingularAttribute<Pagoalumno, Double> cantidad;
     public static volatile SingularAttribute<Pagoalumno, Date> fechaPago;

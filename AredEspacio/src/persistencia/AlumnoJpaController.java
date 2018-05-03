@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package persistencia;
 
 import java.io.Serializable;
@@ -40,7 +45,7 @@ public class AlumnoJpaController implements Serializable {
             em.getTransaction().begin();
             Collection<Grupo> attachedGrupoCollection = new ArrayList<Grupo>();
             for (Grupo grupoCollectionGrupoToAttach : alumno.getGrupoCollection()) {
-                grupoCollectionGrupoToAttach = em.getReference(grupoCollectionGrupoToAttach.getClass(), grupoCollectionGrupoToAttach.getNombreGrupo());
+                grupoCollectionGrupoToAttach = em.getReference(grupoCollectionGrupoToAttach.getClass(), grupoCollectionGrupoToAttach.getIdGrupo());
                 attachedGrupoCollection.add(grupoCollectionGrupoToAttach);
             }
             alumno.setGrupoCollection(attachedGrupoCollection);
@@ -84,7 +89,7 @@ public class AlumnoJpaController implements Serializable {
             Collection<Pagoalumno> pagoalumnoCollectionNew = alumno.getPagoalumnoCollection();
             Collection<Grupo> attachedGrupoCollectionNew = new ArrayList<Grupo>();
             for (Grupo grupoCollectionNewGrupoToAttach : grupoCollectionNew) {
-                grupoCollectionNewGrupoToAttach = em.getReference(grupoCollectionNewGrupoToAttach.getClass(), grupoCollectionNewGrupoToAttach.getNombreGrupo());
+                grupoCollectionNewGrupoToAttach = em.getReference(grupoCollectionNewGrupoToAttach.getClass(), grupoCollectionNewGrupoToAttach.getIdGrupo());
                 attachedGrupoCollectionNew.add(grupoCollectionNewGrupoToAttach);
             }
             grupoCollectionNew = attachedGrupoCollectionNew;
@@ -219,7 +224,7 @@ public class AlumnoJpaController implements Serializable {
             em.close();
         }
     }
-
+    
     public List<Alumno> obtenerAlumnos(String nombre) {
         List<persistencia.Alumno> alumnos;
         String consulta = "Select a from Alumno a where a.nombre = :nombre";
@@ -243,5 +248,5 @@ public class AlumnoJpaController implements Serializable {
         }
         return gruposAlumno;
     }
-
+    
 }
