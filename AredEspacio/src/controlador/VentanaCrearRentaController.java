@@ -8,6 +8,7 @@ package controlador;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -16,12 +17,16 @@ import javafx.fxml.Initializable;
  */
 public class VentanaCrearRentaController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    private Pane panelPrincipal;
+
+    public void obtenerPanel(Pane panelPrincipal) {
+        this.panelPrincipal = panelPrincipal;
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-    }    
-    
+
+    }
+
 }
