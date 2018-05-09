@@ -64,8 +64,7 @@ public class VentanaBuscarController implements Initializable {
                 VentanaRegistrarMaestroController ventanaRegistrarMaestro = loader.getController();
                 panelPrincipal.getChildren().add(root);
                 break;
-            case "Rentas":
-                break;                
+
             case "Clientes":
                 loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRegistrarCliente.fxml"));
                 root = (Parent) loader.load();
@@ -159,10 +158,6 @@ public class VentanaBuscarController implements Initializable {
                         etiquetaNoCoincidencias.setText("Maestro no encontrado");
                     }
                     break;
-
-                case "Rentas":
-                    break;
-
                 default:
                     break;
 

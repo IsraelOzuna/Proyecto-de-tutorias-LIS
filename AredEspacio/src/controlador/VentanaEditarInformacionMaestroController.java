@@ -98,7 +98,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
 
     @FXML
     private void cerrarVentanaEditarInformacionMaestro(ActionEvent event) throws IOException {
-        desplegarVentanaBusquedaAlumno();
+        desplegarVentanaBusqueda();
     }
 
     @FXML
@@ -129,7 +129,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
 
                         if (maestroDAO.editarMaestro(maestroNuevo)) {
                             DialogosController.mostrarMensajeInformacion("Guardado", "Maestro modificado", "El maestro ha sido modificado exitosamente");
-                            desplegarVentanaBusquedaAlumno();
+                            desplegarVentanaBusqueda();
                         } else {
                             DialogosController.mostrarMensajeAdvertencia("Error", "Error al modificar", "Ha ocurrido un error. No se pudo modificar");
                         }
@@ -272,7 +272,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
 
     }
 
-    public void desplegarVentanaBusquedaAlumno() throws IOException {
+    public void desplegarVentanaBusqueda() throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();

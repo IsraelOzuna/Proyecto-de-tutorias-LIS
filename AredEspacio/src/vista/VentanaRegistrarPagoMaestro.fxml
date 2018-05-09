@@ -59,7 +59,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </JFXButton>
-                  <DatePicker fx:id="campoFechaPago" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <DatePicker fx:id="campoFechaPago" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
             </GridPane>
          </children>

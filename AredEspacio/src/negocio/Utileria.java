@@ -64,4 +64,42 @@ public class Utileria {
 
         return mesConvertido;
     }
+
+    public static String convertirDia(String diaIngles) {
+        String diaEspañol = null;
+
+        switch (diaIngles) {
+            case "MONDAY":
+                diaEspañol = "Lunes";
+                break;
+
+            case "TUESDAY":
+                diaEspañol = "Martes";
+                break;
+
+            case "WEDNESDAY":
+                diaEspañol = "Miercoles";
+                break;
+
+            case "THURSDAY":
+                diaEspañol = "Jueves";
+                break;
+
+            case "FRIDAY":
+                diaEspañol = "Viernes";
+                break;
+
+            case "SATURDAY":
+                diaEspañol = "Sabado";
+                break;
+
+            case "SUNDAY":
+                diaEspañol = "Domingo";
+                break;
+
+        }
+
+        return diaEspañol;
+    }
+
 }

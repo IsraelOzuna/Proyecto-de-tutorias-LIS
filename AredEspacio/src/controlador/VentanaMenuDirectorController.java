@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
@@ -18,11 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import negocio.MaestroDAO;
 
-/**
- * FXML Controller class
- *
- * @author iro19
- */
+
 public class VentanaMenuDirectorController implements Initializable {
 
     @FXML
@@ -72,7 +63,7 @@ public class VentanaMenuDirectorController implements Initializable {
         Parent root = (Parent) loader.load();
         VentanaRentasController ventanaRentas = loader.getController();
         ventanaRentas.obtenerPanel(panelPrincipal);
-       ventanaRentas.llenarTablaRentas();
+        ventanaRentas.llenarTablaRentas();
         panelPrincipal.getChildren().add(root);
     }
 

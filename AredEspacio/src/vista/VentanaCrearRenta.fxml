@@ -12,15 +12,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaCrearRentaController">
+<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaCrearRentaController">
    <children>
-      <TableView fx:id="tablaActividades" layoutX="178.0" layoutY="145.0" prefHeight="392.0" prefWidth="796.0">
+      <TableView fx:id="tablaGrupos" layoutX="178.0" layoutY="143.0" prefHeight="339.0" prefWidth="370.0">
         <columns>
-          <TableColumn prefWidth="102.0" text="Horario" />
-          <TableColumn prefWidth="346.0" text="Actividades" />
+          <TableColumn fx:id="columnaHorarioGrupo" prefWidth="102.0" text="Horario" />
+          <TableColumn fx:id="columnaNombreGrupo" prefWidth="267.0" text="Grupo" />
         </columns>
       </TableView>
-      <DatePicker fx:id="campoFecha" layoutX="623.0" layoutY="69.0" />
+      <DatePicker fx:id="campoFecha" editable="false" layoutX="623.0" layoutY="69.0" />
       <Label fx:id="etiquetaFecha" layoutX="623.0" layoutY="37.0" text="Fecha:">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
@@ -37,7 +37,7 @@
          </font>
       </Label>
       <TextField fx:id="campoCantidad" layoutX="383.0" layoutY="70.0" />
-      <JFXButton fx:id="botonRegistrar" layoutX="598.0" layoutY="561.0" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Registrar">
+      <JFXButton fx:id="botonRegistrar" layoutX="598.0" layoutY="561.0" onAction="#registrarRenta" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Registrar">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -45,7 +45,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="botonCancelar" alignment="CENTER" layoutX="431.0" layoutY="561.0" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Cancelar">
+      <JFXButton fx:id="botonCancelar" alignment="CENTER" layoutX="431.0" layoutY="561.0" onAction="#cerrarVentanaCrearRenta" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Cancelar">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -53,11 +53,17 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <Button layoutX="879.0" layoutY="67.0" mnemonicParsing="false" text="Ver horario">
+      <Button fx:id="botonMostrarHorarios" layoutX="879.0" layoutY="67.0" mnemonicParsing="false" onAction="#consultarHorariosDelDia" text="Ver horario">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <ComboBox layoutX="178.0" layoutY="70.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboBoxClientes" layoutX="178.0" layoutY="70.0" prefWidth="150.0" />
+      <TableView fx:id="tablaRentas" layoutX="607.0" layoutY="143.0" prefHeight="339.0" prefWidth="370.0">
+        <columns>
+          <TableColumn fx:id="columnaHorarioRenta" prefWidth="95.0" text="Horario" />
+          <TableColumn fx:id="columnaNombreClienteRenta" prefWidth="274.0" text="Nombre Cliente" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

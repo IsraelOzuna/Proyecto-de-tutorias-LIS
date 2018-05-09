@@ -41,6 +41,8 @@ public class VentanaRentasController implements Initializable {
     private TableColumn<persistencia.Renta, String> columnaHoraFin;
     @FXML
     private TableColumn<persistencia.Renta, Double> columnaCantidad;
+    
+    
 
     public void obtenerPanel(Pane panelPrincipal) {
         this.panelPrincipal = panelPrincipal;
@@ -78,7 +80,8 @@ public class VentanaRentasController implements Initializable {
         Parent root;
         loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaCrearRenta.fxml"));
         root = (Parent) loader.load();
-        VentanaCrearRentaController ventanaCrearRenta = loader.getController(); 
+        VentanaCrearRentaController ventanaCrearRenta = loader.getController();
+        ventanaCrearRenta.obtenerPanel(panelPrincipal);
         panelPrincipal.getChildren().add(root);
     }
 
