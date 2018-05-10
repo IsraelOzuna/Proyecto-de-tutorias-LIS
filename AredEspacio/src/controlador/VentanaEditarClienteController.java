@@ -131,7 +131,7 @@ public class VentanaEditarClienteController {
                         cliente.setApellidos(campoApellidos.getText());
                         cliente.setCorreo(campoCorreo.getText());
                         cliente.setTelefono(campoTelefono.getText());
-                        cliente.setRutaFoto(nombreFoto);
+                        cliente.setRutaFoto(cliente.getRutaFoto());
 
                         if (nuevosDatosCliente.editarCliente(cliente)) {
                             DialogosController.mostrarMensajeInformacion("Guardado", "Cliente Modificado", "El cliente ha sido modificado exitosamente");
