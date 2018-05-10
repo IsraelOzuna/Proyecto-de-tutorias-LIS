@@ -47,6 +47,8 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
     private TextField campoMontoPagar;
     private List<String> gruposAlumno;
     private int idAlumno;
+    @FXML
+    private Label etiquetaFechaPago;
     
 
     /**

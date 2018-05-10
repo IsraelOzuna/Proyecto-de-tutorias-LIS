@@ -134,4 +134,15 @@ public class ClienteJpaController implements Serializable {
         }
     }
     
+    public List<Cliente> obtenerClientes(String nombre) {
+        List<persistencia.Cliente> cliente;
+        String consulta = "Select c from Cliente c where c.nombre = :nombre";
+        EntityManager em = getEntityManager();
+        try {
+            cliente = em.createQuery(consulta).setParameter("nombre", nombre).getResultList();
+        } finally {
+            em.close();
+        }
+        return cliente;
+    }
 }

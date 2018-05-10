@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import persistencia.Alumno;
+import persistencia.Cliente;
 import persistencia.Maestro;
 
 /**
@@ -37,6 +38,7 @@ public class PanelCoincidenciaController implements Initializable {
     private String seccion = "";
     private Maestro maestro;
     private Alumno alumno;
+    private Cliente cliente;
 
     /**
      * Initializes the controller class.
@@ -48,7 +50,7 @@ public class PanelCoincidenciaController implements Initializable {
 
     public void obtenerSeccion(String seccion, Pane panelPrincipal) {
         this.seccion = seccion;
-        this.panelPrincipal = panelPrincipal;        
+        this.panelPrincipal = panelPrincipal;
     }
 
     @FXML
@@ -59,7 +61,7 @@ public class PanelCoincidenciaController implements Initializable {
             case "Alumnos":
                 loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaInformacionAlumnos.fxml"));
                 root = (Parent) loader.load();
-                VentanaInformacionAlumnosController ventanaMostrarInformacionAlumno = loader.getController();                
+                VentanaInformacionAlumnosController ventanaMostrarInformacionAlumno = loader.getController();
                 ventanaMostrarInformacionAlumno.obtenerAlumno(alumno);
                 ventanaMostrarInformacionAlumno.obtenerPanel(panelPrincipal);
                 ventanaMostrarInformacionAlumno.llenarCamposInformacion();
@@ -68,13 +70,23 @@ public class PanelCoincidenciaController implements Initializable {
             case "Maestros":
                 loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaMostrarInformacionMaestro.fxml"));
                 root = (Parent) loader.load();
-                VentanaMostrarInformacionMaestroController ventanaMostrarInformacionMaestro = loader.getController();                
+                VentanaMostrarInformacionMaestroController ventanaMostrarInformacionMaestro = loader.getController();
                 ventanaMostrarInformacionMaestro.obtenerMaestro(maestro);
                 ventanaMostrarInformacionMaestro.obtenerPanel(panelPrincipal);
                 ventanaMostrarInformacionMaestro.llenarCamposInformacion();
                 panelPrincipal.getChildren().add(root);
                 break;
             case "Rentas":
+                break;
+
+            case "Clientes":
+                loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaInformacionClientes.fxml"));
+                root = (Parent) loader.load();
+                VentanaInformacionClientesController ventanaMostrarInformacionCliente = loader.getController();
+                ventanaMostrarInformacionCliente.obtenerCliente(cliente);
+                ventanaMostrarInformacionCliente.obtenerPanel(panelPrincipal);
+                ventanaMostrarInformacionCliente.llenarCamposInformacion();
+                panelPrincipal.getChildren().add(root);
                 break;
             default:
                 break;
@@ -99,6 +111,17 @@ public class PanelCoincidenciaController implements Initializable {
         etiquetaNombre.setText(nombre + " " + apellidos);
         if (maestro.getRutaFoto() != null) {
             Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
+            fotoPerfil.setImage(foto);
+        }
+    }
+
+    public void llenarDatosCliente(Cliente cliente) {
+        this.cliente = cliente;
+        String nombre = cliente.getNombre();
+        String apellidos = cliente.getApellidos();
+        etiquetaNombre.setText(nombre + " " + apellidos);
+        if(cliente.getRutaFoto() != null){
+            Image foto = new Image("imagenesClientes/" + cliente.getRutaFoto(), 100, 100, false, true, true);
             fotoPerfil.setImage(foto);
         }
     }

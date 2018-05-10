@@ -1,5 +1,6 @@
 package negocio;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -35,5 +36,50 @@ public class ClienteDAO implements ICliente{
             }
         }
         return clienteRegistradoExitosamente;
-    }           
+    }
+    
+    @Override
+    public boolean editarCliente(persistencia.Cliente cliente) {
+        boolean datosModificacdosExitosamente = false;
+        if(cliente != null){
+           EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+           ClienteJpaController clienteJpaController = new ClienteJpaController(entityManagerFactory);
+           
+           persistencia.Cliente clienteEditado = cliente;
+           
+           clienteEditado.setNombre(cliente.getNombre());
+           clienteEditado.setApellidos(cliente.getApellidos());
+           clienteEditado.setCorreo(cliente.getCorreo());           
+           clienteEditado.setTelefono(cliente.getTelefono());
+           clienteEditado.setRutaFoto(cliente.getRutaFoto());
+           
+           try{
+               clienteJpaController.edit(clienteEditado);
+               datosModificacdosExitosamente = true;
+           } catch (Exception ex) {
+                Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return datosModificacdosExitosamente;
+    }
+
+    @Override
+    public List<persistencia.Cliente> buscarCliente(String nombre) {
+        List<persistencia.Cliente> clienteEncontrados = null;
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        ClienteJpaController clienteJpaController = new ClienteJpaController(entityManagerFactory);
+
+        persistencia.Cliente cliente = new persistencia.Cliente();
+
+        cliente.setNombre(nombre);
+
+        try {
+            clienteEncontrados = clienteJpaController.obtenerClientes(nombre);
+
+        } catch (Exception ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return clienteEncontrados;
+    }
 }

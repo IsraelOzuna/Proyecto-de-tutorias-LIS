@@ -15,7 +15,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import negocio.Alumno;
 import negocio.AlumnoDAO;
+import negocio.ClienteDAO;
 import negocio.MaestroDAO;
+import persistencia.Cliente;
 import persistencia.Maestro;
 
 public class VentanaBuscarController implements Initializable {
@@ -86,7 +88,7 @@ public class VentanaBuscarController implements Initializable {
                     Alumno alumno = new Alumno();
                     List<persistencia.Alumno> alumnos = null;
                     alumnos = alumnoDAO.buscarAlumno(campoBusqueda.getText());
-                    persistencia.Alumno alumnoCoincidencia;
+
                     Pane panelAnterior = new Pane();
 
                     int contadorCoincidencias = 0;
@@ -158,9 +160,46 @@ public class VentanaBuscarController implements Initializable {
                         etiquetaNoCoincidencias.setText("Maestro no encontrado");
                     }
                     break;
+
+                case "Clientes":
+                    ClienteDAO clienteDAO = new ClienteDAO();
+                    Cliente cliente = new Cliente();
+                    List<persistencia.Cliente> clientes = null;
+                    clientes = clienteDAO.buscarCliente(campoBusqueda.getText());
+
+                    Pane panelA = new Pane();
+
+                    int contadorCoincidenciasEncon = 0;
+                    if (clientes.size() > 0) {
+                        for (int i = 0; i < clientes.size(); i++) {
+                            FXMLLoader loader;
+                            Parent root;
+                            loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/PanelCoincidencia.fxml"));
+                            panelCoincidencia = (Pane) loader.load();
+                            PanelCoincidenciaController coincidenciasEncontradas = loader.getController();
+                            coincidenciasEncontradas.obtenerSeccion(seccion, panelPrincipal);
+                            if (contadorCoincidenciasEncon < 3) {
+                                if (contadorCoincidenciasEncon == 0) {
+                                    panelCoincidencia.setLayoutX(45);
+                                    panelCoincidencia.setLayoutY(110);
+                                } else {
+                                    panelCoincidencia.relocate(panelA.getLayoutX() + 380, 110);
+                                }
+                                contadorCoincidenciasEncon++;
+                            } else {
+                                contadorCoincidencias = 1;
+                                panelCoincidencia.relocate(45, panelA.getLayoutY() + 200);
+                            }
+                            coincidenciasEncontradas.llenarDatosCliente(clientes.get(i));
+                            panelPrincipal.getChildren().add(panelCoincidencia);
+                            panelA = panelCoincidencia;
+                        }
+                    } else {
+                        etiquetaNoCoincidencias.setText("Cliente no encontrado");
+                    }
+                    break;
                 default:
                     break;
-
             }
 
         }

@@ -3,12 +3,9 @@ package controlador;
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,17 +14,18 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import negocio.Cliente;
+import persistencia.Cliente;
 import negocio.ClienteDAO;
 import negocio.Utileria;
 
 /**
- * FXML Controller class
  *
- * @author Israel Reyes Ozuna
+ * @author iro19
  */
-public class VentanaRegistrarClienteController implements Initializable {
+public class VentanaEditarClienteController {
 
+    @FXML
+    private AnchorPane panelPrincipal;
     @FXML
     private ImageView fotoSeleccionada;
     @FXML
@@ -60,56 +58,16 @@ public class VentanaRegistrarClienteController implements Initializable {
     private Label etiquetaErrorCorreo;
     @FXML
     private Label etiquetaErrorTelefono;
-    @FXML
-    private AnchorPane panelPrincipal;
+
     private String nombreFoto;
-    private Cliente nuevoCliente;
-
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
-    
-    @FXML
-    public void registrarNuevoCliente(ActionEvent event) throws IOException {
-        limpiarEtiquetas();
-        if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
-            if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
-                if (Utileria.validarCorreo(campoCorreo.getText())) {
-                    if (esTelefonoValido(campoTelefono.getText())) {
-                        ClienteDAO nuevoClienteDAO = new ClienteDAO();
-                        nuevoCliente = new Cliente();
-                        nuevoCliente.setNombre(campoNombre.getText());
-                        nuevoCliente.setApellidos(campoApellidos.getText());
-                        nuevoCliente.setCorreo(campoCorreo.getText());                        
-                        nuevoCliente.setTelefono(campoTelefono.getText());
-                        nuevoCliente.setRutaFoto(nombreFoto);
-
-                        if (nuevoClienteDAO.registrarCliente(nuevoCliente)) {
-                            DialogosController.mostrarMensajeInformacion("Guardado", "Cliente registrado", "El cliente ha sido registrado exitosamente");
-                            desplegarVentanaBusquedaCliente();
-                        } else {
-                            DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "Ha ocurrido un error. No se pudo registrar");
-                        }
-                    }
-                } else {
-                    etiquetaErrorCorreo.setText("Formato de correo no valido");
-                }
-            }
-        }
-    }
+    private Cliente cliente;
 
     @FXML
     private String seleccionarImagen(ActionEvent event) throws IOException {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        nuevoCliente = new Cliente();
-        nombreFoto = "";
-
+        
         if (archivoSeleccionado != null) {
             String rutaOrigen = archivoSeleccionado.getAbsolutePath();
             nombreFoto = archivoSeleccionado.getName();
@@ -119,11 +77,11 @@ public class VentanaRegistrarClienteController implements Initializable {
             ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
             builder.redirectErrorStream(true);
             Process process = builder.start();
-            nuevoCliente.setRutaFoto(nombreFoto);
+            cliente.setRutaFoto(nombreFoto);
         }
 
-        if (nuevoCliente.getRutaFoto() != null) {
-            Image foto = new Image("imagenesAlumnos/" + nuevoCliente.getRutaFoto(), 140, 140, false, true, true);
+        if (cliente.getRutaFoto() != null) {
+            Image foto = new Image("imagenesAlumnos/" + cliente.getRutaFoto(), 140, 140, false, true, true);
             fotoSeleccionada.setImage(foto);
         }
         return nombreFoto;
@@ -160,7 +118,35 @@ public class VentanaRegistrarClienteController implements Initializable {
             event.consume();
         }
     }
-   
+
+    @FXML
+    private void editarCliente(ActionEvent event) throws IOException {
+        limpiarEtiquetas();
+        if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
+            if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
+                if (Utileria.validarCorreo(campoCorreo.getText())) {
+                    if (esTelefonoValido(campoTelefono.getText())) {
+                        ClienteDAO nuevosDatosCliente = new ClienteDAO();                        
+                        cliente.setNombre(campoNombre.getText());
+                        cliente.setApellidos(campoApellidos.getText());
+                        cliente.setCorreo(campoCorreo.getText());
+                        cliente.setTelefono(campoTelefono.getText());
+                        cliente.setRutaFoto(nombreFoto);
+
+                        if (nuevosDatosCliente.editarCliente(cliente)) {
+                            DialogosController.mostrarMensajeInformacion("Guardado", "Cliente Modificado", "El cliente ha sido modificado exitosamente");
+                            desplegarVentanaBusquedaCliente();
+                        } else {
+                            DialogosController.mostrarMensajeAdvertencia("Error", "Error al modificar", "Ha ocurrido un error. No se pudo modificar");
+                        }
+                    }
+                } else {
+                    etiquetaErrorCorreo.setText("Formato de correo no valido");
+                }
+            }
+        }
+    }
+
     @FXML
     private void cancelarRegistro(ActionEvent event) throws IOException {
         if (existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
@@ -216,6 +202,27 @@ public class VentanaRegistrarClienteController implements Initializable {
         return campoExcedido;
     }
 
+    private void desplegarVentanaBusquedaCliente() throws IOException {
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaBuscarController ventanaBuscar = loader.getController();
+        ventanaBuscar.obtenerSeccion("Clientes", panelPrincipal);
+        panelPrincipal.getChildren().add(root);
+    }
+    
+    public void llenarCampos(Cliente cliente) {
+        this.cliente = cliente;
+        campoNombre.setText(cliente.getNombre());
+        campoApellidos.setText(cliente.getApellidos());
+        campoCorreo.setText(cliente.getCorreo());        
+        campoTelefono.setText(cliente.getTelefono());
+        if (cliente.getRutaFoto() != null) {
+            Image foto = new Image("imagenesClientes/" + cliente.getRutaFoto(), 100, 100, false, true, true);
+            fotoSeleccionada.setImage(foto);
+        }
+    }
+
+
     private boolean esTelefonoValido(String telefono) {
         boolean telefonoValido = true;
         for (int i = 0; i < telefono.length(); i++) {
@@ -228,17 +235,9 @@ public class VentanaRegistrarClienteController implements Initializable {
         return telefonoValido;
     }
 
-    private void desplegarVentanaBusquedaCliente() throws IOException {
-        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
-        Parent root = (Parent) loader.load();
-        VentanaBuscarController ventanaBuscar = loader.getController();
-        ventanaBuscar.obtenerSeccion("Clientes", panelPrincipal);
-        panelPrincipal.getChildren().add(root);
-    }
-
     private void limpiarEtiquetas() {
         etiquetaErrorApellidos.setText("");
-        etiquetaErrorCorreo.setText("");
+        etiquetaErrorCorreo.setText("");        
         etiquetaErrorNombre.setText("");
         etiquetaErrorTelefono.setText("");
     }
