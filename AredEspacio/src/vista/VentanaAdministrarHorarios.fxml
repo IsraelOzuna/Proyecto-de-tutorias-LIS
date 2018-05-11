@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="panelAdministrarHorario" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaAdministrarHorariosController">
+   <children>
+      <Label layoutX="417.0" layoutY="33.0" text="Administrar Horarios">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="326.0" layoutY="79.0" text="Seleccione a un grupo">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="36.0" layoutY="119.0" prefHeight="34.0" prefWidth="1058.0" text="Presione                            en uno de los cuadrantes para asignar al grupo  o presione                          para liberar el cuadrante">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboGrupos" layoutX="547.0" layoutY="82.0" prefWidth="150.0" />
+      <TableView fx:id="tablaHorario" layoutX="25.0" layoutY="148.0" prefHeight="422.0" prefWidth="1064.0">
+        <columns>
+          <TableColumn fx:id="columnaHora" prefWidth="133.0" text="Hora" />
+          <TableColumn fx:id="columnaDomingo" prefWidth="133.0" text="Domingo" />
+            <TableColumn fx:id="columnaLunes" prefWidth="133.0" text="Lunes" />
+            <TableColumn fx:id="columnaMartes" prefWidth="133.0" text="Martes" />
+            <TableColumn fx:id="columnaMiercoles" prefWidth="133.0" text="Miercoles" />
+            <TableColumn fx:id="columnaJueves" prefWidth="133.0" text="Jueves" />
+            <TableColumn fx:id="columnaViernes" prefWidth="133.0" text="Virenes" />
+            <TableColumn fx:id="columnaSabado" prefWidth="133.0" text="Sabado" />
+        </columns>
+      </TableView>
+      <JFXButton fx:id="botonGuardar" layoutX="587.0" layoutY="580.0" onAction="#guardarHorario" style="-fx-background-color: #CDCDCD;" text="Guardar">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="botonRgresar" layoutX="461.0" layoutY="583.0" onAction="#regresarPantallaAnterior" style="-fx-background-color: #CDCDCD;" text="Regresar">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </JFXButton>
+      <Label layoutX="98.0" layoutY="126.0" text="Click Izquierdo">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="604.0" layoutY="126.0" text="Click Derecho">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

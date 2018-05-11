@@ -1,5 +1,6 @@
 package controlador;
 
+import com.jfoenix.controls.JFXButton;
 import java.awt.Insets;
 import java.io.IOException;
 import java.net.URL;
@@ -51,7 +52,9 @@ public class VentanaConsultarGruposController implements Initializable {
     private Button botonCrearGrupo;
     @FXML
     private AnchorPane panelConsultarGrupos;
-    
+    @FXML
+    private JFXButton botonAdministrarHorarios;
+    private String unidadPersistencia="AredEspacioPU";
 
     
     
@@ -64,7 +67,7 @@ public class VentanaConsultarGruposController implements Initializable {
     
     public void iniciarVentana(){
 
-        GrupoDAO grupoDAO = new GrupoDAO();
+        GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         Grupo grupo = new Grupo();
         List<Grupo> listaGrupos=null;
         Cuenta cuentaNueva = new Cuenta();
@@ -79,6 +82,23 @@ public class VentanaConsultarGruposController implements Initializable {
                 
             }
         }
+        tablaGrupos.setOnMousePressed(new EventHandler<MouseEvent>() {
+        @Override
+            public void handle(MouseEvent event) {
+                if(tablaGrupos.getSelectionModel().getSelectedItem()!=null){
+                    FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarInformacionGrupo.fxml"));
+                    try{
+                        Parent root = (Parent) loader.load();
+                        VentanaConsultarInformacionGrupoController ventanaConsultarInformacionGrupoController = loader.getController();
+                        ventanaConsultarInformacionGrupoController.establecerGrupo(tablaGrupos.getSelectionModel().getSelectedItem().getIdGrupo());////////manejar excepción en caso de estar vacio
+                        panelConsultarGrupos.getChildren().add(root);
+                    }catch(IOException ex){
+                        Logger.getLogger (VentanaConsultarGruposController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            }   
+        });
     }
     
     @Override
@@ -94,4 +114,14 @@ public class VentanaConsultarGruposController implements Initializable {
         crearGrupo.iniciarVentana();
         panelConsultarGrupos.getChildren().add(root);
     } 
+
+    @FXML
+    private void desplegarVentanaAdministrarHorarios(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaAdministrarHorarios.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaAdministrarHorariosController administrarGrupo = loader.getController();
+        administrarGrupo.iniciarVentana();
+        panelConsultarGrupos.getChildren().add(root);
+        
+    }
 }

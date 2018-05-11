@@ -10,11 +10,16 @@ import persistencia.CuentaJpaController;
 import persistencia.GrupoJpaController;
 import persistencia.MaestroJpaController;
 public class GrupoDAO implements IGrupo{
+    String unidadPersistencia;
+    
+    public GrupoDAO(String unidadPersistencia){
+        this.unidadPersistencia=unidadPersistencia;
+    }
 
     @Override
     public List<Grupo> adquirirGrupos(persistencia.Cuenta usuario) {
         List<Grupo> listaGrupos=null;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);
         GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         persistencia.Grupo grupo = new persistencia.Grupo();
         grupo.setUsuario(usuario);
@@ -32,7 +37,7 @@ public class GrupoDAO implements IGrupo{
         if(nuevoGrupo.getNombreGrupo()==null){
             grupoCreadoExitosamente=false;
         }else{
-            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);//Cambiar a "AredEspacioPU"
             GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
             
             try{
@@ -51,7 +56,7 @@ public class GrupoDAO implements IGrupo{
     @Override
     public List<Cuenta> adquirirCuentas() {
         List<Cuenta> listaCuentas=null;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);/////////Cambiar a AredEspacioPU
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);/////////Cambiar a AredEspacioPU
         CuentaJpaController cuentaJpaController = new CuentaJpaController(entityManagerFactory);
         //persistencia.Cuenta cuenta = new persistencia.Cuenta();
         try{
@@ -64,29 +69,11 @@ public class GrupoDAO implements IGrupo{
 
     @Override
     public Grupo adquirirGrupo(int idGrupo) {
-
         Grupo grupoEncontrado=new Grupo();
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);//Cambiar a "AredEspacioPU"
         GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         try{
-            grupoEncontrado=grupoJpaController.findGrupo(idGrupo); 
-            /*Cambios Necesarios:
-            El grupo ahora se identificará por un id y no por el nombre, por eso 
-            se realizó un cambio en la base de datos y se necesita actualizar las 
-            entidades y los controladores JPA de dichas entidades para que esten
-            acorde a los cambios en la base de datos, el problema es que esos 
-            cambios de entidades y controladores impactan clases en las cuales 
-            yo no contribuí, principalmente la de pago alumno, por lo tanto, las
-            entidades ni los controladores JPA de grupo han sido actualizados en
-            este repositorio, pues afectarian negativamente a otras clases las 
-            cuales yo no sabría como modificar. Hasta que se realicen cambios en
-            las clases afectadas, recomiendo comentar esta linea para evitar 
-            problemas en la compilación.
-            */
-            
-            
-            
-            
+            grupoEncontrado=grupoJpaController.findGrupo(idGrupo);
         }catch (Exception ex){
             Logger.getLogger(GrupoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -96,7 +83,7 @@ public class GrupoDAO implements IGrupo{
     @Override
     public boolean eliminarGrupo(Grupo grupoEliminar) {
         boolean grupoEliminado=false;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);//Cambiar a "AredEspacioPU"
         GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         try{
             grupoJpaController.edit(grupoEliminar);
@@ -113,8 +100,8 @@ public class GrupoDAO implements IGrupo{
     @Override
     public boolean editarGrupo(Grupo grupoEditar) {
         boolean grupoEditado=true;
-        grupoEditar.setEstaActivo(1);
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
+        //grupoEditar.setEstaActivo(1);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);//Cambiar a "AredEspacioPU"
         GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         
         try{
@@ -122,19 +109,16 @@ public class GrupoDAO implements IGrupo{
             grupoEditado=true;
         }catch (Exception ex){
             grupoEditado=false;
-            Logger.getLogger(GrupoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return grupoEditado;
     }
     @Override
-    public List<persistencia.Alumno> obtenerAlumnos(String nombreGrupo) {
+    public List<persistencia.Alumno> obtenerAlumnos(int idGrupo) {
         List<persistencia.Alumno> listaAlumnos=null;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);
         GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
-        listaAlumnos=grupoJpaController.obtenerListaAlumnos(nombreGrupo);
+        listaAlumnos=grupoJpaController.obtenerListaAlumnos(idGrupo);
         return listaAlumnos;
     }
-
-    
 }

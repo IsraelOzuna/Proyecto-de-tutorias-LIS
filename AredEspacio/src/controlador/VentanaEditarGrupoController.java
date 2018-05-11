@@ -69,6 +69,9 @@ public class VentanaEditarGrupoController implements Initializable {
     private ComboBox<String> comboMaestro;
     @FXML
     private AnchorPane panelEditarGrupo;
+    private String nombreInicial;
+    private int idGrupoActual;
+    private String unidadPersistencia="AredEspacioPU";
    
     
 
@@ -76,10 +79,12 @@ public class VentanaEditarGrupoController implements Initializable {
         ObservableList<String> maestros =FXCollections.observableArrayList();
         List<Cuenta> listaUsuarios=null;
         Grupo grupo;
-        GrupoDAO grupoDAO = new GrupoDAO();
+        GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         grupo=grupoDAO.adquirirGrupo(idGrupo);
         listaUsuarios=grupoDAO.adquirirCuentas();
-        campoNombre.setText(grupo.getNombreGrupo());
+        nombreInicial=grupo.getNombreGrupo();
+        idGrupoActual=idGrupo;
+        campoNombre.setText(nombreInicial);
         campoInscripcion.setText(grupo.getInscripcion().toString());
         campoMensualidad.setText(grupo.getMensualidad().toString());
         for(int i=0; i<listaUsuarios.size(); i++){///////
@@ -87,7 +92,6 @@ public class VentanaEditarGrupoController implements Initializable {
         }
         comboMaestro.setItems(maestros);
         comboMaestro.setValue(grupo.getUsuario().getUsuario());
-        campoNombre.setDisable(true);
         
         campoInscripcion.textProperty().addListener((observable, viejoValor, nuevoValor) -> {
             if (!nuevoValor.matches("\\d+\\.\\d*")) {
@@ -109,23 +113,29 @@ public class VentanaEditarGrupoController implements Initializable {
     private void guardarGrupoEditado(ActionEvent event) throws IOException {
         if(!existenCamposVacios()){
             if(!existenCamposExcedidos()){
-                GrupoDAO nuevoGrupoDAO = new GrupoDAO();
-                Cuenta nuevaCuenta=new Cuenta();
-                nuevaCuenta.setUsuario(comboMaestro.getValue());
-                Grupo grupoEditar = new Grupo();
-                grupoEditar.setNombreGrupo(campoNombre.getText());
-                grupoEditar.setUsuario(nuevaCuenta);
-                grupoEditar.setInscripcion(Double.parseDouble(campoInscripcion.getText()));
-                grupoEditar.setMensualidad(Double.parseDouble(campoMensualidad.getText()));
-                if(nuevoGrupoDAO.editarGrupo(grupoEditar)){
-                    DialogosController.mostrarMensajeInformacion("Editado", "El grupo ha sido editado", "El grupo fué editado correctamente");
-                    FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
-                    Parent root = (Parent) loader.load();
-                    VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
-                    ventanaConsultarGruposController.iniciarVentana();
-                    panelEditarGrupo.getChildren().add(root); 
+                if(!nombreGrupoRepetido()){
+                    GrupoDAO nuevoGrupoDAO = new GrupoDAO(unidadPersistencia);
+                    Cuenta nuevaCuenta=new Cuenta();
+                    nuevaCuenta.setUsuario(comboMaestro.getValue());
+                    Grupo grupoEditar = new Grupo();
+                    
+                    grupoEditar=nuevoGrupoDAO.adquirirGrupo(idGrupoActual);
+                    grupoEditar.setNombreGrupo(campoNombre.getText());
+                    grupoEditar.setUsuario(nuevaCuenta);
+                    grupoEditar.setInscripcion(Double.parseDouble(campoInscripcion.getText()));
+                    grupoEditar.setMensualidad(Double.parseDouble(campoMensualidad.getText()));
+                    if(nuevoGrupoDAO.editarGrupo(grupoEditar)){
+                        DialogosController.mostrarMensajeInformacion("Editado", "El grupo ha sido editado", "El grupo fué editado correctamente");
+                        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
+                        Parent root = (Parent) loader.load();
+                        VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
+                        ventanaConsultarGruposController.iniciarVentana();
+                        panelEditarGrupo.getChildren().add(root); 
+                    }else{
+                        DialogosController.mostrarMensajeInformacion("Error", "Parece haber ocurrido un error", "Por favor comuniquese con un el encargado del sistema");
+                    }
                 }else{
-                    DialogosController.mostrarMensajeInformacion("Campos Excedidos", "Existen Campos que exceden el numero de caracteres validos", "ERRORel grupo no pu");
+                    DialogosController.mostrarMensajeInformacion("Grupo repetido", "Un grupo con ese nombre ya existe", "por favor cambie el nombre del grupo");
                 }
             }else{
                 DialogosController.mostrarMensajeInformacion("Campos Excedidos", "Existen Campos que exceden el numero de caracteres validos", "El nombre del grupo no puede rebasar los 100 caracteres, mientras que los campos de inscripcion y mensualidad no deben exceder los 10 caracteres");
@@ -180,6 +190,31 @@ public class VentanaEditarGrupoController implements Initializable {
         }
         
         return camposVacios;
+    }
+    
+    public boolean nombreGrupoRepetido(){
+        boolean repetido=true;
+        GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
+        Cuenta usuario = new Cuenta();
+        List<Grupo> listaGrupos;
+        String grupoActual;
+        listaGrupos=grupoDAO.adquirirGrupos(usuario);
+        for(int i=0;i<listaGrupos.size();i++){
+            grupoActual=listaGrupos.get(i).getNombreGrupo();
+            if(listaGrupos.get(i).getEstaActivo()==1){
+                if(campoNombre.getText().equals(nombreInicial)){
+                    repetido=false;
+                }else{
+                    System.out.println("Grupo Actual: "+grupoActual+" campo nombre: "+campoNombre.getText());
+                    repetido = grupoActual.equals(campoNombre.getText());
+                    if(repetido){
+                        break;
+                    }
+                }
+            }
+            
+        }
+        return repetido;
     }
     
 }

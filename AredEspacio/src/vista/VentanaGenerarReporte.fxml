@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="1120.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111" fx:controller="controlador.VentanaGenerarReporteController">
+   <children>
+      <GridPane layoutY="6.0" prefHeight="55.0" prefWidth="1120.0" AnchorPane.bottomAnchor="569.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.33331298828125" minWidth="10.0" prefWidth="275.33331298828125" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0000610351562" minWidth="10.0" prefWidth="638.0000610351562" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="10.0" prefWidth="48.99993896484375" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="39.0" prefWidth="225.0" text="Reporte Mensual " GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="27.0" />
+               </font>
+            </Label>
+            <Label fx:id="etiquetaPeriodoReporte" prefHeight="46.0" prefWidth="643.0" text="del 31 de septiembre a 31 de septiembre" GridPane.columnIndex="2" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="27.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <GridPane layoutX="232.0" layoutY="64.0" prefHeight="431.0" prefWidth="1120.0" AnchorPane.bottomAnchor="129.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.33331298828125" minWidth="0.0" prefWidth="14.000000953674316" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="689.9999990463257" minWidth="10.0" prefWidth="524.6666870117188" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="403.66668701171875" minWidth="10.0" prefWidth="29.33331298828125" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="548.0" minWidth="10.0" prefWidth="513.3333129882812" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.33331298828125" minWidth="0.0" prefWidth="26.66668701171875" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="209.33331298828125" minHeight="10.0" prefHeight="22.666656494140625" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="408.3333435058594" minHeight="10.0" prefHeight="408.3333435058594" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TableView fx:id="tablaGanancias" prefHeight="200.0" prefWidth="337.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+              <columns>
+                <TableColumn fx:id="columnaRazonGanancia" prefWidth="260.6666564941406" text="Razón" />
+                <TableColumn fx:id="columnaCantidadGanacias" prefWidth="265.3333435058594" text="Cantidad" />
+              </columns>
+            </TableView>
+            <TableView fx:id="tablaPerdidas" prefHeight="200.0" prefWidth="395.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
+              <columns>
+                <TableColumn fx:id="columnaRazonPerdidas" prefWidth="260.0" text="Razón" />
+                <TableColumn fx:id="columnaCantidadPerdidas" minWidth="0.0" prefWidth="255.0" text="Cantidad" />
+              </columns>
+            </TableView>
+            <Label text="Ganancias" textFill="#189e21" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label text="Perdidas" textFill="#e7101e" GridPane.columnIndex="3" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+      <GridPane layoutX="4.0" layoutY="501.0" prefHeight="114.0" prefWidth="1113.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="510.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="etiquetaGananciaTotal" text="Label" textFill="#189e21" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label prefHeight="36.0" prefWidth="195.0" text="Ganancia Total: " textFill="#189e21" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="etiquetaPerdidaTotal" text="Label" textFill="#e7101e" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label text="Perdida Total: " textFill="#e7101e" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

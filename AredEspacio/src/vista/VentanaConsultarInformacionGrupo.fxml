@@ -16,7 +16,7 @@
             <TableView fx:id="tablaAlumnos" layoutX="52.0" layoutY="86.0" prefHeight="293.0" prefWidth="419.0">
                <columns>
                   <TableColumn minWidth="0.0" prefWidth="0.0" />
-                  <TableColumn fx:id="columnaAlumnos" prefWidth="199.0" text="Alumnos" />
+                  <TableColumn fx:id="columnaAlumnos" prefWidth="418.0" text="Alumnos" />
                </columns>
             </TableView>
             <TableView fx:id="tablaHorario" layoutX="598.0" layoutY="85.0" prefHeight="301.0" prefWidth="416.0">
@@ -40,7 +40,7 @@
                   <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
             </Label>
-            <JFXButton fx:id="botonEliminar" contentDisplay="TOP" layoutX="250.0" layoutY="444.0" onAction="#eliminarGrupo" prefHeight="81.0" prefWidth="97.0" text="Eliminar">
+            <JFXButton fx:id="botonEliminar" contentDisplay="TOP" layoutX="250.0" layoutY="489.0" onAction="#eliminarGrupo" prefHeight="81.0" prefWidth="97.0" text="Eliminar">
                <graphic>
                   <FontAwesomeIconView glyphName="CLOSE" size="50" wrappingWidth="40.2857141494751" />
                </graphic>
@@ -65,12 +65,17 @@
                <font>
                   <Font size="18.0" />
                </font></Label>
-            <JFXButton fx:id="botonEditar" contentDisplay="TOP" layoutX="140.0" layoutY="433.0" onAction="#desplegarVentanaEditar" prefHeight="99.0" prefWidth="97.0" text="Editar">
+            <JFXButton fx:id="botonEditar" contentDisplay="TOP" layoutX="140.0" layoutY="480.0" onAction="#desplegarVentanaEditar" prefHeight="99.0" prefWidth="97.0" text="Editar">
                <graphic>
                   <FontAwesomeIconView glyphName="PENCIL" size="50" wrappingWidth="12.285714149475098" />
                </graphic>
                <font>
                   <Font name="System Bold" size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton layoutX="312.0" layoutY="386.0" style="-fx-background-color: #CDCDCD;" text="Registrar Asistencia">
+               <font>
+                  <Font name="System Bold" size="15.0" />
                </font>
             </JFXButton>
          </children>

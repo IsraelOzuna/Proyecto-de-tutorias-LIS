@@ -94,8 +94,9 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     private AnchorPane panelConsultarInfo;
     
     private int idGrupo;
+    private String nombreGrupo;
     private String rutaXML="C:\\Users\\Renato\\Documents\\NetBeansProjects\\AredEspacio\\src\\Archivos\\Horarios.xml";
-
+    private String unidadPersistencia="AredEspacioPU";
     
 
     /**
@@ -145,9 +146,9 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     }
     
     public void llenarTablaAlumnos(String nombreGrupo){
-        GrupoDAO grupoDAO = new GrupoDAO();
+        GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         List<Alumno> listaAlumnos=null;
-        listaAlumnos=grupoDAO.obtenerAlumnos(nombreGrupo);
+        listaAlumnos=grupoDAO.obtenerAlumnos(idGrupo);
         for(int i=0; i<listaAlumnos.size(); i++){
             alumnos.add(listaAlumnos.get(i));
         }
@@ -161,109 +162,17 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         int numeroClases=0;
         String nombreElemento;
         for (int temp = 0; temp < nList.getLength(); temp++) {
-                Node nNode = nList.item(temp);
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element eElement = (Element) nNode;
-                    nombreElemento=eElement.getElementsByTagName("ocho-ochoMedia").item(0).getTextContent();
-                    //System.out.println(eElement.getElementsByTagName("ocho-ochoMedia").item(0).getTextContent());
+            Node nNode = nList.item(temp);
+            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element eElement = (Element) nNode;
+                for(int i=0; i<30; i++){
+                    nombreElemento=eElement.getElementsByTagName(etiquetasHorasXML[i]).item(0).getTextContent();
                     if(nombreElemento.equals(nombreGrupo)){
                         numeroClases++;
                     }
-                    nombreElemento=eElement.getElementsByTagName("ochoMedia-nueve").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("nueve-nueveMedia").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("nueveMedia-diez").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("diez-diezMedia").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("diezMedia-once").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("once-onceMedia").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("onceMedia-doce").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("doce-doceMedia").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("doceMedia-una").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("una-unaMedia").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("unaMedia-dos").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("dos-dosMedia").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("dosMedia-tres").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("tres-tresMedia").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("tresMedia-cuatro").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("cuatro-cuatroMedia").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("cuatroMedia-cinco").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("cinco-cincoMedia").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("cincoMedia-seis").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("seis-seisMedia").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("seisMedia-siete").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("siete-sieteMedia").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    nombreElemento=eElement.getElementsByTagName("sieteMedia-ocho").item(0).getTextContent();
-                    if(nombreElemento.equals(nombreGrupo)){
-                        numeroClases++;
-                    }
-                    
                 }
             }
+        }
         return numeroClases;
     
     }
@@ -328,7 +237,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     }
     
     public String[] establecerEtiquetas(){
-        String[] etiquetas = new String[24];
+        String[] etiquetas = new String[30];
         etiquetas[0]="ocho-ochoMedia";
         etiquetas[1]="ochoMedia-nueve";
         etiquetas[2]="nueve-nueveMedia";
@@ -353,11 +262,17 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         etiquetas[21]="seisMedia-siete";
         etiquetas[22]="siete-sieteMedia";
         etiquetas[23]="sieteMedia-ocho";
+        etiquetas[24]="ocho-ochoMediaPm";
+        etiquetas[25]="ochoMedia-nuevePm";
+        etiquetas[26]="nueve-nueveMediaPm";
+        etiquetas[27]="nueveMedia-diezPm";
+        etiquetas[28]="diez-diezMediaPm";
+        etiquetas[29]="diezMedia-oncePm";
         return etiquetas;
     }
     
     public String[] establecerHoras(){
-        String[] etiquetas = new String[24];
+        String[] etiquetas = new String[30];
         etiquetas[0]="8:00-8:30";
         etiquetas[1]="8:30-9:00";
         etiquetas[2]="9:00-9:30";
@@ -367,35 +282,42 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         etiquetas[6]="11:00-11:30";
         etiquetas[7]="11:30-12:00";
         etiquetas[8]="12:00-12:30";
-        etiquetas[9]="12:30-1:00";
-        etiquetas[10]="1:00-1:30";
-        etiquetas[11]="1:30-2:00";
-        etiquetas[12]="2:00-2:30";
-        etiquetas[13]="2:30-3:00";
-        etiquetas[14]="3:00-3:30";
-        etiquetas[15]="3:30-4:00";
-        etiquetas[16]="4:00-4:30";
-        etiquetas[17]="4:30-5:00";
-        etiquetas[18]="5:00-5:30";
-        etiquetas[19]="5:30-6:00";
-        etiquetas[20]="6:00-6:30";
-        etiquetas[21]="6:30-7:00";
-        etiquetas[22]="7:00-7:30";
-        etiquetas[23]="7:30-8:00";
+        etiquetas[9]="12:30-13:00";
+        etiquetas[10]="13:00-13:30";
+        etiquetas[11]="13:30-14:00";
+        etiquetas[12]="14:00-14:30";
+        etiquetas[13]="14:30-15:00";
+        etiquetas[14]="15:00-15:30";
+        etiquetas[15]="15:30-16:00";
+        etiquetas[16]="16:00-16:30";
+        etiquetas[17]="16:30-17:00";
+        etiquetas[18]="17:00-17:30";
+        etiquetas[19]="17:30-18:00";
+        etiquetas[20]="18:00-18:30";
+        etiquetas[21]="18:30-19:00";
+        etiquetas[22]="19:00-19:30";
+        etiquetas[23]="19:30-20:00";
+        etiquetas[24]="20:00-20:30";
+        etiquetas[25]="20:30-21:00";
+        etiquetas[26]="21:00-21:30";
+        etiquetas[27]="21:30-22:00";
+        etiquetas[28]="22:00-22:30";
+        etiquetas[29]="22:30-23:00";
         return etiquetas;
     }
     
     public void establecerGrupo(int idGrupo){
         this.idGrupo=idGrupo;
-        GrupoDAO grupoDAO = new GrupoDAO();
+        GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         Grupo grupoConsultado= new Grupo();
         grupoConsultado=grupoDAO.adquirirGrupo(idGrupo);
+        nombreGrupo=grupoConsultado.getNombreGrupo();
         etiquetaNombreMaestro.setText(grupoConsultado.getUsuario().getUsuario());
         etiquetaPrecioInscripcion.setText(grupoConsultado.getInscripcion().toString());
         etiquetaPrecioMensualidad.setText(grupoConsultado.getMensualidad().toString());
-        etiquetasHorasXML= new String[24];
+        etiquetasHorasXML= new String[30];
         etiquetasHorasXML=establecerEtiquetas();
-        horasNumericas= new String [24];
+        horasNumericas= new String [30];
         horasNumericas= establecerHoras();
         this.iniciarTablaHorario();
         this.llenarTablaHorario(grupoConsultado.getNombreGrupo());
@@ -424,9 +346,9 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
 
     @FXML
     private void eliminarGrupo(ActionEvent event) throws IOException {
-        GrupoDAO nuevoGrupoDAO = new GrupoDAO();
+        GrupoDAO nuevoGrupoDAO = new GrupoDAO(unidadPersistencia);
         Grupo grupoEliminar = new Grupo();
-        //grupoEliminar=nuevoGrupoDAO.adquirirGrupo(nombreGrupo);
+        grupoEliminar=nuevoGrupoDAO.adquirirGrupo(idGrupo);
         grupoEliminar.setEstaActivo(0);
         if(nuevoGrupoDAO.eliminarGrupo(grupoEliminar)){
             eliminarHorarioGrupo();
@@ -464,7 +386,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
                 Element eElement = (Element) nNode;
 
 
-                if(eElement.getElementsByTagName(nombreFila).item(0).getTextContent().equals(idGrupo)){
+                if(eElement.getElementsByTagName(nombreFila).item(0).getTextContent().equals(nombreGrupo)){
                     eElement.getElementsByTagName(nombreFila).item(0).setTextContent("Disponible");
                 }
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();

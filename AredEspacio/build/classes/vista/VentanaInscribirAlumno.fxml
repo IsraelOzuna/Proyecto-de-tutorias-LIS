@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaInscribirAlumnoController">
+   <children>
+      <GridPane layoutX="-2.0" layoutY="-3.0" prefHeight="620.0" prefWidth="1119.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.3333740234375" minWidth="10.0" prefWidth="472.3333740234375" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="347.33331298828125" minWidth="10.0" prefWidth="236.6666259765625" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="479.3333435058594" minHeight="10.0" prefHeight="410.0000305175781" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="199.33334350585938" minHeight="10.0" prefHeight="91.99996948242188" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <AnchorPane prefHeight="433.0" prefWidth="417.0" style="-fx-background-color: #FFFFFF;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                  <GridPane layoutX="-1.0" layoutY="32.0" prefHeight="401.0" prefWidth="454.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="32.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="238.66668701171875" minWidth="10.0" prefWidth="238.66668701171875" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="109.33331298828125" minWidth="10.0" prefWidth="34.33331298828125" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="238.6666259765625" minWidth="10.0" prefWidth="228.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="98.0" minHeight="10.0" prefHeight="66.66665649414062" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="156.6666717529297" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="159.66665649414062" minHeight="6.0" prefHeight="65.33334350585938" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="141.6666717529297" minHeight="10.0" prefHeight="63.333343505859375" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="130.0" minHeight="10.0" prefHeight="82.66665649414062" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="113.66665649414062" minHeight="10.0" prefHeight="54.333343505859375" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Nombre Alumno:" GridPane.halignment="RIGHT">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Nombre" GridPane.columnIndex="2" />
+                        <Label text="Grupo:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label text="Promoción:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <JFXButton style="-fx-background-color: #CDCDCD;" text="Crear Nueva Promoción" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </JFXButton>
+                        <Label text="Monto por pagar de Inscripción:" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Monto" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <JFXButton style="-fx-background-color: #CDCDCD;" text="Inscribir" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="TOP">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="TOP">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </GridPane>
+                  <GridPane layoutX="17.0" layoutY="-1.0" prefHeight="22.0" prefWidth="340.0" AnchorPane.rightAnchor="92.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.33331298828125" minWidth="10.0" prefWidth="115.33331298828125" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.66668701171875" minWidth="10.0" prefWidth="159.66668701171875" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Inscribir Alumno" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
