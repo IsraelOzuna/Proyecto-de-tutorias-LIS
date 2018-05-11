@@ -6,6 +6,7 @@
 package persistencia;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -133,5 +134,17 @@ public class RentaJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public List<Renta> obtenerRentasPorFecha(Date fecha) {
+        List<persistencia.Renta> listaRentas = null;
+        String consulta = "select a from Renta a where a.fecha =:fecha";
+        EntityManager em = getEntityManager();
+        try {
+            listaRentas = em.createQuery(consulta).setParameter("fecha", fecha).getResultList();
+        } finally {
+            em.close();
+        }
+        return listaRentas;
+    }
+
 }

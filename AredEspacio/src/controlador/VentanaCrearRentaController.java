@@ -1,18 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Time;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +28,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import negocio.Renta;
+import negocio.RentaDAO;
 import negocio.Utileria;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -39,22 +37,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import persistencia.Horario;
 
-/**
- * FXML Controller class
- *
- * @author Irdevelo
- */
 public class VentanaCrearRentaController implements Initializable {
 
     private Pane panelPrincipal;
     @FXML
     private DatePicker campoFecha;
-    @FXML
-    private Label etiquetaFecha;
-    @FXML
-    private Label etiquetaCliente;
-    @FXML
-    private Label etiquetaCantidad;
     @FXML
     private TextField campoCantidad;
     @FXML
@@ -68,42 +55,34 @@ public class VentanaCrearRentaController implements Initializable {
     @FXML
     private TableColumn<Horario, String> columnaNombreGrupo;
     @FXML
-    private TableColumn<?, ?> columnaHorarioRenta;
+    private TableColumn<persistencia.Renta, String> columnaHorarioRenta;
     @FXML
-    private TableColumn<?, ?> columnaNombreClienteRenta;
+    private TableColumn<persistencia.Renta, String> columnaNombreClienteRenta;
+    @FXML
+    private TableColumn<persistencia.Renta, String> columnaHoraFin;
     @FXML
     private Button botonMostrarHorarios;
-    
     String diaDeLaSemanaSeleccionado;
-
     ObservableList<Horario> horarios;
-
     @FXML
     private TableView<Horario> tablaGrupos;
     @FXML
-    private TableView<?> tablaRentas;
+    private TableView<persistencia.Renta> tablaRentas;
+    private String rutaXML = "C:\\Users\\irdev\\OneDrive\\Documentos\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\Archivos\\Horarios.xml";
+    @FXML
+    private ComboBox<String> comboBoxHoraInicio;
+    List<persistencia.Renta> listaRentas = null;
+    @FXML
+    private ComboBox<String> comboBoxHoraFin;
 
-     private String rutaXML = "C:\\Users\\irdev\\OneDrive\\Documentos\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\Archivos\\Horarios.xml";
-   
-    
     public void obtenerPanel(Pane panelPrincipal) {
         this.panelPrincipal = panelPrincipal;
-
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-    }
-
-    @FXML
-    private void cerrarVentanaCrearRenta(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRentas.fxml"));
-        Parent root = (Parent) loader.load();
-        VentanaRentasController ventanaRentas = loader.getController();
-        ventanaRentas.obtenerPanel(panelPrincipal);
-        ventanaRentas.llenarTablaRentas();
-        panelPrincipal.getChildren().add(root);
+        llenarComboHorasInicio();
+        llenarComboHorasFin();
     }
 
     @FXML
@@ -119,33 +98,53 @@ public class VentanaCrearRentaController implements Initializable {
             }
             if (cantidadIngresadaCorrecta) {
 
+                String horaInicioRenta = comboBoxHoraInicio.getSelectionModel().getSelectedItem();
+                String horaFinRenta = comboBoxHoraFin.getSelectionModel().getSelectedItem();
+
+                int horaInicio = generarCoordenada(horaInicioRenta);
+                int horaFin = generarCoordenada(horaFinRenta);
+
+                if (horaInicio >= horaFin) {
+                    DialogosController.mostrarMensajeInformacion("", "Error en la elección de horario", "No se puede elegir una hora igual o anterior a la hora de inicio");
+                } else if (revisarDsiponibilidadDeHorario(horaInicio, horaFin)) {
+
+                    RentaDAO rentaDAO = new RentaDAO();
+                    Renta renta = new Renta();
+                    renta.setCantidad(Double.parseDouble(campoCantidad.getText()));
+                    renta.setNombreCliente("Diego");
+                    renta.setFecha(Utileria.convertirFecha(campoFecha.getValue()));
+                    renta.setHoraInicio(Time.valueOf(horaInicioRenta + ":00"));
+                    renta.setHoraFin(Time.valueOf(horaFinRenta + ":00"));
+
+                    if (rentaDAO.registrarRenta(renta)) {
+                        DialogosController.mostrarMensajeInformacion("", "Registro de renta exitoso", "La renta se ha registrado correctamente");
+                    } else {
+                        DialogosController.mostrarMensajeInformacion("", "Registro de renta fallido", "La renta no se se ha registrado correctamente");
+                    }
+                }
             } else {
                 DialogosController.mostrarMensajeInformacion("Dato incorrecto", "Las letras no son una cantidad", "Debe ingresar una cantidad numérica");
             }
-
         }
     }
 
-  //  public void llenarTablaHorario() {
+    public boolean revisarDsiponibilidadDeHorario(int horaInicio, int horaFin) {
+        boolean horarioDisponible = true;
 
-    
-//}
+        for (int i = horaInicio; i < horaFin; i++) {
+            Horario horario;
+            horario = horarios.get(i);
+            if (!horario.getDia().equals("Disponible")) {
+                horarioDisponible = false;
+            }
+        }
 
-    public void llenarTablaRentas() {
+        if (!horarioDisponible) {
+            DialogosController.mostrarMensajeInformacion("Choque de horarios", "El horario elegido está ocupado", "Revise cuidadosamente los horarios disponibles");
+        }
 
+        return horarioDisponible;
     }
-    
-        public void inicializarTablaHorario(){
-        columnaHorarioGrupo.setCellValueFactory(new PropertyValueFactory<Horario, String>("hora"));
-        //columnaNombreGrupo.setCellValueFactory(new PropertyValueFactory<Horario, String>(""));
-        horarios = FXCollections.observableArrayList();
-        tablaGrupos.setItems(horarios);
-        //tablaHorario.setEditable(true);
-        tablaGrupos.getSelectionModel().setCellSelectionEnabled(true);
-       
-        
-    }
-    
 
     @FXML
     private void consultarHorariosDelDia(ActionEvent event) {
@@ -154,12 +153,34 @@ public class VentanaCrearRentaController implements Initializable {
         } else {
             diaDeLaSemanaSeleccionado = Utileria.convertirDia(campoFecha.getValue().getDayOfWeek().toString());
             inicializarTablaHorario();
-            llenarTabla();
-            
+            llenarTablaRentas();
+            llenarTablaHorario();
+            marcarNoDisponibles();
+
+            for (int i = 0; i < horarios.size(); i++) {
+                Horario horario;
+                horario = horarios.get(i);
+            }
         }
     }
 
-    public void llenarTabla() {
+    public void llenarTablaRentas() {
+        RentaDAO rentaDAO = new RentaDAO();
+        listaRentas = rentaDAO.obtenerRentasPorFecha(Utileria.convertirFecha(campoFecha.getValue()));
+        columnaHorarioRenta.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, String>("FormatoHoraInicio"));
+        columnaNombreClienteRenta.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, String>("nombreCliente"));
+        columnaHoraFin.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, String>("FormatoHoraFin"));
+        tablaRentas.setItems(FXCollections.observableList(listaRentas));
+    }
+
+    public void inicializarTablaHorario() {
+        columnaHorarioGrupo.setCellValueFactory(new PropertyValueFactory<Horario, String>("hora"));
+        columnaNombreGrupo.setCellValueFactory(new PropertyValueFactory<Horario, String>("dia"));
+        horarios = FXCollections.observableArrayList();
+        tablaGrupos.setItems(horarios);
+    }
+
+    public void llenarTablaHorario() {
         try {
             File inputFile = new File(rutaXML);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -170,12 +191,47 @@ public class VentanaCrearRentaController implements Initializable {
             for (int i = 0; i < 24; i++) {
                 Horario h1 = new Horario();
                 h1 = establecerFila(i, h1, nList);
-                System.out.println(h1.getHora());
                 horarios.add(h1);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void marcarNoDisponibles() {
+        for (int i = 0; i < listaRentas.size(); i++) {
+
+            columnaHoraFin.getCellData(i);
+            String[] horaPartidaInicio = columnaHorarioRenta.getCellData(i).split(":");
+            String horaArmadaInicio = horaPartidaInicio[0] + ":" + horaPartidaInicio[1];
+            int horaInicio = generarCoordenada(horaArmadaInicio);
+
+            String[] horaPartidaFin = columnaHoraFin.getCellData(i).split(":");
+            String horaArmadaFin = horaPartidaFin[0] + ":" + horaPartidaFin[1];
+            int horaFin = generarCoordenada(horaArmadaFin);
+
+            System.out.println("Hora inicio" + horaInicio);
+            System.out.println("Hora fin" + horaFin);
+
+            for (int j = horaInicio; j < horaFin; j++) {
+                Horario horario;
+                horario = horarios.get(j);
+                horario.setDia("No disponible");
+            }
+        }
+
+    }
+
+    public void llenarComboHorasInicio() {
+        ObservableList<String> horas = FXCollections.observableArrayList();
+        horas.addAll("8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00");
+        comboBoxHoraInicio.setItems(horas);
+    }
+
+    public void llenarComboHorasFin() {
+        ObservableList<String> horas = FXCollections.observableArrayList();
+        horas.addAll("8:00", "8:30", "9:00", "9:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00");
+        comboBoxHoraFin.setItems(horas);
     }
 
     public Horario establecerFila(int i, Horario h1, NodeList nList) {
@@ -190,7 +246,7 @@ public class VentanaCrearRentaController implements Initializable {
                 nombreEtiqueta = "ochoMedia-nueve";
                 break;
             case 2:
-                h1.setHora("9:00-9:00");
+                h1.setHora("9:00-9:30");
                 nombreEtiqueta = "nueve-nueveMedia";
                 break;
             case 3:
@@ -262,7 +318,7 @@ public class VentanaCrearRentaController implements Initializable {
                 nombreEtiqueta = "cincoMedia-seis";
                 break;
             case 20:
-                h1.setHora("18:00-18:30");
+                h1.setHora("18:00.18:30");
                 nombreEtiqueta = "seis-seisMedia";
                 break;
             case 21:
@@ -278,46 +334,124 @@ public class VentanaCrearRentaController implements Initializable {
                 nombreEtiqueta = "sieteMedia-ocho";
                 break;
         }
-        for (int temp = 0; temp < nList.getLength(); temp++) {
-            Node nNode = nList.item(temp);
-            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element eElement = (Element) nNode;
 
-                switch (eElement.getAttribute("diaDeLaSemanaSeleccionado")) {
-                    case "Domingo":
-                        h1.setDia(eElement.getAttribute("nombre"));
-                        h1.setDomingo(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                        break;
-                    case "Lunes":
-                        h1.setDia(eElement.getAttribute("nombre"));
-                        h1.setLunes(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                        break;
-                    case "Martes":
-                        h1.setDia(eElement.getAttribute("nombre"));
-                        h1.setMartes(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                        break;
-                    case "Miercoles":
-                        h1.setDia(eElement.getAttribute("nombre"));
-                        h1.setMiercoles(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                        break;
-                    case "Jueves":
-                        h1.setDia(eElement.getAttribute("nombre"));
-                        h1.setJueves(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                        break;
-                    case "Viernes":
-                        h1.setDia(eElement.getAttribute("nombre"));
-                        h1.setViernes(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                        break;
-                    case "Sabado":
-                        h1.setDia(eElement.getAttribute("nombre"));
-                        h1.setSabado(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                        break;
-
-                }
-
+        Node nNode = nList.item(generarDia(diaDeLaSemanaSeleccionado));
+        if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+            Element eElement = (Element) nNode;
+            switch (diaDeLaSemanaSeleccionado) {
+                case "Domingo":
+                    h1.setDia(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    h1.setDomingo(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    break;
+                case "Lunes":
+                    h1.setDia(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    h1.setLunes(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    break;
+                case "Martes":
+                    h1.setDia(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    h1.setMartes(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    break;
+                case "Miercoles":
+                    h1.setDia(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    h1.setMiercoles(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    break;
+                case "Jueves":
+                    h1.setDia(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    h1.setJueves(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    break;
+                case "Viernes":
+                    h1.setDia(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    h1.setViernes(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    break;
+                case "Sabado":
+                    h1.setDia(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    h1.setSabado(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
+                    break;
             }
         }
         return h1;
+    }
+
+    @FXML
+    private void cerrarVentanaCrearRenta(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRentas.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaRentasController ventanaRentas = loader.getController();
+        ventanaRentas.obtenerPanel(panelPrincipal);
+        ventanaRentas.llenarTablaRentas();
+        panelPrincipal.getChildren().add(root);
+    }
+
+    public int generarCoordenada(String horaRenta) {
+        int coordenada;
+
+        Map<String, Integer> coordenadas = new HashMap<>();
+        coordenadas.put("8:00", 0);
+        coordenadas.put("8:30", 1);
+        coordenadas.put("9:00", 2);
+        coordenadas.put("9:30", 3);
+        coordenadas.put("10:00", 4);
+        coordenadas.put("10:30", 5);
+        coordenadas.put("11:00", 6);
+        coordenadas.put("11:30", 7);
+        coordenadas.put("12:00", 8);
+        coordenadas.put("12:30", 9);
+        coordenadas.put("13:00", 10);
+        coordenadas.put("13:30", 11);
+        coordenadas.put("14:00", 12);
+        coordenadas.put("14:30", 13);
+        coordenadas.put("15:00", 14);
+        coordenadas.put("15:30", 15);
+        coordenadas.put("16:00", 16);
+        coordenadas.put("16:30", 17);
+        coordenadas.put("17:00", 18);
+        coordenadas.put("17:30", 19);
+        coordenadas.put("18:00", 20);
+        coordenadas.put("18:30", 21);
+        coordenadas.put("19:00", 22);
+        coordenadas.put("19:30", 23);
+        coordenadas.put("20:00", 24);
+//        coordenadas.put("20:30", 25);
+//        coordenadas.put("21:00", 26);
+//        coordenadas.put("21:30", 27);
+//        coordenadas.put("22:00", 28);
+//        coordenadas.put("22:30", 29);
+
+        coordenada = coordenadas.get(horaRenta);
+        return coordenada;
+    }
+
+    public int generarDia(String elementoSeleccionado) {
+        int dia = 0;
+        switch (elementoSeleccionado) {
+            case "Domingo":
+                dia = 0;
+                break;
+            case "Lunes":
+                dia = 1;
+                break;
+
+            case "Martes":
+                dia = 2;
+                break;
+
+            case "Miercoles":
+                dia = 3;
+                break;
+
+            case "Jueves":
+                dia = 4;
+                break;
+
+            case "Viernes":
+                dia = 5;
+                break;
+
+            case "Sabado":
+                dia = 6;
+                break;
+        }
+        return dia;
     }
 
 }

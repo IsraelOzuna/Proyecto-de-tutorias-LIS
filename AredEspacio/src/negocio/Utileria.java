@@ -64,6 +64,10 @@ public class Utileria {
 
         return mesConvertido;
     }
+    
+     public static Date convertirFecha(LocalDate fecha) {
+        return java.sql.Date.valueOf(fecha);
+    }
 
     public static String convertirDia(String diaIngles) {
         String diaEspañol = null;

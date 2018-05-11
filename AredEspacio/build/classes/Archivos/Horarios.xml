@@ -54,7 +54,7 @@
    </dia>
    
    <dia nombre="Martes">
-        <ocho-ochoMedia>Salsa</ocho-ochoMedia>
+        <ocho-ochoMedia>Martes</ocho-ochoMedia>
         <ochoMedia-nueve>Salsa</ochoMedia-nueve>
         <nueve-nueveMedia>Salsa</nueve-nueveMedia>
         <nueveMedia-diez>Salsa</nueveMedia-diez>
@@ -108,7 +108,7 @@
    </dia>
    
    <dia nombre="Jueves">
-        <ocho-ochoMedia>Salsa</ocho-ochoMedia>
+        <ocho-ochoMedia>Jueves</ocho-ochoMedia>
         <ochoMedia-nueve>Salsa</ochoMedia-nueve>
         <nueve-nueveMedia>Salsa</nueve-nueveMedia>
         <nueveMedia-diez>Salsa</nueveMedia-diez>
