@@ -37,7 +37,7 @@
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="campoCantidad" layoutX="642.0" layoutY="71.0" prefHeight="25.0" prefWidth="136.0" />
+      <TextField fx:id="campoCantidad" layoutX="642.0" layoutY="71.0" onKeyTyped="#limitarCaracteresCantidad" prefHeight="25.0" prefWidth="136.0" />
       <JFXButton fx:id="botonRegistrar" layoutX="598.0" layoutY="561.0" onAction="#registrarRenta" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Registrar">
          <font>
             <Font name="System Bold" size="18.0" />

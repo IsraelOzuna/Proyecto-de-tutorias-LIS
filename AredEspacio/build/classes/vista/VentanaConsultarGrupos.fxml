@@ -25,5 +25,9 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </JFXButton>
+      <JFXButton fx:id="botonAdministrarHorarios" layoutX="86.0" layoutY="575.0" onAction="#desplegarVentanaAdministrarHorarios" style="-fx-background-color: #CDCDCD;" text="Administrar Horarios">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></JFXButton>
    </children>
 </AnchorPane>

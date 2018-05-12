@@ -11,7 +11,8 @@ import persistencia.ClienteJpaController;
  *
  * @author Israel Reyes Ozuna
  */
-public class ClienteDAO implements ICliente{   
+public class ClienteDAO implements ICliente {
+
     @Override
     public boolean registrarCliente(Cliente cliente) {
         boolean clienteRegistradoExitosamente = false;
@@ -23,7 +24,7 @@ public class ClienteDAO implements ICliente{
 
             nuevoCliente.setNombre(cliente.getNombre());
             nuevoCliente.setApellidos(cliente.getApellidos());
-            nuevoCliente.setCorreo(cliente.getCorreo());            
+            nuevoCliente.setCorreo(cliente.getCorreo());
             nuevoCliente.setTelefono(cliente.getTelefono());
             nuevoCliente.setRutaFoto(cliente.getRutaFoto());
 
@@ -37,27 +38,28 @@ public class ClienteDAO implements ICliente{
         }
         return clienteRegistradoExitosamente;
     }
-    
+
     @Override
     public boolean editarCliente(persistencia.Cliente cliente) {
         boolean datosModificacdosExitosamente = false;
-        if(cliente != null){
-           EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
-           ClienteJpaController clienteJpaController = new ClienteJpaController(entityManagerFactory);
-           
-           persistencia.Cliente clienteEditado = cliente;
-           
-           clienteEditado.setNombre(cliente.getNombre());
-           clienteEditado.setApellidos(cliente.getApellidos());
-           clienteEditado.setCorreo(cliente.getCorreo());           
-           clienteEditado.setTelefono(cliente.getTelefono());
-           clienteEditado.setRutaFoto(cliente.getRutaFoto());
-           
-           try{
-               clienteJpaController.edit(clienteEditado);
-               datosModificacdosExitosamente = true;
-           } catch (Exception ex) {
+        if (cliente != null) {
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+            ClienteJpaController clienteJpaController = new ClienteJpaController(entityManagerFactory);
+
+            persistencia.Cliente clienteEditado = cliente;
+
+            clienteEditado.setNombre(cliente.getNombre());
+            clienteEditado.setApellidos(cliente.getApellidos());
+            clienteEditado.setCorreo(cliente.getCorreo());
+            clienteEditado.setTelefono(cliente.getTelefono());
+            clienteEditado.setRutaFoto(cliente.getRutaFoto());
+
+            try {
+                clienteJpaController.edit(clienteEditado);
+                datosModificacdosExitosamente = true;
+            } catch (Exception ex) {
                 Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+
             }
         }
         return datosModificacdosExitosamente;
@@ -81,5 +83,22 @@ public class ClienteDAO implements ICliente{
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return clienteEncontrados;
+    }
+
+    @Override
+    public List<persistencia.Cliente> buscarTodosLosClientes() {
+        List<persistencia.Cliente> clienteEncontrados = null;
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        ClienteJpaController clienteJpaController = new ClienteJpaController(entityManagerFactory);
+
+        try {
+            clienteEncontrados = clienteJpaController.findClienteEntities();
+
+        } catch (Exception ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return clienteEncontrados;
+
     }
 }

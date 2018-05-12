@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Horario>
    <dia nombre="Domingo">
-        <ocho-ochoMedia>Salsa</ocho-ochoMedia>
-        <ochoMedia-nueve>Salsa</ochoMedia-nueve>
-        <nueve-nueveMedia>Salsa</nueve-nueveMedia>
-        <nueveMedia-diez>Salsa</nueveMedia-diez>
+        <ocho-ochoMedia>Disponible</ocho-ochoMedia>
+        <ochoMedia-nueve>Disponible</ochoMedia-nueve>
+        <nueve-nueveMedia>Disponible</nueve-nueveMedia>
+        <nueveMedia-diez>Disponible</nueveMedia-diez>
         <diez-diezMedia>Disponible</diez-diezMedia>
         <diezMedia-once>Disponible</diezMedia-once>
         <once-onceMedia>Disponible</once-onceMedia>
@@ -24,6 +24,12 @@
         <seisMedia-siete>Disponible</seisMedia-siete>
         <siete-sieteMedia>Disponible</siete-sieteMedia>
         <sieteMedia-ocho>Disponible</sieteMedia-ocho>
+        <ocho-ochoMediaPm>Disponible</ocho-ochoMediaPm>
+        <ochoMedia-nuevePm>Disponible</ochoMedia-nuevePm>
+        <nueve-nueveMediaPm>Disponible</nueve-nueveMediaPm>
+        <nueveMedia-diezPm>Disponible</nueveMedia-diezPm>
+        <diez-diezMediaPm>Disponible</diez-diezMediaPm>
+        <diezMedia-oncePm>Disponible</diezMedia-oncePm>
    </dia>
    
    <dia nombre="Lunes">
@@ -51,13 +57,19 @@
         <seisMedia-siete>Disponible</seisMedia-siete>
         <siete-sieteMedia>Disponible</siete-sieteMedia>
         <sieteMedia-ocho>Disponible</sieteMedia-ocho>
+        <ocho-ochoMediaPm>Disponible</ocho-ochoMediaPm>
+        <ochoMedia-nuevePm>Disponible</ochoMedia-nuevePm>
+        <nueve-nueveMediaPm>Disponible</nueve-nueveMediaPm>
+        <nueveMedia-diezPm>Disponible</nueveMedia-diezPm>
+        <diez-diezMediaPm>Disponible</diez-diezMediaPm>
+        <diezMedia-oncePm>Disponible</diezMedia-oncePm>
    </dia>
    
    <dia nombre="Martes">
-        <ocho-ochoMedia>Martes</ocho-ochoMedia>
-        <ochoMedia-nueve>Salsa</ochoMedia-nueve>
-        <nueve-nueveMedia>Salsa</nueve-nueveMedia>
-        <nueveMedia-diez>Salsa</nueveMedia-diez>
+        <ocho-ochoMedia>Disponible</ocho-ochoMedia>
+        <ochoMedia-nueve>Disponible</ochoMedia-nueve>
+        <nueve-nueveMedia>Disponible</nueve-nueveMedia>
+        <nueveMedia-diez>Disponible</nueveMedia-diez>
         <diez-diezMedia>Disponible</diez-diezMedia>
         <diezMedia-once>Disponible</diezMedia-once>
         <once-onceMedia>Disponible</once-onceMedia>
@@ -78,6 +90,12 @@
         <seisMedia-siete>Disponible</seisMedia-siete>
         <siete-sieteMedia>Disponible</siete-sieteMedia>
         <sieteMedia-ocho>Disponible</sieteMedia-ocho>
+        <ocho-ochoMediaPm>Disponible</ocho-ochoMediaPm>
+        <ochoMedia-nuevePm>Disponible</ochoMedia-nuevePm>
+        <nueve-nueveMediaPm>Disponible</nueve-nueveMediaPm>
+        <nueveMedia-diezPm>Disponible</nueveMedia-diezPm>
+        <diez-diezMediaPm>Disponible</diez-diezMediaPm>
+        <diezMedia-oncePm>Disponible</diezMedia-oncePm>
    </dia>
    
    <dia nombre="Miercoles">
@@ -105,13 +123,19 @@
         <seisMedia-siete>Disponible</seisMedia-siete>
         <siete-sieteMedia>Disponible</siete-sieteMedia>
         <sieteMedia-ocho>Disponible</sieteMedia-ocho>
+        <ocho-ochoMediaPm>Disponible</ocho-ochoMediaPm>
+        <ochoMedia-nuevePm>Disponible</ochoMedia-nuevePm>
+        <nueve-nueveMediaPm>Disponible</nueve-nueveMediaPm>
+        <nueveMedia-diezPm>Disponible</nueveMedia-diezPm>
+        <diez-diezMediaPm>Disponible</diez-diezMediaPm>
+        <diezMedia-oncePm>Disponible</diezMedia-oncePm>
    </dia>
    
    <dia nombre="Jueves">
-        <ocho-ochoMedia>Jueves</ocho-ochoMedia>
-        <ochoMedia-nueve>Salsa</ochoMedia-nueve>
-        <nueve-nueveMedia>Salsa</nueve-nueveMedia>
-        <nueveMedia-diez>Salsa</nueveMedia-diez>
+        <ocho-ochoMedia>Disponible</ocho-ochoMedia>
+        <ochoMedia-nueve>Disponible</ochoMedia-nueve>
+        <nueve-nueveMedia>Disponible</nueve-nueveMedia>
+        <nueveMedia-diez>Disponible</nueveMedia-diez>
         <diez-diezMedia>Disponible</diez-diezMedia>
         <diezMedia-once>Disponible</diezMedia-once>
         <once-onceMedia>Disponible</once-onceMedia>
@@ -132,6 +156,12 @@
         <seisMedia-siete>Disponible</seisMedia-siete>
         <siete-sieteMedia>Disponible</siete-sieteMedia>
         <sieteMedia-ocho>Disponible</sieteMedia-ocho>
+        <ocho-ochoMediaPm>Disponible</ocho-ochoMediaPm>
+        <ochoMedia-nuevePm>Disponible</ochoMedia-nuevePm>
+        <nueve-nueveMediaPm>Disponible</nueve-nueveMediaPm>
+        <nueveMedia-diezPm>Disponible</nueveMedia-diezPm>
+        <diez-diezMediaPm>Disponible</diez-diezMediaPm>
+        <diezMedia-oncePm>Disponible</diezMedia-oncePm>
    </dia>
    
    <dia nombre="Viernes">
@@ -159,6 +189,12 @@
         <seisMedia-siete>Disponible</seisMedia-siete>
         <siete-sieteMedia>Disponible</siete-sieteMedia>
         <sieteMedia-ocho>Disponible</sieteMedia-ocho>
+        <ocho-ochoMediaPm>Disponible</ocho-ochoMediaPm>
+        <ochoMedia-nuevePm>Disponible</ochoMedia-nuevePm>
+        <nueve-nueveMediaPm>Disponible</nueve-nueveMediaPm>
+        <nueveMedia-diezPm>Disponible</nueveMedia-diezPm>
+        <diez-diezMediaPm>Disponible</diez-diezMediaPm>
+        <diezMedia-oncePm>Disponible</diezMedia-oncePm>
    </dia>
    
    <dia nombre="Sabado">
@@ -186,5 +222,11 @@
         <seisMedia-siete>Disponible</seisMedia-siete>
         <siete-sieteMedia>Disponible</siete-sieteMedia>
         <sieteMedia-ocho>Disponible</sieteMedia-ocho>
+        <ocho-ochoMediaPm>Disponible</ocho-ochoMediaPm>
+        <ochoMedia-nuevePm>Disponible</ochoMedia-nuevePm>
+        <nueve-nueveMediaPm>Disponible</nueve-nueveMediaPm>
+        <nueveMedia-diezPm>Disponible</nueveMedia-diezPm>
+        <diez-diezMediaPm>Disponible</diez-diezMediaPm>
+        <diezMedia-oncePm>Disponible</diezMedia-oncePm>
    </dia>
 </Horario>

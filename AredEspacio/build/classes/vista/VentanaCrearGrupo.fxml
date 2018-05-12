@@ -78,7 +78,7 @@
          <children>
             <Label fx:id="etiquetaCrearGrupo" prefHeight="27.0" prefWidth="137.0" text="Crear Grupo" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
-                  <Font name="Gill Sans MT Bold" size="18.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Label>
          </children>

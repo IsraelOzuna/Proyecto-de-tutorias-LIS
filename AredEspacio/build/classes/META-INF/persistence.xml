@@ -11,7 +11,7 @@
     <class>persistencia.Renta</class>
     <class>persistencia.Pagoalumno</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ared?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Ared?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="Hector"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="s13zw98"/>
