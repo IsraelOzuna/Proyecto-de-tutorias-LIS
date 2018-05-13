@@ -30,6 +30,10 @@ public class VentanaMenuDirectorController implements Initializable {
     private Label etiquetaNombreUsuario;
     @FXML
     private Pane panelPrincipal;
+    @FXML
+    private Label etiquetaUsuario;
+    @FXML
+    private JFXButton botonClientes;
 
     /**
      * Initializes the controller class.
@@ -88,5 +92,16 @@ public class VentanaMenuDirectorController implements Initializable {
         VentanaBuscarController ventanaBuscar = loader.getController();
         ventanaBuscar.obtenerSeccion("Clientes", panelPrincipal);
         panelPrincipal.getChildren().add(root);
+    }
+    
+    public void obtenerUsuario(String usuario){
+        etiquetaNombreUsuario.setText(usuario);
+    }
+    
+    public void ocultarBotones(){
+        botonClientes.setVisible(false);
+        botonMaestros.setVisible(false);
+        botonRecursosReportes.setVisible(false);
+        botonRenta.setVisible(false);
     }
 }

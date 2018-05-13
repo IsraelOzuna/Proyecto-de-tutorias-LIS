@@ -59,4 +59,27 @@ public class CuentaDAO implements ICuenta {
         return usuarioRepetido;
     }
 
+    @Override
+    public String iniciarSesion(String nombreUsuario, String contrasena) {        
+        String tipoInicioSesion = "";
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        CuentaJpaController cuentaJpaController = new CuentaJpaController(entityManagerFactory);
+
+        try {
+            persistencia.Cuenta cuenta = cuentaJpaController.findCuenta(nombreUsuario);
+            if (cuenta != null) {
+                if (cuenta.getTipoCuenta().equals("Director") && cuenta.getContrasena().equals(contrasena)) {
+                    tipoInicioSesion = "Director";                    
+                } else if (cuenta.getTipoCuenta().equals("Maestro") && cuenta.getContrasena().equals(contrasena)) {
+                    tipoInicioSesion = "Maestro";                 
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Persistence.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return tipoInicioSesion;
+    }
+
 }
