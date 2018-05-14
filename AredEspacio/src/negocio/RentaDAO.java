@@ -64,23 +64,27 @@ public class RentaDAO implements IRenta {
 
     @Override
     public boolean registrarRenta(negocio.Renta renta) {
-        boolean registroRentaExitoso = true;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
-        RentaJpaController rentaJpaController = new RentaJpaController(entityManagerFactory);
+        boolean registroRentaExitoso = false;
 
-        persistencia.Renta nuevaRenta = new persistencia.Renta();
+        if (renta.getNombreCliente() != null) {
+            registroRentaExitoso = true;
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+            RentaJpaController rentaJpaController = new RentaJpaController(entityManagerFactory);
 
-        nuevaRenta.setCantidad(renta.getCantidad());
-        nuevaRenta.setFecha(renta.getFecha());
-        nuevaRenta.setHoraInicio(renta.getHoraInicio());
-        nuevaRenta.setHoraFin(renta.getHoraFin());
-        nuevaRenta.setNombreCliente(renta.getNombreCliente());
+            persistencia.Renta nuevaRenta = new persistencia.Renta();
 
-        try {
-            rentaJpaController.create(nuevaRenta);
-        } catch (Exception ex1) {
-            registroRentaExitoso = false;
-            Logger.getLogger(RentaDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            nuevaRenta.setCantidad(renta.getCantidad());
+            nuevaRenta.setFecha(renta.getFecha());
+            nuevaRenta.setHoraInicio(renta.getHoraInicio());
+            nuevaRenta.setHoraFin(renta.getHoraFin());
+            nuevaRenta.setNombreCliente(renta.getNombreCliente());
+
+            try {
+                rentaJpaController.create(nuevaRenta);
+            } catch (Exception ex1) {
+                registroRentaExitoso = false;
+                Logger.getLogger(RentaDAO.class.getName()).log(Level.SEVERE, null, ex1);
+            }
         }
         return registroRentaExitoso;
     }
