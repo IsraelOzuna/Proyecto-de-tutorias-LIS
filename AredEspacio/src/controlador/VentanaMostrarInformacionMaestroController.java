@@ -72,7 +72,7 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
         etiquetaMontoAPagar.setText(Double.toString(maestro.getMensualidad()));
         etiquetaTelefono.setText(maestro.getTelefono());
         if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:"+ System.getProperty("user.dir") +"\\imagenesMaestros\\" + maestro.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
     }

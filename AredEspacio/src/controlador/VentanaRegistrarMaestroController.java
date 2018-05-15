@@ -70,7 +70,6 @@ public class VentanaRegistrarMaestroController implements Initializable {
     @FXML
     private PasswordField campoContraseña;
 
-    String rutaImagen = "";
     Maestro maestro = new Maestro();
     @FXML
     private AnchorPane panelPrincipal;
@@ -88,14 +87,17 @@ public class VentanaRegistrarMaestroController implements Initializable {
     private Label etiquetaAdvertenciaUsuario;
     @FXML
     private Label etiquetaAdvertenciaContraseña;
+    private String rutaOrigen;
+    private String rutaNueva;
+    private String rutaImagen;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        rutaImagen = "";
     }
 
     @FXML
-    private void realizarRegistro(ActionEvent event) throws NoSuchAlgorithmException {
+    private void realizarRegistro(ActionEvent event) throws NoSuchAlgorithmException, IOException {
         boolean cantidadCorrecta = true;
         CuentaDAO cuentaDAO = new CuentaDAO();
         MaestroDAO maestroDAO = new MaestroDAO();
@@ -116,6 +118,12 @@ public class VentanaRegistrarMaestroController implements Initializable {
                     if (cantidadCorrecta) {
 
                         if (!cuentaDAO.verificarNombreUsuarioRepetido(campoUsuario.getText())) {
+
+                            StringBuilder comando = new StringBuilder();
+                            comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+                            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+                            builder.redirectErrorStream(true);
+                            Process process = builder.start();
 
                             cuenta.setTipoCuenta("Maestro");
                             cuenta.setUsuario(campoUsuario.getText());
@@ -277,23 +285,15 @@ public class VentanaRegistrarMaestroController implements Initializable {
         File archivoSeleccionado = explorador.showOpenDialog(null);
 
         if (archivoSeleccionado != null) {
-            String rutaOrigen = archivoSeleccionado.getAbsolutePath();
-            String nombreArchivo = archivoSeleccionado.getName();
-            //String rutaNueva = "C:\\Users\\irdev\\OneDrive\\Documentos\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesMaestros";
-            String rutaNueva = "C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesAlumnos";
-            StringBuilder comando = new StringBuilder();
-            comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-            builder.redirectErrorStream(true);
-            Process process = builder.start();
-            rutaImagen = nombreArchivo;
-            maestro.setRutaFoto(rutaImagen);
 
-            if (maestro.getRutaFoto() != null) {
-                Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 140, 140, false, true, true);
+            rutaOrigen = archivoSeleccionado.getAbsolutePath();
+            rutaImagen = archivoSeleccionado.getName();
+            rutaNueva = System.getProperty("user.dir") + "\\imagenesMaestros";
+
+            if (!rutaImagen.equals("")) {
+                Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
                 imagenPerfil.setImage(foto);
             }
-
         }
 
         return rutaImagen;

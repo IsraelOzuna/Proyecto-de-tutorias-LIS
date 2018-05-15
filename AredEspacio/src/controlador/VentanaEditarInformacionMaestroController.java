@@ -67,8 +67,6 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
     private Maestro maestro;
 
     private Pane panelPrincipal;
-
-    private String nombreFoto = "";
     @FXML
     private Label etiquetaAdvertenciaNombre;
     @FXML
@@ -79,6 +77,9 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
     private Label etiquetaAdvertenciaTelefono;
     @FXML
     private Label etiquetaAdvertenciaCantidad;
+    private String rutaOrigen;
+    private String rutaNueva;
+    private String nombreFoto;
 
     public void obtenerMaestro(Maestro maestro) {
         this.maestro = maestro;
@@ -93,7 +94,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        nombreFoto = "";
     }
 
     @FXML
@@ -116,13 +117,19 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
                     }
                     if (cantidadCorrecta) {
 
+                        StringBuilder comando = new StringBuilder();
+                        comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+                        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+                        builder.redirectErrorStream(true);
+                        Process process = builder.start();
+
                         MaestroDAO maestroDAO = new MaestroDAO();
 
                         maestroNuevo.setNombre(campoNombre.getText());
                         maestroNuevo.setApellidos(campoApellidos.getText());
                         maestroNuevo.setCorreoElectronico(campoCorreoElectronico.getText());
                         maestroNuevo.setTelefono(campoTelefono.getText());
-                        maestroNuevo.setRutaFoto(maestro.getRutaFoto());
+                        maestroNuevo.setRutaFoto(nombreFoto);
                         maestroNuevo.setEstaActivo(maestro.getEstaActivo());
                         maestroNuevo.setFechaCorte(maestro.getFechaCorte());
                         maestroNuevo.setUsuario(maestro.getUsuario());
@@ -149,20 +156,13 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         File archivoSeleccionado = explorador.showOpenDialog(null);
 
         if (archivoSeleccionado != null) {
-            String rutaOrigen = archivoSeleccionado.getAbsolutePath();
+            rutaOrigen = archivoSeleccionado.getAbsolutePath();
             nombreFoto = archivoSeleccionado.getName();
-            //String rutaNueva = "C:\\Users\\irdev\\OneDrive\\Documentos\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesMaestros";
-            String rutaNueva = "C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesMaestros";
-            StringBuilder comando = new StringBuilder();
-            comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-            builder.redirectErrorStream(true);
-            Process process = builder.start();
-            maestro.setRutaFoto(nombreFoto);
+            rutaNueva = System.getProperty("user.dir") + "\\imagenesMaestros";
         }
 
         if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 140, 140, false, true, true);
+            Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
             imagenPerfil.setImage(foto);
         }
         return nombreFoto;
@@ -266,7 +266,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         campoCantidadAPagar.setText(String.valueOf(maestro.getMensualidad()));
 
         if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesMaestros\\" + maestro.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
 

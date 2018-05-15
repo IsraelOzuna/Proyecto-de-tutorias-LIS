@@ -108,7 +108,7 @@ public class PanelCoincidenciaController implements Initializable {
         String apellidos = maestro.getApellidos();
         etiquetaNombre.setText(nombre + " " + apellidos);
         if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesMaestros\\" + maestro.getRutaFoto(), 100, 100, false, true, true);
             fotoPerfil.setImage(foto);
         }
     }
