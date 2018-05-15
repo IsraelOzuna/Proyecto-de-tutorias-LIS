@@ -90,7 +90,7 @@ public class VentanaInformacionAlumnosController implements Initializable {
         etiquetaTelefono.setText(alumno.getTelefono());
         etiquetaFechaNacimiento.setText(dia+" de "+Utileria.convertirMeses(mes)+" de "+anio);
         if (alumno.getRutaFoto() != null) {
-            Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:"+ System.getProperty("user.dir") +"\\imagenesAlumnos\\" + alumno.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
     }

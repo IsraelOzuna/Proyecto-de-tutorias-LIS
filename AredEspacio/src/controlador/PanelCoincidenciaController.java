@@ -76,8 +76,6 @@ public class PanelCoincidenciaController implements Initializable {
                 ventanaMostrarInformacionMaestro.llenarCamposInformacion();
                 panelPrincipal.getChildren().add(root);
                 break;
-            case "Rentas":
-                break;
 
             case "Clientes":
                 loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaInformacionClientes.fxml"));
@@ -97,9 +95,9 @@ public class PanelCoincidenciaController implements Initializable {
         this.alumno = alumno;
         String nombre = alumno.getNombre();
         String apellidos = alumno.getApellidos();
-        etiquetaNombre.setText(nombre + " " + apellidos);
+        etiquetaNombre.setText(nombre + " " + apellidos);             
         if (alumno.getRutaFoto() != null) {
-            Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesAlumnos\\" + alumno.getRutaFoto(), 100, 100, false, true, true);
             fotoPerfil.setImage(foto);
         }
     }
@@ -121,7 +119,7 @@ public class PanelCoincidenciaController implements Initializable {
         String apellidos = cliente.getApellidos();
         etiquetaNombre.setText(nombre + " " + apellidos);
         if(cliente.getRutaFoto() != null){
-            Image foto = new Image("imagenesClientes/" + cliente.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesClientes\\" + cliente.getRutaFoto(), 100, 100, false, true, true);
             fotoPerfil.setImage(foto);
         }
     }

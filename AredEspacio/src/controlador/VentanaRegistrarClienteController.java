@@ -64,15 +64,17 @@ public class VentanaRegistrarClienteController implements Initializable {
     private AnchorPane panelPrincipal;
     private String nombreFoto;
     private Cliente nuevoCliente;
+    private String rutaOrigen;
+    private String rutaNueva;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        nombreFoto = "";
     }
-    
+
     @FXML
     public void registrarNuevoCliente(ActionEvent event) throws IOException {
         limpiarEtiquetas();
@@ -80,11 +82,17 @@ public class VentanaRegistrarClienteController implements Initializable {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreo.getText())) {
                     if (esTelefonoValido(campoTelefono.getText())) {
+                        StringBuilder comando = new StringBuilder();
+                        comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+                        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+                        builder.redirectErrorStream(true);
+                        Process process = builder.start();
+
                         ClienteDAO nuevoClienteDAO = new ClienteDAO();
                         nuevoCliente = new Cliente();
                         nuevoCliente.setNombre(campoNombre.getText());
                         nuevoCliente.setApellidos(campoApellidos.getText());
-                        nuevoCliente.setCorreo(campoCorreo.getText());                        
+                        nuevoCliente.setCorreo(campoCorreo.getText());
                         nuevoCliente.setTelefono(campoTelefono.getText());
                         nuevoCliente.setRutaFoto(nombreFoto);
 
@@ -106,26 +114,19 @@ public class VentanaRegistrarClienteController implements Initializable {
     private String seleccionarImagen(ActionEvent event) throws IOException {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
-        File archivoSeleccionado = explorador.showOpenDialog(null);
-        nuevoCliente = new Cliente();
-        nombreFoto = "";
+        File archivoSeleccionado = explorador.showOpenDialog(null);        
 
         if (archivoSeleccionado != null) {
-            String rutaOrigen = archivoSeleccionado.getAbsolutePath();
+            rutaOrigen = archivoSeleccionado.getAbsolutePath();
             nombreFoto = archivoSeleccionado.getName();
-            String rutaNueva = "C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesClientes";
-            StringBuilder comando = new StringBuilder();
-            comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-            builder.redirectErrorStream(true);
-            Process process = builder.start();
-            nuevoCliente.setRutaFoto(nombreFoto);
+            rutaNueva = System.getProperty("user.dir") + "\\imagenesClientes";
+            
+            if (!nombreFoto.equals("")) {
+                Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
+                fotoSeleccionada.setImage(foto);
+            }
         }
 
-        if (nuevoCliente.getRutaFoto() != null) {
-            Image foto = new Image("imagenesAlumnos/" + nuevoCliente.getRutaFoto(), 140, 140, false, true, true);
-            fotoSeleccionada.setImage(foto);
-        }
         return nombreFoto;
     }
 
@@ -160,7 +161,7 @@ public class VentanaRegistrarClienteController implements Initializable {
             event.consume();
         }
     }
-   
+
     @FXML
     private void cancelarRegistro(ActionEvent event) throws IOException {
         if (existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {

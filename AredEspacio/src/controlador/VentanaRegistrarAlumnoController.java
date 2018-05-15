@@ -60,7 +60,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     @FXML
     private AnchorPane panelPrincipal;
 
-    private String nombreFoto = "";
+    private String nombreFoto;
     private Alumno nuevoAlumno = new Alumno();
     @FXML
     private Label etiquetaErrorNombre;
@@ -72,13 +72,15 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     private Label etiquetaErrorFecha;
     @FXML
     private Label etiquetaErrorTelefono;
+    private String rutaOrigen;
+    private String rutaNueva;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        nombreFoto = "";
     }
 
     @FXML
@@ -88,6 +90,12 @@ public class VentanaRegistrarAlumnoController implements Initializable {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreo.getText())) {
                     if (esTelefonoValido(campoTelefono.getText())) {
+                        StringBuilder comando = new StringBuilder();
+                        comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+                        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+                        builder.redirectErrorStream(true);
+                        Process process = builder.start();
+                        
                         AlumnoDAO nuevoAlumnoDAO = new AlumnoDAO();
                         nuevoAlumno = new Alumno();
                         nuevoAlumno.setNombre(campoNombre.getText());
@@ -129,18 +137,12 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         File archivoSeleccionado = explorador.showOpenDialog(null);
 
         if (archivoSeleccionado != null) {
-            String rutaOrigen = archivoSeleccionado.getAbsolutePath();
+            rutaOrigen = archivoSeleccionado.getAbsolutePath();
             nombreFoto = archivoSeleccionado.getName();
-            String rutaNueva = "C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesAlumnos";
-            StringBuilder comando = new StringBuilder();
-            comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-            builder.redirectErrorStream(true);
-            Process process = builder.start();
-            nuevoAlumno.setRutaFoto(nombreFoto);
+            rutaNueva = System.getProperty("user.dir") + "\\imagenesAlumnos";
             
-            if (nuevoAlumno.getRutaFoto() != null) {
-                Image foto = new Image("imagenesAlumnos/" + nuevoAlumno.getRutaFoto(), 140, 140, false, true, true);
+            if (!nombreFoto.equals("")) {
+                Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
                 fotoSeleccionada.setImage(foto);
             }
         }

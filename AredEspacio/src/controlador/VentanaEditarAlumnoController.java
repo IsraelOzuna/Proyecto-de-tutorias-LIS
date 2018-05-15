@@ -73,13 +73,15 @@ public class VentanaEditarAlumnoController implements Initializable {
     private Label etiquetaErrorCorreo;
     @FXML
     private Label etiquetaErrorTelefono;
+    private String rutaOrigen;
+    private String rutaNueva;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        nombreFoto = "";
     }
 
     @FXML
@@ -89,6 +91,12 @@ public class VentanaEditarAlumnoController implements Initializable {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreo.getText())) {
                     if (esTelefonoValido(campoTelefono.getText())) {
+                        StringBuilder comando = new StringBuilder();
+                        comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+                        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+                        builder.redirectErrorStream(true);
+                        Process process = builder.start();
+
                         AlumnoDAO nuevosDatosAlumno = new AlumnoDAO();
 
                         alumno.setNombre(campoNombre.getText());
@@ -96,7 +104,7 @@ public class VentanaEditarAlumnoController implements Initializable {
                         alumno.setCorreoElectronico(campoCorreo.getText());
                         alumno.setFechaNacimiento(Date.valueOf(campoFechaNacimiennto.getValue()));
                         alumno.setTelefono(campoTelefono.getText());
-                        alumno.setRutaFoto(alumno.getRutaFoto());
+                        alumno.setRutaFoto(nombreFoto);
 
                         if (nuevosDatosAlumno.editarAlumno(alumno)) {
                             DialogosController.mostrarMensajeInformacion("Guardado", "Alumno modificado", "El alumno ha sido modificado exitosamente");
@@ -130,21 +138,16 @@ public class VentanaEditarAlumnoController implements Initializable {
         File archivoSeleccionado = explorador.showOpenDialog(null);
 
         if (archivoSeleccionado != null) {
-            String rutaOrigen = archivoSeleccionado.getAbsolutePath();
+            rutaOrigen = archivoSeleccionado.getAbsolutePath();
             nombreFoto = archivoSeleccionado.getName();
-            String rutaNueva = "C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesAlumnos";
-            StringBuilder comando = new StringBuilder();
-            comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-            builder.redirectErrorStream(true);
-            Process process = builder.start();
-            alumno.setRutaFoto(nombreFoto);
+            rutaNueva = System.getProperty("user.dir") + "\\imagenesAlumnos";
+            
+            if (!nombreFoto.equals("")) {
+                Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
+                fotoSeleccionada.setImage(foto);
+            }
         }
 
-        if (alumno.getRutaFoto() != null) {
-            Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 140, 140, false, true, true);
-            fotoSeleccionada.setImage(foto);
-        }
         return nombreFoto;
     }
 
@@ -156,7 +159,8 @@ public class VentanaEditarAlumnoController implements Initializable {
         campoFechaNacimiennto.setValue(Utileria.mostrarFechaNacimiento(alumno.getFechaNacimiento()));
         campoTelefono.setText(alumno.getTelefono());
         if (alumno.getRutaFoto() != null) {
-            Image foto = new Image("imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
+            nombreFoto = alumno.getRutaFoto();
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesAlumnos\\" + alumno.getRutaFoto(), 100, 100, false, true, true);
             fotoSeleccionada.setImage(foto);
         }
     }

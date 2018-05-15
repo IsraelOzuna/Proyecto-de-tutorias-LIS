@@ -1,8 +1,11 @@
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
+import javafx.fxml.Initializable;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +25,7 @@ import negocio.Utileria;
  *
  * @author iro19
  */
-public class VentanaEditarClienteController {
+public class VentanaEditarClienteController implements Initializable{
 
     @FXML
     private AnchorPane panelPrincipal;
@@ -61,29 +64,70 @@ public class VentanaEditarClienteController {
 
     private String nombreFoto;
     private Cliente cliente;
+    private String rutaOrigen;
+    private String rutaNueva;
+    
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        nombreFoto = "";
+    } 
+    
+    @FXML
+    private void editarCliente(ActionEvent event) throws IOException {
+        limpiarEtiquetas();
+        if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
+            if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
+                if (Utileria.validarCorreo(campoCorreo.getText())) {
+                    if (esTelefonoValido(campoTelefono.getText())) {
+                        StringBuilder comando = new StringBuilder();
+                        comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+                        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+                        builder.redirectErrorStream(true);
+                        Process process = builder.start();
+
+                        ClienteDAO nuevosDatosCliente = new ClienteDAO();
+                        
+                        cliente.setNombre(campoNombre.getText());
+                        cliente.setApellidos(campoApellidos.getText());
+                        cliente.setCorreo(campoCorreo.getText());
+                        cliente.setTelefono(campoTelefono.getText());
+                        cliente.setRutaFoto(nombreFoto);
+
+                        if (nuevosDatosCliente.editarCliente(cliente)) {
+                            DialogosController.mostrarMensajeInformacion("Guardado", "Cliente Modificado", "El cliente ha sido modificado exitosamente");
+                            desplegarVentanaBusquedaCliente();
+                        } else {
+                            DialogosController.mostrarMensajeAdvertencia("Error", "Error al modificar", "Ha ocurrido un error. No se pudo modificar");
+                        }
+                    }
+                } else {
+                    etiquetaErrorCorreo.setText("Formato de correo no valido");
+                }
+            }
+        }
+    }
+
 
     @FXML
     private String seleccionarImagen(ActionEvent event) throws IOException {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        
+
         if (archivoSeleccionado != null) {
-            String rutaOrigen = archivoSeleccionado.getAbsolutePath();
+            rutaOrigen = archivoSeleccionado.getAbsolutePath();
             nombreFoto = archivoSeleccionado.getName();
-            String rutaNueva = "C:\\Users\\iro19\\Documents\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\imagenesClientes";
-            StringBuilder comando = new StringBuilder();
-            comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-            builder.redirectErrorStream(true);
-            Process process = builder.start();
-            cliente.setRutaFoto(nombreFoto);
+            rutaNueva = System.getProperty("user.dir") + "\\imagenesClientes";
+
+            if (!nombreFoto.equals("")) {
+                Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
+                fotoSeleccionada.setImage(foto);
+            }
         }
 
-        if (cliente.getRutaFoto() != null) {
-            Image foto = new Image("imagenesAlumnos/" + cliente.getRutaFoto(), 140, 140, false, true, true);
-            fotoSeleccionada.setImage(foto);
-        }
         return nombreFoto;
     }
 
@@ -119,34 +163,7 @@ public class VentanaEditarClienteController {
         }
     }
 
-    @FXML
-    private void editarCliente(ActionEvent event) throws IOException {
-        limpiarEtiquetas();
-        if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
-            if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
-                if (Utileria.validarCorreo(campoCorreo.getText())) {
-                    if (esTelefonoValido(campoTelefono.getText())) {
-                        ClienteDAO nuevosDatosCliente = new ClienteDAO();                        
-                        cliente.setNombre(campoNombre.getText());
-                        cliente.setApellidos(campoApellidos.getText());
-                        cliente.setCorreo(campoCorreo.getText());
-                        cliente.setTelefono(campoTelefono.getText());
-                        cliente.setRutaFoto(cliente.getRutaFoto());
-
-                        if (nuevosDatosCliente.editarCliente(cliente)) {
-                            DialogosController.mostrarMensajeInformacion("Guardado", "Cliente Modificado", "El cliente ha sido modificado exitosamente");
-                            desplegarVentanaBusquedaCliente();
-                        } else {
-                            DialogosController.mostrarMensajeAdvertencia("Error", "Error al modificar", "Ha ocurrido un error. No se pudo modificar");
-                        }
-                    }
-                } else {
-                    etiquetaErrorCorreo.setText("Formato de correo no valido");
-                }
-            }
-        }
-    }
-
+    
     @FXML
     private void cancelarRegistro(ActionEvent event) throws IOException {
         if (existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
@@ -209,19 +226,19 @@ public class VentanaEditarClienteController {
         ventanaBuscar.obtenerSeccion("Clientes", panelPrincipal);
         panelPrincipal.getChildren().add(root);
     }
-    
+
     public void llenarCampos(Cliente cliente) {
         this.cliente = cliente;
         campoNombre.setText(cliente.getNombre());
         campoApellidos.setText(cliente.getApellidos());
-        campoCorreo.setText(cliente.getCorreo());        
+        campoCorreo.setText(cliente.getCorreo());
         campoTelefono.setText(cliente.getTelefono());
         if (cliente.getRutaFoto() != null) {
-            Image foto = new Image("imagenesClientes/" + cliente.getRutaFoto(), 100, 100, false, true, true);
+            nombreFoto = cliente.getRutaFoto();
+            Image foto = new Image("file:" +System.getProperty("user.dir")+ "\\imagenesClientes\\" + cliente.getRutaFoto(), 100, 100, false, true, true);
             fotoSeleccionada.setImage(foto);
         }
     }
-
 
     private boolean esTelefonoValido(String telefono) {
         boolean telefonoValido = true;
@@ -237,7 +254,7 @@ public class VentanaEditarClienteController {
 
     private void limpiarEtiquetas() {
         etiquetaErrorApellidos.setText("");
-        etiquetaErrorCorreo.setText("");        
+        etiquetaErrorCorreo.setText("");
         etiquetaErrorNombre.setText("");
         etiquetaErrorTelefono.setText("");
     }
