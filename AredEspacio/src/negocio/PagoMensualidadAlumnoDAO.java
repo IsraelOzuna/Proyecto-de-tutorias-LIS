@@ -60,7 +60,6 @@ public class PagoMensualidadAlumnoDAO implements IPagoMensualidadAlumno {
     @Override
     public List<persistencia.Pagoalumno> obtenerPagosAlumno(int id) {
         List<persistencia.Pagoalumno> listaPagos = null;
-
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
         PagoalumnoJpaController pagoMensualidadController = new PagoalumnoJpaController(entityManagerFactory);
 

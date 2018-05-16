@@ -40,7 +40,7 @@ public class VentanaHistorialDePagosAlumnosController implements Initializable {
 
     public void llenarTablaPagos(int id) {
 
-        List<persistencia.Pagoalumno> listaPagos = null;
+        List<persistencia.Pagoalumno> listaPagos;
         PagoMensualidadAlumnoDAO pagoMensualidadAlumno = new PagoMensualidadAlumnoDAO();
         listaPagos = pagoMensualidadAlumno.obtenerPagosAlumno(id);
 
