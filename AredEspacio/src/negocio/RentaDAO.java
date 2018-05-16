@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package negocio;
 
 import java.util.Date;
@@ -13,11 +8,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import persistencia.Renta;
 import persistencia.RentaJpaController;
+import persistencia.exceptions.NonexistentEntityException;
 
-/**
- *
- * @author Irdevelo
- */
 public class RentaDAO implements IRenta {
 
     @Override
@@ -88,4 +80,22 @@ public class RentaDAO implements IRenta {
         }
         return registroRentaExitoso;
     }
+
+    @Override
+    public boolean eliminarRenta(int id) {
+        boolean eliminacionCorrecta = true;
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        RentaJpaController rentaJpaController = new RentaJpaController(entityManagerFactory);
+
+        try {
+            rentaJpaController.destroy(id);
+        } catch (NonexistentEntityException ex) {
+            eliminacionCorrecta = false;
+            Logger.getLogger(RentaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return eliminacionCorrecta;
+    }
+
 }

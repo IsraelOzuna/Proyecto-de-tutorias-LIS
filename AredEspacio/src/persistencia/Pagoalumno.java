@@ -6,6 +6,7 @@
 package persistencia;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -30,11 +31,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "pagoalumno")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Pagoalumno.findAll", query = "SELECT p FROM Pagoalumno p")
-    , @NamedQuery(name = "Pagoalumno.findByIdPago", query = "SELECT p FROM Pagoalumno p WHERE p.idPago = :idPago")
-    , @NamedQuery(name = "Pagoalumno.findByFechaPago", query = "SELECT p FROM Pagoalumno p WHERE p.fechaPago = :fechaPago")
-    , @NamedQuery(name = "Pagoalumno.findByCantidad", query = "SELECT p FROM Pagoalumno p WHERE p.cantidad = :cantidad")
-    , @NamedQuery(name = "Pagoalumno.findByTipoPago", query = "SELECT p FROM Pagoalumno p WHERE p.tipoPago = :tipoPago")})
+    @NamedQuery(name = "Pagoalumno.findAll", query = "SELECT p FROM Pagoalumno p"),
+    @NamedQuery(name = "Pagoalumno.findByIdPago", query = "SELECT p FROM Pagoalumno p WHERE p.idPago = :idPago"),
+    @NamedQuery(name = "Pagoalumno.findByFechaPago", query = "SELECT p FROM Pagoalumno p WHERE p.fechaPago = :fechaPago"),
+    @NamedQuery(name = "Pagoalumno.findByCantidad", query = "SELECT p FROM Pagoalumno p WHERE p.cantidad = :cantidad"),
+    @NamedQuery(name = "Pagoalumno.findByTipoPago", query = "SELECT p FROM Pagoalumno p WHERE p.tipoPago = :tipoPago")})
 public class Pagoalumno implements Serializable {
 
     @JoinColumn(name = "idAlumno", referencedColumnName = "idAlumno")
@@ -80,6 +81,12 @@ public class Pagoalumno implements Serializable {
 
     public void setFechaPago(Date fechaPago) {
         this.fechaPago = fechaPago;
+    }
+
+    public String getFormatoFecha() {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        return formato.format(fechaPago);
+
     }
 
     public Double getCantidad() {
@@ -137,5 +144,5 @@ public class Pagoalumno implements Serializable {
 
     public void setIdGrupo(Grupo idGrupo) {
         this.idGrupo = idGrupo;
-    }   
+    }
 }

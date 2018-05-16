@@ -99,7 +99,7 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
         this.idAlumno = idAlumno;
         etiquetaNombreAlumno.setText(nombreAlumno + " " + apellidosAlumno);
         if (rutaFotoAlumno != null) {
-            Image foto = new Image("imagenesAlumnos/" + rutaFotoAlumno, 100, 100, false, true, true);
+            Image foto = new Image("file:"+ System.getProperty("user.dir") +"\\imagenesAlumnos\\" + rutaFotoAlumno, 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
         llenarComboGrupos();

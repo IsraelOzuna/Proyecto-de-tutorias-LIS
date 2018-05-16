@@ -1,5 +1,6 @@
 package negocio;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -22,7 +23,7 @@ public class PagoMensualidadAlumnoDAO implements IPagoMensualidadAlumno {
 
         if (pagoMensualidad != null) {
             Alumno alumno = null;
-            Grupo grupo = null;            
+            Grupo grupo = null;
             int idGrupo;
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
             PagoalumnoJpaController pagoMensualidadController = new PagoalumnoJpaController(entityManagerFactory);
@@ -54,6 +55,25 @@ public class PagoMensualidadAlumnoDAO implements IPagoMensualidadAlumno {
             pagoInscripcionExitoso = false;
         }
         return pagoInscripcionExitoso;
+    }
+
+    @Override
+    public List<persistencia.Pagoalumno> obtenerPagosAlumno(int id) {
+        List<persistencia.Pagoalumno> listaPagos = null;
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        PagoalumnoJpaController pagoMensualidadController = new PagoalumnoJpaController(entityManagerFactory);
+
+        try {
+
+            listaPagos = pagoMensualidadController.encontrarPagosAlumnos(id);
+
+        } catch (Exception ex) {
+
+            Logger.getLogger(PagoMensualidadAlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return listaPagos;
     }
 
 }

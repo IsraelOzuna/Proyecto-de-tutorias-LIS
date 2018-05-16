@@ -15,7 +15,11 @@ import java.util.List;
 public interface IRenta {
 
     public List<persistencia.Renta> obtenerRentas();
+
     public List<persistencia.Renta> obtenerRentasPorFecha(Date fecha);
+
     public boolean registrarRenta(Renta renta);
+
+    public boolean eliminarRenta(int id);
 
 }

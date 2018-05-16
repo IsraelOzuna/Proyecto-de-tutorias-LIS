@@ -74,8 +74,7 @@ public class VentanaCrearRentaController implements Initializable {
     List<persistencia.Cliente> clientes = null;
     @FXML
     private ComboBox<String> comboBoxHoraFin;
- 
-    
+
     public void obtenerPanel(Pane panelPrincipal) {
         this.panelPrincipal = panelPrincipal;
     }
@@ -106,9 +105,6 @@ public class VentanaCrearRentaController implements Initializable {
 
                 int horaInicio = generarCoordenada(horaInicioRenta);
                 int horaFin = generarCoordenada(horaFinRenta);
-
-                System.out.println(horaInicio);
-                System.out.println(horaFin);
 
                 if (horaInicio >= horaFin) {
                     DialogosController.mostrarMensajeInformacion("", "Error en la elección de horario", "No se puede elegir una hora igual o anterior a la hora de inicio");

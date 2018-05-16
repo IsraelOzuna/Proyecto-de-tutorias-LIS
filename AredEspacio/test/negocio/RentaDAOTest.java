@@ -70,11 +70,11 @@ public class RentaDAOTest {
         boolean result = instance.registrarRenta(renta);
         assertEquals(expResult, result);
     }
-    
-       @Test
+
+    @Test
     public void testRegistrarRentaFallido() {
         Renta renta = new Renta();
-        
+
         renta.setNombreCliente(null);
 
         RentaDAO instance = new RentaDAO();
@@ -82,5 +82,26 @@ public class RentaDAOTest {
         boolean result = instance.registrarRenta(renta);
         assertEquals(expResult, result);
     }
-    
+
+    @Test
+    public void testEliminarRenta() {
+        System.out.println("eliminarRenta");
+        int id = 31;
+        RentaDAO instance = new RentaDAO();
+        boolean expResult = true;
+        boolean result = instance.eliminarRenta(id);
+        assertEquals(expResult, result);
+       
+    }
+
+    @Test
+    public void testEliminarRentaFallido() {
+        System.out.println("eliminarRenta");
+        int id = 0;
+        RentaDAO instance = new RentaDAO();
+        boolean expResult = false;
+        boolean result = instance.eliminarRenta(id);
+        assertEquals(expResult, result);
+    }
+
 }

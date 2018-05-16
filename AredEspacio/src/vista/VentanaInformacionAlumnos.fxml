@@ -17,14 +17,14 @@
    <children>
       <AnchorPane fx:id="panelInformacionAlumno" layoutX="350.0" layoutY="100.0" prefHeight="431.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <GridPane prefHeight="43.0" prefWidth="299.0" AnchorPane.bottomAnchor="388.0" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="0.0">
+            <GridPane layoutX="25.0" layoutY="8.0" prefHeight="30.0" prefWidth="298.0" AnchorPane.bottomAnchor="393.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="8.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="106.0" />
                   <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="109.0" />
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="84.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="34.0" minHeight="10.0" prefHeight="26.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Button fx:id="botonDarBaja" mnemonicParsing="false" style="-fx-background-color: #FFFFFF;" text="Dar de baja" textFill="#0400ff" underline="true">
@@ -55,7 +55,9 @@
             </GridPane>
             <GridPane prefHeight="381.0" prefWidth="347.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="51.0">
               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
                   <RowConstraints maxHeight="181.0" minHeight="10.0" prefHeight="159.0" vgrow="SOMETIMES" />
@@ -66,28 +68,28 @@
                 <RowConstraints maxHeight="289.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ImageView fx:id="imagenPerfil" fitHeight="140.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="etiquetaNombre" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER" GridPane.rowIndex="1">
+                  <ImageView fx:id="imagenPerfil" fitHeight="140.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" />
+                  <Label fx:id="etiquetaNombre" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <font>
                         <Font name="Gill Sans MT" size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="etiquetaFechaNacimiento" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER" GridPane.rowIndex="2">
+                  <Label fx:id="etiquetaFechaNacimiento" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font name="Gill Sans MT" size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="etiquetaCorreo" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER" GridPane.rowIndex="3">
+                  <Label fx:id="etiquetaCorreo" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font name="Gill Sans MT" size="16.0" />
                      </font>
                   </Label>
-                  <Label fx:id="etiquetaTelefono" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER" GridPane.rowIndex="4">
+                  <Label fx:id="etiquetaTelefono" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font name="Gill Sans MT" size="16.0" />
                      </font>
                   </Label>
-                  <JFXButton fx:id="botonCerrar" onAction="#cerrarDetalles" style="-fx-background-color: #CDCDCD;" text="Cerrar" GridPane.rowIndex="5">
+                  <JFXButton fx:id="botonCerrar" onAction="#cerrarDetalles" style="-fx-background-color: #CDCDCD;" text="Cerrar" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -95,6 +97,14 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
+                  <Button fx:id="botonDarBaja1" mnemonicParsing="false" onAction="#visualizarPagosAlumno" prefHeight="23.0" prefWidth="84.0" style="-fx-background-color: #FFFFFF;" text="Ver pagos" textFill="#0400ff" underline="true" GridPane.rowIndex="5">
+                     <font>
+                        <Font name="Gill Sans MT" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
                </children>
             </GridPane>
          </children>
