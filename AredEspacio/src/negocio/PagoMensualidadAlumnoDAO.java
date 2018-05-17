@@ -56,23 +56,4 @@ public class PagoMensualidadAlumnoDAO implements IPagoMensualidadAlumno {
         }
         return pagoInscripcionExitoso;
     }
-
-    @Override
-    public List<persistencia.Pagoalumno> obtenerPagosAlumno(int id) {
-        List<persistencia.Pagoalumno> listaPagos = null;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
-        PagoalumnoJpaController pagoMensualidadController = new PagoalumnoJpaController(entityManagerFactory);
-
-        try {
-
-            listaPagos = pagoMensualidadController.encontrarPagosAlumnos(id);
-
-        } catch (Exception ex) {
-
-            Logger.getLogger(PagoMensualidadAlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return listaPagos;
-    }
-
 }

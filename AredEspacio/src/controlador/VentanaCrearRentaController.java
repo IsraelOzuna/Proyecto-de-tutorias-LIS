@@ -67,7 +67,7 @@ public class VentanaCrearRentaController implements Initializable {
     private TableView<Horario> tablaGrupos;
     @FXML
     private TableView<persistencia.Renta> tablaRentas;
-    private String rutaXML = "C:\\Users\\irdev\\OneDrive\\Documentos\\GitHub\\Repositorio-Desarrollo-de-Software\\AredEspacio\\src\\Archivos\\Horarios.xml";
+    private String rutaXML = System.getProperty("user.dir") + "\\Archivos\\Horarios.xml";
     @FXML
     private ComboBox<String> comboBoxHoraInicio;
     List<persistencia.Renta> listaRentas = null;
