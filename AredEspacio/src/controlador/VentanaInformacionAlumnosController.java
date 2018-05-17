@@ -52,6 +52,8 @@ public class VentanaInformacionAlumnosController implements Initializable {
     private Pane panelPrincipal;
     @FXML
     private Button botonDarBaja1;
+    @FXML
+    private Button botonInscribir;
 
     public void obtenerAlumno(Alumno alumno) {
         this.alumno = alumno;
@@ -116,5 +118,14 @@ public class VentanaInformacionAlumnosController implements Initializable {
         ventanaHistorialDePagos.llenarTablaPagos(alumno.getIdAlumno());
         panelPrincipal.getChildren().add(root);
 
+    }
+
+    @FXML
+    private void desplegarVentanaInscribirAlumno(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaInscribirAlumno.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaInscribirAlumnoController ventanaInscribir = loader.getController();
+        ventanaInscribir.llenarCampos(alumno);        
+        panelPrincipal.getChildren().add(root); 
     }
 }

@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaInscribirAlumnoController">
+<AnchorPane id="AnchorPane" fx:id="panelPrincipal" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaInscribirAlumnoController">
    <children>
       <GridPane layoutX="-2.0" layoutY="-3.0" prefHeight="620.0" prefWidth="1119.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -46,20 +45,20 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label text="Nombre" GridPane.columnIndex="2" />
+                        <Label fx:id="etiquetaNombreAlumno" text="Nombre" GridPane.columnIndex="2" />
                         <Label text="Grupo:" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="comboGrupo" onAction="#cambiarMonto" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                         <Label text="Promoción:" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <JFXButton style="-fx-background-color: #CDCDCD;" text="Crear Nueva Promoción" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                        <ComboBox fx:id="comboPromocion" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <JFXButton fx:id="botonCrearPromo" onAction="#desplegarVentanaCrearPromocion" style="-fx-background-color: #CDCDCD;" text="Crear Nueva Promoción" GridPane.columnIndex="2" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
@@ -69,13 +68,13 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <Label text="Monto" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                        <JFXButton style="-fx-background-color: #CDCDCD;" text="Inscribir" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="TOP">
+                        <Label fx:id="etiquetaMontoInscripcion" text="Monto" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                        <JFXButton fx:id="botonInscribir" onAction="#inscribirAlumno" style="-fx-background-color: #CDCDCD;" text="Inscribir" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="TOP">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="TOP">
+                        <JFXButton fx:id="botonCancelar" onAction="#cancelarInscripcion" style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="5" GridPane.valignment="TOP">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>

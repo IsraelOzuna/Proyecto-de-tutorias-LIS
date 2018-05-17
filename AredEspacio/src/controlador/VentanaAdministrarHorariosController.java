@@ -99,7 +99,7 @@ public class VentanaAdministrarHorariosController implements Initializable {
         ObservableList<String> grupos =FXCollections.observableArrayList();
         List<Grupo> listaGrupos=null;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
-        Cuenta usuario = new Cuenta();////////////////////////////Modificar para saber qué tipo de usuario es
+        Cuenta usuario = new Cuenta();
         listaGrupos=grupoDAO.adquirirGrupos(usuario);
         etiquetasHorasXML= new String[30];
         etiquetasHorasXML=establecerEtiquetas();
@@ -127,7 +127,7 @@ public class VentanaAdministrarHorariosController implements Initializable {
                     clickDerecho=true;
                 }
                 boolean banderaEditar=true;
-                String nombreGrupoElegido=comboGrupos.getValue();;
+                String nombreGrupoElegido=comboGrupos.getValue();
                 
 
                 fila=tablaHorario.getFocusModel().getFocusedCell().getRow();
@@ -442,11 +442,6 @@ public class VentanaAdministrarHorariosController implements Initializable {
         etiquetas[29]="22:30-23:00";
         return etiquetas;
     }
-    
-    
-    
-   
-    
-    
+
     
 }

@@ -15,11 +15,12 @@
 
 <AnchorPane fx:id="panelTrasero" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaInformacionAlumnosController">
    <children>
-      <AnchorPane fx:id="panelInformacionAlumno" layoutX="350.0" layoutY="100.0" prefHeight="431.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF;">
+      <AnchorPane fx:id="panelInformacionAlumno" layoutX="350.0" layoutY="100.0" prefHeight="431.0" prefWidth="418.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <GridPane layoutX="25.0" layoutY="8.0" prefHeight="30.0" prefWidth="298.0" AnchorPane.bottomAnchor="393.0" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="8.0">
+            <GridPane layoutY="8.0" prefHeight="30.0" prefWidth="457.0" AnchorPane.bottomAnchor="393.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="8.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="113.0" minWidth="10.0" prefWidth="106.0" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="109.0" />
                   <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="129.0" minWidth="10.0" prefWidth="109.0" />
                 <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" prefWidth="84.0" />
               </columnConstraints>
@@ -35,7 +36,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="botonEditar" mnemonicParsing="false" onAction="#desplegarVentanaEditar" prefHeight="24.0" prefWidth="20.0" style="-fx-background-color: #000000;" GridPane.columnIndex="2">
+                  <Button fx:id="botonEditar" mnemonicParsing="false" onAction="#desplegarVentanaEditar" prefHeight="24.0" prefWidth="20.0" style="-fx-background-color: #000000;" GridPane.columnIndex="3" GridPane.halignment="CENTER">
                      <graphic>
                         <FontAwesomeIconView fill="WHITE" glyphName="PENCIL" text="" />
                      </graphic>
@@ -43,7 +44,15 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="botonRegistrarPago" mnemonicParsing="false" onAction="#desplegarVentanaRegistrarMensualidad" prefHeight="26.0" prefWidth="105.0" style="-fx-background-color: #FFFFFF;" text="Registrar pago" textFill="#0400ff" underline="true" GridPane.columnIndex="1">
+                  <Button fx:id="botonRegistrarPago" mnemonicParsing="false" onAction="#desplegarVentanaRegistrarMensualidad" prefHeight="30.0" prefWidth="114.0" style="-fx-background-color: #FFFFFF;" text="Registrar pago" textFill="#0400ff" underline="true" GridPane.columnIndex="1" GridPane.halignment="LEFT">
+                     <font>
+                        <Font name="Gill Sans MT" size="14.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="botonInscribir" mnemonicParsing="false" onAction="#desplegarVentanaInscribirAlumno" prefHeight="30.0" prefWidth="123.0" style="-fx-background-color: #FFFFFF;" text="Inscribir " textFill="#0400ff" underline="true" GridPane.columnIndex="2" GridPane.halignment="LEFT">
                      <font>
                         <Font name="Gill Sans MT" size="14.0" />
                      </font>

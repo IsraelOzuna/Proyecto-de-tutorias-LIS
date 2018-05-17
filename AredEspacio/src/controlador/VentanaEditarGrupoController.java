@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -30,6 +31,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import negocio.GrupoDAO;
+import negocio.MaestroDAO;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -37,6 +39,7 @@ import org.w3c.dom.NodeList;
 import persistencia.Cuenta;
 import persistencia.Grupo;
 import persistencia.Horario;
+import persistencia.Maestro;
 
 /**
  * FXML Controller class
@@ -72,12 +75,14 @@ public class VentanaEditarGrupoController implements Initializable {
     private String nombreInicial;
     private int idGrupoActual;
     private String unidadPersistencia="AredEspacioPU";
+    List<Maestro> listaMaestros=new ArrayList();
    
     
 
     public void establecerGrupo(int idGrupo){
         ObservableList<String> maestros =FXCollections.observableArrayList();
         List<Cuenta> listaUsuarios=null;
+        MaestroDAO maestroDAO = new MaestroDAO();
         Grupo grupo;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         grupo=grupoDAO.adquirirGrupo(idGrupo);
@@ -87,8 +92,9 @@ public class VentanaEditarGrupoController implements Initializable {
         campoNombre.setText(nombreInicial);
         campoInscripcion.setText(grupo.getInscripcion().toString());
         campoMensualidad.setText(grupo.getMensualidad().toString());
-        for(int i=0; i<listaUsuarios.size(); i++){///////
-            maestros.add(listaUsuarios.get(i).getUsuario());///////
+        listaMaestros=maestroDAO.adquirirMaestros();
+        for(int i=0; i<listaMaestros.size(); i++){///////
+                maestros.add(listaMaestros.get(i).getNombre());
         }
         comboMaestro.setItems(maestros);
         comboMaestro.setValue(grupo.getUsuario().getUsuario());

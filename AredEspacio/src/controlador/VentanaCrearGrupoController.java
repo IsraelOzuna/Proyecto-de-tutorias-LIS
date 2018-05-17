@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,6 +32,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import negocio.GrupoDAO;
+import persistencia.Maestro;
+import negocio.MaestroDAO;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
@@ -67,20 +70,21 @@ public class VentanaCrearGrupoController implements Initializable {
     @FXML
     private Label etiquetaMaestro;
     private String unidadPersistencia="AredEspacioPU";
+    List<Maestro> listaMaestros=new ArrayList();
    
 
     
     
     public void iniciarVentana(){
         ObservableList<String> maestros =FXCollections.observableArrayList();
-        List<Cuenta> listaUsuarios=null;
+        MaestroDAO maestroDAO = new MaestroDAO();
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);/////////
-        listaUsuarios=grupoDAO.adquirirCuentas();//////
-        for(int i=0; i<listaUsuarios.size(); i++){///////
-            maestros.add(listaUsuarios.get(i).getUsuario());///////
+        listaMaestros=maestroDAO.adquirirMaestros();
+        for(int i=0; i<listaMaestros.size(); i++){///////
+                maestros.add(listaMaestros.get(i).getNombre());
         }
-        comboBoxMaestro.setItems(maestros);
         
+        comboBoxMaestro.setItems(maestros);
         campoInscripcion.textProperty().addListener((observable, viejoValor, nuevoValor) -> {
             if (!nuevoValor.matches("\\d+\\.\\d*")) {
                 campoInscripcion.setText(nuevoValor.replaceAll("[^\\d]", ""));
@@ -109,8 +113,17 @@ public class VentanaCrearGrupoController implements Initializable {
             if(!existenCamposExcedidos()){
                 if(!nombreGrupoRepetido()){
                     GrupoDAO nuevoGrupoDAO = new GrupoDAO(unidadPersistencia);
+                    MaestroDAO maestroDAO = new MaestroDAO();
                     Cuenta nuevaCuenta=new Cuenta();
                     nuevaCuenta.setUsuario(comboBoxMaestro.getValue());
+                    Maestro maestroEditar=new Maestro();
+                    for(int i=0; i<listaMaestros.size(); i++){
+                        if(listaMaestros.get(i).getNombre().equals(comboBoxMaestro.getValue())){
+                            maestroEditar=listaMaestros.get(i);
+                        }
+                    }
+                    maestroEditar.setEstaActivo(1);
+                    maestroDAO.editarMaestro(maestroEditar);
                     Grupo nuevoGrupo = new Grupo();
                     nuevoGrupo.setNombreGrupo(campoNombreGrupo.getText());
                     nuevoGrupo.setUsuario(nuevaCuenta);

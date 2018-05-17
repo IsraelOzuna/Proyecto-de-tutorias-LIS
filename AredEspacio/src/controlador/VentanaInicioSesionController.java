@@ -51,7 +51,7 @@ public class VentanaInicioSesionController implements Initializable {
         limpiarEtiquetas();
         if (!existenCamposVacios() && !existenCamposExcedidos()) {
             try {
-                switch (cuentaDAO.iniciarSesion(campoUsuario.getText(), Utileria.cifrarContrasena(campoContrasena.getText()))) {
+                switch (cuentaDAO.iniciarSesion(campoUsuario.getText(), Utileria.cifrarContrasena(campoContrasena.getText()))){
                     case "Director":
                         desplegarMenuDirector(event);
                         break;
