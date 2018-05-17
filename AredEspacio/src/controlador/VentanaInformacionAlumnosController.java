@@ -3,6 +3,7 @@ package controlador;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import negocio.Utileria;
 import persistencia.Alumno;
+import persistencia.Pagoalumno;
 
 /**
  * FXML Controller class
@@ -114,10 +116,10 @@ public class VentanaInformacionAlumnosController implements Initializable {
         Parent root = (Parent) loader.load();
         VentanaHistorialDePagosAlumnosController ventanaHistorialDePagos = loader.getController();
         String nombreCompletoAlumno = alumno.getNombre() + " " + alumno.getApellidos();
-        ventanaHistorialDePagos.obtenerDatos(panelPrincipal, nombreCompletoAlumno);
-        ventanaHistorialDePagos.llenarTablaPagos(alumno.getIdAlumno());
+        ventanaHistorialDePagos.obtenerDatos(panelPrincipal, nombreCompletoAlumno, alumno.getRutaFoto());
+        ArrayList<Pagoalumno> pagosAlumnos = new ArrayList(alumno.getPagoalumnoCollection());
+        ventanaHistorialDePagos.llenarTablaPagos(pagosAlumnos);
         panelPrincipal.getChildren().add(root);
-
     }
 
     @FXML
