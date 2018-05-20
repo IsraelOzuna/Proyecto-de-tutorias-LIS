@@ -106,7 +106,7 @@ public class VentanaRegistrarMaestroController implements Initializable {
         if (!verificarCamposVacios(campoNombre, campoApellidos, campoCorreoElectronico, campoTelefono, campoCantidadAPagar, campoUsuario, campoContraseña)) {
 
             if (!verificarLongitudExcedida(campoNombre, campoApellidos, campoCorreoElectronico, campoTelefono, campoUsuario)) {
-                if (Utileria.validarCorreo(campoCorreoElectronico.getText())) {
+                if (Utileria.validarCorreo(campoCorreoElectronico.getText().trim())) {
 
                     try {
                         maestro.setMensualidad(Double.parseDouble(campoCantidadAPagar.getText()));
@@ -117,7 +117,7 @@ public class VentanaRegistrarMaestroController implements Initializable {
 
                     if (cantidadCorrecta) {
 
-                        if (!cuentaDAO.verificarNombreUsuarioRepetido(campoUsuario.getText())) {
+                        if (!cuentaDAO.verificarNombreUsuarioRepetido(campoUsuario.getText().trim())) {
 
                             StringBuilder comando = new StringBuilder();
                             comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
@@ -126,18 +126,18 @@ public class VentanaRegistrarMaestroController implements Initializable {
                             Process process = builder.start();
 
                             cuenta.setTipoCuenta("Maestro");
-                            cuenta.setUsuario(campoUsuario.getText());
+                            cuenta.setUsuario(campoUsuario.getText().trim());
                             cuenta.setContraseña(Utileria.cifrarContrasena(campoContraseña.getText()));
                             if (cuentaDAO.crearCuenta(cuenta)) {
 
-                                maestro.setNombre(campoNombre.getText());
-                                maestro.setApellidos(campoApellidos.getText());
-                                maestro.setCorreoElectronico(campoCorreoElectronico.getText());
-                                maestro.setTelefono(campoTelefono.getText());
+                                maestro.setNombre(campoNombre.getText().trim());
+                                maestro.setApellidos(campoApellidos.getText().trim());
+                                maestro.setCorreoElectronico(campoCorreoElectronico.getText().trim());
+                                maestro.setTelefono(campoTelefono.getText().trim());
                                 maestro.setEstaActivo(0);
                                 maestro.setFechaCorte(null);
                                 maestro.setRutaFoto(rutaImagen);
-                                maestro.setUsuario(campoUsuario.getText());
+                                maestro.setUsuario(campoUsuario.getText().trim());
 
                                 if (maestroDAO.registrarMaestro(maestro)) {
                                     DialogosController.mostrarMensajeInformacion("Registro exitoso", "El maestro se ha registrado correctamente", "El maestro se ha registrado correctamente");
@@ -229,42 +229,42 @@ public class VentanaRegistrarMaestroController implements Initializable {
     public boolean verificarLongitudExcedida(TextField campoNombre, TextField campoApellidos, TextField campoCorreoElectronico, TextField campoTelefono, TextField campoUsuario) {
         boolean longitudExcedida = false;
 
-        if (campoNombre.getText().length() > 30) {
+        if (campoNombre.getText().trim().length() > 30) {
             mandarAdvertencia(etiquetaAdvertenciaNombre);
             longitudExcedida = true;
         } else {
             desactivarAdvertencia(etiquetaAdvertenciaNombre);
         }
 
-        if (campoApellidos.getText().length() > 30) {
+        if (campoApellidos.getText().trim().length() > 30) {
             mandarAdvertencia(etiquetaAdvertenciaApellido);
             longitudExcedida = true;
         } else {
             desactivarAdvertencia(etiquetaAdvertenciaApellido);
         }
 
-        if (campoCorreoElectronico.getText().length() > 320) {
+        if (campoCorreoElectronico.getText().trim().length() > 320) {
             mandarAdvertencia(etiquetaAdvertenciaCorreo);
             longitudExcedida = true;
         } else {
             desactivarAdvertencia(etiquetaAdvertenciaCorreo);
         }
 
-        if (campoTelefono.getText().length() > 10) {
+        if (campoTelefono.getText().trim().length() > 10) {
             mandarAdvertencia(etiquetaAdvertenciaTelefono);
             longitudExcedida = true;
         } else {
             desactivarAdvertencia(etiquetaAdvertenciaTelefono);
         }
 
-        if (campoCantidadAPagar.getText().length() > 8) {
+        if (campoCantidadAPagar.getText().trim().length() > 8) {
             mandarAdvertencia(etiquetaAdvertenciaCantidad);
             longitudExcedida = true;
         } else {
             desactivarAdvertencia(etiquetaAdvertenciaCantidad);
         }
 
-        if (campoUsuario.getText().length() > 50) {
+        if (campoUsuario.getText().trim().length() > 50) {
             mandarAdvertencia(etiquetaAdvertenciaUsuario);
             longitudExcedida = true;
         } else {
@@ -317,7 +317,7 @@ public class VentanaRegistrarMaestroController implements Initializable {
     }
 
     public void limitarCaracteres(KeyEvent event, TextField campo, int caracteresMaximos) {
-        if (campo.getText().length() >= caracteresMaximos) {
+        if (campo.getText().trim().length() >= caracteresMaximos) {
             event.consume();
         }
     }

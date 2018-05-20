@@ -8,8 +8,6 @@ package controlador;
 import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Time;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -24,7 +22,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -37,6 +34,7 @@ import persistencia.Renta;
 public class VentanaRentasController implements Initializable {
 
     private Pane panelPrincipal;
+
     @FXML
     private TableView<persistencia.Renta> tablaRentas;
     @FXML
@@ -149,7 +147,25 @@ public class VentanaRentasController implements Initializable {
     }
 
     @FXML
-    private void editarRenta(ActionEvent event) {
+    private void editarRenta(ActionEvent event) throws IOException {
+        Renta renta = null;
+        renta = tablaRentas.getSelectionModel().getSelectedItem();
+
+        if (renta == null) {
+            DialogosController.mostrarMensajeInformacion("", "No hay una renta seleccionada", "Debe elegir la renta que deseas modificar");
+        } else {
+
+            FXMLLoader loader;
+            Parent root;
+            loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaEditarRenta.fxml"));
+            root = (Parent) loader.load();
+            VentanaEditarRentaController ventanaEditarRenta = loader.getController();
+            ventanaEditarRenta.obtenerPanel(panelPrincipal, renta);
+            ventanaEditarRenta.llenarDatos();
+            panelPrincipal.getChildren().add(root);
+
+        }
+
     }
 
 }

@@ -56,7 +56,7 @@
                   <Font name="Gill Sans MT Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="etiquetaFechaActual" maxHeight="25.0" maxWidth="122.0" minHeight="25.0" minWidth="122.0" prefHeight="25.0" prefWidth="122.0" GridPane.columnIndex="1">
+            <Label fx:id="etiquetaFechaActual" alignment="CENTER" contentDisplay="CENTER" maxHeight="25.0" maxWidth="122.0" minHeight="25.0" minWidth="122.0" prefHeight="25.0" prefWidth="122.0" textAlignment="CENTER" GridPane.columnIndex="1">
                <font>
                   <Font name="Gill Sans MT" size="12.0" />
                </font></Label>

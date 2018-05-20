@@ -107,7 +107,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         boolean cantidadCorrecta = true;
         if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreoElectronico, campoTelefono, campoCantidadAPagar)) {
             if (!verificarLongitudExcedida(campoNombre, campoApellidos, campoCorreoElectronico, campoTelefono, campoCantidadAPagar)) {
-                if (Utileria.validarCorreo(campoCorreoElectronico.getText())) {
+                if (Utileria.validarCorreo(campoCorreoElectronico.getText().trim())) {
                     Maestro maestroNuevo = new Maestro();
                     try {
                         maestroNuevo.setMensualidad(Double.parseDouble(campoCantidadAPagar.getText()));
@@ -125,10 +125,10 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
 
                         MaestroDAO maestroDAO = new MaestroDAO();
 
-                        maestroNuevo.setNombre(campoNombre.getText());
-                        maestroNuevo.setApellidos(campoApellidos.getText());
-                        maestroNuevo.setCorreoElectronico(campoCorreoElectronico.getText());
-                        maestroNuevo.setTelefono(campoTelefono.getText());
+                        maestroNuevo.setNombre(campoNombre.getText().trim());
+                        maestroNuevo.setApellidos(campoApellidos.getText().trim());
+                        maestroNuevo.setCorreoElectronico(campoCorreoElectronico.getText().trim());
+                        maestroNuevo.setTelefono(campoTelefono.getText().trim());
                         maestroNuevo.setRutaFoto(nombreFoto);
                         maestroNuevo.setEstaActivo(maestro.getEstaActivo());
                         maestroNuevo.setFechaCorte(maestro.getFechaCorte());
@@ -171,35 +171,35 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
     public boolean verificarLongitudExcedida(TextField campoNombre, TextField campoApellidos, TextField campoCorreoElectronico, TextField campoTelefono, TextField campoCantidadAPagar) {
         boolean longitudExcedida = false;
 
-        if (campoNombre.getText().length() > 30) {
+        if (campoNombre.getText().trim().length() > 30) {
             mandarAdvertencia(etiquetaAdvertenciaNombre);
             longitudExcedida = true;
         } else {
             desactivarAdvertencia(etiquetaAdvertenciaNombre);
         }
 
-        if (campoApellidos.getText().length() > 30) {
+        if (campoApellidos.getText().trim().length() > 30) {
             mandarAdvertencia(etiquetaAdvertenciaApellido);
             longitudExcedida = true;
         } else {
             desactivarAdvertencia(etiquetaAdvertenciaApellido);
         }
 
-        if (campoCorreoElectronico.getText().length() > 320) {
+        if (campoCorreoElectronico.getText().trim().length() > 320) {
             mandarAdvertencia(etiquetaAdvertenciaCorreo);
             longitudExcedida = true;
         } else {
             desactivarAdvertencia(etiquetaAdvertenciaCorreo);
         }
 
-        if (campoTelefono.getText().length() > 10) {
+        if (campoTelefono.getText().trim().length() > 10) {
             mandarAdvertencia(etiquetaAdvertenciaTelefono);
             longitudExcedida = true;
         } else {
             desactivarAdvertencia(etiquetaAdvertenciaTelefono);
         }
 
-        if (campoCantidadAPagar.getText().length() > 8) {
+        if (campoCantidadAPagar.getText().trim().length() > 8) {
             mandarAdvertencia(etiquetaAdvertenciaCantidad);
             longitudExcedida = true;
         } else {
@@ -289,7 +289,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
     }
 
     public void limitarCaracteres(KeyEvent event, TextField campo, int caracteresMaximos) {
-        if (campo.getText().length() >= caracteresMaximos) {
+        if (campo.getText().trim().length() >= caracteresMaximos) {
             event.consume();
         }
     }
