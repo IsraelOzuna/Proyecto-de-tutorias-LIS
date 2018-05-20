@@ -63,7 +63,7 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
     private void registrarMensualidad(ActionEvent event) {
         boolean cantidadValida = true;
         Date fechaPago = new Date();
-        if (comboGruposAlumno.getSelectionModel().getSelectedItem() != null && !campoMontoPagar.getText().isEmpty()) {
+        if (comboGruposAlumno.getSelectionModel().getSelectedItem() != null && !campoMontoPagar.getText().trim().isEmpty()) {
             try {
                 Double.parseDouble(campoMontoPagar.getText());
             } catch (NumberFormatException ex) {
@@ -74,7 +74,7 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
                 PagoMensualidadAlumno pagoAlumno = new PagoMensualidadAlumno();
                 PagoMensualidadAlumnoDAO pagoInscripcion = new PagoMensualidadAlumnoDAO();
                 
-                pagoAlumno.setCantidad(Double.parseDouble(campoMontoPagar.getText()));
+                pagoAlumno.setCantidad(Double.parseDouble(campoMontoPagar.getText().trim()));
                 pagoAlumno.setFechaPagoInscripcion(fechaPago);
                 pagoAlumno.setIdAlumno(idAlumno);
                 pagoAlumno.setNombreGrupo(comboGruposAlumno.getValue());
@@ -126,7 +126,7 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
     private void limitarCampoMonto(KeyEvent event) {
         char caracter = event.getCharacter().charAt(0);
 
-        if (campoMontoPagar.getText().length() >= 10 || !Character.isDigit(caracter)) {
+        if (campoMontoPagar.getText().trim().length() >= 10 || !Character.isDigit(caracter)) {
             event.consume();
         }
     }

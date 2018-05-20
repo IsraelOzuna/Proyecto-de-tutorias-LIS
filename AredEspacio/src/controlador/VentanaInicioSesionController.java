@@ -51,7 +51,7 @@ public class VentanaInicioSesionController implements Initializable {
         limpiarEtiquetas();
         if (!existenCamposVacios() && !existenCamposExcedidos()) {
             try {
-                switch (cuentaDAO.iniciarSesion(campoUsuario.getText(), Utileria.cifrarContrasena(campoContrasena.getText()))){
+                switch (cuentaDAO.iniciarSesion(campoUsuario.getText().trim(), Utileria.cifrarContrasena(campoContrasena.getText()))){
                     case "Director":
                         desplegarMenuDirector(event);
                         break;
@@ -72,7 +72,7 @@ public class VentanaInicioSesionController implements Initializable {
     private void limitarUsuario(KeyEvent event) {
         char caracter = event.getCharacter().charAt(0);
 
-        if (campoUsuario.getText().length() >= 50 || !(Character.isDigit(caracter) || Character.isLetter(caracter))) {
+        if (campoUsuario.getText().trim().length() >= 50 || !(Character.isDigit(caracter) || Character.isLetter(caracter))) {
             event.consume();
         }
     }
@@ -80,12 +80,12 @@ public class VentanaInicioSesionController implements Initializable {
     public boolean existenCamposVacios() {
         boolean camposVacios = false;
 
-        if (campoUsuario.getText().isEmpty()) {
+        if (campoUsuario.getText().trim().isEmpty()) {
             camposVacios = true;
             etiquetaErrorUsuario.setText("Llena este campo");
         }
 
-        if (campoContrasena.getText().isEmpty()) {
+        if (campoContrasena.getText().trim().isEmpty()) {
             camposVacios = true;
             etiquetaErrorContrasena.setText("Llena este campo");
         }
@@ -95,7 +95,7 @@ public class VentanaInicioSesionController implements Initializable {
 
     public boolean existenCamposExcedidos() {
         boolean camposExedidos = false;
-        if (campoUsuario.getText().length() > 50) {
+        if (campoUsuario.getText().trim().length() > 50) {
             etiquetaErrorUsuario.setText("El usuario solo puede tener 50 caracteres");
         }
         return camposExedidos;

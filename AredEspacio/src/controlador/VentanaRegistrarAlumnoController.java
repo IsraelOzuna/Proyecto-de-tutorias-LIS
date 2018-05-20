@@ -88,8 +88,8 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         limpiarEtiquetas();
         if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono, campoFechaNacimiennto)) {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
-                if (Utileria.validarCorreo(campoCorreo.getText())) {
-                    if (esTelefonoValido(campoTelefono.getText())) {
+                if (Utileria.validarCorreo(campoCorreo.getText().trim())) {
+                    if (esTelefonoValido(campoTelefono.getText().trim())) {
                         StringBuilder comando = new StringBuilder();
                         comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
                         ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
@@ -98,11 +98,11 @@ public class VentanaRegistrarAlumnoController implements Initializable {
                         
                         AlumnoDAO nuevoAlumnoDAO = new AlumnoDAO();
                         nuevoAlumno = new Alumno();
-                        nuevoAlumno.setNombre(campoNombre.getText());
-                        nuevoAlumno.setApellidos(campoApellidos.getText());
-                        nuevoAlumno.setCorreoElectronico(campoCorreo.getText());
+                        nuevoAlumno.setNombre(campoNombre.getText().trim());
+                        nuevoAlumno.setApellidos(campoApellidos.getText().trim());
+                        nuevoAlumno.setCorreoElectronico(campoCorreo.getText().trim());
                         nuevoAlumno.setFechaNacimiento(Utileria.convertirFechaNacimiento(campoFechaNacimiennto.getValue()));
-                        nuevoAlumno.setTelefono(campoTelefono.getText());
+                        nuevoAlumno.setTelefono(campoTelefono.getText().trim());
                         nuevoAlumno.setRutaFoto(nombreFoto);
 
                         if (nuevoAlumnoDAO.registrarAlumno(nuevoAlumno)) {
@@ -153,19 +153,19 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     public boolean existenCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono, DatePicker campoFechaNacimiento) {
         boolean camposVacios = false;
 
-        if (campoNombre.getText().isEmpty()) {
+        if (campoNombre.getText().trim().isEmpty()) {
             camposVacios = true;
             etiquetaErrorNombre.setText("Campo obligatorio");
         }
-        if (campoApellidos.getText().isEmpty()) {
+        if (campoApellidos.getText().trim().isEmpty()) {
             camposVacios = true;
             etiquetaErrorApellidos.setText("Campo obligatorio");
         }
-        if (campoCorreo.getText().isEmpty()) {
+        if (campoCorreo.getText().trim().isEmpty()) {
             camposVacios = true;
             etiquetaErrorCorreo.setText("Campo obligatorio");
         }
-        if (campoTelefono.getText().isEmpty()) {
+        if (campoTelefono.getText().trim().isEmpty()) {
             camposVacios = true;
             etiquetaErrorTelefono.setText("Campo obligatorio");
         }
@@ -179,19 +179,19 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     public boolean existenCamposExcedidos(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono) {
         boolean campoExcedido = false;
 
-        if (campoNombre.getText().length() > 30) {
+        if (campoNombre.getText().trim().length() > 30) {
             campoExcedido = true;
             etiquetaErrorNombre.setText("No puede contener más de 30 caracteres");
         }
-        if (campoApellidos.getText().length() > 30) {
+        if (campoApellidos.getText().trim().length() > 30) {
             campoExcedido = true;
             etiquetaErrorApellidos.setText("No puede contener más de 30 caracteres");
         }
-        if (campoCorreo.getText().length() > 320) {
+        if (campoCorreo.getText().trim().length() > 320) {
             campoExcedido = true;
             etiquetaErrorCorreo.setText("No puede contener más de 320 caracteres");
         }
-        if (campoTelefono.getText().length() > 10) {
+        if (campoTelefono.getText().trim().length() > 10) {
             campoExcedido = true;
             etiquetaErrorTelefono.setText("No puede contener más de 10 digitos");
         }
@@ -229,7 +229,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     @FXML
     private void limitarNombre(KeyEvent event) {
         char caracter = event.getCharacter().charAt(0);
-        if (campoNombre.getText().length() >= 30 || !(Character.isLetter(caracter) || Character.isSpaceChar(caracter))) {
+        if (campoNombre.getText().trim().length() >= 30 || !(Character.isLetter(caracter) || Character.isSpaceChar(caracter))) {
             event.consume();
         }
     }
@@ -237,14 +237,14 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     @FXML
     private void limitarApellidos(KeyEvent event) {
         char caracter = event.getCharacter().charAt(0);
-        if (campoApellidos.getText().length() >= 30 || !(Character.isLetter(caracter) || Character.isSpaceChar(caracter))) {
+        if (campoApellidos.getText().trim().length() >= 30 || !(Character.isLetter(caracter) || Character.isSpaceChar(caracter))) {
             event.consume();
         }
     }
 
     @FXML
     private void limitarCorreo(KeyEvent event) {
-        if (campoCorreo.getText().length() >= 320) {
+        if (campoCorreo.getText().trim().length() >= 320) {
             event.consume();
         }
     }
@@ -253,7 +253,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     private void limitarTelefono(KeyEvent event) {
         char caracter = event.getCharacter().charAt(0);
 
-        if (campoTelefono.getText().length() >= 10 || !Character.isDigit(caracter)) {
+        if (campoTelefono.getText().trim().length() >= 10 || !Character.isDigit(caracter)) {
             event.consume();
         }
     }

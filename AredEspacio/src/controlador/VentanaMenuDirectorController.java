@@ -13,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import negocio.MaestroDAO;
 
-
 public class VentanaMenuDirectorController implements Initializable {
 
     @FXML
@@ -34,6 +33,8 @@ public class VentanaMenuDirectorController implements Initializable {
     private Label etiquetaUsuario;
     @FXML
     private JFXButton botonClientes;
+    @FXML
+    private JFXButton botonAnuncios;
 
     /**
      * Initializes the controller class.
@@ -93,15 +94,25 @@ public class VentanaMenuDirectorController implements Initializable {
         ventanaBuscar.obtenerSeccion("Clientes", panelPrincipal);
         panelPrincipal.getChildren().add(root);
     }
-    
-    public void obtenerUsuario(String usuario){
+
+    @FXML
+    public void desplegarVentanaFacebook(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaEgresosFb.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaEgresosFbController ventanaEgresosFb = loader.getController();
+        panelPrincipal.getChildren().add(root);
+    }
+
+    public void obtenerUsuario(String usuario) {
         etiquetaNombreUsuario.setText(usuario);
     }
-    
-    public void ocultarBotones(){
+
+    public void ocultarBotones() {
         botonClientes.setVisible(false);
         botonMaestros.setVisible(false);
         botonRecursosReportes.setVisible(false);
         botonRenta.setVisible(false);
+        botonAnuncios.setVisible(false);
     }
+
 }
