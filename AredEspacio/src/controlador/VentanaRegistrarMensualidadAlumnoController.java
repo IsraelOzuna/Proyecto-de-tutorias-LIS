@@ -49,7 +49,6 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
     private int idAlumno;
     @FXML
     private Label etiquetaFechaPago;
-    
 
     /**
      * Initializes the controller class.
@@ -73,19 +72,21 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
             if (cantidadValida) {
                 PagoMensualidadAlumno pagoAlumno = new PagoMensualidadAlumno();
                 PagoMensualidadAlumnoDAO pagoInscripcion = new PagoMensualidadAlumnoDAO();
-                
+
                 pagoAlumno.setCantidad(Double.parseDouble(campoMontoPagar.getText().trim()));
                 pagoAlumno.setFechaPagoInscripcion(fechaPago);
                 pagoAlumno.setIdAlumno(idAlumno);
                 pagoAlumno.setNombreGrupo(comboGruposAlumno.getValue());
                 pagoAlumno.setTipoPago('1');
-                
-                if(pagoInscripcion.registrarMensualidad(pagoAlumno, idAlumno, comboGruposAlumno.getValue())){
+
+                if (pagoInscripcion.registrarMensualidad(pagoAlumno, idAlumno, comboGruposAlumno.getValue())) {
                     DialogosController.mostrarMensajeInformacion("", "Registro de pago exitoso", "El pago se ha registrado correctamente");
                     panelTrasero.setVisible(false);
+                } else {
+                    DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "El pago no se pudo registrar");
                 }
             }
-        }else{
+        } else {
             DialogosController.mostrarMensajeAdvertencia("", "Campos vacios", "Llene ambos campos");
         }
     }
@@ -99,7 +100,7 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
         this.idAlumno = idAlumno;
         etiquetaNombreAlumno.setText(nombreAlumno + " " + apellidosAlumno);
         if (rutaFotoAlumno != null) {
-            Image foto = new Image("file:"+ System.getProperty("user.dir") +"\\imagenesAlumnos\\" + rutaFotoAlumno, 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesAlumnos\\" + rutaFotoAlumno, 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
         llenarComboGrupos();

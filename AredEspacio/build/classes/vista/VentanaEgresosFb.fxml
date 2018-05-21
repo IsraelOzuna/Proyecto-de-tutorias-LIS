@@ -80,6 +80,30 @@
                   <Insets left="90.0" />
                </GridPane.margin>
             </FontAwesomeIconView>
+            <Label fx:id="etiquetaFechaPublicacion" prefHeight="14.0" prefWidth="124.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="50.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="etiquetaFechaFin" prefHeight="14.0" prefWidth="123.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="50.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="etiquetaCosto" prefHeight="14.0" prefWidth="117.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="50.0" />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
       <GridPane layoutX="519.0" layoutY="97.0" prefHeight="486.0" prefWidth="356.0">
@@ -109,13 +133,13 @@
                   <Font name="Gill Sans MT Bold" size="14.0" />
                </font>
             </Label>
-            <JFXTextField focusColor="#740808" maxHeight="25.0" maxWidth="200.0" minHeight="25.0" minWidth="200.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" />
+            <JFXTextField fx:id="campoLink" focusColor="#740808" maxHeight="25.0" maxWidth="200.0" minHeight="25.0" minWidth="200.0" onKeyTyped="#limitarLink" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" />
             <JFXComboBox fx:id="comboCreador" focusColor="#740808" maxHeight="25.0" maxWidth="150.0" minHeight="25.0" minWidth="200.0" prefHeight="25.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXComboBox>
-            <TextArea fx:id="campoDescripcion" maxHeight="150.0" maxWidth="200.0" minHeight="150.0" minWidth="200.0" onKeyTyped="#limitarDescripcion" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextArea fx:id="campoDescripcion" maxHeight="130.0" maxWidth="200.0" minHeight="130.0" minWidth="200.0" onKeyTyped="#limitarDescripcion" prefHeight="130.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <JFXButton prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets />
@@ -127,7 +151,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #CDCDCD;" text="Registrar" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <JFXButton onAction="#registrarEgresoFb" prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #CDCDCD;" text="Registrar" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font name="Gill Sans MT Bold" size="14.0" />
                </font>
@@ -135,6 +159,30 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
+            <Label fx:id="etiquetaLink" prefHeight="14.0" prefWidth="198.0" textFill="RED" GridPane.columnIndex="1">
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="50.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="etiquetaCreador" prefHeight="14.0" prefWidth="197.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="50.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="etiquetaDescripcion" prefHeight="14.0" prefWidth="200.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets top="132.0" />
+               </GridPane.margin>
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
    </children>

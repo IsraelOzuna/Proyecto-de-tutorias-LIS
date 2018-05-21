@@ -6,6 +6,7 @@
 package persistencia;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -14,11 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,6 +42,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Maestro.findByMensualidad", query = "SELECT m FROM Maestro m WHERE m.mensualidad = :mensualidad"),
     @NamedQuery(name = "Maestro.findByUsuario", query = "SELECT m FROM Maestro m WHERE m.usuario = :usuario")})
 public class Maestro implements Serializable {
+
+    @OneToMany(mappedBy = "creador")
+    private Collection<Egreso> egresoCollection;
 
     private static final long serialVersionUID = 1L;
     @Column(name = "nombre")
@@ -177,6 +183,15 @@ public class Maestro implements Serializable {
     @Override
     public String toString() {
         return "persistencia.Maestro[ usuario=" + usuario + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Egreso> getEgresoCollection() {
+        return egresoCollection;
+    }
+
+    public void setEgresoCollection(Collection<Egreso> egresoCollection) {
+        this.egresoCollection = egresoCollection;
     }
     
 }
