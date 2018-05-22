@@ -15,19 +15,19 @@ import persistencia.Maestro;
 public class EgresoDAO implements IEgreso {
 
     @Override
-    public boolean registrarRecursoFb(Egreso egresoFb, String usuarioMaestro) {
+    public boolean registrarEgresoFb(Egreso egresoFb, String usuarioMaestro) {
         boolean egresoFbRegistradoExitosamente = true;
-        if(egresoFb != null){
-            Maestro maestro;            
-                        
+        if (egresoFb != null) {
+            Maestro maestro;
+
             EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
             EgresoJpaController egresofbJpaController = new EgresoJpaController(entityManagerFactory);
             MaestroJpaController encontrarMaestro = new MaestroJpaController(entityManagerFactory);
-            
+
             maestro = encontrarMaestro.findMaestro(usuarioMaestro);
-            
+
             persistencia.Egreso nuevoEgresoFb = new persistencia.Egreso();
-            
+
             nuevoEgresoFb.setCosto(egresoFb.getCosto());
             nuevoEgresoFb.setDescripcion(egresoFb.getDescripcion());
             nuevoEgresoFb.setFechaFin(egresoFb.getFechaFinPublicacion());
@@ -35,18 +35,44 @@ public class EgresoDAO implements IEgreso {
             nuevoEgresoFb.setFechaRegistro(egresoFb.getFechaRegistro());
             nuevoEgresoFb.setLink(egresoFb.getUrl());
             nuevoEgresoFb.setCreador(maestro);
-            
-            try{
-            egresofbJpaController.create(nuevoEgresoFb);
-            }catch(Exception ex){
+            nuevoEgresoFb.setNombreGasto("Anuncio de Facebook");
+
+            try {
+                egresofbJpaController.create(nuevoEgresoFb);
+            } catch (Exception ex) {
                 egresoFbRegistradoExitosamente = false;
                 Logger.getLogger(EgresoDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
+        } else {
             egresoFbRegistradoExitosamente = false;
         }
 
         return egresoFbRegistradoExitosamente;
+    }
+
+    @Override
+    public boolean registrarEgresoVariado(Egreso egresoVariado) {
+        boolean egresoRegistradoExitosamente = true;
+        if (egresoVariado != null) {
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+            EgresoJpaController egresoJpaController = new EgresoJpaController(entityManagerFactory);
+            persistencia.Egreso nuevoEgreso = new persistencia.Egreso();
+
+            nuevoEgreso.setCosto(egresoVariado.getCosto());
+            nuevoEgreso.setFechaRegistro(egresoVariado.getFechaRegistro());
+            nuevoEgreso.setDescripcion(egresoVariado.getDescripcion());
+            nuevoEgreso.setNombreGasto(egresoVariado.getNombreGasto());
+
+            try {
+                egresoJpaController.create(nuevoEgreso);
+            } catch (Exception ex) {
+                egresoRegistradoExitosamente = false;
+                Logger.getLogger(EgresoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            egresoRegistradoExitosamente = false;
+        }
+        return egresoRegistradoExitosamente;
     }
 
 }

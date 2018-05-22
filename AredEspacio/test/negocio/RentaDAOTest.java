@@ -56,7 +56,7 @@ public class RentaDAOTest {
         try {
             fechaAMandar = formato.parse(fecha);
         } catch (ParseException ex) {
-            Logger.getLogger(PagoInscripcionAlumnoDAOTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PagoMensualidadAlumnoDAOTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         renta.setFecha(fechaAMandar);

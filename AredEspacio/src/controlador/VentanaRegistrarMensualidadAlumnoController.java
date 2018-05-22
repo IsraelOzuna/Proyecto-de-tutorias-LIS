@@ -75,8 +75,7 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
 
                 pagoAlumno.setCantidad(Double.parseDouble(campoMontoPagar.getText().trim()));
                 pagoAlumno.setFechaPagoInscripcion(fechaPago);
-                pagoAlumno.setIdAlumno(idAlumno);
-                pagoAlumno.setNombreGrupo(comboGruposAlumno.getValue());
+                pagoAlumno.setIdAlumno(idAlumno);                
                 pagoAlumno.setTipoPago('1');
 
                 if (pagoInscripcion.registrarMensualidad(pagoAlumno, idAlumno, comboGruposAlumno.getValue())) {

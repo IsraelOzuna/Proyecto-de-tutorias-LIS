@@ -50,6 +50,7 @@ public class VentanaMenuDirectorController implements Initializable {
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
         ventanaBuscar.obtenerSeccion("Alumnos", panelPrincipal);
+        panelPrincipal.getChildren().clear();
         panelPrincipal.getChildren().add(root);
     }
 
@@ -59,6 +60,7 @@ public class VentanaMenuDirectorController implements Initializable {
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
         ventanaBuscar.obtenerSeccion("Maestros", panelPrincipal);
+        panelPrincipal.getChildren().clear();
         panelPrincipal.getChildren().add(root);
     }
 
@@ -69,6 +71,7 @@ public class VentanaMenuDirectorController implements Initializable {
         VentanaRentasController ventanaRentas = loader.getController();
         ventanaRentas.obtenerPanel(panelPrincipal);
         ventanaRentas.llenarTablaRentas();
+        panelPrincipal.getChildren().clear();
         panelPrincipal.getChildren().add(root);
     }
 
@@ -80,6 +83,7 @@ public class VentanaMenuDirectorController implements Initializable {
             Parent root = (Parent) loader.load();
             VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
             ventanaConsultarGruposController.iniciarVentana();
+            panelPrincipal.getChildren().clear();
             panelPrincipal.getChildren().add(root);
         } else {
             DialogosController.mostrarMensajeInformacion("No hay maestros registrados", "No hay maestros registrados", "Debe haber al menos un maestro registrado para realizar esta acción");
@@ -92,6 +96,7 @@ public class VentanaMenuDirectorController implements Initializable {
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
         ventanaBuscar.obtenerSeccion("Clientes", panelPrincipal);
+        panelPrincipal.getChildren().clear();
         panelPrincipal.getChildren().add(root);
     }
 
@@ -100,6 +105,16 @@ public class VentanaMenuDirectorController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaEgresosFb.fxml"));
         Parent root = (Parent) loader.load();
         VentanaEgresosFbController ventanaEgresosFb = loader.getController();
+        panelPrincipal.getChildren().clear();
+        panelPrincipal.getChildren().add(root);
+    }
+
+    @FXML
+    private void desplegarVentanaRecursos(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaGenerarReporte.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaGenerarReporteController ventanaReporte = loader.getController();
+        panelPrincipal.getChildren().clear();
         panelPrincipal.getChildren().add(root);
     }
 
@@ -114,5 +129,4 @@ public class VentanaMenuDirectorController implements Initializable {
         botonRenta.setVisible(false);
         botonAnuncios.setVisible(false);
     }
-
 }

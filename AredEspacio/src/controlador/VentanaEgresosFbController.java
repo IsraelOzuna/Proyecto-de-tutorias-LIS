@@ -80,20 +80,29 @@ public class VentanaEgresosFbController implements Initializable {
                 Date fechaRegistro = new Date();
                 Egreso egresoFb = new Egreso();
                 EgresoDAO nuevoEgresoFb = new EgresoDAO();
+                boolean cantidadValida = true;
 
-                egresoFb.setCosto(Double.parseDouble(campoCosto.getText().trim()));
-                egresoFb.setCreador((String) comboCreador.getValue());
-                egresoFb.setDescripcion(campoDescripcion.getText().trim());
-                egresoFb.setFechaFinPublicacion(Utileria.convertirFecha(campoFechaFinPub.getValue()));
-                egresoFb.setFechaInicioPublicacion(Utileria.convertirFecha(campoFehcaInicioPub.getValue()));
-                egresoFb.setFechaRegistro(fechaRegistro);
-                egresoFb.setUrl(campoLink.getText().trim());
+                try {
+                    Double.parseDouble(campoCosto.getText().trim());
+                } catch (NumberFormatException ex) {
+                    cantidadValida = false;
+                    etiquetaCosto.setText("Solo ingresa números");
+                }
+                if (cantidadValida) {
+                    egresoFb.setCosto(Double.parseDouble(campoCosto.getText().trim()));
+                    egresoFb.setCreador((String) comboCreador.getValue());
+                    egresoFb.setDescripcion(campoDescripcion.getText().trim());
+                    egresoFb.setFechaFinPublicacion(Utileria.convertirFecha(campoFechaFinPub.getValue()));
+                    egresoFb.setFechaInicioPublicacion(Utileria.convertirFecha(campoFehcaInicioPub.getValue()));
+                    egresoFb.setFechaRegistro(fechaRegistro);
+                    egresoFb.setUrl(campoLink.getText().trim());
 
-                if (nuevoEgresoFb.registrarRecursoFb(egresoFb, (String) comboCreador.getValue())) {
-                    DialogosController.mostrarMensajeInformacion("Registrado", "Egreso registrado", "El egreso de ha registrado correctamente");
-                    limpiarCampos();
-                } else {
-                    DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "El egreso no se pudo registrar");
+                    if (nuevoEgresoFb.registrarEgresoFb(egresoFb, (String) comboCreador.getValue())) {
+                        DialogosController.mostrarMensajeInformacion("Registrado", "Egreso registrado", "El egreso de ha registrado correctamente");
+                        limpiarCampos();
+                    } else {
+                        DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "El egreso no se pudo registrar");
+                    }
                 }
             }
         }
@@ -138,10 +147,6 @@ public class VentanaEgresosFbController implements Initializable {
         if (campoCosto.getText().trim().isEmpty()) {
             camposVacios = true;
             etiquetaCosto.setText("Campo obligatorio");
-        }
-        if (campoDescripcion.getText().trim().isEmpty()) {
-            camposVacios = true;
-            etiquetaDescripcion.setText("Campo obligatorio");
         }
         if (campoFechaFinPub.getValue() == null) {
             camposVacios = true;

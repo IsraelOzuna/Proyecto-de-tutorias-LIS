@@ -147,7 +147,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="botonRecursosReportes" alignment="CENTER" contentDisplay="TOP" text="Recursos y reportes" GridPane.rowIndex="6">
+            <JFXButton fx:id="botonRecursosReportes" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaRecursos" text="Recursos y reportes" GridPane.rowIndex="6">
                <graphic>
                   <FontAwesomeIconView fill="#740808" glyphName="MONEY" size="60.0">
                      <cursor>

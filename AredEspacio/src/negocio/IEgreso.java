@@ -5,6 +5,6 @@ package negocio;
  * @author Israel Reyes Ozuna
  */
 public interface IEgreso {
-    public boolean registrarRecursoFb(Egreso recursoFb, String usuarioMaestro);
-    
+    public boolean registrarEgresoFb(Egreso recursoFb, String usuarioMaestro);
+    public boolean registrarEgresoVariado(Egreso egresoVariado);
 }

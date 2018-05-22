@@ -11,10 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -22,25 +18,9 @@ import static org.junit.Assert.*;
  *
  * @author iro19
  */
-public class PagoInscripcionAlumnoDAOTest {
+public class PagoMensualidadAlumnoDAOTest {
 
-    public PagoInscripcionAlumnoDAOTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
+    public PagoMensualidadAlumnoDAOTest() {
     }
 
     /**
@@ -48,23 +28,24 @@ public class PagoInscripcionAlumnoDAOTest {
      */
     @Test
     public void testRegistrarInscripcionExitoso() {
-        String fecha = "13/12/2018";
+        String fecha = "2018/12/13";
         DateFormat formato = new SimpleDateFormat("YYY/MM/DD");
         Date fechaNacimiento = null;
         try {
             fechaNacimiento = formato.parse(fecha);
         } catch (ParseException ex) {
-            Logger.getLogger(PagoInscripcionAlumnoDAOTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PagoMensualidadAlumnoDAOTest.class.getName()).log(Level.SEVERE, null, ex);
         }
         PagoMensualidadAlumno pagoAlumno = new PagoMensualidadAlumno();
         persistencia.Alumno alumno = new persistencia.Alumno();
-        alumno.setIdAlumno(18);
-        persistencia.Grupo grupo = new persistencia.Grupo();
-        grupo.setNombreGrupo("Danza arabe");
+        String nombreGrupo = "Salsa";
+        alumno.setIdAlumno(18);        
+        persistencia.Grupo grupo = new persistencia.Grupo();        
+        grupo.setNombreGrupo(nombreGrupo);
         pagoAlumno.setCantidad(500.00);
         pagoAlumno.setIdAlumno(alumno.getIdAlumno());
         pagoAlumno.setFechaPagoInscripcion(fechaNacimiento);
-        pagoAlumno.setNombreGrupo(grupo.getNombreGrupo());
+        pagoAlumno.setIdGrupo(2);
         pagoAlumno.setTipoPago('1');
 
         PagoMensualidadAlumnoDAO pagoInscripcion = new PagoMensualidadAlumnoDAO();

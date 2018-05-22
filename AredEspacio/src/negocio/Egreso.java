@@ -14,7 +14,16 @@ public class Egreso {
     private String creador;
     private String descripcion;
     private String url;
+    private String nombreGasto;
 
+    public String getNombreGasto() {
+        return nombreGasto;
+    }
+
+    public void setNombreGasto(String nombreGasto) {
+        this.nombreGasto = nombreGasto;
+    }
+    
     public Date getFechaRegistro() {
         return fechaRegistro;
     }

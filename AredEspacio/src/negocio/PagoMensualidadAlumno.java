@@ -10,16 +10,16 @@ public class PagoMensualidadAlumno {
     private Date fechaPagoInscripcion;
     private char tipoPago;
     private Double cantidad;
-    private String nombreGrupo;
+    private int idGrupo;
     private int idAlumno;
 
-    public String getNombreGrupo() {
-        return nombreGrupo;
+    public int getIdGrupo() {
+        return idGrupo;
     }
 
-    public void setNombreGrupo(String nombreGrupo) {
-        this.nombreGrupo = nombreGrupo;
-    }
+    public void setIdGrupo(int idGrupo) {
+        this.idGrupo = idGrupo;
+    }    
 
     public int getIdAlumno() {
         return idAlumno;
