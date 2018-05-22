@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package negocio;
 
 import java.sql.Time;
@@ -10,7 +5,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;
@@ -21,10 +15,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import negocio.Renta;
 
-/**
- *
- * @author Irdevelo
- */
+
 public class RentaDAOTest {
 
     public RentaDAOTest() {
@@ -56,7 +47,7 @@ public class RentaDAOTest {
         try {
             fechaAMandar = formato.parse(fecha);
         } catch (ParseException ex) {
-            Logger.getLogger(PagoMensualidadAlumnoDAOTest.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RentaDAOTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         renta.setFecha(fechaAMandar);
@@ -102,6 +93,33 @@ public class RentaDAOTest {
         boolean expResult = false;
         boolean result = instance.eliminarRenta(id);
         assertEquals(expResult, result);
+    }
+    
+        @Test
+    public void testEditarRenta() {
+        System.out.println("editarRenta");
+        Renta renta = new Renta();
+
+        String fecha = "13/12/2018";
+        DateFormat formato = new SimpleDateFormat("YYY/MM/DD");
+        Date fechaAMandar = null;
+        try {
+            fechaAMandar = formato.parse(fecha);
+        } catch (ParseException ex) {
+            Logger.getLogger(RentaDAOTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        renta.setNombreCliente("Julian Hernandez");
+        renta.setCantidad(200.0);
+        renta.setFecha(fechaAMandar);
+        renta.setHoraInicio(Time.valueOf("15:00:00"));
+        renta.setHoraFin(Time.valueOf("17:00:00"));
+        int idRenta = 4;
+        RentaDAO instance = new RentaDAO();
+        boolean expResult = true;
+        boolean result = instance.editarRenta(renta, idRenta);
+        assertEquals(expResult, result);
+
     }
 
 }

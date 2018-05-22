@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
@@ -23,11 +18,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -45,13 +38,7 @@ import org.w3c.dom.NodeList;
 import persistencia.Horario;
 import persistencia.Renta;
 
-/**
- * FXML Controller class
- *
- * @author Irdevelo
- */
 public class VentanaEditarRentaController implements Initializable {
-
 
     @FXML
     private ComboBox<String> comboBoxHoraInicio;
@@ -412,45 +399,51 @@ public class VentanaEditarRentaController implements Initializable {
                 cantidadIngresadaCorrecta = false;
             }
 
-            if (campoCantidad.getText().length() <= 7) {
+            if (cantidadIngresadaCorrecta) {
 
-                if (cantidadIngresadaCorrecta) {
+                if (campoCantidad.getText().length() <= 5) {
 
-                    String horaInicioRenta = comboBoxHoraInicio.getSelectionModel().getSelectedItem();
-                    String horaFinRenta = comboBoxHoraFin.getSelectionModel().getSelectedItem();
+                    if (Double.parseDouble(campoCantidad.getText()) > 0) {
 
-                    int horaInicio = generarCoordenada(horaInicioRenta);
-                    int horaFin = generarCoordenada(horaFinRenta);
+                        String horaInicioRenta = comboBoxHoraInicio.getSelectionModel().getSelectedItem();
+                        String horaFinRenta = comboBoxHoraFin.getSelectionModel().getSelectedItem();
 
-                    if (horaInicio >= horaFin) {
-                        DialogosController.mostrarMensajeInformacion("", "Error en la elección de horario", "No se puede elegir una hora igual o anterior a la hora de inicio");
-                    } else if (revisarDsiponibilidadDeHorario(horaInicio, horaFin)) {
+                        int horaInicio = generarCoordenada(horaInicioRenta);
+                        int horaFin = generarCoordenada(horaFinRenta);
 
-                        RentaDAO rentaDAO = new RentaDAO();
-                        negocio.Renta rentaModificada = new negocio.Renta();
-                        rentaModificada.setNombreCliente(renta.getNombreCliente());
-                        rentaModificada.setCantidad(Double.parseDouble(campoCantidad.getText()));
-                        rentaModificada.setFecha(Utileria.convertirFecha(campoFecha.getValue()));
-                        rentaModificada.setHoraInicio(Time.valueOf(horaInicioRenta + ":00"));
-                        rentaModificada.setHoraFin(Time.valueOf(horaFinRenta + ":00"));
+                        if (horaInicio >= horaFin) {
+                            DialogosController.mostrarMensajeInformacion("", "Error en la elección de horario", "No se puede elegir una hora igual o anterior a la hora de inicio");
+                        } else if (revisarDsiponibilidadDeHorario(horaInicio, horaFin)) {
 
-                        if (rentaDAO.editarRenta(rentaModificada, idRenta)) {
-                            DialogosController.mostrarMensajeInformacion("", "Modificación de datos exitoso", "Los datos de la renta se han modificado correctamente");
-                            try {
-                                regresarVentanaAnterior();
-                            } catch (IOException ex) {
-                                Logger.getLogger(VentanaEditarRentaController.class.getName()).log(Level.SEVERE, null, ex);
+                            RentaDAO rentaDAO = new RentaDAO();
+                            negocio.Renta rentaModificada = new negocio.Renta();
+                            rentaModificada.setNombreCliente(renta.getNombreCliente());
+                            rentaModificada.setCantidad(Double.parseDouble(campoCantidad.getText()));
+                            rentaModificada.setFecha(Utileria.convertirFecha(campoFecha.getValue()));
+                            rentaModificada.setHoraInicio(Time.valueOf(horaInicioRenta + ":00"));
+                            rentaModificada.setHoraFin(Time.valueOf(horaFinRenta + ":00"));
+
+                            if (rentaDAO.editarRenta(rentaModificada, idRenta)) {
+                                DialogosController.mostrarMensajeInformacion("", "Modificación de datos exitoso", "Los datos de la renta se han modificado correctamente");
+                                try {
+                                    regresarVentanaAnterior();
+                                } catch (IOException ex) {
+                                    Logger.getLogger(VentanaEditarRentaController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            } else {
+                                DialogosController.mostrarMensajeInformacion("", "Modificación de datos fallido", "Los datos de la renta se no se modificaron correctamente");
                             }
-                        } else {
-                            DialogosController.mostrarMensajeInformacion("", "Modificación de datos fallido", "Los datos de la renta se no se modificaron correctamente");
                         }
+
+                    } else {
+                        DialogosController.mostrarMensajeInformacion("", "Numero negativo", "La cantidad a cobrar no puede ser un número negativo");
                     }
 
                 } else {
-                    DialogosController.mostrarMensajeInformacion("Dato incorrecto", "Las letras no son una cantidad", "Debe ingresar una cantidad numérica");
+                    DialogosController.mostrarMensajeInformacion("", "Excede el límite permitido", "El campo de cantidad no debe exceder los 5 caracteres");
                 }
             } else {
-                DialogosController.mostrarMensajeInformacion("", "Excede el límite permitido", "El campo de cantidad no debe exceder los 8 caracteres");
+                DialogosController.mostrarMensajeInformacion("Dato incorrecto", "Las letras no son una cantidad", "Debe ingresar una cantidad numérica");
             }
         }
 

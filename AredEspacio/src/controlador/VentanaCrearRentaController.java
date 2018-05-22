@@ -97,44 +97,49 @@ public class VentanaCrearRentaController implements Initializable {
                 cantidadIngresadaCorrecta = false;
             }
 
-            if (campoCantidad.getText().length() <= 5) {
+            if (cantidadIngresadaCorrecta) {
+                if (campoCantidad.getText().length() <= 5) {
 
-                if (cantidadIngresadaCorrecta) {
+                    if (Double.parseDouble(campoCantidad.getText()) > 0) {
 
-                    String horaInicioRenta = comboBoxHoraInicio.getSelectionModel().getSelectedItem();
-                    String horaFinRenta = comboBoxHoraFin.getSelectionModel().getSelectedItem();
+                        String horaInicioRenta = comboBoxHoraInicio.getSelectionModel().getSelectedItem();
+                        String horaFinRenta = comboBoxHoraFin.getSelectionModel().getSelectedItem();
 
-                    int horaInicio = generarCoordenada(horaInicioRenta);
-                    int horaFin = generarCoordenada(horaFinRenta);
+                        int horaInicio = generarCoordenada(horaInicioRenta);
+                        int horaFin = generarCoordenada(horaFinRenta);
 
-                    if (horaInicio >= horaFin) {
-                        DialogosController.mostrarMensajeInformacion("", "Error en la elección de horario", "No se puede elegir una hora igual o anterior a la hora de inicio");
-                    } else if (revisarDsiponibilidadDeHorario(horaInicio, horaFin)) {
+                        if (horaInicio >= horaFin) {
+                            DialogosController.mostrarMensajeInformacion("", "Error en la elección de horario", "No se puede elegir una hora igual o anterior a la hora de inicio");
+                        } else if (revisarDsiponibilidadDeHorario(horaInicio, horaFin)) {
 
-                        RentaDAO rentaDAO = new RentaDAO();
-                        Renta renta = new Renta();
-                        renta.setCantidad(Double.parseDouble(campoCantidad.getText()));
-                        renta.setNombreCliente(comboBoxClientes.getSelectionModel().getSelectedItem());
-                        renta.setFecha(Utileria.convertirFecha(campoFecha.getValue()));
-                        renta.setHoraInicio(Time.valueOf(horaInicioRenta + ":00"));
-                        renta.setHoraFin(Time.valueOf(horaFinRenta + ":00"));
+                            RentaDAO rentaDAO = new RentaDAO();
+                            Renta renta = new Renta();
+                            renta.setCantidad(Double.parseDouble(campoCantidad.getText()));
+                            renta.setNombreCliente(comboBoxClientes.getSelectionModel().getSelectedItem());
+                            renta.setFecha(Utileria.convertirFecha(campoFecha.getValue()));
+                            renta.setHoraInicio(Time.valueOf(horaInicioRenta + ":00"));
+                            renta.setHoraFin(Time.valueOf(horaFinRenta + ":00"));
 
-                        if (rentaDAO.registrarRenta(renta)) {
-                            DialogosController.mostrarMensajeInformacion("", "Registro de renta exitoso", "La renta se ha registrado correctamente");
-                            try {
-                                regresarVentanaAnterior();
-                            } catch (IOException ex) {
-                                Logger.getLogger(VentanaCrearRentaController.class.getName()).log(Level.SEVERE, null, ex);
+                            if (rentaDAO.registrarRenta(renta)) {
+                                DialogosController.mostrarMensajeInformacion("", "Registro de renta exitoso", "La renta se ha registrado correctamente");
+                                try {
+                                    regresarVentanaAnterior();
+                                } catch (IOException ex) {
+                                    Logger.getLogger(VentanaCrearRentaController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            } else {
+                                DialogosController.mostrarMensajeInformacion("", "Registro de renta fallido", "La renta no se se ha registrado correctamente");
                             }
-                        } else {
-                            DialogosController.mostrarMensajeInformacion("", "Registro de renta fallido", "La renta no se se ha registrado correctamente");
                         }
+                    } else {
+                        DialogosController.mostrarMensajeInformacion("", "Numero negativo", "La cantidad a cobrar no puede ser un número negativo");
                     }
                 } else {
-                    DialogosController.mostrarMensajeInformacion("Dato incorrecto", "Las letras no son una cantidad", "Debe ingresar una cantidad numérica");
+                    DialogosController.mostrarMensajeInformacion("", "Excede el límite permitido", "El campo de cantidad no debe exceder los 5 caracteres");
                 }
+
             } else {
-                DialogosController.mostrarMensajeInformacion("", "Excede el límite permitido", "El campo de cantidad no debe exceder los 8 caracteres");
+                DialogosController.mostrarMensajeInformacion("Dato incorrecto", "Las letras no son una cantidad", "Debe ingresar una cantidad numérica");
             }
         }
     }
