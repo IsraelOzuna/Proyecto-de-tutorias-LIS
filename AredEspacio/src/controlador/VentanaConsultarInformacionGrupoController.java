@@ -97,6 +97,8 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     private String nombreGrupo;
     private String rutaXML="C:\\Users\\Renato\\Documents\\NetBeansProjects\\AredEspacio\\src\\Archivos\\Horarios.xml";
     private String unidadPersistencia="AredEspacioPU";
+    @FXML
+    private JFXButton botonRegistrarAsistencia;
     
 
     /**
@@ -404,6 +406,15 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         Parent root = (Parent) loader.load();
         VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
         ventanaConsultarGruposController.iniciarVentana();
+        panelConsultarInfo.getChildren().add(root);
+    }
+
+    @FXML
+    private void desplegarVentanaRegistrarAsistencia(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRegistrarAsistencia.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaRegistrarAsistenciaController ventanaRegistrarAsistenciaController = loader.getController();
+        ventanaRegistrarAsistenciaController.iniciarVentana(idGrupo);
         panelConsultarInfo.getChildren().add(root);
     }
 }

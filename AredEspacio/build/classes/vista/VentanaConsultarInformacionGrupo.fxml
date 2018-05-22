@@ -73,7 +73,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </JFXButton>
-            <JFXButton layoutX="312.0" layoutY="386.0" style="-fx-background-color: #CDCDCD;" text="Registrar Asistencia">
+            <JFXButton fx:id="botonRegistrarAsistencia" layoutX="312.0" layoutY="386.0" onAction="#desplegarVentanaRegistrarAsistencia" style="-fx-background-color: #CDCDCD;" text="Registrar Asistencia">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

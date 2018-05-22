@@ -11,6 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -90,27 +91,40 @@ public class VentanaInscribirAlumnoController implements Initializable {
 
     @FXML
     private void inscribirAlumno(ActionEvent event) throws IOException{
+        boolean realizarInscripcion=false;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         AlumnoDAO alumnoDAO = new AlumnoDAO();
         String nombreGrupoElegido=comboGrupo.getValue();
         Grupo grupoElegido=obtenerGrupo(nombreGrupoElegido);
         List<Alumno> listaAlumnos = grupoDAO.obtenerAlumnos(grupoElegido.getIdGrupo());
-        listaAlumnos.add(alumnoInscribir);
-        grupoElegido.setAlumnoCollection(listaAlumnos);
-        if(grupoDAO.editarGrupo(grupoElegido)){
-            if(registrarPagoInscripcion(montoInscripcion, nombreGrupoElegido)){
-                DialogosController.mostrarMensajeInformacion("Inscrito", "El alumno fue inscrito de forma correcta al grupo", "");
-                FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
-                Parent root = (Parent) loader.load();
-                VentanaBuscarController ventanaBuscar = loader.getController();
-                ventanaBuscar.obtenerSeccion("Alumnos", panelPrincipal);
-                panelPrincipal.getChildren().add(root);
+        for(int i=0; i<listaAlumnos.size();i++){
+            if(Objects.equals(listaAlumnos.get(i).getIdAlumno(), alumnoInscribir.getIdAlumno())){
+                realizarInscripcion=false;
+                i=listaAlumnos.size();
             }else{
-                DialogosController.mostrarMensajeInformacion("Error", "Ocurrio un error y no se pudo realizar el pago de la isncripción", "");
+                realizarInscripcion=true;
             }
+        }
+        if(realizarInscripcion==true){
+            listaAlumnos.add(alumnoInscribir);
+            grupoElegido.setAlumnoCollection(listaAlumnos);
+            if(grupoDAO.editarGrupo(grupoElegido)){
+                if(registrarPagoInscripcion(montoInscripcion, nombreGrupoElegido)){
+                    DialogosController.mostrarMensajeInformacion("Inscrito", "El alumno fue inscrito de forma correcta al grupo", "");
+                    FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
+                    Parent root = (Parent) loader.load();
+                    VentanaBuscarController ventanaBuscar = loader.getController();
+                    ventanaBuscar.obtenerSeccion("Alumnos", panelPrincipal);
+                    panelPrincipal.getChildren().add(root);
+                }else{
+                    DialogosController.mostrarMensajeInformacion("Error", "Ocurrio un error y no se pudo realizar el pago de la isncripción", "");
+                }
+            }else{
+                DialogosController.mostrarMensajeInformacion("Error", "Ocurrio un error y no se pudo realizar la inscripción", "");
+            } 
         }else{
-            DialogosController.mostrarMensajeInformacion("Error", "Ocurrio un error y no se pudo realizar la inscripción", "");
-        } 
+            DialogosController.mostrarMensajeInformacion("Alumno ya inscrito", "El alumno ya esta inscrito a ese grupo, por favor elija otro grupo", "");
+        }
     }
 
     @FXML

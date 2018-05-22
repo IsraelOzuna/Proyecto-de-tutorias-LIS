@@ -12,4 +12,5 @@ public interface IAlumno {
     public boolean editarAlumno(persistencia.Alumno alumno);
     public List<persistencia.Alumno> buscarAlumno(String nombre);
     public List<String> encontrarGruposAlumno(int idAlumno);
+    public persistencia.Alumno adquirirAlumno(int idAlumno);
 }
