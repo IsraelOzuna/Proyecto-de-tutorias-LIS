@@ -28,9 +28,11 @@ import javafx.scene.layout.Pane;
 import negocio.AlumnoDAO;
 import negocio.GrupoDAO;
 import negocio.PagoInscripcionAlumnoDAO;
+import negocio.PromocionDAO;
 import persistencia.Alumno;
 import persistencia.Cuenta;
 import persistencia.Grupo;
+import persistencia.Promocion;
 
 /**
  * FXML Controller class
@@ -81,12 +83,27 @@ public class VentanaInscribirAlumnoController implements Initializable {
             } 
         }
         comboGrupo.setItems(grupos);
+        
+        PromocionDAO promocionDAO = new PromocionDAO();
+        List<Promocion> promociones = new ArrayList();
+        promociones=promocionDAO.consultarPromociones();
+        ObservableList<String> promocionesCombo =FXCollections.observableArrayList();
+        for(int i=0; i<promociones.size(); i++){
+            promocionesCombo.add(promociones.get(i).getNombrePromocion());
+        }
+        comboPromocion.setItems(promocionesCombo);
+        
 
         
     }
 
     @FXML
-    private void desplegarVentanaCrearPromocion(ActionEvent event) {
+    private void desplegarVentanaCrearPromocion(ActionEvent event) throws IOException{
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaCrearPromocion.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaCrearPromocionController ventanaPromocion = loader.getController();
+        ventanaPromocion.iniciarVentanaDesdeInscripcion(alumnoInscribir);
+        panelPrincipal.getChildren().add(root); 
     }
 
     @FXML

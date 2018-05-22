@@ -148,7 +148,6 @@ public class VentanaRegistrarAsistenciaController implements Initializable {
 
     @FXML
     private void registrarAsistencia(ActionEvent event) {
-        System.out.println("RegistrarAsistencia");
         String nombreAlumno;
         int idAlumno;
         String asistio="";

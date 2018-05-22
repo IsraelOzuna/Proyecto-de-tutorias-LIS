@@ -64,7 +64,7 @@ public class VentanaAdministrarHorariosController implements Initializable {
     @FXML
     private JFXButton botonGuardar;
     ObservableList<Horario> horarios;
-    private String rutaXML="C:\\Users\\Renato\\Documents\\NetBeansProjects\\AredEspacio\\src\\Archivos\\Horarios.xml";
+    private String rutaXML=System.getProperty("user.dir") + "\\Archivos\\Horarios.xml";
     @FXML
     private JFXButton botonRgresar;
     private static int fila;

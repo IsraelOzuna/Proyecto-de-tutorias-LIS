@@ -33,12 +33,6 @@ public class AsistenciaDAO implements IAsistenciaDAO{
         
         listaAsistencias=asistenciaJpaController.obtenerAsistenciasPorFecha(fecha);
         listaAsistencias=obtenerListaPorGrupo(listaAsistencias, idGrupo);
-        for(int i=0; i<listaAsistencias.size(); i++ ){
-            System.out.println(listaAsistencias.get(i).getIdAlumno());
-            System.out.println(listaAsistencias.get(i).getIdGrupo());
-            System.out.println(listaAsistencias.get(i).getFecha());
-            System.out.println(listaAsistencias.get(i).getAsistio());
-        }
         
         
         return listaAsistencias;

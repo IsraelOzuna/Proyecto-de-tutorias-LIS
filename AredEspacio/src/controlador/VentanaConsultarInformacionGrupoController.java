@@ -95,7 +95,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     
     private int idGrupo;
     private String nombreGrupo;
-    private String rutaXML="C:\\Users\\Renato\\Documents\\NetBeansProjects\\AredEspacio\\src\\Archivos\\Horarios.xml";
+    private String rutaXML=System.getProperty("user.dir") + "\\Archivos\\Horarios.xml";
     private String unidadPersistencia="AredEspacioPU";
     @FXML
     private JFXButton botonRegistrarAsistencia;
