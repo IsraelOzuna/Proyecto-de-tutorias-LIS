@@ -98,4 +98,28 @@ public class RentaDAO implements IRenta {
         return eliminacionCorrecta;
     }
 
+    @Override
+    public boolean editarRenta(negocio.Renta renta, int idRenta) {
+        boolean modificaciónCorrecta = true;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        RentaJpaController rentaJpaController = new RentaJpaController(entityManagerFactory);
+
+        persistencia.Renta nuevaRenta = new persistencia.Renta();
+        nuevaRenta.setCantidad(renta.getCantidad());
+        nuevaRenta.setFecha(renta.getFecha());
+        nuevaRenta.setHoraInicio(renta.getHoraInicio());
+        nuevaRenta.setHoraFin(renta.getHoraFin());
+        nuevaRenta.setNombreCliente(renta.getNombreCliente());
+        nuevaRenta.setIdRenta(idRenta);
+
+        try {
+            rentaJpaController.edit(nuevaRenta);
+        } catch (Exception ex) {
+            modificaciónCorrecta = false;
+            Logger.getLogger(RentaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return modificaciónCorrecta;
+    }
+
 }

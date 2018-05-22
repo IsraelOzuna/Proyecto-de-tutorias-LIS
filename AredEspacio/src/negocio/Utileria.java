@@ -43,6 +43,12 @@ public class Utileria {
         return fecha;
     }
 
+    public static LocalDate mostrarFecha(Date fechaNacimiento) {
+        java.sql.Date fechaSql = new java.sql.Date(fechaNacimiento.getTime());
+        LocalDate fecha = fechaSql.toLocalDate();
+        return fecha;
+    }
+
     public static String convertirMeses(int mes) {
         String mesConvertido;
 
@@ -64,8 +70,8 @@ public class Utileria {
 
         return mesConvertido;
     }
-    
-     public static Date convertirFecha(LocalDate fecha) {
+
+    public static Date convertirFecha(LocalDate fecha) {
         return java.sql.Date.valueOf(fecha);
     }
 

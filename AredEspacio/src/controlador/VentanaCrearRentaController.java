@@ -96,39 +96,45 @@ public class VentanaCrearRentaController implements Initializable {
             } catch (NumberFormatException ex) {
                 cantidadIngresadaCorrecta = false;
             }
-            if (cantidadIngresadaCorrecta) {
 
-                String horaInicioRenta = comboBoxHoraInicio.getSelectionModel().getSelectedItem();
-                String horaFinRenta = comboBoxHoraFin.getSelectionModel().getSelectedItem();
+            if (campoCantidad.getText().length() <= 5) {
 
-                int horaInicio = generarCoordenada(horaInicioRenta);
-                int horaFin = generarCoordenada(horaFinRenta);
+                if (cantidadIngresadaCorrecta) {
 
-                if (horaInicio >= horaFin) {
-                    DialogosController.mostrarMensajeInformacion("", "Error en la elección de horario", "No se puede elegir una hora igual o anterior a la hora de inicio");
-                } else if (revisarDsiponibilidadDeHorario(horaInicio, horaFin)) {
+                    String horaInicioRenta = comboBoxHoraInicio.getSelectionModel().getSelectedItem();
+                    String horaFinRenta = comboBoxHoraFin.getSelectionModel().getSelectedItem();
 
-                    RentaDAO rentaDAO = new RentaDAO();
-                    Renta renta = new Renta();
-                    renta.setCantidad(Double.parseDouble(campoCantidad.getText()));
-                    renta.setNombreCliente(comboBoxClientes.getSelectionModel().getSelectedItem());
-                    renta.setFecha(Utileria.convertirFecha(campoFecha.getValue()));
-                    renta.setHoraInicio(Time.valueOf(horaInicioRenta + ":00"));
-                    renta.setHoraFin(Time.valueOf(horaFinRenta + ":00"));
+                    int horaInicio = generarCoordenada(horaInicioRenta);
+                    int horaFin = generarCoordenada(horaFinRenta);
 
-                    if (rentaDAO.registrarRenta(renta)) {
-                        DialogosController.mostrarMensajeInformacion("", "Registro de renta exitoso", "La renta se ha registrado correctamente");
-                        try {
-                            regresarVentanaAnterior();
-                        } catch (IOException ex) {
-                            Logger.getLogger(VentanaCrearRentaController.class.getName()).log(Level.SEVERE, null, ex);
+                    if (horaInicio >= horaFin) {
+                        DialogosController.mostrarMensajeInformacion("", "Error en la elección de horario", "No se puede elegir una hora igual o anterior a la hora de inicio");
+                    } else if (revisarDsiponibilidadDeHorario(horaInicio, horaFin)) {
+
+                        RentaDAO rentaDAO = new RentaDAO();
+                        Renta renta = new Renta();
+                        renta.setCantidad(Double.parseDouble(campoCantidad.getText()));
+                        renta.setNombreCliente(comboBoxClientes.getSelectionModel().getSelectedItem());
+                        renta.setFecha(Utileria.convertirFecha(campoFecha.getValue()));
+                        renta.setHoraInicio(Time.valueOf(horaInicioRenta + ":00"));
+                        renta.setHoraFin(Time.valueOf(horaFinRenta + ":00"));
+
+                        if (rentaDAO.registrarRenta(renta)) {
+                            DialogosController.mostrarMensajeInformacion("", "Registro de renta exitoso", "La renta se ha registrado correctamente");
+                            try {
+                                regresarVentanaAnterior();
+                            } catch (IOException ex) {
+                                Logger.getLogger(VentanaCrearRentaController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            DialogosController.mostrarMensajeInformacion("", "Registro de renta fallido", "La renta no se se ha registrado correctamente");
                         }
-                    } else {
-                        DialogosController.mostrarMensajeInformacion("", "Registro de renta fallido", "La renta no se se ha registrado correctamente");
                     }
+                } else {
+                    DialogosController.mostrarMensajeInformacion("Dato incorrecto", "Las letras no son una cantidad", "Debe ingresar una cantidad numérica");
                 }
             } else {
-                DialogosController.mostrarMensajeInformacion("Dato incorrecto", "Las letras no son una cantidad", "Debe ingresar una cantidad numérica");
+                DialogosController.mostrarMensajeInformacion("", "Excede el límite permitido", "El campo de cantidad no debe exceder los 8 caracteres");
             }
         }
     }
@@ -498,7 +504,7 @@ public class VentanaCrearRentaController implements Initializable {
 
     @FXML
     private void limitarCaracteresCantidad(KeyEvent event) {
-        limitarCaracteres(event, campoCantidad, 8);
+        limitarCaracteres(event, campoCantidad, 5);
     }
 
     public void regresarVentanaAnterior() throws IOException {

@@ -21,5 +21,7 @@ public interface IRenta {
     public boolean registrarRenta(Renta renta);
 
     public boolean eliminarRenta(int id);
+    
+    public boolean editarRenta(Renta renta, int idRenta);
 
 }
