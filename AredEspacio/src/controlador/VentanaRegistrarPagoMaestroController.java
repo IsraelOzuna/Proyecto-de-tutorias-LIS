@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
@@ -19,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import negocio.PagoMaestro;
@@ -67,7 +63,7 @@ public class VentanaRegistrarPagoMaestroController implements Initializable {
     public void llenarCamposInformacion() throws MalformedURLException {
         etiquetaNombre.setText(maestro.getNombre() + " " + maestro.getApellidos());
         if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("file:"+ System.getProperty("user.dir") +"\\imagenesMaestros\\" + maestro.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesMaestros\\" + maestro.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
     }
@@ -89,25 +85,42 @@ public class VentanaRegistrarPagoMaestroController implements Initializable {
                 cantidadCorrecta = false;
                 DialogosController.mostrarMensajeInformacion("Dato incorrecto", "Las letras no son una cantidad", "Debe ingresar una cantidad numérica");
             }
-            if (cantidadCorrecta) {
-                PagoMaestro pagoMaestro = new PagoMaestro();
-                PagoMaestroDAO pagoMaestroDAO = new PagoMaestroDAO();
+            if (campoCantidadPagada.getText().length() <= 5) {
+                if (cantidadCorrecta) {
+                    PagoMaestro pagoMaestro = new PagoMaestro();
+                    PagoMaestroDAO pagoMaestroDAO = new PagoMaestroDAO();
 
-                pagoMaestro.setUsuario(maestro.getUsuario());
-                pagoMaestro.setFecha(Utileria.convertirFechaNacimiento(campoFechaPago.getValue()));
-                pagoMaestro.setCantidad(Double.parseDouble(campoCantidadPagada.getText()));
+                    pagoMaestro.setUsuario(maestro.getUsuario());
+                    pagoMaestro.setFecha(Utileria.convertirFechaNacimiento(campoFechaPago.getValue()));
+                    pagoMaestro.setCantidad(Double.parseDouble(campoCantidadPagada.getText()));
 
-                if (pagoMaestroDAO.registrarPagoMaestro(pagoMaestro)) {
-                    DialogosController.mostrarMensajeInformacion("", "Registro de pago exitoso", "El pago se ha registrado correctamente");
-                    panelRegistroPago.setVisible(false);
-                   
-                } else {
-                    DialogosController.mostrarMensajeInformacion("", "Registro no exitoso", "El pago no se ha registrado correctamente");
+                    if (pagoMaestroDAO.registrarPagoMaestro(pagoMaestro)) {
+                        DialogosController.mostrarMensajeInformacion("", "Registro de pago exitoso", "El pago se ha registrado correctamente");
+                        panelRegistroPago.setVisible(false);
+
+                    } else {
+                        DialogosController.mostrarMensajeInformacion("", "Registro no exitoso", "El pago no se ha registrado correctamente");
+                    }
+
                 }
-
+            } else {
+                DialogosController.mostrarMensajeInformacion("", "Limite excedido", "El campo del pago esta excedido de caracteres");
             }
-            
-            
+        }
+    }
+
+    @FXML
+    private void limitarCampoMotoAPagar(KeyEvent event) {
+        char caracter = event.getCharacter().charAt(0);
+        limitarCaracteres(event, campoCantidadPagada, 5);
+        if (!Character.isDigit(caracter)) {
+            event.consume();
+        }
+    }
+
+    public void limitarCaracteres(KeyEvent event, TextField campo, int caracteresMaximos) {
+        if (campo.getText().trim().length() >= caracteresMaximos) {
+            event.consume();
         }
     }
 

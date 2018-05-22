@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
@@ -26,11 +21,6 @@ import negocio.MaestroDAO;
 import negocio.Utileria;
 import persistencia.Maestro;
 
-/**
- * FXML Controller class
- *
- * @author Irdevelo
- */
 public class VentanaEditarInformacionMaestroController implements Initializable {
 
     @FXML
@@ -95,6 +85,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         nombreFoto = "";
+
     }
 
     @FXML
@@ -117,28 +108,31 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
                     }
                     if (cantidadCorrecta) {
 
-                        StringBuilder comando = new StringBuilder();
-                        comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-                        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-                        builder.redirectErrorStream(true);
-                        Process process = builder.start();
+                        if (esTelefonoValido(campoTelefono.getText())) {
 
-                        MaestroDAO maestroDAO = new MaestroDAO();
+                            StringBuilder comando = new StringBuilder();
+                            comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+                            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+                            builder.redirectErrorStream(true);
+                            Process process = builder.start();
 
-                        maestroNuevo.setNombre(campoNombre.getText().trim());
-                        maestroNuevo.setApellidos(campoApellidos.getText().trim());
-                        maestroNuevo.setCorreoElectronico(campoCorreoElectronico.getText().trim());
-                        maestroNuevo.setTelefono(campoTelefono.getText().trim());
-                        maestroNuevo.setRutaFoto(nombreFoto);
-                        maestroNuevo.setEstaActivo(maestro.getEstaActivo());
-                        maestroNuevo.setFechaCorte(maestro.getFechaCorte());
-                        maestroNuevo.setUsuario(maestro.getUsuario());
+                            MaestroDAO maestroDAO = new MaestroDAO();
 
-                        if (maestroDAO.editarMaestro(maestroNuevo)) {
-                            DialogosController.mostrarMensajeInformacion("Guardado", "Maestro modificado", "El maestro ha sido modificado exitosamente");
-                            desplegarVentanaBusqueda();
-                        } else {
-                            DialogosController.mostrarMensajeAdvertencia("Error", "Error al modificar", "Ha ocurrido un error. No se pudo modificar");
+                            maestroNuevo.setNombre(campoNombre.getText().trim());
+                            maestroNuevo.setApellidos(campoApellidos.getText().trim());
+                            maestroNuevo.setCorreoElectronico(campoCorreoElectronico.getText().trim());
+                            maestroNuevo.setTelefono(campoTelefono.getText().trim());
+                            maestroNuevo.setRutaFoto(nombreFoto);
+                            maestroNuevo.setEstaActivo(maestro.getEstaActivo());
+                            maestroNuevo.setFechaCorte(maestro.getFechaCorte());
+                            maestroNuevo.setUsuario(maestro.getUsuario());
+
+                            if (maestroDAO.editarMaestro(maestroNuevo)) {
+                                DialogosController.mostrarMensajeInformacion("Guardado", "Maestro modificado", "El maestro ha sido modificado exitosamente");
+                                desplegarVentanaBusqueda();
+                            } else {
+                                DialogosController.mostrarMensajeAdvertencia("Error", "Error al modificar", "Ha ocurrido un error. No se pudo modificar");
+                            }
                         }
                     }
                 } else {
@@ -161,7 +155,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
             rutaNueva = System.getProperty("user.dir") + "\\imagenesMaestros";
         }
 
-        if (maestro.getRutaFoto() != null) {
+        if (nombreFoto != null) {
             Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
             imagenPerfil.setImage(foto);
         }
@@ -266,6 +260,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         campoCantidadAPagar.setText(String.valueOf(maestro.getMensualidad()));
 
         if (maestro.getRutaFoto() != null) {
+            nombreFoto = maestro.getRutaFoto();
             Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesMaestros\\" + maestro.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
@@ -296,27 +291,63 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
 
     @FXML
     private void limitarCaracteresNombre(KeyEvent event) {
+        char caracter = event.getCharacter().charAt(0);
         limitarCaracteres(event, campoNombre, 30);
+        if (!(Character.isLetter(caracter) || Character.isSpaceChar(caracter))) {
+            event.consume();
+        }
     }
 
     @FXML
     private void limitarCaracteresApellido(KeyEvent event) {
+        char caracter = event.getCharacter().charAt(0);
         limitarCaracteres(event, campoApellidos, 30);
+        if (!(Character.isLetter(caracter) || Character.isSpaceChar(caracter))) {
+            event.consume();
+        }
     }
 
     @FXML
     private void limitarCaracteresCorreo(KeyEvent event) {
+        char caracter = event.getCharacter().charAt(0);
         limitarCaracteres(event, campoCorreoElectronico, 320);
+        if (Character.isSpaceChar(caracter)) {
+            event.consume();
+        }
     }
 
     @FXML
     private void limitarCaracteresTelefono(KeyEvent event) {
         limitarCaracteres(event, campoTelefono, 10);
+        char caracter = event.getCharacter().charAt(0);
+        if (!Character.isDigit(caracter)) {
+            event.consume();
+        }
     }
 
     @FXML
     private void limitarCaracteresCantidad(KeyEvent event) {
+        char caracter = event.getCharacter().charAt(0);
         limitarCaracteres(event, campoCantidadAPagar, 8);
+        if (!Character.isDigit(caracter)) {
+            event.consume();
+        }
+    }
+
+    private boolean esTelefonoValido(String telefono) {
+        boolean telefonoValido = true;
+        for (int i = 0; i < telefono.length(); i++) {
+            char caracter = telefono.charAt(i);
+            if (!Character.isDigit(caracter)) {
+                telefonoValido = false;
+            }
+        }
+
+        if (!telefonoValido) {
+            DialogosController.mostrarMensajeInformacion("", "Telefono incorrecto", "El número de teléfono no puede contener letras");
+        }
+
+        return telefonoValido;
     }
 
 }

@@ -509,7 +509,11 @@ public class VentanaCrearRentaController implements Initializable {
 
     @FXML
     private void limitarCaracteresCantidad(KeyEvent event) {
+        char caracter = event.getCharacter().charAt(0);
         limitarCaracteres(event, campoCantidad, 5);
+        if (!Character.isDigit(caracter)) {
+            event.consume();
+        }
     }
 
     public void regresarVentanaAnterior() throws IOException {

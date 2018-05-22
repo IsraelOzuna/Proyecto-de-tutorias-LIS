@@ -117,46 +117,49 @@ public class VentanaRegistrarMaestroController implements Initializable {
 
                     if (cantidadCorrecta) {
 
-                        if (!cuentaDAO.verificarNombreUsuarioRepetido(campoUsuario.getText().trim())) {
+                        if (esTelefonoValido(campoTelefono.getText())) {
 
-                            StringBuilder comando = new StringBuilder();
-                            comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-                            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-                            builder.redirectErrorStream(true);
-                            Process process = builder.start();
+                            if (!cuentaDAO.verificarNombreUsuarioRepetido(campoUsuario.getText().trim())) {
 
-                            cuenta.setTipoCuenta("Maestro");
-                            cuenta.setUsuario(campoUsuario.getText().trim());
-                            cuenta.setContraseña(Utileria.cifrarContrasena(campoContraseña.getText()));
-                            if (cuentaDAO.crearCuenta(cuenta)) {
+                                StringBuilder comando = new StringBuilder();
+                                comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+                                ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+                                builder.redirectErrorStream(true);
+                                Process process = builder.start();
 
-                                maestro.setNombre(campoNombre.getText().trim());
-                                maestro.setApellidos(campoApellidos.getText().trim());
-                                maestro.setCorreoElectronico(campoCorreoElectronico.getText().trim());
-                                maestro.setTelefono(campoTelefono.getText().trim());
-                                maestro.setEstaActivo(0);
-                                maestro.setFechaCorte(null);
-                                maestro.setRutaFoto(rutaImagen);
-                                maestro.setUsuario(campoUsuario.getText().trim());
+                                cuenta.setTipoCuenta("Maestro");
+                                cuenta.setUsuario(campoUsuario.getText().trim());
+                                cuenta.setContraseña(Utileria.cifrarContrasena(campoContraseña.getText()));
+                                if (cuentaDAO.crearCuenta(cuenta)) {
 
-                                if (maestroDAO.registrarMaestro(maestro)) {
-                                    DialogosController.mostrarMensajeInformacion("Registro exitoso", "El maestro se ha registrado correctamente", "El maestro se ha registrado correctamente");
-                                    campoApellidos.clear();
-                                    campoCantidadAPagar.clear();
-                                    campoContraseña.clear();
-                                    campoCorreoElectronico.clear();
-                                    campoNombre.clear();
-                                    campoTelefono.clear();
-                                    campoUsuario.clear();
-                                    imagenPerfil.setImage(null);
+                                    maestro.setNombre(campoNombre.getText().trim());
+                                    maestro.setApellidos(campoApellidos.getText().trim());
+                                    maestro.setCorreoElectronico(campoCorreoElectronico.getText().trim());
+                                    maestro.setTelefono(campoTelefono.getText().trim());
+                                    maestro.setEstaActivo(0);
+                                    maestro.setFechaCorte(null);
+                                    maestro.setRutaFoto(rutaImagen);
+                                    maestro.setUsuario(campoUsuario.getText().trim());
 
+                                    if (maestroDAO.registrarMaestro(maestro)) {
+                                        DialogosController.mostrarMensajeInformacion("Registro exitoso", "El maestro se ha registrado correctamente", "El maestro se ha registrado correctamente");
+                                        campoApellidos.clear();
+                                        campoCantidadAPagar.clear();
+                                        campoContraseña.clear();
+                                        campoCorreoElectronico.clear();
+                                        campoNombre.clear();
+                                        campoTelefono.clear();
+                                        campoUsuario.clear();
+                                        imagenPerfil.setImage(null);
+
+                                    }
+                                } else {
+                                    DialogosController.mostrarMensajeInformacion("", "Registro no exitoso", "El maestro no se ha registrado correctamente");
                                 }
-                            } else {
-                                DialogosController.mostrarMensajeInformacion("", "Registro no exitoso", "El maestro no se ha registrado correctamente");
-                            }
 
-                        } else {
-                            DialogosController.mostrarMensajeInformacion("Usuario existente", "El nombre de usuario elegido ya se encuentra en uso", "El nombre de usuario elegido ya se encuentra en uso");
+                            } else {
+                                DialogosController.mostrarMensajeInformacion("Usuario existente", "El nombre de usuario elegido ya se encuentra en uso", "El nombre de usuario elegido ya se encuentra en uso");
+                            }
                         }
                     }
 
@@ -329,27 +332,63 @@ public class VentanaRegistrarMaestroController implements Initializable {
 
     @FXML
     private void limitarCaracteresNombre(KeyEvent event) {
+        char caracter = event.getCharacter().charAt(0);
         limitarCaracteres(event, campoNombre, 30);
+        if (!(Character.isLetter(caracter) || Character.isSpaceChar(caracter))) {
+            event.consume();
+        }
     }
 
     @FXML
     private void limitarCaracteresApellido(KeyEvent event) {
+        char caracter = event.getCharacter().charAt(0);
         limitarCaracteres(event, campoApellidos, 30);
+        if (!(Character.isLetter(caracter) || Character.isSpaceChar(caracter))) {
+            event.consume();
+        }
     }
 
     @FXML
     private void limitarCaracteresCorreo(KeyEvent event) {
+        char caracter = event.getCharacter().charAt(0);
         limitarCaracteres(event, campoCorreoElectronico, 320);
+        if (Character.isSpaceChar(caracter)) {
+            event.consume();
+        }
     }
 
     @FXML
     private void limitarCaracteresTelefono(KeyEvent event) {
         limitarCaracteres(event, campoTelefono, 10);
+        char caracter = event.getCharacter().charAt(0);
+        if (!Character.isDigit(caracter)) {
+            event.consume();
+        }
+    }
+
+    private boolean esTelefonoValido(String telefono) {
+        boolean telefonoValido = true;
+        for (int i = 0; i < telefono.length(); i++) {
+            char caracter = telefono.charAt(i);
+            if (!Character.isDigit(caracter)) {
+                telefonoValido = false;
+            }
+        }
+
+        if (!telefonoValido) {
+            DialogosController.mostrarMensajeInformacion("", "Telefono incorrecto", "El número de teléfono no puede contener letras");
+        }
+
+        return telefonoValido;
     }
 
     @FXML
     private void limitarCaracteresCantidad(KeyEvent event) {
-        limitarCaracteres(event, campoCantidadAPagar, 8);
+        char caracter = event.getCharacter().charAt(0);
+        limitarCaracteres(event, campoCantidadAPagar, 5);
+        if (!Character.isDigit(caracter)) {
+            event.consume();
+        }
     }
 
 }

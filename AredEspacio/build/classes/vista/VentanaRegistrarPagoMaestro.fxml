@@ -48,7 +48,7 @@
                         <Font name="Gill Sans MT Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="campoCantidadPagada" prefHeight="25.0" prefWidth="117.0" GridPane.columnIndex="1" />
+                  <TextField fx:id="campoCantidadPagada" onKeyTyped="#limitarCampoMotoAPagar" prefHeight="25.0" prefWidth="117.0" GridPane.columnIndex="1" />
                   <JFXButton fx:id="botonCancelar" onAction="#cerrarVentanaRegistroPago" style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="14.0" />
