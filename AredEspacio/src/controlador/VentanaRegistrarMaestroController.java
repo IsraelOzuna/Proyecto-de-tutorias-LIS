@@ -1,6 +1,7 @@
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
+import com.sun.javafx.util.Utils;
 import java.io.File;
 
 import java.io.IOException;
@@ -121,12 +122,23 @@ public class VentanaRegistrarMaestroController implements Initializable {
 
                             if (!cuentaDAO.verificarNombreUsuarioRepetido(campoUsuario.getText().trim())) {
 
-                                StringBuilder comando = new StringBuilder();
-                                comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-                                ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-                                builder.redirectErrorStream(true);
-                                Process process = builder.start();
+                                System.out.println(Utils.isWindows());
 
+                                if (Utils.isWindows()) {
+
+                                    StringBuilder comando = new StringBuilder();
+                                    comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+                                    ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+                                    builder.redirectErrorStream(true);
+                                    Process process = builder.start();
+
+                                } else {
+                                    StringBuilder comando = new StringBuilder();
+                                    comando.append("cp ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
+                                    ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
+                                    builder.redirectErrorStream(true);
+                                    Process process = builder.start();
+                                }
                                 cuenta.setTipoCuenta("Maestro");
                                 cuenta.setUsuario(campoUsuario.getText().trim());
                                 cuenta.setContraseña(Utileria.cifrarContrasena(campoContraseña.getText()));
@@ -286,11 +298,17 @@ public class VentanaRegistrarMaestroController implements Initializable {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-
+        File directorio = new File(System.getProperty("user.dir") + "\\imagenesMaestros");
+        
         if (archivoSeleccionado != null) {
 
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
             rutaImagen = archivoSeleccionado.getName();
+
+            if (!directorio.exists()) {
+                directorio.mkdirs();
+            }
+
             rutaNueva = System.getProperty("user.dir") + "\\imagenesMaestros";
 
             if (!rutaImagen.equals("")) {

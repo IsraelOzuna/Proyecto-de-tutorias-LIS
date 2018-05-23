@@ -148,10 +148,15 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
+        File directorio = new File(System.getProperty("user.dir") + "\\imagenesMaestros");
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
             nombreFoto = archivoSeleccionado.getName();
+
+            if (!directorio.exists()) {
+                directorio.mkdirs();
+            }
             rutaNueva = System.getProperty("user.dir") + "\\imagenesMaestros";
         }
 
