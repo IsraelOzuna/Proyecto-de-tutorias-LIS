@@ -95,7 +95,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
                         ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
                         builder.redirectErrorStream(true);
                         Process process = builder.start();
-                        
+
                         AlumnoDAO nuevoAlumnoDAO = new AlumnoDAO();
                         nuevoAlumno = new Alumno();
                         nuevoAlumno.setNombre(campoNombre.getText().trim());
@@ -135,12 +135,18 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
+        File directorio = new File(System.getProperty("user.dir") + "\\imagenesAlumnos");
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
             nombreFoto = archivoSeleccionado.getName();
-            rutaNueva = System.getProperty("user.dir") + "\\imagenesAlumnos";
             
+            if (!directorio.exists()) {
+                directorio.mkdirs();
+            }
+
+            rutaNueva = System.getProperty("user.dir") + "\\imagenesAlumnos";
+
             if (!nombreFoto.equals("")) {
                 Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
                 fotoSeleccionada.setImage(foto);

@@ -38,13 +38,12 @@ public class VentanaBuscarController implements Initializable {
     private TextField campoBusqueda;
     @FXML
     private Label etiquetaNoCoincidencias;
-    private String seccion = "";
-    private Pane panelCoincidencia;
-    private Pane panelPrincipal;
     @FXML
     private ScrollPane scrollCoincidencias;
     @FXML
     private GridPane gridCoincidencias;
+    private String seccion = "";
+    private Pane panelPrincipal;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -87,7 +86,7 @@ public class VentanaBuscarController implements Initializable {
     }
 
     @FXML
-    public void buscarCoincidencias() throws IOException {
+    public void buscarCoincidencias() {
         etiquetaNoCoincidencias.setText("");
         gridCoincidencias.getChildren().clear();
         if (!campoBusqueda.getText().isEmpty()) {
