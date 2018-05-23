@@ -13,88 +13,92 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.Cursor?>
 
 <AnchorPane id="AnchorPane" prefHeight="375.0" prefWidth="784.0" style="-fx-background-color: #FFFFFF;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaInicioSesionController">
     <stylesheets>
         <URL value="@ventanainiciosesion.css" />
     </stylesheets>
-   <children>
-      <AnchorPane layoutX="549.0" prefHeight="421.0" prefWidth="340.0" style="-fx-background-color: #F3AFCA;">
-         <children>
-            <GridPane prefHeight="113.0" prefWidth="340.0" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-              <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label text="Inicia sesión" textFill="WHITE">
-                     <font>
-                        <Font name="Gill Sans MT Bold" size="26.0" />
-                     </font>
-                  </Label>
-               </children>
-            </GridPane>
-            <GridPane layoutY="121.0" prefHeight="149.0" prefWidth="330.0" AnchorPane.bottomAnchor="151.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="121.0">
-              <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="35.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="306.0" minWidth="10.0" prefWidth="305.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="59.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <JFXTextField fx:id="campoUsuario" focusColor="#9040a8" onKeyTyped="#limitarUsuario" prefHeight="33.0" prefWidth="271.0" promptText="Usuario" unFocusColor="WHITE" GridPane.columnIndex="1">
-                     <font>
-                        <Font name="Gill Sans MT" size="16.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXPasswordField fx:id="campoContrasena" focusColor="#9040a8" prefHeight="30.0" prefWidth="250.0" promptText="Contraseña" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="Gill Sans MT" size="16.0" />
-                     </font>
-                  </JFXPasswordField>
-                  <FontAwesomeIconView fill="WHITE" glyphName="USER" size="30" wrappingWidth="25.428571701049805" />
-                  <FontAwesomeIconView fill="WHITE" glyphName="LOCK" size="30" GridPane.rowIndex="2" />
-                  <Label fx:id="etiquetaErrorUsuario" prefHeight="17.0" prefWidth="314.0" textFill="#ff4848" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label fx:id="etiquetaErrorContrasena" prefHeight="17.0" prefWidth="314.0" textFill="#ff4848" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-               </children>
-            </GridPane>
-            <GridPane layoutY="268.0" prefHeight="146.0" prefWidth="340.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="270.0">
-              <columnConstraints>
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
+    <children>
+        <AnchorPane layoutX="549.0" prefHeight="421.0" prefWidth="340.0" style="-fx-background-color: #F3AFCA;">
+            <children>
+                <GridPane prefHeight="113.0" prefWidth="340.0" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="Inicia sesión" textFill="WHITE">
+                            <font>
+                                <Font name="Gill Sans MT Bold" size="26.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </GridPane>
+                <GridPane layoutY="121.0" prefHeight="149.0" prefWidth="330.0" AnchorPane.bottomAnchor="151.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="121.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="165.0" minWidth="10.0" prefWidth="35.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="306.0" minWidth="10.0" prefWidth="305.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="59.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <JFXTextField fx:id="campoUsuario" focusColor="#9040a8" onKeyTyped="#limitarUsuario" prefHeight="33.0" prefWidth="271.0" promptText="Usuario" unFocusColor="WHITE" GridPane.columnIndex="1">
+                            <font>
+                                <Font name="Gill Sans MT" size="16.0" />
+                            </font>
+                        </JFXTextField>
+                        <JFXPasswordField fx:id="campoContrasena" focusColor="#9040a8" prefHeight="30.0" prefWidth="250.0" promptText="Contraseña" unFocusColor="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <font>
+                                <Font name="Gill Sans MT" size="16.0" />
+                            </font>
+                        </JFXPasswordField>
+                        <FontAwesomeIconView fill="WHITE" glyphName="USER" size="30" wrappingWidth="25.428571701049805" />
+                        <FontAwesomeIconView fill="WHITE" glyphName="LOCK" size="30" GridPane.rowIndex="2" />
+                        <Label fx:id="etiquetaErrorUsuario" prefHeight="17.0" prefWidth="314.0" textFill="#ff4848" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="etiquetaErrorContrasena" prefHeight="17.0" prefWidth="314.0" textFill="#ff4848" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                    </children>
+                </GridPane>
+                <GridPane layoutY="268.0" prefHeight="146.0" prefWidth="340.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="270.0">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <JFXButton onAction="#ingresar" prefHeight="25.0" prefWidth="250.0" style="-fx-background-color: #BF4C6F;" text="Iniciar" textFill="WHITE">
+                            <font>
+                                <Font name="Gill Sans MT Bold" size="22.0" />                                
+                            </font>
+                            <cursor>
+                                <Cursor fx:constant="HAND" />
+                            </cursor>
+                        </JFXButton>
+                    </children>
+                </GridPane>
+            </children>
+        </AnchorPane>
+        <GridPane layoutY="-1.0" prefHeight="421.0" prefWidth="549.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <JFXButton onAction="#ingresar" prefHeight="25.0" prefWidth="250.0" style="-fx-background-color: #BF4C6F;" text="Iniciar" textFill="WHITE">
-                     <font>
-                        <Font name="Gill Sans MT Bold" size="22.0" />
-                     </font>
-                  </JFXButton>
-               </children>
-            </GridPane>
-         </children>
-      </AnchorPane>
-      <GridPane layoutY="-1.0" prefHeight="421.0" prefWidth="549.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="0.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <ImageView fitHeight="389.0" fitWidth="550.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imagenes/LogoAred.png" />
-               </image>
-            </ImageView>
-         </children>
-      </GridPane>
-   </children>
+            </rowConstraints>
+            <children>
+                <ImageView fitHeight="389.0" fitWidth="550.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../imagenes/LogoAred.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </GridPane>
+    </children>
 </AnchorPane>

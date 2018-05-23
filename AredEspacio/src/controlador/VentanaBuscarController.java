@@ -5,13 +5,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import negocio.Alumno;
 import negocio.AlumnoDAO;
@@ -37,6 +41,10 @@ public class VentanaBuscarController implements Initializable {
     private String seccion = "";
     private Pane panelCoincidencia;
     private Pane panelPrincipal;
+    @FXML
+    private ScrollPane scrollCoincidencias;
+    @FXML
+    private GridPane gridCoincidencias;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -81,127 +89,131 @@ public class VentanaBuscarController implements Initializable {
     @FXML
     public void buscarCoincidencias() throws IOException {
         etiquetaNoCoincidencias.setText("");
+        gridCoincidencias.getChildren().clear();
         if (!campoBusqueda.getText().isEmpty()) {
             switch (seccion) {
                 case "Alumnos":
-                    AlumnoDAO alumnoDAO = new AlumnoDAO();
-                    Alumno alumno = new Alumno();
-                    List<persistencia.Alumno> alumnos = null;
-                    alumnos = alumnoDAO.buscarAlumno(campoBusqueda.getText());
-
-                    Pane panelAnterior = new Pane();
-
-                    int contadorCoincidencias = 0;
-                    if (alumnos.size() > 0) {
-                        for (int i = 0; i < alumnos.size(); i++) {
-                            FXMLLoader loader;
-                            Parent root;
-                            loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/PanelCoincidencia.fxml"));
-                            panelCoincidencia = (Pane) loader.load();
-                            PanelCoincidenciaController coincidenciasEncontradas = loader.getController();
-                            coincidenciasEncontradas.obtenerSeccion(seccion, panelPrincipal);
-                            if (contadorCoincidencias < 3) {
-                                if (contadorCoincidencias == 0) {
-                                    panelCoincidencia.setLayoutX(45);
-                                    panelCoincidencia.setLayoutY(110);
-                                } else {
-                                    panelCoincidencia.relocate(panelAnterior.getLayoutX() + 380, 110);
-                                }
-                                contadorCoincidencias++;
-                            } else {
-                                contadorCoincidencias = 1;
-                                panelCoincidencia.relocate(45, panelAnterior.getLayoutY() + 200);
-                            }
-                            coincidenciasEncontradas.llenarDatosAlumno(alumnos.get(i));
-                            panelPrincipal.getChildren().add(panelCoincidencia);
-                            panelAnterior = panelCoincidencia;
-                        }
-                    } else {
-                        etiquetaNoCoincidencias.setText("Alumno no encontrado");
-                    }
+                    mostrarCoincidenciasAlumno();
                     break;
 
                 case "Maestros":
-                    MaestroDAO maestroDAO = new MaestroDAO();
-                    Maestro maestro = new Maestro();
-                    List<persistencia.Maestro> maestros = null;
-                    maestros = maestroDAO.buscarMaestro(campoBusqueda.getText());
-
-                    persistencia.Maestro maestroCoincidencia;
-                    Pane panel = new Pane();
-
-                    int contadorCoincidenciasEncontradas = 0;
-                    if (maestros.size() > 0) {
-                        for (int i = 0; i < maestros.size(); i++) {
-                            FXMLLoader loader;
-                            Parent root;
-                            loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/PanelCoincidencia.fxml"));
-                            panelCoincidencia = (Pane) loader.load();
-                            PanelCoincidenciaController coincidencias = loader.getController();
-                            coincidencias.obtenerSeccion(seccion, panelPrincipal);
-                            if (contadorCoincidenciasEncontradas < 3) {
-                                if (contadorCoincidenciasEncontradas == 0) {
-                                    panelCoincidencia.setLayoutX(45);
-                                    panelCoincidencia.setLayoutY(110);
-
-                                } else {
-                                    panelCoincidencia.relocate(panel.getLayoutX() + 380, 110);
-                                }
-                                contadorCoincidenciasEncontradas++;
-                            } else {
-                                contadorCoincidenciasEncontradas = 1;
-                                panelCoincidencia.relocate(45, panel.getLayoutY() + 200);
-                            }
-                            coincidencias.llenarDatosMaestro(maestros.get(i));
-                            panelPrincipal.getChildren().add(panelCoincidencia);
-                            panel = panelCoincidencia;
-                        }
-                    } else {
-                        etiquetaNoCoincidencias.setText("Maestro no encontrado");
-                    }
+                    mostrarCoincidenciasMaestro();
                     break;
 
                 case "Clientes":
-                    ClienteDAO clienteDAO = new ClienteDAO();
-                    Cliente cliente = new Cliente();
-                    List<persistencia.Cliente> clientes = null;
-                    clientes = clienteDAO.buscarCliente(campoBusqueda.getText());
-
-                    Pane panelA = new Pane();
-
-                    int contadorCoincidenciasEncon = 0;
-                    if (clientes.size() > 0) {
-                        for (int i = 0; i < clientes.size(); i++) {
-                            FXMLLoader loader;
-                            Parent root;
-                            loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/PanelCoincidencia.fxml"));
-                            panelCoincidencia = (Pane) loader.load();
-                            PanelCoincidenciaController coincidenciasEncontradas = loader.getController();
-                            coincidenciasEncontradas.obtenerSeccion(seccion, panelPrincipal);
-                            if (contadorCoincidenciasEncon < 3) {
-                                if (contadorCoincidenciasEncon == 0) {
-                                    panelCoincidencia.setLayoutX(45);
-                                    panelCoincidencia.setLayoutY(110);
-                                } else {
-                                    panelCoincidencia.relocate(panelA.getLayoutX() + 380, 110);
-                                }
-                                contadorCoincidenciasEncon++;
-                            } else {
-                                contadorCoincidencias = 1;
-                                panelCoincidencia.relocate(45, panelA.getLayoutY() + 200);
-                            }
-                            coincidenciasEncontradas.llenarDatosCliente(clientes.get(i));
-                            panelPrincipal.getChildren().add(panelCoincidencia);
-                            panelA = panelCoincidencia;
-                        }
-                    } else {
-                        etiquetaNoCoincidencias.setText("Cliente no encontrado");
-                    }
+                    mostrarCoincidenciasCliente();
                     break;
                 default:
                     break;
             }
+        }
+    }
 
+    public void mostrarCoincidenciasAlumno() {
+        AlumnoDAO alumnoDAO = new AlumnoDAO();
+        Alumno alumno = new Alumno();
+        List<persistencia.Alumno> alumnos = null;
+        alumnos = alumnoDAO.buscarAlumno(campoBusqueda.getText());
+
+        int contadorCoincidencias = 0;
+        if (alumnos.size() > 0) {
+            int filas = alumnos.size() / 3;
+            if (alumnos.size() % 3 != 0) {
+                filas = ((alumnos.size() / 3) + 1);
+            }
+            for (int i = 0; i < filas; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (contadorCoincidencias < alumnos.size()) {
+                        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/PanelCoincidencia.fxml"));
+                        Parent root;
+
+                        try {
+                            root = (Parent) loader.load();
+                            PanelCoincidenciaController controlador = loader.getController();
+                            controlador.obtenerSeccion(seccion, panelPrincipal);
+                            controlador.llenarDatosAlumno(alumnos.get(contadorCoincidencias));
+                            contadorCoincidencias++;
+                            gridCoincidencias.add(root, j, i);
+                        } catch (IOException ex) {
+                            Logger.getLogger(VentanaBuscarController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }
+        } else {
+            etiquetaNoCoincidencias.setText("Alumno no encontrado");
+        }
+    }
+
+    public void mostrarCoincidenciasMaestro() {
+        MaestroDAO maestroDAO = new MaestroDAO();
+        Maestro maestro = new Maestro();
+        List<persistencia.Maestro> maestros = null;
+        maestros = maestroDAO.buscarMaestro(campoBusqueda.getText());
+
+        int contadorCoincidenciasEncontradas = 0;
+        if (maestros.size() > 0) {
+            int filas = maestros.size() / 3;
+            if (maestros.size() % 3 != 0) {
+                filas = ((maestros.size() / 3) + 1);
+            }
+            for (int i = 0; i < filas; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (contadorCoincidenciasEncontradas < maestros.size()) {
+                        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/PanelCoincidencia.fxml"));
+                        Parent root;
+
+                        try {
+                            root = (Parent) loader.load();
+                            PanelCoincidenciaController controlador = loader.getController();
+                            controlador.obtenerSeccion(seccion, panelPrincipal);
+                            controlador.llenarDatosMaestro(maestros.get(contadorCoincidenciasEncontradas));
+                            contadorCoincidenciasEncontradas++;
+                            gridCoincidencias.add(root, j, i);
+                        } catch (IOException ex) {
+                            Logger.getLogger(VentanaBuscarController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }
+        } else {
+            etiquetaNoCoincidencias.setText("Maestro no encontrado");
+        }
+    }
+
+    public void mostrarCoincidenciasCliente() {
+        ClienteDAO clienteDAO = new ClienteDAO();
+        Cliente cliente = new Cliente();
+        List<persistencia.Cliente> clientes = null;
+        clientes = clienteDAO.buscarCliente(campoBusqueda.getText());
+
+        int contadorCoincidenciasEncon = 0;
+        if (clientes.size() > 0) {
+            int filas = clientes.size() / 3;
+            if (clientes.size() % 3 != 0) {
+                filas = ((clientes.size() / 3) + 1);
+            }
+            for (int i = 0; i < filas; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (contadorCoincidenciasEncon < clientes.size()) {
+                        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/PanelCoincidencia.fxml"));
+                        Parent root;
+
+                        try {
+                            root = (Parent) loader.load();
+                            PanelCoincidenciaController controlador = loader.getController();
+                            controlador.obtenerSeccion(seccion, panelPrincipal);
+                            controlador.llenarDatosCliente(clientes.get(contadorCoincidenciasEncon));
+                            contadorCoincidenciasEncon++;
+                            gridCoincidencias.add(root, j, i);
+                        } catch (IOException ex) {
+                            Logger.getLogger(VentanaBuscarController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }
+        } else {
+            etiquetaNoCoincidencias.setText("Cliente no encontrado");
         }
     }
 }

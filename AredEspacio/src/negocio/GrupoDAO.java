@@ -12,6 +12,10 @@ import persistencia.MaestroJpaController;
 public class GrupoDAO implements IGrupo{
     String unidadPersistencia;
     
+    public GrupoDAO(){
+        
+    }
+    
     public GrupoDAO(String unidadPersistencia){
         this.unidadPersistencia=unidadPersistencia;
     }
