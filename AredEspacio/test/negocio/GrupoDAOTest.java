@@ -156,7 +156,6 @@ public class GrupoDAOTest {
      @Test
     public void testAdquirirGruposExitoso() {
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistenciaPruebas);
-        
         Cuenta cuentaPruebaDirector = new Cuenta();
         Cuenta cuentaPruebaMaestro = new Cuenta();
         cuentaPruebaDirector.setUsuario("cuentaPruebaDirector");
@@ -221,9 +220,7 @@ public class GrupoDAOTest {
         listaGruposPredeterminados.add(grupo3);
         listaGruposPredeterminados.add(grupo4);
         listaGruposPredeterminados.add(grupo5);
-        
         List<Grupo> listaGruposAdquiridos=grupoDAO.adquirirGrupos(cuentaPruebaDirector);
-        
         assertEquals(listaGruposPredeterminados, listaGruposAdquiridos);
     }
     

@@ -24,6 +24,13 @@ import persistencia.Grupo;
 public class AsistenciaDAO implements IAsistenciaDAO{
     private String unidadPersistencia="AredEspacioPU";
     
+    public AsistenciaDAO(){
+    }
+    
+    public AsistenciaDAO(String unidadPersistencia){
+        this.unidadPersistencia=unidadPersistencia;
+    }
+    
     @Override
     public List<persistencia.Asistencia> obtenerAsistencia(Date fecha, int idGrupo) {
         boolean asistio=false;

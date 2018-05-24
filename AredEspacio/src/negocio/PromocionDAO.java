@@ -17,11 +17,19 @@ import persistencia.PromocionJpaController;
  * @author Renato
  */
 public class PromocionDAO implements IPromocion{
-
+    String unidadPersistencia="AredEspacioPU";
+    
+    public PromocionDAO (){
+        
+    }
+    
+    public PromocionDAO (String unidadPersistencia){
+        this.unidadPersistencia=unidadPersistencia;
+    }
     @Override
     public boolean registrarPromocion(Promocion nuevaPromocion) {
         boolean promocionRegistradaExitosamente = true;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);
         PromocionJpaController promocionJpaController = new PromocionJpaController(entityManagerFactory);
         promocionJpaController.create(nuevaPromocion);
         promocionRegistradaExitosamente=true;
@@ -31,7 +39,7 @@ public class PromocionDAO implements IPromocion{
     @Override
     public List<Promocion> consultarPromociones() {
         List<Promocion> promociones = new ArrayList();
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);
         PromocionJpaController promocionJpaController = new PromocionJpaController(entityManagerFactory);
         promociones=promocionJpaController.findPromocionEntities();
         return promociones;
@@ -40,7 +48,7 @@ public class PromocionDAO implements IPromocion{
     @Override
     public Promocion adquirirPromocionPorNombre(String nombrePromocion) {
         List<Promocion> promociones = new ArrayList();
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);
         PromocionJpaController promocionJpaController = new PromocionJpaController(entityManagerFactory);
         promociones=promocionJpaController.findPromocionEntities();
         Promocion promocionAdquirida= new Promocion();

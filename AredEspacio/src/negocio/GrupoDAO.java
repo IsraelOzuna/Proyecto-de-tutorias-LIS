@@ -11,7 +11,11 @@ import persistencia.CuentaJpaController;
 import persistencia.GrupoJpaController;
 import persistencia.MaestroJpaController;
 public class GrupoDAO implements IGrupo{
-    String unidadPersistencia;
+    String unidadPersistencia="AredEspacioPU";
+    
+    public GrupoDAO(){
+    }
+    
     public GrupoDAO(String unidadPersistencia){
         this.unidadPersistencia=unidadPersistencia;
     }
@@ -97,7 +101,6 @@ public class GrupoDAO implements IGrupo{
         try{
             grupoJpaController.edit(grupoEliminar);
             grupoEliminado=true;
-            //grupoJpaController.destroy(grupoEliminar.getNombreGrupo());
             
         }catch (Exception ex){
             grupoEliminado=false;

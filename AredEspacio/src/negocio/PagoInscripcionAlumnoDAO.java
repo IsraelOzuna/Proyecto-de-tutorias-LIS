@@ -11,13 +11,22 @@ import persistencia.GrupoJpaController;
 import persistencia.PagoalumnoJpaController;
 
 public class PagoInscripcionAlumnoDAO implements IPagoInscripcionAlumno{
+    String unidadPersistencia="AredEspacioPU";
+    
+    public PagoInscripcionAlumnoDAO(){
+        
+    }
+    
+    public PagoInscripcionAlumnoDAO(String unidadPersistencia){
+        this.unidadPersistencia=unidadPersistencia;
+    }
     @Override
     public boolean registrarInscripcion(double monto, int idAlumno, String nombreGrupo, Date fecha) {///Guardar grupo
     boolean pagoInscripcionExitoso = true;
         persistencia.Alumno alumno = null;
         Grupo grupo = null;            
         int idGrupo;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);
         PagoalumnoJpaController pagoInscripcionController = new PagoalumnoJpaController(entityManagerFactory);
         AlumnoJpaController encontrarAlumno = new AlumnoJpaController(entityManagerFactory);
         GrupoJpaController encontrarGrupo = new GrupoJpaController(entityManagerFactory);

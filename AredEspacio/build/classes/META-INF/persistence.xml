@@ -14,10 +14,31 @@
     <class>persistencia.Egreso</class>
     <class>persistencia.Promocion</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/AredEspacio?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Ared?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="Hector"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="s13zw98"/>
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="PruebasAredEspacioPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>persistencia.Alumno</class>
+    <class>persistencia.Cliente</class>
+    <class>persistencia.Cuenta</class>
+    <class>persistencia.Grupo</class>
+    <class>persistencia.Asistencia</class>
+    <class>persistencia.Maestro</class>
+    <class>persistencia.Renta</class>
+    <class>persistencia.Promocion</class>
+    <class>persistencia.Pagomaestro</class>
+    <class>persistencia.Pagoalumno</class>
+    <class>persistencia.Egreso</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/aredespaciopruebas?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>
 </persistence>
