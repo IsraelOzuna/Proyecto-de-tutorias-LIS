@@ -12,5 +12,6 @@ package negocio;
 public interface ICuenta {    
     public boolean crearCuenta(Cuenta cuenta);
     public boolean verificarNombreUsuarioRepetido(String nombreUsuario);
-    public String iniciarSesion(String nombreUsuario, String contrasena);    
+    public String iniciarSesion(String nombreUsuario, String contrasena);
+    public persistencia.Cuenta obtenerCuentaMaestro(String nombreMaestro);
 }

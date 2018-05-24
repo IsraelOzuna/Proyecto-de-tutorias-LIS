@@ -58,6 +58,7 @@ public class VentanaEditarGrupoController implements Initializable {
     private Label etiquetaMaestro;
     @FXML
     private Label etiquetaInscripcion;
+    private String nombreUsuario;
     @FXML
     private TextField campoInscripcion;
     @FXML
@@ -79,7 +80,8 @@ public class VentanaEditarGrupoController implements Initializable {
    
     
 
-    public void establecerGrupo(int idGrupo){
+    public void establecerGrupo(int idGrupo, String nombreUsuarioActual){
+        nombreUsuario=nombreUsuarioActual;
         ObservableList<String> maestros =FXCollections.observableArrayList();
         List<Cuenta> listaUsuarios=null;
         MaestroDAO maestroDAO = new MaestroDAO();
@@ -135,7 +137,7 @@ public class VentanaEditarGrupoController implements Initializable {
                         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
                         Parent root = (Parent) loader.load();
                         VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
-                        ventanaConsultarGruposController.iniciarVentana();
+                        ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
                         panelEditarGrupo.getChildren().add(root); 
                     }else{
                         DialogosController.mostrarMensajeInformacion("Error", "Parece haber ocurrido un error", "Por favor comuniquese con un el encargado del sistema");
@@ -160,7 +162,7 @@ public class VentanaEditarGrupoController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
         Parent root = (Parent) loader.load();
         VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
-        ventanaConsultarGruposController.iniciarVentana();
+        ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
         panelEditarGrupo.getChildren().add(root);
     }
     

@@ -6,6 +6,7 @@
 package negocio;
 
 import java.util.List;
+import persistencia.Promocion;
 
 /**
  *
@@ -14,4 +15,5 @@ import java.util.List;
 public interface IPromocion {
     public boolean registrarPromocion(persistencia.Promocion nuevaPromocion);
     public List<persistencia.Promocion> consultarPromociones ();
+    public Promocion adquirirPromocionPorNombre(String nombrePromocion);
 }

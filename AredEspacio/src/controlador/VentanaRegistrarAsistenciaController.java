@@ -63,6 +63,7 @@ public class VentanaRegistrarAsistenciaController implements Initializable {
     private JFXButton botonRegresar;
     @FXML
     private AnchorPane panelAsistencia;
+    private String nombreUsuario;
     /**
      * Initializes the controller class.
      */
@@ -78,7 +79,8 @@ public class VentanaRegistrarAsistenciaController implements Initializable {
         tablaAsistencia.setItems(listaAsistencia);
     }
     
-    public void iniciarVentana(int idGrupo){
+    public void iniciarVentana(int idGrupo, String nombreUsuarioActual){
+        nombreUsuario=nombreUsuarioActual;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         Grupo grupo = grupoDAO.adquirirGrupo(idGrupo);
         etiquetaNombreGrupo.setText(grupo.getNombreGrupo());
@@ -173,7 +175,7 @@ public class VentanaRegistrarAsistenciaController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarInformacionGrupo.fxml"));
         Parent root = (Parent) loader.load();
         VentanaConsultarInformacionGrupoController ventanaConsultarInformacionGrupoController = loader.getController();
-        ventanaConsultarInformacionGrupoController.establecerGrupo(idGrupoGlobal);
+        ventanaConsultarInformacionGrupoController.establecerGrupo(idGrupoGlobal, nombreUsuario);
         panelAsistencia.getChildren().add(root);
     }
     

@@ -65,6 +65,7 @@ public class VentanaAdministrarHorariosController implements Initializable {
     private JFXButton botonGuardar;
     ObservableList<Horario> horarios;
     private String rutaXML=System.getProperty("user.dir") + "\\Archivos\\Horarios.xml";
+    private String nombreUsuario;
     @FXML
     private JFXButton botonRgresar;
     private static int fila;
@@ -95,7 +96,8 @@ public class VentanaAdministrarHorariosController implements Initializable {
         
     }  
     
-    public void iniciarVentana(){
+    public void iniciarVentana(String nombreUsuarioActual){
+        nombreUsuario=nombreUsuarioActual;
         ObservableList<String> grupos =FXCollections.observableArrayList();
         List<Grupo> listaGrupos=null;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
@@ -301,7 +303,7 @@ public class VentanaAdministrarHorariosController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
         Parent root = (Parent) loader.load();
         VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
-        ventanaConsultarGruposController.iniciarVentana();
+        ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
         panelAdministrarHorario.getChildren().add(root);
         
     }
@@ -330,7 +332,7 @@ public class VentanaAdministrarHorariosController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
         Parent root = (Parent) loader.load();
         VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
-        ventanaConsultarGruposController.iniciarVentana();
+        ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
         panelAdministrarHorario.getChildren().add(root); 
         
     }

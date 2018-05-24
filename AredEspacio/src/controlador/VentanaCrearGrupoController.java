@@ -31,6 +31,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import negocio.CuentaDAO;
 import negocio.GrupoDAO;
 import persistencia.Maestro;
 import negocio.MaestroDAO;
@@ -60,7 +61,7 @@ public class VentanaCrearGrupoController implements Initializable {
     private TextField campoMensualidad;
     @FXML
     private TextField campoInscripcion;
-    
+    private String nombreUsuario;
     @FXML
     private TextField campoNombreGrupo;
     @FXML
@@ -75,7 +76,8 @@ public class VentanaCrearGrupoController implements Initializable {
 
     
     
-    public void iniciarVentana(){
+    public void iniciarVentana(String nombreUsuarioActual){
+        nombreUsuario=nombreUsuarioActual;
         ObservableList<String> maestros =FXCollections.observableArrayList();
         MaestroDAO maestroDAO = new MaestroDAO();
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);/////////
@@ -114,8 +116,10 @@ public class VentanaCrearGrupoController implements Initializable {
                 if(!nombreGrupoRepetido()){
                     GrupoDAO nuevoGrupoDAO = new GrupoDAO(unidadPersistencia);
                     MaestroDAO maestroDAO = new MaestroDAO();
+                    CuentaDAO cuentaDAO = new CuentaDAO();
                     Cuenta nuevaCuenta=new Cuenta();
-                    nuevaCuenta.setUsuario(comboBoxMaestro.getValue());
+                    nuevaCuenta=cuentaDAO.obtenerCuentaMaestro(comboBoxMaestro.getValue());
+                    nuevaCuenta.setUsuario(nuevaCuenta.getUsuario());
                     Maestro maestroEditar=new Maestro();
                     for(int i=0; i<listaMaestros.size(); i++){
                         if(listaMaestros.get(i).getNombre().equals(comboBoxMaestro.getValue())){
@@ -136,7 +140,7 @@ public class VentanaCrearGrupoController implements Initializable {
                         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
                         Parent root = (Parent) loader.load();
                         VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
-                        ventanaConsultarGruposController.iniciarVentana();
+                        ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
                         panelCrearGrupos.getChildren().add(root); 
                     }
                 }else{
@@ -156,7 +160,7 @@ public class VentanaCrearGrupoController implements Initializable {
             FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
             Parent root = (Parent) loader.load();
             VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
-            ventanaConsultarGruposController.iniciarVentana();
+            ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
             panelCrearGrupos.getChildren().add(root); 
     }
     

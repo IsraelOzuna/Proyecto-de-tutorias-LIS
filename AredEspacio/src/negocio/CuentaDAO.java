@@ -1,10 +1,12 @@
 package negocio;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import persistencia.CuentaJpaController;
+import persistencia.MaestroJpaController;
 
 /**
  *
@@ -76,6 +78,26 @@ public class CuentaDAO implements ICuenta {
         }
 
         return tipoInicioSesion;
+    }
+
+    @Override
+    public persistencia.Cuenta obtenerCuentaMaestro(String nombreMaestro) {
+        persistencia.Cuenta cuentaAdquirida = new persistencia.Cuenta();
+        persistencia.Maestro maestroAdquirido = new persistencia.Maestro();
+        List<persistencia.Maestro> listaMaestros;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        MaestroJpaController maestroJpaController = new MaestroJpaController(entityManagerFactory);
+        listaMaestros=maestroJpaController.findMaestroEntities();
+        for(int i =0;i<listaMaestros.size();i++){
+            if(listaMaestros.get(i).getNombre().equals(nombreMaestro)){
+                maestroAdquirido=listaMaestros.get(i);
+                break;
+            }
+        }
+        CuentaJpaController cuentaJpaController = new CuentaJpaController(entityManagerFactory);
+        cuentaAdquirida=cuentaJpaController.findCuenta(maestroAdquirido.getUsuario());
+        return cuentaAdquirida;
+        
     }
 
 }

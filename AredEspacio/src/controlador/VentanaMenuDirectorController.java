@@ -82,7 +82,7 @@ public class VentanaMenuDirectorController implements Initializable {
             FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
             Parent root = (Parent) loader.load();
             VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
-            ventanaConsultarGruposController.iniciarVentana();
+            ventanaConsultarGruposController.iniciarVentana(etiquetaNombreUsuario.getText());
             panelPrincipal.getChildren().clear();
             panelPrincipal.getChildren().add(root);
         } else {

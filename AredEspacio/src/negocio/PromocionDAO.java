@@ -36,6 +36,22 @@ public class PromocionDAO implements IPromocion{
         promociones=promocionJpaController.findPromocionEntities();
         return promociones;
     }
+
+    @Override
+    public Promocion adquirirPromocionPorNombre(String nombrePromocion) {
+        List<Promocion> promociones = new ArrayList();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        PromocionJpaController promocionJpaController = new PromocionJpaController(entityManagerFactory);
+        promociones=promocionJpaController.findPromocionEntities();
+        Promocion promocionAdquirida= new Promocion();
+        for(int i = 0; i<promociones.size(); i++){
+            if(promociones.get(i).getNombrePromocion().equals(nombrePromocion)){
+                promocionAdquirida=promociones.get(i);
+            }   
+        }
+        return promocionAdquirida;
+    }
+    
     
     
 }

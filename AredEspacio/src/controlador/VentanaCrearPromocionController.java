@@ -64,6 +64,10 @@ public class VentanaCrearPromocionController implements Initializable {
         nuevaPromocion.setNombrePromocion(nombrePromocion);
         nuevaPromocion.setDescripcion(descripcionPromocion);
         nuevaPromocion.setPorcentajeDescuento(porcentaje);
+        if(promocionYaExiste()){
+            DialogosController.mostrarMensajeInformacion("Error", "Se ha detectado un problema y la promocion no fue creada", "Por favor consulte al encargado del sistema");
+        }
+        
         if(promocionDAO.registrarPromocion(nuevaPromocion)){
             DialogosController.mostrarMensajeInformacion("Creada", "La promocion fué creada de manera exitosa", "Ahora podrá aplicar está promoción cuando lo desee");
             FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaInscribirAlumno.fxml"));
@@ -85,6 +89,11 @@ public class VentanaCrearPromocionController implements Initializable {
         ventanaInscribir.llenarCampos(alumnoInscribir);        
         panelPrincipal.getChildren().add(root);
         
+    }
+    
+    private boolean promocionYaExiste(){
+        boolean existe=true;
+        return existe;
     }
     
 }

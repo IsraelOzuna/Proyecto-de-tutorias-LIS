@@ -57,7 +57,7 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="comboPromocion" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="comboPromocion" onAction="#aplicarPromocion" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                         <JFXButton fx:id="botonCrearPromo" onAction="#desplegarVentanaCrearPromocion" style="-fx-background-color: #CDCDCD;" text="Crear Nueva Promoción" GridPane.columnIndex="2" GridPane.rowIndex="3">
                            <font>
                               <Font name="System Bold" size="13.0" />

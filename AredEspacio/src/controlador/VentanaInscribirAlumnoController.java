@@ -61,6 +61,7 @@ public class VentanaInscribirAlumnoController implements Initializable {
     @FXML
     private AnchorPane panelPrincipal;
     private double montoInscripcion;
+    private double montoFijoInscripcion;
 
 
     @Override
@@ -159,6 +160,7 @@ public class VentanaInscribirAlumnoController implements Initializable {
         Grupo grupoElegido=obtenerGrupo(nombreGrupoElegido);
         etiquetaMontoInscripcion.setText(grupoElegido.getInscripcion().toString());
         montoInscripcion=grupoElegido.getInscripcion();
+        montoFijoInscripcion=grupoElegido.getInscripcion();
         
     }
     
@@ -182,6 +184,18 @@ public class VentanaInscribirAlumnoController implements Initializable {
         pagoInscripcion.registrarInscripcion(monto, idAlumnoInscribir, nombreGrupo, new Date());
         pagoRegistrado=true;
         return pagoRegistrado;
+    }
+
+    @FXML
+    private void aplicarPromocion(ActionEvent event) {
+        montoInscripcion=montoFijoInscripcion;
+        PromocionDAO promocionDAO = new PromocionDAO();
+        Promocion promocionSeleccionada=new Promocion();
+        promocionSeleccionada=promocionDAO.adquirirPromocionPorNombre(comboPromocion.getValue());
+        double valor =promocionSeleccionada.getPorcentajeDescuento();
+        double descuento=montoInscripcion*(valor/100);
+        montoInscripcion=montoInscripcion-descuento;
+        etiquetaMontoInscripcion.setText(Double.toString(montoInscripcion));
     }
     
 }

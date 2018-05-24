@@ -1,4 +1,5 @@
 package negocio;
+import java.util.ArrayList;
 import java.util.List;
 import persistencia.Grupo;
 import java.util.logging.Level;
@@ -11,24 +12,28 @@ import persistencia.GrupoJpaController;
 import persistencia.MaestroJpaController;
 public class GrupoDAO implements IGrupo{
     String unidadPersistencia;
-    
-    public GrupoDAO(){
-        
-    }
-    
     public GrupoDAO(String unidadPersistencia){
         this.unidadPersistencia=unidadPersistencia;
     }
-
+    
     @Override
     public List<Grupo> adquirirGrupos(persistencia.Cuenta usuario) {
         List<Grupo> listaGrupos=null;
+        List<Grupo> listaGrupoAuxiliar= new ArrayList();
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);
         GrupoJpaController grupoJpaController = new GrupoJpaController(entityManagerFactory);
         persistencia.Grupo grupo = new persistencia.Grupo();
         grupo.setUsuario(usuario);
         try{
             listaGrupos=grupoJpaController.findGrupoEntities();
+            if(usuario.getTipoCuenta().equals("Maestro")){
+                for(int i=0; i<listaGrupos.size();i++){
+                    if(listaGrupos.get(i).getUsuario().getUsuario().equals(usuario.getUsuario())){
+                        listaGrupoAuxiliar.add(listaGrupos.get(i));
+                    }
+                }
+                listaGrupos=listaGrupoAuxiliar;
+            }
         }catch(Exception ex){
             Logger.getLogger(GrupoDAO.class.getName());
         }

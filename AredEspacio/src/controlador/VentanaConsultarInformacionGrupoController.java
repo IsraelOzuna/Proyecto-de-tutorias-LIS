@@ -67,6 +67,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     private Label etiquetaMensualidad;
     @FXML
     private JFXButton botonEditar;
+    private String nombreUsuario;
     @FXML
     private JFXButton botonEliminar;
     @FXML
@@ -308,7 +309,8 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         return etiquetas;
     }
     
-    public void establecerGrupo(int idGrupo){
+    public void establecerGrupo(int idGrupo, String nombreUsuarioActual){
+        nombreUsuario=nombreUsuarioActual;
         this.idGrupo=idGrupo;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         Grupo grupoConsultado= new Grupo();
@@ -334,7 +336,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         try{
             Parent root = (Parent) loader.load();
             VentanaEditarGrupoController editarGrupoController = loader.getController();
-            editarGrupoController.establecerGrupo(idGrupo);////////manejar excepción en caso de estar vacio
+            editarGrupoController.establecerGrupo(idGrupo, nombreUsuario);////////manejar excepción en caso de estar vacio
             panelConsultarInfo.getChildren().add(root);
         }catch(IOException ex){
             Logger.getLogger (VentanaConsultarGruposController.class.getName()).log(Level.SEVERE, null, ex);
@@ -358,7 +360,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
             FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
             Parent root = (Parent) loader.load();
             VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
-            ventanaConsultarGruposController.iniciarVentana();
+            ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
             panelConsultarInfo.getChildren().add(root); 
         }
     }
@@ -405,7 +407,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
         Parent root = (Parent) loader.load();
         VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
-        ventanaConsultarGruposController.iniciarVentana();
+        ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
         panelConsultarInfo.getChildren().add(root);
     }
 
@@ -414,7 +416,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRegistrarAsistencia.fxml"));
         Parent root = (Parent) loader.load();
         VentanaRegistrarAsistenciaController ventanaRegistrarAsistenciaController = loader.getController();
-        ventanaRegistrarAsistenciaController.iniciarVentana(idGrupo);
+        ventanaRegistrarAsistenciaController.iniciarVentana(idGrupo, nombreUsuario);
         panelConsultarInfo.getChildren().add(root);
     }
 }

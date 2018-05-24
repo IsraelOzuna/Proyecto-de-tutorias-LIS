@@ -76,7 +76,7 @@
             <RowConstraints minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <JFXButton fx:id="botonGrupos" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaGrupos" text="Grupos">
+            <JFXButton fx:id="botonGrupos" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaGrupos" text="Grupos" GridPane.rowIndex="1">
                <graphic>
                   <FontAwesomeIconView fill="#740808" glyphName="USERS" size="60">
                      <cursor>
@@ -91,7 +91,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton fx:id="botonMaestros" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaMaestro" text="Maestros" GridPane.rowIndex="1">
+            <JFXButton fx:id="botonMaestros" alignment="CENTER" contentDisplay="TOP" onAction="#desplegarVentanaBusquedaMaestro" text="Maestros">
                <graphic>
                   <FontAwesomeIconView fill="#740808" glyphName="USER" size="60">
                      <cursor>

@@ -39,6 +39,9 @@ public class GrupoJpaController implements Serializable {
         if (grupo.getPagoalumnoCollection() == null) {
             grupo.setPagoalumnoCollection(new ArrayList<Pagoalumno>());
         }
+        if (grupo.getAsistenciaCollection() == null) {
+            grupo.setAsistenciaCollection(new ArrayList<Asistencia>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -60,6 +63,12 @@ public class GrupoJpaController implements Serializable {
                 attachedPagoalumnoCollection.add(pagoalumnoCollectionPagoalumnoToAttach);
             }
             grupo.setPagoalumnoCollection(attachedPagoalumnoCollection);
+            Collection<Asistencia> attachedAsistenciaCollection = new ArrayList<Asistencia>();
+            for (Asistencia asistenciaCollectionAsistenciaToAttach : grupo.getAsistenciaCollection()) {
+                asistenciaCollectionAsistenciaToAttach = em.getReference(asistenciaCollectionAsistenciaToAttach.getClass(), asistenciaCollectionAsistenciaToAttach.getIdAsistencia());
+                attachedAsistenciaCollection.add(asistenciaCollectionAsistenciaToAttach);
+            }
+            grupo.setAsistenciaCollection(attachedAsistenciaCollection);
             em.persist(grupo);
             if (usuario != null) {
                 usuario.getGrupoCollection().add(grupo);
@@ -76,6 +85,15 @@ public class GrupoJpaController implements Serializable {
                 if (oldIdGrupoOfPagoalumnoCollectionPagoalumno != null) {
                     oldIdGrupoOfPagoalumnoCollectionPagoalumno.getPagoalumnoCollection().remove(pagoalumnoCollectionPagoalumno);
                     oldIdGrupoOfPagoalumnoCollectionPagoalumno = em.merge(oldIdGrupoOfPagoalumnoCollectionPagoalumno);
+                }
+            }
+            for (Asistencia asistenciaCollectionAsistencia : grupo.getAsistenciaCollection()) {
+                Grupo oldIdGrupoOfAsistenciaCollectionAsistencia = asistenciaCollectionAsistencia.getIdGrupo();
+                asistenciaCollectionAsistencia.setIdGrupo(grupo);
+                asistenciaCollectionAsistencia = em.merge(asistenciaCollectionAsistencia);
+                if (oldIdGrupoOfAsistenciaCollectionAsistencia != null) {
+                    oldIdGrupoOfAsistenciaCollectionAsistencia.getAsistenciaCollection().remove(asistenciaCollectionAsistencia);
+                    oldIdGrupoOfAsistenciaCollectionAsistencia = em.merge(oldIdGrupoOfAsistenciaCollectionAsistencia);
                 }
             }
             em.getTransaction().commit();
@@ -98,6 +116,8 @@ public class GrupoJpaController implements Serializable {
             Collection<Alumno> alumnoCollectionNew = grupo.getAlumnoCollection();
             Collection<Pagoalumno> pagoalumnoCollectionOld = persistentGrupo.getPagoalumnoCollection();
             Collection<Pagoalumno> pagoalumnoCollectionNew = grupo.getPagoalumnoCollection();
+            Collection<Asistencia> asistenciaCollectionOld = persistentGrupo.getAsistenciaCollection();
+            Collection<Asistencia> asistenciaCollectionNew = grupo.getAsistenciaCollection();
             if (usuarioNew != null) {
                 usuarioNew = em.getReference(usuarioNew.getClass(), usuarioNew.getUsuario());
                 grupo.setUsuario(usuarioNew);
@@ -116,6 +136,13 @@ public class GrupoJpaController implements Serializable {
             }
             pagoalumnoCollectionNew = attachedPagoalumnoCollectionNew;
             grupo.setPagoalumnoCollection(pagoalumnoCollectionNew);
+            Collection<Asistencia> attachedAsistenciaCollectionNew = new ArrayList<Asistencia>();
+            for (Asistencia asistenciaCollectionNewAsistenciaToAttach : asistenciaCollectionNew) {
+                asistenciaCollectionNewAsistenciaToAttach = em.getReference(asistenciaCollectionNewAsistenciaToAttach.getClass(), asistenciaCollectionNewAsistenciaToAttach.getIdAsistencia());
+                attachedAsistenciaCollectionNew.add(asistenciaCollectionNewAsistenciaToAttach);
+            }
+            asistenciaCollectionNew = attachedAsistenciaCollectionNew;
+            grupo.setAsistenciaCollection(asistenciaCollectionNew);
             grupo = em.merge(grupo);
             if (usuarioOld != null && !usuarioOld.equals(usuarioNew)) {
                 usuarioOld.getGrupoCollection().remove(grupo);
@@ -151,6 +178,23 @@ public class GrupoJpaController implements Serializable {
                     if (oldIdGrupoOfPagoalumnoCollectionNewPagoalumno != null && !oldIdGrupoOfPagoalumnoCollectionNewPagoalumno.equals(grupo)) {
                         oldIdGrupoOfPagoalumnoCollectionNewPagoalumno.getPagoalumnoCollection().remove(pagoalumnoCollectionNewPagoalumno);
                         oldIdGrupoOfPagoalumnoCollectionNewPagoalumno = em.merge(oldIdGrupoOfPagoalumnoCollectionNewPagoalumno);
+                    }
+                }
+            }
+            for (Asistencia asistenciaCollectionOldAsistencia : asistenciaCollectionOld) {
+                if (!asistenciaCollectionNew.contains(asistenciaCollectionOldAsistencia)) {
+                    asistenciaCollectionOldAsistencia.setIdGrupo(null);
+                    asistenciaCollectionOldAsistencia = em.merge(asistenciaCollectionOldAsistencia);
+                }
+            }
+            for (Asistencia asistenciaCollectionNewAsistencia : asistenciaCollectionNew) {
+                if (!asistenciaCollectionOld.contains(asistenciaCollectionNewAsistencia)) {
+                    Grupo oldIdGrupoOfAsistenciaCollectionNewAsistencia = asistenciaCollectionNewAsistencia.getIdGrupo();
+                    asistenciaCollectionNewAsistencia.setIdGrupo(grupo);
+                    asistenciaCollectionNewAsistencia = em.merge(asistenciaCollectionNewAsistencia);
+                    if (oldIdGrupoOfAsistenciaCollectionNewAsistencia != null && !oldIdGrupoOfAsistenciaCollectionNewAsistencia.equals(grupo)) {
+                        oldIdGrupoOfAsistenciaCollectionNewAsistencia.getAsistenciaCollection().remove(asistenciaCollectionNewAsistencia);
+                        oldIdGrupoOfAsistenciaCollectionNewAsistencia = em.merge(oldIdGrupoOfAsistenciaCollectionNewAsistencia);
                     }
                 }
             }
@@ -197,6 +241,11 @@ public class GrupoJpaController implements Serializable {
             for (Pagoalumno pagoalumnoCollectionPagoalumno : pagoalumnoCollection) {
                 pagoalumnoCollectionPagoalumno.setIdGrupo(null);
                 pagoalumnoCollectionPagoalumno = em.merge(pagoalumnoCollectionPagoalumno);
+            }
+            Collection<Asistencia> asistenciaCollection = grupo.getAsistenciaCollection();
+            for (Asistencia asistenciaCollectionAsistencia : asistenciaCollection) {
+                asistenciaCollectionAsistencia.setIdGrupo(null);
+                asistenciaCollectionAsistencia = em.merge(asistenciaCollectionAsistencia);
             }
             em.remove(grupo);
             em.getTransaction().commit();
@@ -276,6 +325,5 @@ public class GrupoJpaController implements Serializable {
         }
         return idGrupo;
     }
-    
     
 }

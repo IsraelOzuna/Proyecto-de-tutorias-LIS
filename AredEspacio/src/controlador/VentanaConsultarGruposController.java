@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import java.awt.Insets;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,6 +51,7 @@ public class VentanaConsultarGruposController implements Initializable {
     ObservableList<Grupo> grupos;
     @FXML
     private Button botonCrearGrupo;
+    private String usuario;
     @FXML
     private AnchorPane panelConsultarGrupos;
     @FXML
@@ -65,13 +67,23 @@ public class VentanaConsultarGruposController implements Initializable {
         
     }
     
-    public void iniciarVentana(){
-
+    public void iniciarVentana(String nombreUsuario){
+        System.out.println(nombreUsuario);
+        usuario=nombreUsuario;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
+        List<Cuenta> cuentas = new ArrayList();
+        cuentas=grupoDAO.adquirirCuentas();
+        Cuenta usuarioActual=new Cuenta();
+        for(int i=0; i<cuentas.size(); i++ ){
+            if(cuentas.get(i).getUsuario().equals(nombreUsuario)){
+                usuarioActual=cuentas.get(i);
+                break;
+            } 
+        }
+        
         Grupo grupo = new Grupo();
         List<Grupo> listaGrupos=null;
-        Cuenta cuentaNueva = new Cuenta();
-        listaGrupos=grupoDAO.adquirirGrupos(cuentaNueva);//////////////
+        listaGrupos=grupoDAO.adquirirGrupos(usuarioActual);//////////////
         this.inicializarTablaGrupos();
         final ObservableList<Grupo> tablaGrupoSel = tablaGrupos.getSelectionModel().getSelectedItems();
         if(listaGrupos!=null){
@@ -90,7 +102,7 @@ public class VentanaConsultarGruposController implements Initializable {
                     try{
                         Parent root = (Parent) loader.load();
                         VentanaConsultarInformacionGrupoController ventanaConsultarInformacionGrupoController = loader.getController();
-                        ventanaConsultarInformacionGrupoController.establecerGrupo(tablaGrupos.getSelectionModel().getSelectedItem().getIdGrupo());////////manejar excepción en caso de estar vacio
+                        ventanaConsultarInformacionGrupoController.establecerGrupo(tablaGrupos.getSelectionModel().getSelectedItem().getIdGrupo(), usuario);////////manejar excepción en caso de estar vacio
                         panelConsultarGrupos.getChildren().add(root);
                     }catch(IOException ex){
                         Logger.getLogger (VentanaConsultarGruposController.class.getName()).log(Level.SEVERE, null, ex);
@@ -111,7 +123,7 @@ public class VentanaConsultarGruposController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaCrearGrupo.fxml"));
         Parent root = (Parent) loader.load();
         VentanaCrearGrupoController crearGrupo = loader.getController();
-        crearGrupo.iniciarVentana();
+        crearGrupo.iniciarVentana(usuario);
         panelConsultarGrupos.getChildren().add(root);
     } 
 
@@ -120,7 +132,7 @@ public class VentanaConsultarGruposController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaAdministrarHorarios.fxml"));
         Parent root = (Parent) loader.load();
         VentanaAdministrarHorariosController administrarGrupo = loader.getController();
-        administrarGrupo.iniciarVentana();
+        administrarGrupo.iniciarVentana(usuario);
         panelConsultarGrupos.getChildren().add(root);
         
     }
