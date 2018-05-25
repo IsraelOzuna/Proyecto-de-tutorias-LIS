@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="panelPrincipal" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaEditarClienteController">
    <children>
-      <GridPane layoutX="16.0" layoutY="104.0" prefHeight="530.0" prefWidth="426.0">
+      <GridPane layoutX="16.0" layoutY="104.0" prefHeight="530.0" prefWidth="426.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="678.0" AnchorPane.topAnchor="104.0">
          <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
@@ -26,7 +26,7 @@
             <ImageView fx:id="fotoSeleccionada" fitHeight="160.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
             <JFXButton fx:id="botonSeleccionarImagen" onAction="#seleccionarImagen" prefHeight="26.0" prefWidth="186.0" style="-fx-background-color: #CDCDCD;" text="Seleccionar imagen" GridPane.rowIndex="1">
                <font>
-                  <Font name="Gill Sans MT Bold" size="14.0" />
+                  <Font name="Gill Sans MT Bold" size="16.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -34,7 +34,7 @@
             </JFXButton>
          </children>
       </GridPane>
-      <GridPane alignment="CENTER" layoutX="468.0" layoutY="8.0" prefHeight="612.0" prefWidth="426.0">
+      <GridPane alignment="CENTER" layoutX="468.0" layoutY="8.0" prefHeight="612.0" prefWidth="426.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="468.0" AnchorPane.rightAnchor="226.0" AnchorPane.topAnchor="8.0">
          <columnConstraints>
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" percentWidth="0.0" prefWidth="182.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="262.0" minWidth="10.0" prefWidth="244.0" />

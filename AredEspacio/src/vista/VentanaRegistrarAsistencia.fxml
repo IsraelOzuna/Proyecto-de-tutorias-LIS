@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -15,7 +17,7 @@
    <children>
       <Label layoutX="479.0" layoutY="17.0" text="Registro de Asistencia">
          <font>
-            <Font name="System Bold" size="20.0" />
+            <Font name="Gill Sans MT Bold" size="20.0" />
          </font>
       </Label>
       <GridPane layoutX="96.0" layoutY="87.0" prefHeight="93.0" prefWidth="1120.0" AnchorPane.bottomAnchor="444.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
@@ -33,23 +35,26 @@
          <children>
             <Label prefHeight="27.0" prefWidth="61.0" text="Grupo:" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
             </Label>
-            <DatePicker fx:id="selectorFecha" onAction="#actualizarTabla" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <DatePicker fx:id="selectorFecha" editable="false" onAction="#actualizarTabla" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></DatePicker>
             <Label text="Fecha Clase:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
             </Label>
             <Label fx:id="etiquetaNombreGrupo" text="Nombre Grupo" GridPane.columnIndex="3">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Gill Sans MT" size="18.0" />
                </font>
             </Label>
          </children>
       </GridPane>
-      <GridPane layoutX="-7.0" layoutY="463.0" prefHeight="70.0" prefWidth="1120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <GridPane layoutX="-7.0" layoutY="463.0" prefHeight="70.0" prefWidth="1120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="554.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -61,15 +66,27 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <JFXButton fx:id="botonRegistrarAsistencia" onAction="#registrarAsistencia" prefHeight="30.0" prefWidth="87.0" style="-fx-background-color: #CDCDCD;" text="Registrar" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+            <JFXButton fx:id="botonRegistrarAsistencia" onAction="#registrarAsistencia" style="-fx-background-color: #CDCDCD;" text="Registrar" GridPane.columnIndex="3" GridPane.halignment="RIGHT">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="Gill Sans MT Bold" size="17.0" />
                </font>
+               <GridPane.margin>
+                  <Insets right="126.0" />
+               </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
-            <JFXButton fx:id="botonRegresar" onAction="#regresarPantallaAnterior" style="-fx-background-color: #CDCDCD;" text="Regresar" GridPane.columnIndex="3">
+            <JFXButton fx:id="botonRegresar" onAction="#regresarPantallaAnterior" style="-fx-background-color: #CDCDCD;" text="Regresar" GridPane.columnIndex="1">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="Gill Sans MT Bold" size="17.0" />
                </font>
+               <GridPane.margin>
+                  <Insets left="128.0" />
+               </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
          </children>
       </GridPane>

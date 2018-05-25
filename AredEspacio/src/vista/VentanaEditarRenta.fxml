@@ -73,7 +73,7 @@
             <TableColumn fx:id="columnaNombreClienteRenta" prefWidth="161.0" text="Nombre Cliente" />
          </columns>
       </TableView>
-      <JFXButton fx:id="botonGuardar" layoutX="608.0" layoutY="571.0" onAction="#guardarCambios" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Guardar">
+      <JFXButton fx:id="botonGuardar" layoutX="621.0" layoutY="571.0" onAction="#guardarCambios" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Guardar">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -91,7 +91,7 @@
       </JFXButton>
       <Label fx:id="etiquetaNombreCliente" layoutX="51.0" layoutY="76.0" prefHeight="25.0" prefWidth="150.0">
          <font>
-            <Font name="Gill Sans MT Bold" size="18.0" />
+            <Font name="Gill Sans MT" size="18.0" />
          </font>
       </Label>
    </children>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -15,7 +16,7 @@
    <children>
       <AnchorPane layoutX="350.0" layoutY="100.0" prefHeight="431.0" prefWidth="347.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <GridPane layoutY="26.0" prefHeight="183.0" prefWidth="347.0">
+            <GridPane layoutY="26.0" prefHeight="183.0" prefWidth="347.0" AnchorPane.bottomAnchor="222.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="26.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -32,7 +33,7 @@
                   </Label>
                </children>
             </GridPane>
-            <GridPane layoutX="38.0" layoutY="187.0" prefHeight="225.0" prefWidth="272.0">
+            <GridPane layoutX="38.0" layoutY="187.0" prefHeight="225.0" prefWidth="272.0" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="187.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="145.0" />
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="149.0" minWidth="10.0" prefWidth="127.0" />
@@ -53,13 +54,22 @@
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </JFXButton>
                   <JFXButton fx:id="botonAceptar" onAction="#registrarPago" style="-fx-background-color: #CDCDCD;" text="Registrar" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </JFXButton>
-                  <DatePicker fx:id="campoFechaPago" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <DatePicker fx:id="campoFechaPago" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></DatePicker>
                </children>
             </GridPane>
          </children>

@@ -22,23 +22,23 @@
         </columns>
       </TableView>
       <DatePicker fx:id="campoFecha" editable="false" layoutX="811.0" layoutY="71.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label fx:id="etiquetaFecha" layoutX="811.0" layoutY="37.0" text="Fecha:">
+      <Label fx:id="etiquetaFecha" layoutX="811.0" layoutY="40.0" text="Fecha:">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaCliente" layoutX="41.0" layoutY="37.0" text="Cliente:">
+      <Label fx:id="etiquetaCliente" layoutX="41.0" layoutY="40.0" text="Cliente:">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaCantidad" layoutX="646.0" layoutY="37.0" text="Cantidad:">
+      <Label fx:id="etiquetaCantidad" layoutX="646.0" layoutY="40.0" text="Cantidad:">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
       <TextField fx:id="campoCantidad" layoutX="642.0" layoutY="71.0" onKeyTyped="#limitarCaracteresCantidad" prefHeight="25.0" prefWidth="136.0" />
-      <JFXButton fx:id="botonRegistrar" layoutX="598.0" layoutY="561.0" onAction="#registrarRenta" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Registrar">
+      <JFXButton fx:id="botonRegistrar" layoutX="614.0" layoutY="561.0" onAction="#registrarRenta" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Registrar">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -46,7 +46,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <JFXButton fx:id="botonCancelar" alignment="CENTER" layoutX="431.0" layoutY="561.0" onAction="#cerrarVentanaCrearRenta" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Cancelar">
+      <JFXButton fx:id="botonCancelar" alignment="CENTER" layoutX="436.0" layoutY="561.0" onAction="#cerrarVentanaCrearRenta" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Cancelar">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -59,7 +59,10 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <ComboBox fx:id="comboBoxClientes" layoutX="41.0" layoutY="70.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboBoxClientes" layoutX="41.0" layoutY="70.0" prefWidth="150.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ComboBox>
       <TableView fx:id="tablaRentas" layoutX="614.0" layoutY="181.0" prefHeight="339.0" prefWidth="370.0">
         <columns>
           <TableColumn fx:id="columnaHorarioRenta" prefWidth="103.0" text="Hora inicio" />
@@ -78,14 +81,20 @@
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboBoxHoraInicio" layoutX="245.0" layoutY="70.0" prefWidth="150.0" />
-      <Label fx:id="etiquetaCliente1" layoutX="245.0" layoutY="37.0" text="Hora Inicio:">
+      <ComboBox fx:id="comboBoxHoraInicio" layoutX="245.0" layoutY="70.0" prefWidth="150.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ComboBox>
+      <Label fx:id="etiquetaCliente1" layoutX="245.0" layoutY="40.0" text="Hora Inicio:">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboBoxHoraFin" layoutX="448.0" layoutY="72.0" prefWidth="150.0" />
-      <Label fx:id="etiquetaCliente11" layoutX="448.0" layoutY="37.0" text="Hora Fin:">
+      <ComboBox fx:id="comboBoxHoraFin" layoutX="448.0" layoutY="72.0" prefWidth="150.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></ComboBox>
+      <Label fx:id="etiquetaCliente11" layoutX="448.0" layoutY="40.0" text="Hora Fin:">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>

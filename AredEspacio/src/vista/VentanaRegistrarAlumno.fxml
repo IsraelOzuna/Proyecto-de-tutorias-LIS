@@ -129,7 +129,7 @@
             <ImageView fx:id="fotoSeleccionada" fitHeight="160.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" />
             <JFXButton fx:id="botonSeleccionarImagen" onAction="#seleccionarImagen" prefHeight="26.0" prefWidth="186.0" style="-fx-background-color: #CDCDCD;" text="Seleccionar imagen" GridPane.rowIndex="1">
                <font>
-                  <Font name="Gill Sans MT Bold" size="14.0" />
+                  <Font name="Gill Sans MT Bold" size="16.0" />
                </font>
                <cursor>
                   <Cursor fx:constant="HAND" />

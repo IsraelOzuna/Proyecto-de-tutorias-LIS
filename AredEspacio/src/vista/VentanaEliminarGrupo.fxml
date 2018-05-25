@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -11,15 +12,21 @@
          <font>
             <Font name="Gill Sans MT" size="14.0" />
          </font></Label>
-      <JFXButton fx:id="botonEliminar" layoutX="139.0" layoutY="66.0" style="-fx-background-color: #CDCDCD;" text="Eliminar">
+      <JFXButton fx:id="botonEliminar" layoutX="252.0" layoutY="75.0" style="-fx-background-color: #CDCDCD;" text="Eliminar">
          <font>
-            <Font name="Gill Sans MT Bold" size="14.0" />
+            <Font name="Gill Sans MT Bold" size="16.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
-      <JFXButton fx:id="botonCancelar" layoutX="248.0" layoutY="66.0" style="-fx-background-color: #CDCDCD;" text="Cancelar">
+      <JFXButton fx:id="botonCancelar" layoutX="134.0" layoutY="75.0" style="-fx-background-color: #CDCDCD;" text="Cancelar">
          <font>
-            <Font name="Gill Sans MT Bold" size="14.0" />
+            <Font name="Gill Sans MT Bold" size="16.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
    </children>
 </AnchorPane>

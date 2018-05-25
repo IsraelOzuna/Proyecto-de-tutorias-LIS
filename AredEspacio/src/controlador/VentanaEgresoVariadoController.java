@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import negocio.Egreso;
 import negocio.EgresoDAO;
 
@@ -36,6 +37,8 @@ public class VentanaEgresoVariadoController implements Initializable {
     @FXML
     private Label etiquetaDescripcion;
     String fechaActual;
+    @FXML
+    private AnchorPane panelPrincipal;
 
     /**
      * Initializes the controller class.
@@ -146,4 +149,9 @@ public class VentanaEgresoVariadoController implements Initializable {
         etiquetaDescripcion.setText("");
         etiquetaGasto.setText("");
     }        
+
+    @FXML
+    private void cerrarVentana(ActionEvent event) {
+        panelPrincipal.setVisible(false);
+    }
 }

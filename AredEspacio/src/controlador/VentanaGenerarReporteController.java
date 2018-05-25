@@ -54,7 +54,6 @@ public class VentanaGenerarReporteController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaEgresoVariado.fxml"));
         Parent root = (Parent) loader.load();
         VentanaEgresoVariadoController ventanaEgresoVariado = loader.getController();
-        panelPrincipal.getChildren().clear();
         panelPrincipal.getChildren().add(root);
     }
     

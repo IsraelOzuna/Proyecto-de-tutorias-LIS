@@ -118,6 +118,15 @@ public class VentanaMenuDirectorController implements Initializable {
         panelPrincipal.getChildren().add(root);
     }
 
+    @FXML
+    private void desplegarVentanaPromociones(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaCrearPromocion.fxml"));
+        Parent root = (Parent) loader.load();
+        VentanaCrearPromocionController ventanaPromocion = loader.getController();   
+        panelPrincipal.getChildren().clear();
+        panelPrincipal.getChildren().add(root);
+    }
+    
     public void obtenerUsuario(String usuario) {
         etiquetaNombreUsuario.setText(usuario);
     }
@@ -129,4 +138,5 @@ public class VentanaMenuDirectorController implements Initializable {
         botonRenta.setVisible(false);
         botonAnuncios.setVisible(false);
     }
+
 }

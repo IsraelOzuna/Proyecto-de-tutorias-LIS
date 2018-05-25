@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -9,25 +10,31 @@
 
 <AnchorPane id="AnchorPane" fx:id="panelConsultarGrupos" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaConsultarGruposController">
    <children>
-      <TableView fx:id="tablaGrupos" layoutX="36.0" layoutY="96.0" prefHeight="460.0" prefWidth="1000.0">
+      <TableView fx:id="tablaGrupos" layoutX="61.0" layoutY="74.0" prefHeight="460.0" prefWidth="1000.0">
          <columns>
             <TableColumn fx:id="columnaNombre" prefWidth="497.0" text="Nombre" />
             <TableColumn fx:id="columnaAlumnos" prefWidth="502.0" text="Alumnos" />
          </columns>
       </TableView>
-      <Label fx:id="etiquetaGrupos" layoutX="511.0" layoutY="32.0" text="Grupos">
+      <Label fx:id="etiquetaGrupos" layoutX="529.0" layoutY="33.0" text="Grupos">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <JFXButton fx:id="botonCrearGrupo" layoutX="951.0" layoutY="575.0" onAction="#desplegarVentanaCrearGrupo" style="-fx-background-color: #cdcdcd;" text="Crear Grupo">
+      <JFXButton fx:id="botonCrearGrupo" layoutX="955.0" layoutY="557.0" onAction="#desplegarVentanaCrearGrupo" style="-fx-background-color: #cdcdcd;" text="Crear Grupo">
          <font>
-            <Font name="System Bold" size="12.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
-      <JFXButton fx:id="botonAdministrarHorarios" layoutX="86.0" layoutY="575.0" onAction="#desplegarVentanaAdministrarHorarios" style="-fx-background-color: #CDCDCD;" text="Administrar Horarios">
+      <JFXButton fx:id="botonAdministrarHorarios" layoutX="61.0" layoutY="557.0" onAction="#desplegarVentanaAdministrarHorarios" style="-fx-background-color: #CDCDCD;" text="Administrar Horarios">
          <font>
-            <Font name="System Bold" size="12.0" />
-         </font></JFXButton>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></JFXButton>
    </children>
 </AnchorPane>

@@ -23,17 +23,17 @@
       </AnchorPane>
       <Label layoutX="233.0" layoutY="51.0" text="Nombre del alumno:">
          <font>
-            <Font name="System Bold" size="16.0" />
+            <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaNombreAlumno" layoutX="402.0" layoutY="54.0" prefHeight="17.0" prefWidth="180.0">
+      <Label fx:id="etiquetaNombreAlumno" layoutX="413.0" layoutY="54.0" prefHeight="19.0" prefWidth="169.0">
          <font>
             <Font name="Gill Sans MT Bold" size="16.0" />
          </font>
       </Label>
       <Button fx:id="botonRegresar" layoutX="753.0" layoutY="551.0" mnemonicParsing="false" onAction="#cerrarVentanaHistorialDePagos" prefHeight="42.0" prefWidth="101.0" text="Regresar">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Button>
    </children>

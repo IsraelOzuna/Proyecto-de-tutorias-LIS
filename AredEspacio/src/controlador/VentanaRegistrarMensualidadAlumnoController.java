@@ -48,7 +48,9 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
     private List<String> gruposAlumno;
     private int idAlumno;
     @FXML
-    private Label etiquetaFechaPago;
+    private Label etiquetaErrorGrupo;
+    @FXML
+    private Label etiquetaErrorMonto;
 
     /**
      * Initializes the controller class.
@@ -60,33 +62,39 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
 
     @FXML
     private void registrarMensualidad(ActionEvent event) {
+        etiquetaErrorGrupo.setText("");
+        etiquetaErrorMonto.setText("");
         boolean cantidadValida = true;
         Date fechaPago = new Date();
-        if (comboGruposAlumno.getSelectionModel().getSelectedItem() != null && !campoMontoPagar.getText().trim().isEmpty()) {
-            try {
-                Double.parseDouble(campoMontoPagar.getText());
-            } catch (NumberFormatException ex) {
-                DialogosController.mostrarMensajeInformacion("Invalido", "Cantidad invalida", "Ingresa una cantidad valida");
-                cantidadValida = false;
-            }
-            if (cantidadValida) {
-                PagoMensualidadAlumno pagoAlumno = new PagoMensualidadAlumno();
-                PagoMensualidadAlumnoDAO pagoInscripcion = new PagoMensualidadAlumnoDAO();
-
-                pagoAlumno.setCantidad(Double.parseDouble(campoMontoPagar.getText().trim()));
-                pagoAlumno.setFechaPagoInscripcion(fechaPago);
-                pagoAlumno.setIdAlumno(idAlumno);                
-                pagoAlumno.setTipoPago('1');
-
-                if (pagoInscripcion.registrarMensualidad(pagoAlumno, idAlumno, comboGruposAlumno.getValue())) {
-                    DialogosController.mostrarMensajeInformacion("", "Registro de pago exitoso", "El pago se ha registrado correctamente");
-                    panelTrasero.setVisible(false);
-                } else {
-                    DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "El pago no se pudo registrar");
+        if (comboGruposAlumno.getSelectionModel().getSelectedItem() != null) {
+            if (!campoMontoPagar.getText().trim().isEmpty()) {
+                try {
+                    Double.parseDouble(campoMontoPagar.getText());
+                } catch (NumberFormatException ex) {
+                    DialogosController.mostrarMensajeInformacion("Invalido", "Cantidad invalida", "Ingresa una cantidad valida");
+                    cantidadValida = false;
                 }
+                if (cantidadValida) {
+                    PagoMensualidadAlumno pagoAlumno = new PagoMensualidadAlumno();
+                    PagoMensualidadAlumnoDAO pagoInscripcion = new PagoMensualidadAlumnoDAO();
+
+                    pagoAlumno.setCantidad(Double.parseDouble(campoMontoPagar.getText().trim()));
+                    pagoAlumno.setFechaPagoInscripcion(fechaPago);
+                    pagoAlumno.setIdAlumno(idAlumno);
+                    pagoAlumno.setTipoPago('1');
+
+                    if (pagoInscripcion.registrarMensualidad(pagoAlumno, idAlumno, comboGruposAlumno.getValue())) {
+                        DialogosController.mostrarMensajeInformacion("", "Registro de pago exitoso", "El pago se ha registrado correctamente");
+                        panelTrasero.setVisible(false);
+                    } else {
+                        DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "El pago no se pudo registrar");
+                    }
+                }
+            } else {
+                etiquetaErrorMonto.setText("Campo obligatorio");
             }
         } else {
-            DialogosController.mostrarMensajeAdvertencia("", "Campos vacios", "Llene ambos campos");
+            etiquetaErrorGrupo.setText("Campo obligatorio");
         }
     }
 

@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -27,7 +28,7 @@
                <children>
                   <Label fx:id="etiquetaNombreAlumno" alignment="CENTER" prefHeight="28.0" prefWidth="303.0" textAlignment="CENTER" GridPane.rowIndex="1">
                      <font>
-                        <Font name="Gill Sans MT Bold" size="18.0" />
+                        <Font name="Gill Sans MT Bold" size="16.0" />
                      </font>
                   </Label>
                   <ImageView fx:id="imagenPerfil" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
@@ -47,7 +48,7 @@
                <children>
                   <JFXButton fx:id="botonCancelar" onAction="#cerrarDetalles" style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.rowIndex="2">
                      <font>
-                        <Font name="Gill Sans MT Bold" size="14.0" />
+                        <Font name="Gill Sans MT Bold" size="15.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -55,27 +56,43 @@
                   </JFXButton>
                   <JFXButton fx:id="botonAceptar" onAction="#registrarMensualidad" style="-fx-background-color: #CDCDCD;" text="Aceptar" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
-                        <Font name="Gill Sans MT Bold" size="14.0" />
+                        <Font name="Gill Sans MT Bold" size="15.0" />
                      </font>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
                   <TextField fx:id="campoMontoPagar" onKeyTyped="#limitarCampoMonto" prefHeight="25.0" prefWidth="107.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Label fx:id="etiquetaMonto" alignment="CENTER_RIGHT" prefHeight="16.0" prefWidth="96.0" text="Monto a pagar:" GridPane.rowIndex="1">
+                  <Label fx:id="etiquetaMonto" alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="127.0" text="Monto a pagar:" GridPane.rowIndex="1">
                      <font>
-                        <Font name="Gill Sans MT" size="14.0" />
+                        <Font name="Gill Sans MT Bold" size="16.0" />
                      </font>
                   </Label>
                   <Label text="Grupo:">
                      <font>
-                        <Font name="Gill Sans MT" size="14.0" />
+                        <Font name="Gill Sans MT Bold" size="16.0" />
                      </font>
                   </Label>
                   <JFXComboBox fx:id="comboGruposAlumno" prefHeight="25.0" prefWidth="139.0" GridPane.columnIndex="1">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></JFXComboBox>
+                  <Label fx:id="etiquetaErrorGrupo" prefHeight="14.0" prefWidth="113.0" textFill="RED" GridPane.columnIndex="1">
+                     <font>
+                        <Font name="Gill Sans MT" size="12.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets top="43.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label fx:id="etiquetaErrorMonto" prefHeight="14.0" prefWidth="111.0" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Gill Sans MT" size="12.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets top="43.0" />
+                     </GridPane.margin>
+                  </Label>
                </children>
             </GridPane>
          </children>

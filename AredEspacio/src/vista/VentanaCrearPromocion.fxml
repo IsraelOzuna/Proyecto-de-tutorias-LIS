@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,13 +14,12 @@
 
 <AnchorPane id="AnchorPane" fx:id="panelPrincipal" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaCrearPromocionController">
    <children>
-      <GridPane layoutX="-2.0" layoutY="114.0" prefHeight="510.0" prefWidth="1122.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0">
+      <GridPane layoutX="-2.0" layoutY="114.0" prefHeight="510.0" prefWidth="1122.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="114.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="356.0" minWidth="10.0" prefWidth="207.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="445.0" minWidth="10.0" prefWidth="328.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="214.0" minWidth="10.0" prefWidth="58.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="379.0" minWidth="10.0" prefWidth="379.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.0" minWidth="10.0" prefWidth="149.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="379.0" minWidth="10.0" prefWidth="263.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="284.0" minWidth="10.0" prefWidth="284.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -26,54 +28,72 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Porcentaje a descontar:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+            <Label prefHeight="24.0" prefWidth="228.0" text="Porcentaje a descontar:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                <font>
-                  <Font size="24.0" />
+                  <Font name="Gill Sans MT Bold" size="20.0" />
                </font>
             </Label>
-            <Label text="Descripción:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
+            <Label prefHeight="24.0" prefWidth="122.0" text="Descripción:" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                <font>
-                  <Font size="24.0" />
+                  <Font name="Gill Sans MT Bold" size="20.0" />
                </font>
             </Label>
-            <Label text="Nombre:" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
+            <Label prefHeight="24.0" prefWidth="91.0" text="Nombre:" GridPane.columnIndex="1" GridPane.halignment="RIGHT">
                <font>
-                  <Font size="24.0" />
+                  <Font name="Gill Sans MT Bold" size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="campoNombrePromocion" GridPane.columnIndex="3" />
-            <TextField fx:id="campoDescripcion" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <TextField fx:id="campoMonto" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <JFXButton fx:id="botonRegistrarPromocion" onAction="#registrarPromocion" style="-fx-background-color: #CDCDCD;" text="Registrar Promoción" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+            <TextField fx:id="campoNombrePromocion" maxHeight="25.0" maxWidth="250.0" minHeight="25.0" minWidth="250.0" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="2" />
+            <TextField fx:id="campoDescripcion" maxHeight="25.0" maxWidth="250.0" minHeight="25.0" minWidth="250.0" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="campoMonto" maxHeight="25.0" maxWidth="250.0" minHeight="25.0" minWidth="250.0" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <JFXButton fx:id="botonRegistrarPromocion" onAction="#registrarPromocion" style="-fx-background-color: #CDCDCD;" text="Registrar " GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="Gill Sans MT Bold" size="20.0" />
                </font>
+               <GridPane.margin>
+                  <Insets right="75.0" />
+               </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
-            <JFXButton fx:id="botonCancelar" onAction="#regresarPantallaAnterior" style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+            <JFXButton fx:id="botonCancelar" onAction="#regresarPantallaAnterior" style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="Gill Sans MT Bold" size="20.0" />
                </font>
+               <GridPane.margin>
+                  <Insets left="120.0" />
+               </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
-            <Label prefHeight="35.0" prefWidth="34.0" text="\%" GridPane.columnIndex="4" GridPane.rowIndex="2">
+            <Label prefHeight="35.0" prefWidth="34.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                <font>
                   <Font size="24.0" />
                </font>
+               <GridPane.margin>
+                  <Insets left="250.0" />
+               </GridPane.margin>
+               <graphic>
+                  <FontAwesomeIconView glyphName="PERCENT" size="20" />
+               </graphic>
             </Label>
          </children>
       </GridPane>
-      <GridPane layoutX="136.0" layoutY="-3.0" prefHeight="46.0" prefWidth="1120.0" AnchorPane.bottomAnchor="581.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane layoutX="136.0" layoutY="-3.0" prefHeight="119.0" prefWidth="1120.0" AnchorPane.bottomAnchor="505.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="288.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="561.0" minWidth="10.0" prefWidth="561.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="561.0" minWidth="10.0" prefWidth="561.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="407.0" minWidth="10.0" prefWidth="271.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="53.0" prefWidth="256.0" text="Crear Promocion" GridPane.columnIndex="1" GridPane.halignment="CENTER">
+            <Label prefHeight="143.0" prefWidth="201.0" text="Crear promocion" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
-                  <Font name="System Bold" size="30.0" />
+                  <Font name="Gill Sans MT Bold" size="24.0" />
                </font>
             </Label>
          </children>

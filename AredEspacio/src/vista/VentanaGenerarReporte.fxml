@@ -25,14 +25,14 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="39.0" prefWidth="225.0" text="Reporte Mensual " GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+            <Label prefHeight="39.0" prefWidth="200.0" text="Reporte Mensual " GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                <font>
-                  <Font name="Gill Sans MT Bold" size="27.0" />
+                  <Font name="Gill Sans MT" size="27.0" />
                </font>
             </Label>
             <Label fx:id="etiquetaPeriodoReporte" prefHeight="46.0" prefWidth="643.0" text="del 31 de septiembre a 31 de septiembre" GridPane.columnIndex="2" GridPane.valignment="CENTER">
                <font>
-                  <Font name="System Bold" size="27.0" />
+                  <Font name="Gill Sans MT Bold" size="27.0" />
                </font>
             </Label>
             <JFXButton onAction="#desplegarVentanaEgreso" text="Registrar egreso" textFill="#1208d7" underline="true">

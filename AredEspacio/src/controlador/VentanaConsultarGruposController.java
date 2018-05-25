@@ -68,7 +68,6 @@ public class VentanaConsultarGruposController implements Initializable {
     }
     
     public void iniciarVentana(String nombreUsuario){
-        System.out.println(nombreUsuario);
         usuario=nombreUsuario;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         List<Cuenta> cuentas = new ArrayList();

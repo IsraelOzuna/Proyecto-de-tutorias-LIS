@@ -32,22 +32,22 @@
                   <ImageView fx:id="imagenPerfil" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
                   <Label fx:id="etiquetaNombre" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="344.0" GridPane.rowIndex="1">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Gill Sans MT" size="14.0" />
                      </font>
                   </Label>
                   <Label fx:id="etiquetaCorreo" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" GridPane.rowIndex="2">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Gill Sans MT" size="14.0" />
                      </font>
                   </Label>
                   <Label fx:id="etiquetaTelefono" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" GridPane.rowIndex="3">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Gill Sans MT" size="14.0" />
                      </font>
                   </Label>
                   <Label fx:id="etiquetaMontoAPagar" alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="347.0" GridPane.rowIndex="4">
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Gill Sans MT" size="14.0" />
                      </font>
                   </Label>
                   <JFXButton fx:id="botonCerrar" onAction="#cerrarVentanaInformacionMaestro" style="-fx-background-color: #CDCDCD;" text="Cerrar" GridPane.rowIndex="5">

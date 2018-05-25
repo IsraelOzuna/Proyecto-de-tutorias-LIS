@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -25,7 +26,7 @@
                   <TableColumn fx:id="columnaHora" minWidth="0.0" prefWidth="203.66668701171875" text="Hora" />
                </columns>
             </TableView>
-            <Label fx:id="etiquetaMaestro" layoutX="50.0" layoutY="24.0" text="Maestro: ">
+            <Label fx:id="etiquetaMaestro" layoutX="52.0" layoutY="37.0" text="Maestro: ">
                <font>
                   <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
@@ -45,38 +46,50 @@
                   <FontAwesomeIconView glyphName="CLOSE" size="50" wrappingWidth="40.2857141494751" />
                </graphic>
                <font>
-                  <Font size="14.0" />
+                  <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
-            <JFXButton fx:id="botonRegresar" layoutX="1000.0" layoutY="560.0" onAction="#regresarPantallaAnterior" style="-fx-background-color: #CDCDCD;" text="Regresar">
+            <JFXButton fx:id="botonRegresar" layoutX="914.0" layoutY="560.0" onAction="#regresarPantallaAnterior" style="-fx-background-color: #CDCDCD;" text="Regresar">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
-            <Label fx:id="etiquetaPrecioInscripcion" layoutX="838.0" layoutY="452.0" prefHeight="20.0" prefWidth="118.0" text="precioInscripcion">
+            <Label fx:id="etiquetaPrecioInscripcion" layoutX="806.0" layoutY="449.0" prefHeight="21.0" prefWidth="137.0" text="precioInscripcion">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Gill Sans MT" size="18.0" />
                </font></Label>
-            <Label fx:id="etiquetaPrecioMensualidad" layoutX="833.0" layoutY="486.0" prefHeight="17.0" prefWidth="129.0" text="precioMensualidad">
+            <Label fx:id="etiquetaPrecioMensualidad" layoutX="806.0" layoutY="483.0" prefHeight="21.0" prefWidth="150.0" text="precioMensualidad">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Gill Sans MT" size="18.0" />
                </font></Label>
-            <Label fx:id="etiquetaNombreMaestro" layoutX="128.0" layoutY="16.0" prefHeight="41.0" prefWidth="224.0" text="nombreMaestro">
+            <Label fx:id="etiquetaNombreMaestro" layoutX="134.0" layoutY="31.0" prefHeight="33.0" prefWidth="224.0" text="nombreMaestro">
                <font>
-                  <Font size="18.0" />
+                  <Font name="Gill Sans MT" size="18.0" />
                </font></Label>
             <JFXButton fx:id="botonEditar" contentDisplay="TOP" layoutX="140.0" layoutY="480.0" onAction="#desplegarVentanaEditar" prefHeight="99.0" prefWidth="97.0" text="Editar">
                <graphic>
-                  <FontAwesomeIconView glyphName="PENCIL" size="50" wrappingWidth="12.285714149475098" />
+                  <FontAwesomeIconView glyphName="PENCIL" size="50" wrappingWidth="44.2857141494751" />
                </graphic>
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
-            <JFXButton fx:id="botonRegistrarAsistencia" layoutX="312.0" layoutY="386.0" onAction="#desplegarVentanaRegistrarAsistencia" style="-fx-background-color: #CDCDCD;" text="Registrar Asistencia">
+            <JFXButton fx:id="botonRegistrarAsistencia" layoutX="283.0" layoutY="401.0" onAction="#desplegarVentanaRegistrarAsistencia" style="-fx-background-color: #CDCDCD;" text="Registrar asistencia">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
          </children>
       </Pane>
