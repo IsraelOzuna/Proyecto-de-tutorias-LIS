@@ -16,4 +16,5 @@ public interface IPromocion {
     public boolean registrarPromocion(persistencia.Promocion nuevaPromocion);
     public List<persistencia.Promocion> consultarPromociones ();
     public Promocion adquirirPromocionPorNombre(String nombrePromocion);
+    public boolean promocionYaexistente(String nombrePromocion);
 }

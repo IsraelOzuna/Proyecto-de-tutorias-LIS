@@ -3,7 +3,6 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -13,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="1120.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaRegistrarPagoAlumnoDireccionController">
+<AnchorPane id="AnchorPane" fx:id="panelRegistro" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaRegistrarPagoAlumnoDireccionController">
    <children>
       <GridPane layoutX="41.0" layoutY="76.0" prefHeight="540.0" prefWidth="1120.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="84.0">
         <columnConstraints>
@@ -56,21 +55,17 @@
                   <Font name="Gill Sans MT Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="etiquetaNombreMaestro" text="Label" GridPane.columnIndex="2" GridPane.rowIndex="4">
+            <Label fx:id="etiquetaMaestro" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                <font>
                   <Font name="Gill Sans MT" size="16.0" />
                </font>
             </Label>
-            <ComboBox fx:id="comboNombreAlumno" prefHeight="25.0" prefWidth="224.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></ComboBox>
             <DatePicker fx:id="selectorFecha" prefHeight="25.0" prefWidth="230.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></DatePicker>
-            <TextField fx:id="CampoMontoRecibido" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <JFXButton fx:id="botonRegistrar" style="-fx-background-color: #CDCDCD;" text="Registrar" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+            <TextField fx:id="CampoMontoRecibido" onKeyTyped="#limitarCaracteresCantidad" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <JFXButton fx:id="botonRegistrar" onAction="#registrarPago" style="-fx-background-color: #CDCDCD;" text="Registrar" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -81,7 +76,7 @@
                   <Insets />
                </GridPane.margin>
             </JFXButton>
-            <JFXButton fx:id="botonCancelar" style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <JFXButton fx:id="botonCancelar" onAction="#cancelarRegistro" style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
@@ -92,10 +87,16 @@
                   <Insets left="400.0" />
                </GridPane.margin>
             </JFXButton>
-            <ComboBox fx:id="comboGrupo" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="2">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></ComboBox>
+            <Label fx:id="etiquetaNombreGrupo" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="etiquetaNombreAlumno" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
       <GridPane layoutX="100.0" layoutY="-13.0" prefHeight="67.0" prefWidth="1120.0" AnchorPane.bottomAnchor="557.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

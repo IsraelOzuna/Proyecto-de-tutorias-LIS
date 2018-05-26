@@ -100,4 +100,13 @@ public class CuentaDAO implements ICuenta {
         
     }
 
+    @Override
+    public persistencia.Cuenta obtenerCuenta(String nombreUsuario) {
+        persistencia.Cuenta cuentaAdquirida = new persistencia.Cuenta();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        CuentaJpaController cuentaJpaController = new CuentaJpaController(entityManagerFactory);
+        cuentaAdquirida=cuentaJpaController.findCuenta(nombreUsuario);
+        return cuentaAdquirida;
+    }
+
 }

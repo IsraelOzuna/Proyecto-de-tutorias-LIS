@@ -45,6 +45,9 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Alumno implements Serializable {
 
     @OneToMany(mappedBy = "idAlumno")
+    private Collection<Pagoalumnodireccion> pagoalumnodireccionCollection;
+
+    @OneToMany(mappedBy = "idAlumno")
     private Collection<Asistencia> asistenciaCollection;
 
     @JoinTable(name = "pertenece", joinColumns = {
@@ -188,6 +191,15 @@ public class Alumno implements Serializable {
 
     public void setAsistenciaCollection(Collection<Asistencia> asistenciaCollection) {
         this.asistenciaCollection = asistenciaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Pagoalumnodireccion> getPagoalumnodireccionCollection() {
+        return pagoalumnodireccionCollection;
+    }
+
+    public void setPagoalumnodireccionCollection(Collection<Pagoalumnodireccion> pagoalumnodireccionCollection) {
+        this.pagoalumnodireccionCollection = pagoalumnodireccionCollection;
     }
     
 }

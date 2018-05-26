@@ -74,6 +74,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     private Label etiquetaErrorTelefono;
     private String rutaOrigen;
     private String rutaNueva;
+    private String nombreUsuarioActual;
 
     /**
      * Initializes the controller class.
@@ -81,6 +82,10 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         nombreFoto = "";
+    }
+    
+    public void llenarDatos(String nombreUsuario){
+        nombreUsuarioActual=nombreUsuario;
     }
 
     @FXML
@@ -220,7 +225,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
-        ventanaBuscar.obtenerSeccion("Alumnos", panelPrincipal);
+        ventanaBuscar.obtenerSeccion("Alumnos", panelPrincipal, nombreUsuarioActual);
         panelPrincipal.getChildren().add(root);
     }
 

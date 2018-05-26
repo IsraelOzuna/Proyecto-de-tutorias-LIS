@@ -45,6 +45,7 @@ public class VentanaInformacionClientesController {
     private JFXButton botonCerrar;
     private Pane panelPrincipal;
     private Cliente cliente;
+    private String nombreUsuarioActual;
 
     public void obtenerPanel(Pane panelPrincipal) {
         this.panelPrincipal = panelPrincipal;
@@ -59,7 +60,7 @@ public class VentanaInformacionClientesController {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaEditarCliente.fxml"));
         Parent root = (Parent) loader.load();
         VentanaEditarClienteController ventanaEditar = loader.getController();
-        ventanaEditar.llenarCampos(cliente);        
+        ventanaEditar.llenarCampos(cliente, nombreUsuarioActual);        
         panelPrincipal.getChildren().add(root);
     }
 
@@ -68,7 +69,8 @@ public class VentanaInformacionClientesController {
         panelTrasero.setVisible(false);
     }
 
-    public void llenarCamposInformacion() {
+    public void llenarCamposInformacion(String nombreUsuario) {
+        nombreUsuarioActual=nombreUsuario;
         etiquetaNombre.setText(cliente.getNombre() + " " + cliente.getApellidos());
         etiquetaCorreo.setText(cliente.getCorreo());
         etiquetaTelefono.setText(cliente.getTelefono());        

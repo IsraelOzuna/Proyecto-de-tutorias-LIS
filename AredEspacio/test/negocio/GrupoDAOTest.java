@@ -223,7 +223,4 @@ public class GrupoDAOTest {
         List<Grupo> listaGruposAdquiridos=grupoDAO.adquirirGrupos(cuentaPruebaDirector);
         assertEquals(listaGruposPredeterminados, listaGruposAdquiridos);
     }
-    
-    
-
 }

@@ -44,13 +44,15 @@ public class VentanaBuscarController implements Initializable {
     private GridPane gridCoincidencias;
     private String seccion = "";
     private Pane panelPrincipal;
+    String nombreUsuarioActual;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
 
-    public void obtenerSeccion(String seccion, Pane panelPrincipal) {
+    public void obtenerSeccion(String seccion, Pane panelPrincipal, String nombreUsuario) {
+        nombreUsuarioActual=nombreUsuario;
         this.seccion = seccion;
         this.panelPrincipal = panelPrincipal;
         etiquetaIdentidicador.setText(seccion);
@@ -65,12 +67,14 @@ public class VentanaBuscarController implements Initializable {
                 loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRegistrarAlumno.fxml"));
                 root = (Parent) loader.load();
                 VentanaRegistrarAlumnoController ventanaRegistrarAlumno = loader.getController();
+                ventanaRegistrarAlumno.llenarDatos(nombreUsuarioActual);
                 panelPrincipal.getChildren().add(root);
                 break;
             case "Maestros":
                 loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRegistrarMaestro.fxml"));
                 root = (Parent) loader.load();
                 VentanaRegistrarMaestroController ventanaRegistrarMaestro = loader.getController();
+                ventanaRegistrarMaestro.llenarDatos(nombreUsuarioActual);
                 panelPrincipal.getChildren().add(root);
                 break;
 
@@ -78,6 +82,7 @@ public class VentanaBuscarController implements Initializable {
                 loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRegistrarCliente.fxml"));
                 root = (Parent) loader.load();
                 VentanaRegistrarClienteController ventanaRegistrarCliente = loader.getController();
+                ventanaRegistrarCliente.llenarDatos(nombreUsuarioActual);
                 panelPrincipal.getChildren().add(root);
                 break;
             default:
@@ -129,7 +134,7 @@ public class VentanaBuscarController implements Initializable {
                         try {
                             root = (Parent) loader.load();
                             PanelCoincidenciaController controlador = loader.getController();
-                            controlador.obtenerSeccion(seccion, panelPrincipal);
+                            controlador.obtenerSeccion(seccion, panelPrincipal, nombreUsuarioActual);
                             controlador.llenarDatosAlumno(alumnos.get(contadorCoincidencias));
                             contadorCoincidencias++;
                             gridCoincidencias.add(root, j, i);
@@ -165,7 +170,7 @@ public class VentanaBuscarController implements Initializable {
                         try {
                             root = (Parent) loader.load();
                             PanelCoincidenciaController controlador = loader.getController();
-                            controlador.obtenerSeccion(seccion, panelPrincipal);
+                            controlador.obtenerSeccion(seccion, panelPrincipal, nombreUsuarioActual);
                             controlador.llenarDatosMaestro(maestros.get(contadorCoincidenciasEncontradas));
                             contadorCoincidenciasEncontradas++;
                             gridCoincidencias.add(root, j, i);
@@ -201,7 +206,7 @@ public class VentanaBuscarController implements Initializable {
                         try {
                             root = (Parent) loader.load();
                             PanelCoincidenciaController controlador = loader.getController();
-                            controlador.obtenerSeccion(seccion, panelPrincipal);
+                            controlador.obtenerSeccion(seccion, panelPrincipal, nombreUsuarioActual);
                             controlador.llenarDatosCliente(clientes.get(contadorCoincidenciasEncon));
                             contadorCoincidenciasEncon++;
                             gridCoincidencias.add(root, j, i);

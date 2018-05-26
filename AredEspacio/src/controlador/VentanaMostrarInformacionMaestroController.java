@@ -52,6 +52,7 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
     private Pane panelPrincipal;
     @FXML
     private AnchorPane panelInformacionMaestro;
+    private String nombreUsuarioActual;
 
     public void obtenerMaestro(Maestro maestro) {
         this.maestro = maestro;
@@ -66,7 +67,8 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
 
     }
 
-    public void llenarCamposInformacion() throws MalformedURLException {
+    public void llenarCamposInformacion(String nombreUsuario) throws MalformedURLException {
+        nombreUsuarioActual=nombreUsuario;
         etiquetaNombre.setText(maestro.getNombre() + " " + maestro.getApellidos());
         etiquetaCorreo.setText(maestro.getCorreoElectronico());
         etiquetaMontoAPagar.setText(Double.toString(maestro.getMensualidad()));
@@ -97,7 +99,7 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaEditarInformacionMaestro.fxml"));
         Parent root = (Parent) loader.load();
         VentanaEditarInformacionMaestroController ventanaEditarInformacionMaestro = loader.getController();
-        ventanaEditarInformacionMaestro.obtenerMaestro(maestro);
+        ventanaEditarInformacionMaestro.obtenerMaestro(maestro, nombreUsuarioActual);
         ventanaEditarInformacionMaestro.obtenerPanel(panelPrincipal);
         panelPrincipal.getChildren().add(root);
     }

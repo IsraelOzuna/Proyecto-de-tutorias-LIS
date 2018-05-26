@@ -49,7 +49,7 @@ public class VentanaMenuDirectorController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
-        ventanaBuscar.obtenerSeccion("Alumnos", panelPrincipal);
+        ventanaBuscar.obtenerSeccion("Alumnos", panelPrincipal, etiquetaNombreUsuario.getText());
         panelPrincipal.getChildren().clear();
         panelPrincipal.getChildren().add(root);
     }
@@ -59,7 +59,7 @@ public class VentanaMenuDirectorController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
-        ventanaBuscar.obtenerSeccion("Maestros", panelPrincipal);
+        ventanaBuscar.obtenerSeccion("Maestros", panelPrincipal, etiquetaNombreUsuario.getText());
         panelPrincipal.getChildren().clear();
         panelPrincipal.getChildren().add(root);
     }
@@ -95,7 +95,7 @@ public class VentanaMenuDirectorController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
-        ventanaBuscar.obtenerSeccion("Clientes", panelPrincipal);
+        ventanaBuscar.obtenerSeccion("Clientes", panelPrincipal, etiquetaNombreUsuario.getText());
         panelPrincipal.getChildren().clear();
         panelPrincipal.getChildren().add(root);
     }
@@ -122,7 +122,8 @@ public class VentanaMenuDirectorController implements Initializable {
     private void desplegarVentanaPromociones(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaCrearPromocion.fxml"));
         Parent root = (Parent) loader.load();
-        VentanaCrearPromocionController ventanaPromocion = loader.getController();   
+        VentanaCrearPromocionController ventanaPromocion = loader.getController();
+       ventanaPromocion.iniciarVentanaDesdeInscripcion("menu", null, etiquetaNombreUsuario.getText());
         panelPrincipal.getChildren().clear();
         panelPrincipal.getChildren().add(root);
     }

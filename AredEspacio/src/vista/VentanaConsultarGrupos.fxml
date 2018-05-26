@@ -10,10 +10,9 @@
 
 <AnchorPane id="AnchorPane" fx:id="panelConsultarGrupos" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaConsultarGruposController">
    <children>
-      <TableView fx:id="tablaGrupos" layoutX="61.0" layoutY="74.0" prefHeight="460.0" prefWidth="1000.0">
+      <TableView fx:id="tablaGrupos" layoutX="290.0" layoutY="74.0" prefHeight="460.0" prefWidth="559.0">
          <columns>
-            <TableColumn fx:id="columnaNombre" prefWidth="497.0" text="Nombre" />
-            <TableColumn fx:id="columnaAlumnos" prefWidth="502.0" text="Alumnos" />
+            <TableColumn fx:id="columnaNombre" prefWidth="558.0" text="Nombre" />
          </columns>
       </TableView>
       <Label fx:id="etiquetaGrupos" layoutX="529.0" layoutY="33.0" text="Grupos">

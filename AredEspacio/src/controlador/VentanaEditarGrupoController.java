@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -30,6 +31,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import negocio.CuentaDAO;
 import negocio.GrupoDAO;
 import negocio.MaestroDAO;
 import org.w3c.dom.Document;
@@ -98,8 +100,9 @@ public class VentanaEditarGrupoController implements Initializable {
         for(int i=0; i<listaMaestros.size(); i++){///////
                 maestros.add(listaMaestros.get(i).getNombre());
         }
+        maestros.add(nombreUsuarioActual+" (Director)");
         comboMaestro.setItems(maestros);
-        comboMaestro.setValue(grupo.getUsuario().getUsuario());
+        comboMaestro.setValue(maestroDAO.adquirirNombreMaestroPorNombreDeUsuario(grupo.getUsuario().getUsuario()));
         
         campoInscripcion.textProperty().addListener((observable, viejoValor, nuevoValor) -> {
             if (!nuevoValor.matches("\\d+\\.\\d*")) {
@@ -122,25 +125,48 @@ public class VentanaEditarGrupoController implements Initializable {
         if(!existenCamposVacios()){
             if(!existenCamposExcedidos()){
                 if(!nombreGrupoRepetido()){
-                    GrupoDAO nuevoGrupoDAO = new GrupoDAO(unidadPersistencia);
-                    Cuenta nuevaCuenta=new Cuenta();
-                    nuevaCuenta.setUsuario(comboMaestro.getValue());
-                    Grupo grupoEditar = new Grupo();
-                    
-                    grupoEditar=nuevoGrupoDAO.adquirirGrupo(idGrupoActual);
-                    grupoEditar.setNombreGrupo(campoNombre.getText());
-                    grupoEditar.setUsuario(nuevaCuenta);
-                    grupoEditar.setInscripcion(Double.parseDouble(campoInscripcion.getText()));
-                    grupoEditar.setMensualidad(Double.parseDouble(campoMensualidad.getText()));
-                    if(nuevoGrupoDAO.editarGrupo(grupoEditar)){
-                        DialogosController.mostrarMensajeInformacion("Editado", "El grupo ha sido editado", "El grupo fué editado correctamente");
-                        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
-                        Parent root = (Parent) loader.load();
-                        VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
-                        ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
-                        panelEditarGrupo.getChildren().add(root); 
+                    if(!nombreGrupoRepetidoInactivo()){
+                        GrupoDAO nuevoGrupoDAO = new GrupoDAO(unidadPersistencia);
+                        MaestroDAO maestroDAO = new MaestroDAO();
+                        CuentaDAO cuentaDAO = new CuentaDAO();
+                        Cuenta nuevaCuenta=new Cuenta();
+                        if(comboMaestro.getValue().equals(nombreUsuario+" (Director)")){
+                            nuevaCuenta=cuentaDAO.obtenerCuenta(nombreUsuario);
+                            nuevaCuenta.setUsuario(nuevaCuenta.getUsuario());
+                        }else{
+                            nuevaCuenta=cuentaDAO.obtenerCuentaMaestro(comboMaestro.getValue());
+                            nuevaCuenta.setUsuario(nuevaCuenta.getUsuario());
+                            Maestro maestroEditar=new Maestro();
+                            for(int i=0; i<listaMaestros.size(); i++){
+                                if(listaMaestros.get(i).getNombre().equals(comboMaestro.getValue())){
+                                    maestroEditar=listaMaestros.get(i);
+                                }
+                            }
+                            if(maestroEditar.getEstaActivo()==0){
+                                maestroEditar.setFechaCorte(new Date());
+                            }
+                            maestroEditar.setEstaActivo(1);
+                            maestroDAO.editarMaestro(maestroEditar);
+                        }
+                        Grupo grupoEditar = new Grupo();
+
+                        grupoEditar=nuevoGrupoDAO.adquirirGrupo(idGrupoActual);
+                        grupoEditar.setNombreGrupo(campoNombre.getText());
+                        grupoEditar.setUsuario(nuevaCuenta);
+                        grupoEditar.setInscripcion(Double.parseDouble(campoInscripcion.getText()));
+                        grupoEditar.setMensualidad(Double.parseDouble(campoMensualidad.getText()));
+                        if(nuevoGrupoDAO.editarGrupo(grupoEditar)){
+                            DialogosController.mostrarMensajeInformacion("Editado", "El grupo ha sido editado", "El grupo fué editado correctamente");
+                            FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
+                            Parent root = (Parent) loader.load();
+                            VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
+                            ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
+                            panelEditarGrupo.getChildren().add(root); 
+                        }else{
+                            DialogosController.mostrarMensajeInformacion("Error", "Parece haber ocurrido un error", "Por favor comuniquese con un el encargado del sistema");
+                        }
                     }else{
-                        DialogosController.mostrarMensajeInformacion("Error", "Parece haber ocurrido un error", "Por favor comuniquese con un el encargado del sistema");
+                        DialogosController.mostrarMensajeInformacion("Error", "Parece que ese nombre de grupo ya lo tiene un grupo que se encuentra inactivo", "Para evitar conflictos y si lo que desea es reactivar dicho grupo, le recomendamos que cree un nuevo grupo con ese nombre para reactivarlo");
                     }
                 }else{
                     DialogosController.mostrarMensajeInformacion("Grupo repetido", "Un grupo con ese nombre ya existe", "por favor cambie el nombre del grupo");
@@ -165,9 +191,6 @@ public class VentanaEditarGrupoController implements Initializable {
         ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
         panelEditarGrupo.getChildren().add(root);
     }
-    
-    
-    
     
     public boolean existenCamposExcedidos() {
         boolean campoExcedido = false;
@@ -201,7 +224,7 @@ public class VentanaEditarGrupoController implements Initializable {
     }
     
     public boolean nombreGrupoRepetido(){
-        boolean repetido=true;
+        boolean repetido=false;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         Cuenta usuario = new Cuenta();
         List<Grupo> listaGrupos;
@@ -221,6 +244,27 @@ public class VentanaEditarGrupoController implements Initializable {
                 }
             }
             
+        }
+        return repetido;
+    }
+    
+    
+    
+    public boolean nombreGrupoRepetidoInactivo(){
+        boolean repetido=false;
+        GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
+        Cuenta usuario = new Cuenta();
+        List<Grupo> listaGrupos;
+        String grupoActual;
+        listaGrupos=grupoDAO.adquirirGrupos(usuario);
+        for(int i=0;i<listaGrupos.size();i++){
+            if(listaGrupos.get(i).getEstaActivo()==0){
+                grupoActual=listaGrupos.get(i).getNombreGrupo();
+                repetido = grupoActual.equals(campoNombre.getText());
+                if(repetido){
+                    break;
+                }
+            }
         }
         return repetido;
     }

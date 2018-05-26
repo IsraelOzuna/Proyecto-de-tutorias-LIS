@@ -34,6 +34,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cuenta.findByTipoCuenta", query = "SELECT c FROM Cuenta c WHERE c.tipoCuenta = :tipoCuenta")})
 public class Cuenta implements Serializable {
 
+    @OneToMany(mappedBy = "usuario")
+    private Collection<Pagoalumnodireccion> pagoalumnodireccionCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -119,6 +122,15 @@ public class Cuenta implements Serializable {
     @Override
     public String toString() {
         return "persistencia.Cuenta[ usuario=" + usuario + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Pagoalumnodireccion> getPagoalumnodireccionCollection() {
+        return pagoalumnodireccionCollection;
+    }
+
+    public void setPagoalumnodireccionCollection(Collection<Pagoalumnodireccion> pagoalumnodireccionCollection) {
+        this.pagoalumnodireccionCollection = pagoalumnodireccionCollection;
     }
     
 }

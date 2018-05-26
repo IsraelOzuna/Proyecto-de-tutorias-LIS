@@ -45,7 +45,7 @@
             </Label>
             <TextField fx:id="campoNombrePromocion" maxHeight="25.0" maxWidth="250.0" minHeight="25.0" minWidth="250.0" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="2" />
             <TextField fx:id="campoDescripcion" maxHeight="25.0" maxWidth="250.0" minHeight="25.0" minWidth="250.0" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField fx:id="campoMonto" maxHeight="25.0" maxWidth="250.0" minHeight="25.0" minWidth="250.0" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="campoMonto" maxHeight="25.0" maxWidth="250.0" minHeight="25.0" minWidth="250.0" onKeyTyped="#limitarCaracteres" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <JFXButton fx:id="botonRegistrarPromocion" onAction="#registrarPromocion" style="-fx-background-color: #CDCDCD;" text="Registrar " GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                <font>
                   <Font name="Gill Sans MT Bold" size="20.0" />

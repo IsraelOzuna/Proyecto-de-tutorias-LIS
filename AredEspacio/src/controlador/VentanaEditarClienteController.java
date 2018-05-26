@@ -66,6 +66,7 @@ public class VentanaEditarClienteController implements Initializable{
     private Cliente cliente;
     private String rutaOrigen;
     private String rutaNueva;
+    private String nombreUsuarioActual;
     
     /**
      * Initializes the controller class.
@@ -229,11 +230,12 @@ public class VentanaEditarClienteController implements Initializable{
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
-        ventanaBuscar.obtenerSeccion("Clientes", panelPrincipal);
+        ventanaBuscar.obtenerSeccion("Clientes", panelPrincipal, nombreUsuarioActual);
         panelPrincipal.getChildren().add(root);
     }
 
-    public void llenarCampos(Cliente cliente) {
+    public void llenarCampos(Cliente cliente, String nombreUsuario) {
+        nombreUsuarioActual=nombreUsuario;
         this.cliente = cliente;
         campoNombre.setText(cliente.getNombre());
         campoApellidos.setText(cliente.getApellidos());

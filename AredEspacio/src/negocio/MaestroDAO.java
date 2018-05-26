@@ -5,11 +5,13 @@
  */
 package negocio;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import persistencia.CuentaJpaController;
 import persistencia.MaestroJpaController;
 
 /**
@@ -120,5 +122,29 @@ public class MaestroDAO implements IMaestro {
             }
         }
         return datosModificacdosExitosamente;
+    }
+
+    @Override
+    public String adquirirNombreMaestroPorNombreDeUsuario(String nombreUsuario) {
+        String nombreMaestro="";
+        List<persistencia.Maestro> maestros = new ArrayList();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        MaestroJpaController maestroJpaController = new MaestroJpaController(entityManagerFactory);
+        maestros=maestroJpaController.findMaestroEntities();
+        for(int i = 0; i<maestros.size(); i++){
+            if(maestros.get(i).getUsuario().equals(nombreUsuario)){
+                nombreMaestro=maestros.get(i).getNombre();
+            }
+        }
+        return nombreMaestro;
+    }
+
+    @Override
+    public persistencia.Maestro adquirirMaestro(String nombreMaestro) {
+        persistencia.Maestro maestroAdquirido=new persistencia.Maestro();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        MaestroJpaController maestroJpaController = new MaestroJpaController(entityManagerFactory);
+        maestroAdquirido=maestroJpaController.findMaestro(nombreMaestro);
+        return maestroAdquirido;
     }
 }

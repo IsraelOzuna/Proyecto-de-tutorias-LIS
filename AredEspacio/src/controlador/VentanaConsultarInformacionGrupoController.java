@@ -17,6 +17,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -26,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -37,6 +39,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import negocio.CuentaDAO;
 import negocio.GrupoDAO;
 import negocio.MaestroDAO;
 import org.w3c.dom.Document;
@@ -47,6 +50,7 @@ import persistencia.Alumno;
 import persistencia.Cuenta;
 import persistencia.Grupo;
 import persistencia.Horario;
+import persistencia.Maestro;
 
 /**
  * FXML Controller class
@@ -100,6 +104,8 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     private String unidadPersistencia="AredEspacioPU";
     @FXML
     private JFXButton botonRegistrarAsistencia;
+    boolean esMaestro=false;
+    private String nombreCuentaMaestro;
     
 
     /**
@@ -311,10 +317,18 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     
     public void establecerGrupo(int idGrupo, String nombreUsuarioActual){
         nombreUsuario=nombreUsuarioActual;
+        CuentaDAO cuentaDAO = new CuentaDAO();
+        Cuenta cuentaAdquirirda=cuentaDAO.obtenerCuenta(nombreUsuario);
+        if(cuentaAdquirirda.getTipoCuenta().equals("Maestro")){
+            botonEliminar.setVisible(false);
+            botonEditar.setVisible(false);
+            esMaestro=true;
+        }
         this.idGrupo=idGrupo;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         Grupo grupoConsultado= new Grupo();
         grupoConsultado=grupoDAO.adquirirGrupo(idGrupo);
+        nombreCuentaMaestro=grupoConsultado.getUsuario().getUsuario();
         nombreGrupo=grupoConsultado.getNombreGrupo();
         etiquetaNombreMaestro.setText(grupoConsultado.getUsuario().getUsuario());
         etiquetaPrecioInscripcion.setText(grupoConsultado.getInscripcion().toString());
@@ -327,6 +341,23 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         this.llenarTablaHorario(grupoConsultado.getNombreGrupo());
         this.iniciarTablaAlumnos();
         this.llenarTablaAlumnos(grupoConsultado.getNombreGrupo()); 
+        final ObservableList<Alumno> tablaGrupoSel = tablaAlumnos.getSelectionModel().getSelectedItems();
+        tablaAlumnos.setOnMousePressed(new EventHandler<MouseEvent>() {
+        @Override
+            public void handle(MouseEvent event) {
+                if((tablaAlumnos.getSelectionModel().getSelectedItem()!=null) &&(!esMaestro) ){
+                    FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRegistrarPagoAlumnoDireccion.fxml"));
+                    try{
+                        Parent root = (Parent) loader.load();
+                        VentanaRegistrarPagoAlumnoDireccionController ventanaRegistrarPago = loader.getController();
+                        ventanaRegistrarPago.establecerDatos(tablaAlumnos.getSelectionModel().getSelectedItem(), nombreUsuario, idGrupo);
+                        panelConsultarInfo.getChildren().add(root);
+                    }catch(IOException ex){
+                        Logger.getLogger (VentanaConsultarGruposController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }   
+        });
     }
 
     @FXML
@@ -351,6 +382,46 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     @FXML
     private void eliminarGrupo(ActionEvent event) throws IOException {
         GrupoDAO nuevoGrupoDAO = new GrupoDAO(unidadPersistencia);
+        CuentaDAO cuentaDAO = new CuentaDAO();
+        MaestroDAO maestroDAO = new MaestroDAO();
+        Cuenta cuentaMaestro = cuentaDAO.obtenerCuenta(nombreCuentaMaestro);
+        List<Grupo> listaGrupos=null;
+        listaGrupos=nuevoGrupoDAO.adquirirGrupos(cuentaMaestro);
+        
+        /////Dar de baja a todos los alumnos
+        Grupo grupoEditar = nuevoGrupoDAO.adquirirGrupo(idGrupo);
+        List<Alumno> listaAlumnos = nuevoGrupoDAO.obtenerAlumnos(idGrupo);
+        if(!listaAlumnos.isEmpty()){
+            listaAlumnos.clear();
+            grupoEditar.setAlumnoCollection(listaAlumnos);
+            nuevoGrupoDAO.editarGrupo(grupoEditar);
+        }
+        
+        //Desactivar Maestro
+        int gruposActivos=0;
+        int idGrupoActivo=0;
+        if(cuentaMaestro.getTipoCuenta().equals("Maestro")){
+            String nombreMaestroEditar =maestroDAO.adquirirNombreMaestroPorNombreDeUsuario(nombreCuentaMaestro);
+            Maestro maestroEditar = maestroDAO.adquirirMaestro(nombreCuentaMaestro);
+            
+            
+
+            for(int i=0; i<listaGrupos.size(); i++){
+                if(listaGrupos.get(i).getEstaActivo()==1){
+                    gruposActivos++;
+                    idGrupoActivo=listaGrupos.get(i).getIdGrupo();
+                }
+            }
+            if(gruposActivos==1){
+                if(idGrupoActivo==idGrupo){
+                    maestroEditar.setEstaActivo(0);
+                    ////null
+                    maestroDAO.editarMaestro(maestroEditar); 
+                }
+            } 
+        }
+        
+        //Descativar Grupo
         Grupo grupoEliminar = new Grupo();
         grupoEliminar=nuevoGrupoDAO.adquirirGrupo(idGrupo);
         grupoEliminar.setEstaActivo(0);
@@ -362,21 +433,23 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
             VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
             ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
             panelConsultarInfo.getChildren().add(root); 
+        }else{
+            DialogosController.mostrarMensajeInformacion("Error", "Parece haber ocurrido un error y el grupo no pudó ser eliminado correctamente", "Por favor contecte al encargado del sistema");
         }
     }
     
 
     private void eliminarHorarioGrupo(){
         try {
-                File inputFile = new File(rutaXML);
-                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                Document doc = dBuilder.parse(inputFile);
-                doc.getDocumentElement().normalize();
-                NodeList nList = doc.getElementsByTagName("dia");
-                for(int i =0; i<etiquetasHorasXML.length; i++){
-                    actualizarFilaEliminar(nList, doc, etiquetasHorasXML[i]);
-                }    
+            File inputFile = new File(rutaXML);
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+            NodeList nList = doc.getElementsByTagName("dia");
+            for(int i =0; i<etiquetasHorasXML.length; i++){
+                actualizarFilaEliminar(nList, doc, etiquetasHorasXML[i]);
+            }    
         }catch (Exception e) {
            e.printStackTrace();
         }

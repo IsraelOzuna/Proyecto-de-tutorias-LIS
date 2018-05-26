@@ -13,6 +13,7 @@
     <class>persistencia.Asistencia</class>
     <class>persistencia.Egreso</class>
     <class>persistencia.Promocion</class>
+    <class>persistencia.Pagoalumnodireccion</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/Ared?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="Hector"/>

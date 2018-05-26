@@ -39,6 +39,7 @@ public class PanelCoincidenciaController implements Initializable {
     private Maestro maestro;
     private Alumno alumno;
     private Cliente cliente;
+    private String nombreUsuarioActual;
 
     /**
      * Initializes the controller class.
@@ -48,7 +49,8 @@ public class PanelCoincidenciaController implements Initializable {
 
     }
 
-    public void obtenerSeccion(String seccion, Pane panelPrincipal) {
+    public void obtenerSeccion(String seccion, Pane panelPrincipal, String nombreUsuario) {
+        nombreUsuarioActual=nombreUsuario;
         this.seccion = seccion;
         this.panelPrincipal = panelPrincipal;
     }
@@ -64,7 +66,7 @@ public class PanelCoincidenciaController implements Initializable {
                 VentanaInformacionAlumnosController ventanaMostrarInformacionAlumno = loader.getController();
                 ventanaMostrarInformacionAlumno.obtenerAlumno(alumno);
                 ventanaMostrarInformacionAlumno.obtenerPanel(panelPrincipal);
-                ventanaMostrarInformacionAlumno.llenarCamposInformacion();
+                ventanaMostrarInformacionAlumno.llenarCamposInformacion(nombreUsuarioActual);
                 panelPrincipal.getChildren().add(root);
                 break;
             case "Maestros":
@@ -73,7 +75,7 @@ public class PanelCoincidenciaController implements Initializable {
                 VentanaMostrarInformacionMaestroController ventanaMostrarInformacionMaestro = loader.getController();
                 ventanaMostrarInformacionMaestro.obtenerMaestro(maestro);
                 ventanaMostrarInformacionMaestro.obtenerPanel(panelPrincipal);
-                ventanaMostrarInformacionMaestro.llenarCamposInformacion();
+                ventanaMostrarInformacionMaestro.llenarCamposInformacion(nombreUsuarioActual);
                 panelPrincipal.getChildren().add(root);
                 break;
 
@@ -83,7 +85,7 @@ public class PanelCoincidenciaController implements Initializable {
                 VentanaInformacionClientesController ventanaMostrarInformacionCliente = loader.getController();
                 ventanaMostrarInformacionCliente.obtenerCliente(cliente);
                 ventanaMostrarInformacionCliente.obtenerPanel(panelPrincipal);
-                ventanaMostrarInformacionCliente.llenarCamposInformacion();
+                ventanaMostrarInformacionCliente.llenarCamposInformacion(nombreUsuarioActual);
                 panelPrincipal.getChildren().add(root);
                 break;
             default:

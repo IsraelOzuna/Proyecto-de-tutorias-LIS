@@ -86,6 +86,7 @@ public class VentanaRegistrarAsistenciaController implements Initializable {
         etiquetaNombreGrupo.setText(grupo.getNombreGrupo());
         inicializarTablaAsistencia();
         iniciarTablaAsistencia(idGrupo);
+        selectorFecha.setEditable(false);
     }
     
     public void iniciarTablaAsistencia (int idGrupo){
@@ -112,7 +113,6 @@ public class VentanaRegistrarAsistenciaController implements Initializable {
         AsistenciaDAO asistenciaDAO = new AsistenciaDAO();
         for(int i=0; i<lista.size();i++){
             if(lista.get(i).getIdAlumno().getIdAlumno().equals(idAlumno)){
-                System.out.println("Asistio: "+lista.get(i).getAsistio());
                 if(lista.get(i).getAsistio().equals("1")){
                     campoLleno=true;
                 }else{
@@ -128,9 +128,10 @@ public class VentanaRegistrarAsistenciaController implements Initializable {
 
     @FXML
     private void actualizarTabla(ActionEvent event) {
-        for(int c=0; c<listaAsistencia.size();c++){
+        listaAsistencia.clear();
+        /*for(int c=0; c<listaAsistencia.size();c++){
             listaAsistencia.remove(c);
-        }
+        }*/
         
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         AsistenciaDAO asistenciaDAO = new AsistenciaDAO();

@@ -64,6 +64,7 @@ public class VentanaInformacionAlumnosController implements Initializable {
     @FXML
     private Button botonInscribir;
     List<String> grupos;
+    private String nombreUsuarioActual;
 
     public void obtenerAlumno(Alumno alumno) {
         this.alumno = alumno;
@@ -88,11 +89,12 @@ public class VentanaInformacionAlumnosController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaEditarAlumno.fxml"));
         Parent root = (Parent) loader.load();
         VentanaEditarAlumnoController ventanaEditar = loader.getController();
-        ventanaEditar.llenarCampos(alumno);
+        ventanaEditar.llenarCampos(alumno, nombreUsuarioActual);
         panelPrincipal.getChildren().add(root);
     }
 
-    public void llenarCamposInformacion() {
+    public void llenarCamposInformacion(String nombreUsuario) {
+        nombreUsuarioActual=nombreUsuario;
         Calendar fechaNacimiento = Calendar.getInstance();
         fechaNacimiento.setTime(alumno.getFechaNacimiento());
         int dia = fechaNacimiento.get(Calendar.DAY_OF_MONTH);
@@ -135,7 +137,7 @@ public class VentanaInformacionAlumnosController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaInscribirAlumno.fxml"));
         Parent root = (Parent) loader.load();
         VentanaInscribirAlumnoController ventanaInscribir = loader.getController();
-        ventanaInscribir.llenarCampos(alumno);
+        ventanaInscribir.llenarCampos(alumno, nombreUsuarioActual);
         panelPrincipal.getChildren().add(root);
     }
 

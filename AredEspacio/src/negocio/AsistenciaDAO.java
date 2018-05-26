@@ -85,17 +85,26 @@ public class AsistenciaDAO implements IAsistenciaDAO{
         ///////////////////////////////////////Validar que la asistencia no se repita
         List<persistencia.Asistencia> listaAsistencias = new ArrayList();
         listaAsistencias=obtenerAsistencia(fecha, idGrupo);
-        while(!alumnoEncontrado || contador>listaAsistencias.size()){
-            if(listaAsistencias.get(contador).getIdAlumno().getIdAlumno()==idAlumno){
-                alumnoEncontrado=true;
-                asistenciaRepetida=true;
-                idAsistencia=listaAsistencias.get(contador).getIdAsistencia();
-            }else{
-                alumnoEncontrado=false;
-                asistenciaRepetida=false;
-                contador++;
+        System.out.println(listaAsistencias.size());
+        
+        if(listaAsistencias.size()>0){
+            for(int i =0; i<listaAsistencias.size();i++){
+                if(listaAsistencias.get(i).getIdAlumno().getIdAlumno()==idAlumno){
+                    alumnoEncontrado=true;
+                    asistenciaRepetida=true;
+                    idAsistencia=listaAsistencias.get(i).getIdAsistencia();
+                    break;
+                }else{
+                    alumnoEncontrado=false;
+                    asistenciaRepetida=false;
+                }
             }
+            
+        }else{
+            asistenciaRepetida=false;
         }
+        
+        
         
         if(asistenciaRepetida){
             try {

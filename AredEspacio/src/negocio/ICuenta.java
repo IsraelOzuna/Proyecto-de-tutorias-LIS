@@ -14,4 +14,5 @@ public interface ICuenta {
     public boolean verificarNombreUsuarioRepetido(String nombreUsuario);
     public String iniciarSesion(String nombreUsuario, String contrasena);
     public persistencia.Cuenta obtenerCuentaMaestro(String nombreMaestro);
+    public persistencia.Cuenta obtenerCuenta (String nombreUsuario);
 }

@@ -80,6 +80,11 @@ public class VentanaConsultarGruposController implements Initializable {
             } 
         }
         
+        if(usuarioActual.getTipoCuenta().equals("Maestro")){
+            botonAdministrarHorarios.setVisible(false);
+            botonCrearGrupo.setVisible(false);
+        }
+        
         Grupo grupo = new Grupo();
         List<Grupo> listaGrupos=null;
         listaGrupos=grupoDAO.adquirirGrupos(usuarioActual);//////////////
@@ -93,6 +98,9 @@ public class VentanaConsultarGruposController implements Initializable {
                 
             }
         }
+        
+        
+        
         tablaGrupos.setOnMousePressed(new EventHandler<MouseEvent>() {
         @Override
             public void handle(MouseEvent event) {

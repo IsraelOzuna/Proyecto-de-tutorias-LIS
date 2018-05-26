@@ -70,11 +70,12 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
     private String rutaOrigen;
     private String rutaNueva;
     private String nombreFoto;
+    private String nombreUsuarioActual;
 
-    public void obtenerMaestro(Maestro maestro) {
+    public void obtenerMaestro(Maestro maestro, String nombreUsuario) {
         this.maestro = maestro;
 
-        llenarCamposInformacion();
+        llenarCamposInformacion(nombreUsuario);
 
     }
 
@@ -257,7 +258,8 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         return camposVacios;
     }
 
-    public void llenarCamposInformacion() {
+    public void llenarCamposInformacion(String nombreUsuario) {
+        nombreUsuarioActual=nombreUsuario;
         campoNombre.setText(maestro.getNombre());
         campoApellidos.setText(maestro.getApellidos());
         campoCorreoElectronico.setText(maestro.getCorreoElectronico());
@@ -276,7 +278,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
-        ventanaBuscar.obtenerSeccion("Maestros", panelPrincipal);
+        ventanaBuscar.obtenerSeccion("Maestros", panelPrincipal, nombreUsuarioActual);
         panelPrincipal.getChildren().add(root);
     }
 

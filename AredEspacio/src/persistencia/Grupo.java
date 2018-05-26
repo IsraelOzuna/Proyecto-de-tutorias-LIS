@@ -44,6 +44,9 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Grupo implements Serializable {
 
     @OneToMany(mappedBy = "idGrupo")
+    private Collection<Pagoalumnodireccion> pagoalumnodireccionCollection;
+
+    @OneToMany(mappedBy = "idGrupo")
     private Collection<Asistencia> asistenciaCollection;
 
     private static final long serialVersionUID = 1L;
@@ -185,6 +188,15 @@ public class Grupo implements Serializable {
 
     public void setAsistenciaCollection(Collection<Asistencia> asistenciaCollection) {
         this.asistenciaCollection = asistenciaCollection;
+    }
+
+    @XmlTransient
+    public Collection<Pagoalumnodireccion> getPagoalumnodireccionCollection() {
+        return pagoalumnodireccionCollection;
+    }
+
+    public void setPagoalumnodireccionCollection(Collection<Pagoalumnodireccion> pagoalumnodireccionCollection) {
+        this.pagoalumnodireccionCollection = pagoalumnodireccionCollection;
     }
     
 }

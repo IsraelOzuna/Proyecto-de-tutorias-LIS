@@ -59,7 +59,21 @@ public class PromocionDAO implements IPromocion{
         }
         return promocionAdquirida;
     }
-    
-    
-    
+
+    @Override
+    public boolean promocionYaexistente(String nombrePromocion) {
+        boolean existe=false;
+        List<Promocion> promociones = new ArrayList();
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);
+        PromocionJpaController promocionJpaController = new PromocionJpaController(entityManagerFactory);
+        promociones=promocionJpaController.findPromocionEntities();
+        Promocion promo = new Promocion();
+        for(int i = 0; i<promociones.size(); i++){
+            if(promociones.get(i).getNombrePromocion().equals(nombrePromocion)){
+                existe=true;
+                break;
+            }   
+        }
+        return existe;
+    }
 }
