@@ -77,7 +77,7 @@ public class RentaDAOTest {
     @Test
     public void testEliminarRenta() {
         System.out.println("eliminarRenta");
-        int id = 31;
+        int id = 1;
         RentaDAO instance = new RentaDAO();
         boolean expResult = true;
         boolean result = instance.eliminarRenta(id);
@@ -114,7 +114,7 @@ public class RentaDAOTest {
         renta.setFecha(fechaAMandar);
         renta.setHoraInicio(Time.valueOf("15:00:00"));
         renta.setHoraFin(Time.valueOf("17:00:00"));
-        int idRenta = 4;
+        int idRenta = 2;
         RentaDAO instance = new RentaDAO();
         boolean expResult = true;
         boolean result = instance.editarRenta(renta, idRenta);
