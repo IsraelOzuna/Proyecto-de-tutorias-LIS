@@ -68,13 +68,15 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
     }
 
     public void llenarCamposInformacion(String nombreUsuario) throws MalformedURLException {
-        nombreUsuarioActual=nombreUsuario;
+        nombreUsuarioActual = nombreUsuario;
         etiquetaNombre.setText(maestro.getNombre() + " " + maestro.getApellidos());
         etiquetaCorreo.setText(maestro.getCorreoElectronico());
-        etiquetaMontoAPagar.setText(Double.toString(maestro.getMensualidad()));
+        if (maestro.getMensualidad() != null) {
+            etiquetaMontoAPagar.setText(Double.toString(maestro.getMensualidad()));
+        }
         etiquetaTelefono.setText(maestro.getTelefono());
         if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("file:"+ System.getProperty("user.dir") +"\\imagenesMaestros\\" + maestro.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesMaestros\\" + maestro.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
     }
