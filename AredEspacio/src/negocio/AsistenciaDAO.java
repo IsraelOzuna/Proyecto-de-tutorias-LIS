@@ -34,7 +34,7 @@ public class AsistenciaDAO implements IAsistenciaDAO{
     @Override
     public List<persistencia.Asistencia> obtenerAsistencia(Date fecha, int idGrupo) {
         boolean asistio=false;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);
         AsistenciaJpaController asistenciaJpaController = new AsistenciaJpaController(entityManagerFactory);
         List<persistencia.Asistencia> listaAsistencias;
         
@@ -75,7 +75,7 @@ public class AsistenciaDAO implements IAsistenciaDAO{
         Grupo grupo = grupoDAO.adquirirGrupo(idGrupo);
         AlumnoDAO alumnoDAO = new AlumnoDAO();
         persistencia.Alumno alumno = alumnoDAO.adquirirAlumno(idAlumno);
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);
         AsistenciaJpaController asistenciaJpaController = new AsistenciaJpaController(entityManagerFactory);
         persistencia.Asistencia asistencia= new persistencia.Asistencia();
         asistencia.setIdAlumno(alumno);
@@ -110,12 +110,19 @@ public class AsistenciaDAO implements IAsistenciaDAO{
             try {
                 asistencia.setIdAsistencia(idAsistencia);
                 asistenciaJpaController.edit(asistencia);
+                registrada=true;
                 } catch (Exception ex) {
-                    Logger.getLogger(AsistenciaDAO.class.getName()).log(Level.SEVERE, null, ex);
+                    registrada=false;
                 }
 
         }else{
-            asistenciaJpaController.create(asistencia);
+            try{
+                asistenciaJpaController.create(asistencia);
+                registrada=true;
+            }catch (Exception ex){
+                registrada=false;
+            }
+            
         }
         return registrada;
     }

@@ -51,5 +51,13 @@ public class PagoInscripcionAlumnoDAOTest {
         assertEquals(expResult, result); 
     }   
     
+    @Test
+    public void testRegistrarInscripcionFallido() {
+        PagoInscripcionAlumnoDAO instance = new PagoInscripcionAlumnoDAO(unidadPersistenciaPruebas);
+        boolean expResult = false;
+        boolean result = instance.registrarInscripcion(100.0, 1, "grupoNulo", new Date());
+        assertEquals(expResult, result); 
+    }   
+    
     
 }

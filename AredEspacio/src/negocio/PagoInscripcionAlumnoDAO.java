@@ -24,6 +24,7 @@ public class PagoInscripcionAlumnoDAO implements IPagoInscripcionAlumno{
     public boolean registrarInscripcion(double monto, int idAlumno, String nombreGrupo, Date fecha) {///Guardar grupo
     boolean pagoInscripcionExitoso = true;
         persistencia.Alumno alumno = null;
+        boolean grupoNulo=false;
         Grupo grupo = null;            
         int idGrupo;
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);
@@ -36,7 +37,7 @@ public class PagoInscripcionAlumnoDAO implements IPagoInscripcionAlumno{
             idGrupo = encontrarGrupo.encontrarGrupoAlumno(nombreGrupo);
             grupo = encontrarGrupo.findGrupo(idGrupo);
         } catch (Exception ex) {
-            Logger.getLogger(PagoMensualidadAlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            grupoNulo=true;
         }
 
         persistencia.Pagoalumno pagoNuevo = new persistencia.Pagoalumno();
@@ -45,12 +46,17 @@ public class PagoInscripcionAlumnoDAO implements IPagoInscripcionAlumno{
         pagoNuevo.setIdAlumno(alumno);
         pagoNuevo.setIdGrupo(grupo);
         pagoNuevo.setTipoPago("0");//////el cero es de inscripcion
-        try {
+        if(grupoNulo){
+            pagoInscripcionExitoso=false;
+        }else{
+            try {
             pagoInscripcionController.create(pagoNuevo);
-        } catch (Exception ex) {
-            pagoInscripcionExitoso = false;
-            Logger.getLogger(PagoMensualidadAlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                pagoInscripcionExitoso = false;
+                Logger.getLogger(PagoMensualidadAlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        
 
         return pagoInscripcionExitoso;
     }

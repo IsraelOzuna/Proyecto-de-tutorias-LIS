@@ -34,6 +34,7 @@
     <class>persistencia.Pagomaestro</class>
     <class>persistencia.Pagoalumno</class>
     <class>persistencia.Egreso</class>
+    <class>persistencia.Pagoalumnodireccion</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/aredespaciopruebas?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

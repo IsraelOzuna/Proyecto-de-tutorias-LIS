@@ -16,15 +16,27 @@ import persistencia.PagoalumnodireccionJpaController;
  * @author Renato
  */
 public class PagoAlumnoDireccionDAO implements IPagoAlumnoDireccion{
+    String unidadPersistencia="AredEspacioPU";
 
+    public PagoAlumnoDireccionDAO() {
+    }
+    public PagoAlumnoDireccionDAO(String unidadPersistencia){
+        this.unidadPersistencia=unidadPersistencia;
+    }
     @Override
     public boolean registrarPagoDireccion(Pagoalumnodireccion pago) {
         boolean pagoRegistrado=false;
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);
         PagoalumnodireccionJpaController pagoController;
         pagoController = new PagoalumnodireccionJpaController(entityManagerFactory);
-        pagoController.create(pago);
-        pagoRegistrado=true;
+        try{
+            pagoController.create(pago);
+            pagoRegistrado=true;
+        }catch(Exception ex){
+            System.out.println(ex.toString());
+            pagoRegistrado=false;
+        }
+        
         return pagoRegistrado;
     }
     

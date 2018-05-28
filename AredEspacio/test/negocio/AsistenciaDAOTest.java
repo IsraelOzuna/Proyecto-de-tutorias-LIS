@@ -37,7 +37,7 @@ public class AsistenciaDAOTest {
     }
 
     @Test
-    public void testObtenerAsistencia() {
+    public void testObtenerAsistenciaFallido() {
         System.out.println("obtenerAsistencia");
         Date fecha = null;
         int idGrupo = 0;
@@ -45,12 +45,11 @@ public class AsistenciaDAOTest {
         List<Asistencia> expResult = null;
         List<Asistencia> result = instance.obtenerAsistencia(fecha, idGrupo);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
 
     @Test
-    public void testObtenerListaPorGrupo() {
+    public void testObtenerListaPorGrupoFallido() {
         System.out.println("obtenerListaPorGrupo");
         List<Asistencia> listaPorFecha = null;
         int idGrupo = 0;
@@ -58,14 +57,13 @@ public class AsistenciaDAOTest {
         List<Asistencia> expResult = null;
         List<Asistencia> result = instance.obtenerListaPorGrupo(listaPorFecha, idGrupo);
         assertEquals(expResult, result);
-        fail("The test case is a prototype.");
     }
 
     /**
      * Test of obtenerListaPorAlumno method, of class AsistenciaDAO.
      */
     @Test
-    public void testObtenerListaPorAlumno() {
+    public void testObtenerListaPorAlumnoFallido() {
         System.out.println("obtenerListaPorAlumno");
         List<Asistencia> listaPorGrupo = null;
         int idAlumno = 0;
@@ -73,8 +71,6 @@ public class AsistenciaDAOTest {
         List<Asistencia> expResult = null;
         List<Asistencia> result = instance.obtenerListaPorAlumno(listaPorGrupo, idAlumno);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -83,8 +79,8 @@ public class AsistenciaDAOTest {
     @Test
     public void testRegistrarAsistencia() {
         System.out.println("RegistrarAsistencia");
-        int idAlumno = 0;
-        int idGrupo = 0;
+        int idAlumno = 100;
+        int idGrupo = 100;
         Date fecha = null;
         String asistio = "";
         AsistenciaDAO instance = new AsistenciaDAO(unidadPersistenciaPruebas);
