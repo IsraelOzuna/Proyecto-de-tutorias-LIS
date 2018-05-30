@@ -1,5 +1,6 @@
 package negocio;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -9,6 +10,7 @@ import persistencia.Alumno;
 import persistencia.AlumnoJpaController;
 import persistencia.Grupo;
 import persistencia.GrupoJpaController;
+import persistencia.Pagoalumno;
 
 /**
  *
@@ -54,5 +56,17 @@ public class PagoMensualidadAlumnoDAO implements IPagoMensualidadAlumno {
             pagoInscripcionExitoso = false;
         }
         return pagoInscripcionExitoso;
+    }
+
+    @Override
+    public List<Pagoalumno> obtenerPagosDeAlumno(int idAlumno) {
+        List<Pagoalumno> pagos;
+
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        PagoalumnoJpaController pagoMensualidadController = new PagoalumnoJpaController(entityManagerFactory);
+        
+        pagos = pagoMensualidadController.obtenerPagosPorAlumno(idAlumno);
+        
+        return pagos;
     }
 }

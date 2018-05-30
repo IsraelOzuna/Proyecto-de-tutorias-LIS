@@ -9,6 +9,7 @@ import javax.persistence.Persistence;
 import persistencia.AlumnoJpaController;
 import persistencia.Grupo;
 import persistencia.GrupoJpaController;
+import persistencia.Pagoalumno;
 
 public class AlumnoDAO implements IAlumno {
 
@@ -38,28 +39,27 @@ public class AlumnoDAO implements IAlumno {
         }
         return alumnoRegistradoExitosamente;
     }
-    
-    
+
     @Override
     public boolean editarAlumno(persistencia.Alumno alumno) {
         boolean datosModificacdosExitosamente = false;
-        if(alumno != null){
-           EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
-           AlumnoJpaController alumnoJpaController = new AlumnoJpaController(entityManagerFactory);
-           
-           persistencia.Alumno alumnoEditado = alumno;
-           
-           alumnoEditado.setNombre(alumno.getNombre());
-           alumnoEditado.setApellidos(alumno.getApellidos());
-           alumnoEditado.setCorreoElectronico(alumno.getCorreoElectronico());
-           alumnoEditado.setFechaNacimiento(alumno.getFechaNacimiento());
-           alumnoEditado.setTelefono(alumno.getTelefono());
-           alumnoEditado.setRutaFoto(alumno.getRutaFoto());
-           
-           try{
-               alumnoJpaController.edit(alumnoEditado);
-               datosModificacdosExitosamente = true;
-           } catch (Exception ex) {
+        if (alumno != null) {
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+            AlumnoJpaController alumnoJpaController = new AlumnoJpaController(entityManagerFactory);
+
+            persistencia.Alumno alumnoEditado = alumno;
+
+            alumnoEditado.setNombre(alumno.getNombre());
+            alumnoEditado.setApellidos(alumno.getApellidos());
+            alumnoEditado.setCorreoElectronico(alumno.getCorreoElectronico());
+            alumnoEditado.setFechaNacimiento(alumno.getFechaNacimiento());
+            alumnoEditado.setTelefono(alumno.getTelefono());
+            alumnoEditado.setRutaFoto(alumno.getRutaFoto());
+
+            try {
+                alumnoJpaController.edit(alumnoEditado);
+                datosModificacdosExitosamente = true;
+            } catch (Exception ex) {
                 Logger.getLogger(AlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -88,31 +88,32 @@ public class AlumnoDAO implements IAlumno {
 
     @Override
     public List<String> encontrarGruposAlumno(int idAlumno) {
-        List<persistencia.Grupo> gruposEncontrados;    
+        List<persistencia.Grupo> gruposEncontrados;
         List<String> gruposAlumno = new ArrayList();
-        
+
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
         AlumnoJpaController alumnoJpaController = new AlumnoJpaController(entityManagerFactory);
-                        
-        gruposEncontrados = alumnoJpaController.obtenerGruposAlumno(idAlumno);  
-        
-        for(int i = 0; i < gruposEncontrados.size(); i ++){
+
+        gruposEncontrados = alumnoJpaController.obtenerGruposAlumno(idAlumno);
+
+        for (int i = 0; i < gruposEncontrados.size(); i++) {
             gruposAlumno.add(gruposEncontrados.get(i).getNombreGrupo());
         }
-        
+
         return gruposAlumno;
     }
 
     @Override
     public persistencia.Alumno adquirirAlumno(int idAlumno) {
-        persistencia.Alumno alumnoEncontrado=new persistencia.Alumno();
+        persistencia.Alumno alumnoEncontrado = new persistencia.Alumno();
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);//Cambiar a "AredEspacioPU"
         AlumnoJpaController alumnoJpaController = new AlumnoJpaController(entityManagerFactory);
-        try{
-            alumnoEncontrado=alumnoJpaController.findAlumno(idAlumno);
-        }catch (Exception ex){
+        try {
+            alumnoEncontrado = alumnoJpaController.findAlumno(idAlumno);
+        } catch (Exception ex) {
             Logger.getLogger(GrupoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alumnoEncontrado;
     }
+
 }

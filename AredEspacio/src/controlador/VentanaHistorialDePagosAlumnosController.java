@@ -18,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import negocio.PagoMensualidadAlumnoDAO;
+import persistencia.Alumno;
 import persistencia.Pagoalumno;
 
 public class VentanaHistorialDePagosAlumnosController implements Initializable {
@@ -41,14 +42,18 @@ public class VentanaHistorialDePagosAlumnosController implements Initializable {
     @FXML
     private ImageView imagenPerfil;
 
+    private Alumno alumno;
+
     public void obtenerDatos(Pane panelPrincipal, String nombreAlumno, String rutaFoto) {
         this.panelPrincipal = panelPrincipal;
         this.nombreAlumno = nombreAlumno;
         this.rutaFoto = rutaFoto;
+      
     }
 
-    public void llenarTablaPagos(ArrayList<Pagoalumno> listaPagos) {
+    public void llenarTablaPagos(List<Pagoalumno> pagosAlumnos) {
         etiquetaNombreAlumno.setText(nombreAlumno);
+        
 
         if (rutaFoto != null) {
             Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesAlumnos\\" + rutaFoto, 100, 100, false, true, true);
@@ -59,17 +64,17 @@ public class VentanaHistorialDePagosAlumnosController implements Initializable {
 
         columnaCantidad.setCellValueFactory(new PropertyValueFactory<persistencia.Pagoalumno, Double>("cantidad"));
 
-        tablaPagos.setItems(FXCollections.observableList(listaPagos));
+        tablaPagos.setItems(FXCollections.observableList(pagosAlumnos));
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
     }
 
     @FXML
     private void cerrarVentanaHistorialDePagos(ActionEvent event) {
-    panelTrasero.setVisible(false);
+        panelTrasero.setVisible(false);
     }
 
 }

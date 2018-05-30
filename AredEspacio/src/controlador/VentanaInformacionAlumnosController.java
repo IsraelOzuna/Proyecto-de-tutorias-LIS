@@ -22,6 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import negocio.AlumnoDAO;
 import negocio.GrupoDAO;
+import negocio.PagoMensualidadAlumnoDAO;
 import negocio.Utileria;
 import persistencia.Alumno;
 import persistencia.Cuenta;
@@ -94,7 +95,7 @@ public class VentanaInformacionAlumnosController implements Initializable {
     }
 
     public void llenarCamposInformacion(String nombreUsuario) {
-        nombreUsuarioActual=nombreUsuario;
+        nombreUsuarioActual = nombreUsuario;
         Calendar fechaNacimiento = Calendar.getInstance();
         fechaNacimiento.setTime(alumno.getFechaNacimiento());
         int dia = fechaNacimiento.get(Calendar.DAY_OF_MONTH);
@@ -126,8 +127,9 @@ public class VentanaInformacionAlumnosController implements Initializable {
         Parent root = (Parent) loader.load();
         VentanaHistorialDePagosAlumnosController ventanaHistorialDePagos = loader.getController();
         String nombreCompletoAlumno = alumno.getNombre() + " " + alumno.getApellidos();
+        PagoMensualidadAlumnoDAO pago = new PagoMensualidadAlumnoDAO();
+        List<Pagoalumno> pagosAlumnos = pago.obtenerPagosDeAlumno(alumno.getIdAlumno());
         ventanaHistorialDePagos.obtenerDatos(panelPrincipal, nombreCompletoAlumno, alumno.getRutaFoto());
-        ArrayList<Pagoalumno> pagosAlumnos = new ArrayList(alumno.getPagoalumnoCollection());
         ventanaHistorialDePagos.llenarTablaPagos(pagosAlumnos);
         panelPrincipal.getChildren().add(root);
     }

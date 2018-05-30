@@ -98,7 +98,6 @@ public class MaestroDAOTest {
         expResult.add(maestroNuevo);
         List<persistencia.Maestro> result = instance.buscarMaestro(nombre);
         assertEquals(expResult, result);
-
     }
 
     @Test

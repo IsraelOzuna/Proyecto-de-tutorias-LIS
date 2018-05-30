@@ -185,4 +185,17 @@ public class PagoalumnoJpaController implements Serializable {
             em.close();
         }
     }
+
+    public List<Pagoalumno> obtenerPagosPorAlumno(int idAlumno  ) {
+        List<persistencia.Pagoalumno> pagos;
+        String consulta = "Select p from Pagoalumno p where p.idAlumno.idAlumno = :idAlumno";
+        EntityManager em = getEntityManager();
+        try {
+            pagos = em.createQuery(consulta).setParameter("idAlumno", idAlumno).getResultList();
+        } finally {
+            em.close();
+        }
+        return pagos;
+    }
+
 }

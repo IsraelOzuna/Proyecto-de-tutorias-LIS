@@ -15,29 +15,29 @@
 
 <AnchorPane id="AnchorPane" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaCrearRentaController">
    <children>
-      <TableView fx:id="tablaGrupos" layoutX="178.0" layoutY="181.0" prefHeight="339.0" prefWidth="370.0">
+      <TableView fx:id="tablaGrupos" layoutX="178.0" layoutY="226.0" prefHeight="294.0" prefWidth="370.0">
         <columns>
           <TableColumn fx:id="columnaHorarioGrupo" prefWidth="102.0" text="Horario" />
           <TableColumn fx:id="columnaNombreGrupo" prefWidth="267.0" text="Grupo" />
         </columns>
       </TableView>
-      <DatePicker fx:id="campoFecha" editable="false" layoutX="811.0" layoutY="71.0" prefHeight="25.0" prefWidth="150.0" />
-      <Label fx:id="etiquetaFecha" layoutX="811.0" layoutY="40.0" text="Fecha:">
+      <DatePicker fx:id="campoFecha" editable="false" layoutX="33.0" layoutY="45.0" prefHeight="25.0" prefWidth="150.0" />
+      <Label fx:id="etiquetaFecha" layoutX="33.0" layoutY="14.0" text="Fecha:">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaCliente" layoutX="41.0" layoutY="40.0" text="Cliente:">
+      <Label fx:id="etiquetaCliente" layoutX="33.0" layoutY="96.0" text="Cliente:">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="etiquetaCantidad" layoutX="646.0" layoutY="40.0" text="Cantidad:">
+      <Label fx:id="etiquetaCantidad" layoutX="815.0" layoutY="100.0" text="Cantidad:">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="campoCantidad" layoutX="642.0" layoutY="71.0" onKeyTyped="#limitarCaracteresCantidad" prefHeight="25.0" prefWidth="136.0" />
+      <TextField fx:id="campoCantidad" layoutX="811.0" layoutY="131.0" onKeyTyped="#limitarCaracteresCantidad" prefHeight="25.0" prefWidth="136.0" />
       <JFXButton fx:id="botonRegistrar" layoutX="614.0" layoutY="561.0" onAction="#registrarRenta" prefHeight="42.0" prefWidth="112.0" style="-fx-background-color: #CDCDCD;" text="Registrar">
          <font>
             <Font name="System Bold" size="18.0" />
@@ -54,50 +54,51 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXButton>
-      <Button fx:id="botonMostrarHorarios" layoutX="1000.0" layoutY="69.0" mnemonicParsing="false" onAction="#consultarHorariosDelDia" text="Ver horario">
+      <Button fx:id="botonMostrarHorarios" layoutX="222.0" layoutY="43.0" mnemonicParsing="false" onAction="#consultarHorariosDelDia" text="Ver horario">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Button>
-      <ComboBox fx:id="comboBoxClientes" layoutX="41.0" layoutY="70.0" prefWidth="150.0">
+      <ComboBox fx:id="comboBoxClientes" layoutX="33.0" layoutY="126.0" prefWidth="150.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></ComboBox>
-      <TableView fx:id="tablaRentas" layoutX="614.0" layoutY="181.0" prefHeight="339.0" prefWidth="370.0">
+      <TableView fx:id="tablaRentas" layoutX="614.0" layoutY="226.0" prefHeight="294.0" prefWidth="370.0">
         <columns>
           <TableColumn fx:id="columnaHorarioRenta" prefWidth="103.0" text="Hora inicio" />
             <TableColumn fx:id="columnaHoraFin" prefWidth="105.0" text="Hora Fin" />
           <TableColumn fx:id="columnaNombreClienteRenta" prefWidth="161.0" text="Nombre Cliente" />
         </columns>
       </TableView>
-      <Separator layoutX="-1.0" layoutY="117.0" prefHeight="6.0" prefWidth="1120.0" style="-fx-background-color: #000000;" />
-      <Label layoutX="332.0" layoutY="143.0" text="Grupos">
+      <Separator layoutY="172.0" prefHeight="6.0" prefWidth="1120.0" style="-fx-background-color: #000000;" />
+      <Label layoutX="332.0" layoutY="190.0" text="Grupos">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="770.0" layoutY="143.0" text="Rentas">
+      <Label layoutX="770.0" layoutY="190.0" text="Rentas">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboBoxHoraInicio" layoutX="245.0" layoutY="70.0" prefWidth="150.0">
+      <ComboBox fx:id="comboBoxHoraInicio" layoutX="282.0" layoutY="128.0" prefWidth="150.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></ComboBox>
-      <Label fx:id="etiquetaCliente1" layoutX="245.0" layoutY="40.0" text="Hora Inicio:">
+      <Label fx:id="etiquetaCliente1" layoutX="282.0" layoutY="98.0" text="Hora Inicio:">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboBoxHoraFin" layoutX="448.0" layoutY="72.0" prefWidth="150.0">
+      <ComboBox fx:id="comboBoxHoraFin" layoutX="548.0" layoutY="132.0" prefWidth="150.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></ComboBox>
-      <Label fx:id="etiquetaCliente11" layoutX="448.0" layoutY="40.0" text="Hora Fin:">
+      <Label fx:id="etiquetaCliente11" layoutX="548.0" layoutY="100.0" text="Hora Fin:">
          <font>
             <Font name="Gill Sans MT Bold" size="18.0" />
          </font>
       </Label>
+      <Separator layoutX="14.0" layoutY="81.0" prefHeight="6.0" prefWidth="1120.0" style="-fx-background-color: #000000;" />
    </children>
 </AnchorPane>
