@@ -85,7 +85,6 @@ public class VentanaRentasController implements Initializable {
         columnaHoraFin.setCellValueFactory(new PropertyValueFactory<persistencia.Renta, String>("FormatoHoraFin"));
 
         tablaRentas.setItems(FXCollections.observableList(listaRentas));
-
     }
 
     @FXML

@@ -7,13 +7,17 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -45,6 +49,16 @@ public class VentanaBuscarController implements Initializable {
     private String seccion = "";
     private Pane panelPrincipal;
     String nombreUsuarioActual;
+    @FXML
+    private TableView tabla;
+    @FXML
+    private TableColumn<?, String> columnaNombre;
+    @FXML
+    private TableColumn<?, String> columnaApellidos;
+    @FXML
+    private TableColumn<?, String> columnaCorreoElectronico;
+    @FXML
+    private TableColumn<?, String> columnaTelefono;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -52,10 +66,41 @@ public class VentanaBuscarController implements Initializable {
     }
 
     public void obtenerSeccion(String seccion, Pane panelPrincipal, String nombreUsuario) {
-        nombreUsuarioActual=nombreUsuario;
+        nombreUsuarioActual = nombreUsuario;
         this.seccion = seccion;
         this.panelPrincipal = panelPrincipal;
         etiquetaIdentidicador.setText(seccion);
+        llenarTabla();
+
+    }
+
+    public void llenarTabla() {
+        switch (seccion) {
+            case "Alumnos":
+                break;
+
+            case "Maestros":
+                List<persistencia.Maestro> maestros;
+                MaestroDAO maestroDAO = new MaestroDAO();
+
+                maestros = maestroDAO.adquirirMaestros();
+
+                columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+
+                columnaApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
+
+                columnaCorreoElectronico.setCellValueFactory(new PropertyValueFactory<>("correoElectronico"));
+
+                columnaTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+
+                tabla.setItems(FXCollections.observableList(maestros));
+
+                break;
+
+            case "Clientes":
+                break;
+        }
+
     }
 
     @FXML
@@ -181,6 +226,7 @@ public class VentanaBuscarController implements Initializable {
                 }
             }
         } else {
+            tabla.setVisible(false);
             etiquetaNoCoincidencias.setText("Maestro no encontrado");
         }
     }
