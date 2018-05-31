@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  * @author Renato
  */
 public class PagoInscripcionAlumnoDAOTest {
-    private static String unidadPersistenciaPruebas="PruebasAredEspacioPU";
+    private static String unidadPersistenciaPruebas="AredEspacioPU";
     
     public PagoInscripcionAlumnoDAOTest() {
         
@@ -47,7 +47,7 @@ public class PagoInscripcionAlumnoDAOTest {
     public void testRegistrarInscripcionExitoso() {
         PagoInscripcionAlumnoDAO instance = new PagoInscripcionAlumnoDAO(unidadPersistenciaPruebas);
         boolean expResult = true;
-        boolean result = instance.registrarInscripcion(100.0, 1, "grupo1", new Date());
+        boolean result = instance.registrarInscripcion(100.0, 48, "grupo2", new Date());
         assertEquals(expResult, result); 
     }   
     

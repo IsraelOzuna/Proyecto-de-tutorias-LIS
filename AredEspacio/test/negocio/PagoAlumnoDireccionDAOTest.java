@@ -19,7 +19,7 @@ import persistencia.Pagoalumnodireccion;
  * @author Renato
  */
 public class PagoAlumnoDireccionDAOTest {
-    private static String unidadPersistenciaPruebas="PruebasAredEspacioPU";
+    private static String unidadPersistenciaPruebas="AredEspacioPU";
     private static persistencia.Cuenta usuario = new persistencia.Cuenta();
     
     public PagoAlumnoDireccionDAOTest() {
@@ -62,9 +62,9 @@ public class PagoAlumnoDireccionDAOTest {
     public void testRegistrarPagoDireccionExitoso() {
         System.out.println("registrarPagoDireccion");
         persistencia.Alumno alumno=new persistencia.Alumno();
-        alumno.setIdAlumno(1);
+        alumno.setIdAlumno(48);
         persistencia.Grupo grupo = new persistencia.Grupo();
-        grupo.setIdGrupo(2);
+        grupo.setIdGrupo(5);
         Pagoalumnodireccion pago = new Pagoalumnodireccion();
         pago.setCantidad(100.0);
         pago.setFechaPago(new Date());

@@ -77,7 +77,7 @@ public class RentaDAOTest {
     @Test
     public void testEliminarRenta() {
         System.out.println("eliminarRenta");
-        int id = 1;
+        int id = 4;
         RentaDAO instance = new RentaDAO();
         boolean expResult = true;
         boolean result = instance.eliminarRenta(id);

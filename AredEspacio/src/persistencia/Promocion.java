@@ -32,6 +32,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Promocion.findByPorcentajeDescuento", query = "SELECT p FROM Promocion p WHERE p.porcentajeDescuento = :porcentajeDescuento")})
 public class Promocion implements Serializable {
 
+    @Column(name = "tipoPromocion")
+    private String tipoPromocion;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -107,6 +110,14 @@ public class Promocion implements Serializable {
     @Override
     public String toString() {
         return "persistencia.Promocion[ idPromocion=" + idPromocion + " ]";
+    }
+
+    public String getTipoPromocion() {
+        return tipoPromocion;
+    }
+
+    public void setTipoPromocion(String tipoPromocion) {
+        this.tipoPromocion = tipoPromocion;
     }
     
 }

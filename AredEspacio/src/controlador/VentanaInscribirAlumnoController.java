@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
@@ -23,8 +18,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import negocio.AlumnoDAO;
 import negocio.CuentaDAO;
 import negocio.GrupoDAO;
@@ -55,104 +48,104 @@ public class VentanaInscribirAlumnoController implements Initializable {
     @FXML
     private JFXButton botonInscribir;
     @FXML
-    private JFXButton botonCancelar;
-    private String unidadPersistencia="AredEspacioPU";
-    private int idAlumnoInscribir;
-    private Alumno alumnoInscribir;
+    private JFXButton botonCancelar;    
     @FXML
     private AnchorPane panelPrincipal;
     private double montoInscripcion;
     private double montoFijoInscripcion;
     private String nombreUsuarioActual;
-
+    private String unidadPersistencia = "AredEspacioPU";
+    private int idAlumnoInscribir;
+    private Alumno alumnoInscribir;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
-    public void llenarCampos(Alumno alumno, String nombreUsuario){
-        nombreUsuarioActual=nombreUsuario;
-        etiquetaNombreAlumno.setText(alumno.getNombre()+" "+alumno.getApellidos());
-        idAlumnoInscribir=alumno.getIdAlumno();
-        alumnoInscribir=alumno;
-        ObservableList<String> grupos =FXCollections.observableArrayList();
-        List<Grupo> listaGrupos=null;
+    }
+
+    public void llenarCampos(Alumno alumno, String nombreUsuario) {
+        nombreUsuarioActual = nombreUsuario;
+        etiquetaNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellidos());
+        idAlumnoInscribir = alumno.getIdAlumno();
+        alumnoInscribir = alumno;
+        ObservableList<String> grupos = FXCollections.observableArrayList();
+        List<Grupo> listaGrupos = null;
         CuentaDAO cuentaDAO = new CuentaDAO();
         Cuenta usuario = cuentaDAO.obtenerCuenta(nombreUsuario);
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
-        listaGrupos=grupoDAO.adquirirGrupos(usuario);
-        for(int i=0; i<listaGrupos.size(); i++){
-            if(listaGrupos.get(i).getEstaActivo()==1){
+        listaGrupos = grupoDAO.adquirirGrupos(usuario);
+        for (int i = 0; i < listaGrupos.size(); i++) {
+            if (listaGrupos.get(i).getEstaActivo() == 1) {
                 grupos.add(listaGrupos.get(i).getNombreGrupo());
-            } 
+            }
         }
         comboGrupo.setItems(grupos);
-        
+
         PromocionDAO promocionDAO = new PromocionDAO();
         List<Promocion> promociones = new ArrayList();
-        promociones=promocionDAO.consultarPromociones();
-        ObservableList<String> promocionesCombo =FXCollections.observableArrayList();
-        for(int i=0; i<promociones.size(); i++){
+        promociones = promocionDAO.consultarPromociones("Inscripcion");
+        ObservableList<String> promocionesCombo = FXCollections.observableArrayList();
+        promocionesCombo.add(0, comboPromocion.getPromptText());
+        for (int i = 0; i < promociones.size(); i++) {
             promocionesCombo.add(promociones.get(i).getNombrePromocion());
         }
         comboPromocion.setItems(promocionesCombo);
     }
 
     @FXML
-    private void desplegarVentanaCrearPromocion(ActionEvent event) throws IOException{
+    private void desplegarVentanaCrearPromocion(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaCrearPromocion.fxml"));
         Parent root = (Parent) loader.load();
         VentanaCrearPromocionController ventanaPromocion = loader.getController();
         ventanaPromocion.iniciarVentanaDesdeInscripcion("inscripcion", alumnoInscribir, nombreUsuarioActual);
-        panelPrincipal.getChildren().add(root); 
+        panelPrincipal.getChildren().add(root);
     }
 
     @FXML
-    private void inscribirAlumno(ActionEvent event) throws IOException{
-        boolean realizarInscripcion=false;
-        if(comboGrupo.getValue()!=null){
+    private void inscribirAlumno(ActionEvent event) throws IOException {
+        boolean realizarInscripcion = false;
+        if (comboGrupo.getValue() != null) {
             GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
             AlumnoDAO alumnoDAO = new AlumnoDAO();
-            String nombreGrupoElegido=comboGrupo.getValue();
-            Grupo grupoElegido=obtenerGrupo(nombreGrupoElegido);
+            String nombreGrupoElegido = comboGrupo.getValue();
+            Grupo grupoElegido = obtenerGrupo(nombreGrupoElegido);
             List<Alumno> listaAlumnos = grupoDAO.obtenerAlumnos(grupoElegido.getIdGrupo());
-            if(listaAlumnos.size()>0){
-                for(int i=0; i<listaAlumnos.size();i++){
-                    if(Objects.equals(listaAlumnos.get(i).getIdAlumno(), alumnoInscribir.getIdAlumno())){
-                        realizarInscripcion=false;
+            if (listaAlumnos.size() > 0) {
+                for (int i = 0; i < listaAlumnos.size(); i++) {
+                    if (Objects.equals(listaAlumnos.get(i).getIdAlumno(), alumnoInscribir.getIdAlumno())) {
+                        realizarInscripcion = false;
                         break;
-                    }else{
-                        realizarInscripcion=true;
+                    } else {
+                        realizarInscripcion = true;
                     }
                 }
-            }else{
-                realizarInscripcion=true;
+            } else {
+                realizarInscripcion = true;
             }
-            
-            if(realizarInscripcion==true){
+
+            if (realizarInscripcion == true) {
                 listaAlumnos.add(alumnoInscribir);
                 grupoElegido.setAlumnoCollection(listaAlumnos);
-                if(grupoDAO.editarGrupo(grupoElegido)){
-                    if(registrarPagoInscripcion(montoInscripcion, nombreGrupoElegido)){
+                if (grupoDAO.editarGrupo(grupoElegido)) {
+                    if (registrarPagoInscripcion(montoInscripcion, nombreGrupoElegido)) {
                         DialogosController.mostrarMensajeInformacion("Inscrito", "El alumno fue inscrito de forma correcta al grupo", "");
                         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
                         Parent root = (Parent) loader.load();
                         VentanaBuscarController ventanaBuscar = loader.getController();
                         ventanaBuscar.obtenerSeccion("Alumnos", panelPrincipal, nombreUsuarioActual);
                         panelPrincipal.getChildren().add(root);
-                    }else{
+                    } else {
                         DialogosController.mostrarMensajeInformacion("Error", "Ocurrio un error y no se pudo realizar el pago de la isncripción", "");
                     }
-                }else{
+                } else {
                     DialogosController.mostrarMensajeInformacion("Error", "Ocurrio un error y no se pudo realizar la inscripción", "");
-                } 
-            }else{
+                }
+            } else {
                 DialogosController.mostrarMensajeInformacion("Alumno ya inscrito", "El alumno ya esta inscrito a ese grupo, por favor elija otro grupo", "");
             }
-        }else{
+        } else {
             DialogosController.mostrarMensajeInformacion("Error", "Por favor seleccione un grupo", "");
-        } 
+        }
     }
 
     @FXML
@@ -167,48 +160,48 @@ public class VentanaInscribirAlumnoController implements Initializable {
     @FXML
     private void cambiarMonto(ActionEvent event) {
         comboPromocion.setValue(null);
-        String nombreGrupoElegido=comboGrupo.getValue();
-        Grupo grupoElegido=obtenerGrupo(nombreGrupoElegido);
+        String nombreGrupoElegido = comboGrupo.getValue();
+        Grupo grupoElegido = obtenerGrupo(nombreGrupoElegido);
         etiquetaMontoInscripcion.setText(grupoElegido.getInscripcion().toString());
-        montoInscripcion=grupoElegido.getInscripcion();
-        montoFijoInscripcion=grupoElegido.getInscripcion();
-        
+        montoInscripcion = grupoElegido.getInscripcion();
+        montoFijoInscripcion = grupoElegido.getInscripcion();
+
     }
-    
-    public Grupo obtenerGrupo(String nombreGrupo){
+
+    public Grupo obtenerGrupo(String nombreGrupo) {
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         List<Grupo> listaGrupos;
         Grupo grupoObtenido = new Grupo();
         Cuenta usuario = new Cuenta();
-        listaGrupos=grupoDAO.adquirirGrupos(usuario);
-        for(int i=0; i<listaGrupos.size(); i++){
-            if((listaGrupos.get(i).getNombreGrupo().equals(nombreGrupo)) && (listaGrupos.get(i).getEstaActivo()==1)){
-                grupoObtenido=listaGrupos.get(i);
+        listaGrupos = grupoDAO.adquirirGrupos(usuario);
+        for (int i = 0; i < listaGrupos.size(); i++) {
+            if ((listaGrupos.get(i).getNombreGrupo().equals(nombreGrupo)) && (listaGrupos.get(i).getEstaActivo() == 1)) {
+                grupoObtenido = listaGrupos.get(i);
             }
-        } 
+        }
         return grupoObtenido;
     }
-    
-    public boolean registrarPagoInscripcion(double monto, String nombreGrupo ){
-        boolean pagoRegistrado=false;
+
+    public boolean registrarPagoInscripcion(double monto, String nombreGrupo) {
+        boolean pagoRegistrado = false;
         PagoInscripcionAlumnoDAO pagoInscripcion = new PagoInscripcionAlumnoDAO();
         pagoInscripcion.registrarInscripcion(monto, idAlumnoInscribir, nombreGrupo, new Date());
-        pagoRegistrado=true;
+        pagoRegistrado = true;
         return pagoRegistrado;
     }
 
     @FXML
     private void aplicarPromocion(ActionEvent event) {
-        if(comboPromocion.getValue()!=null){
-            montoInscripcion=montoFijoInscripcion;
+        if (comboPromocion.getValue() != null && !comboPromocion.getSelectionModel().getSelectedItem().equals(comboPromocion.getPromptText())) {
+            montoInscripcion = montoFijoInscripcion;
             PromocionDAO promocionDAO = new PromocionDAO();
-            Promocion promocionSeleccionada=new Promocion();
-            promocionSeleccionada=promocionDAO.adquirirPromocionPorNombre(comboPromocion.getValue());
-            double valor =promocionSeleccionada.getPorcentajeDescuento();
-            double descuento=montoInscripcion*(valor/100);
-            montoInscripcion=montoInscripcion-descuento;
+            Promocion promocionSeleccionada = new Promocion();
+            promocionSeleccionada = promocionDAO.adquirirPromocionPorNombre(comboPromocion.getValue());
+            double valor = promocionSeleccionada.getPorcentajeDescuento();
+            double descuento = montoInscripcion * (valor / 100);
+            montoInscripcion = montoInscripcion - descuento;
             etiquetaMontoInscripcion.setText(Double.toString(montoInscripcion));
         }
     }
-    
+
 }

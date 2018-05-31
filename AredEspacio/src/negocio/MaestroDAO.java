@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import persistencia.CuentaJpaController;
 import persistencia.MaestroJpaController;
 
 /**

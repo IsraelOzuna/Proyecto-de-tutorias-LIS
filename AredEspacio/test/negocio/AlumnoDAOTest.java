@@ -57,7 +57,7 @@ public class AlumnoDAOTest {
     @Test
     public void testBuscarAlumnoExitoso() {        
         persistencia.Alumno alumno = new persistencia.Alumno();
-        String fecha = "01/04/2018";
+        String fecha = "09/05/2018";
         DateFormat formato = new SimpleDateFormat("YYYY/MM/DD");
         Date fechaNacimiento = null;
         try {
@@ -65,17 +65,17 @@ public class AlumnoDAOTest {
         } catch (ParseException ex) {
             Logger.getLogger(AlumnoDAOTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        alumno.setIdAlumno(18);
-        alumno.setNombre("Pedro");
-        alumno.setApellidos("Gomez");
-        alumno.setCorreoElectronico("pedro@gmail.com");
-        alumno.setTelefono("2281647283");
+        alumno.setIdAlumno(45);
+        alumno.setNombre("Israel");
+        alumno.setApellidos("Ozuna");
+        alumno.setCorreoElectronico("iro@hotmail.com");
+        alumno.setTelefono("2281228021");
         alumno.setFechaNacimiento(fechaNacimiento);       
-        alumno.setRutaFoto("alumno.jpg");
+        alumno.setRutaFoto("dexter-19030.jpg");
         AlumnoDAO alumnoDAO = new AlumnoDAO();
         List<persistencia.Alumno> expResult = new ArrayList<>();
         expResult.add(alumno);
-        List<persistencia.Alumno> result = alumnoDAO.buscarAlumno("Pedro");
+        List<persistencia.Alumno> result = alumnoDAO.buscarAlumno("Israel");
         assertEquals(expResult, result);
     }
     
@@ -91,7 +91,7 @@ public class AlumnoDAOTest {
     @Test
     public void editarAlumnoExitoso(){
         persistencia.Alumno alumno = new persistencia.Alumno();
-        String fecha = "20/03/2018";
+        String fecha = "09/05/2018";
         DateFormat formato = new SimpleDateFormat("YYYY/MM/DD");
         Date fechaNacimiento = null;
         try {
@@ -99,15 +99,15 @@ public class AlumnoDAOTest {
         } catch (ParseException ex) {
             Logger.getLogger(AlumnoDAOTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-        alumno.setIdAlumno(17);
-        alumno.setNombre("Irvin");
-        alumno.setApellidos("Lopez");
-        alumno.setCorreoElectronico("irvin@gmail.com");
-        alumno.setTelefono("2281767676");
+        alumno.setIdAlumno(45);
+        alumno.setNombre("Israel");
+        alumno.setApellidos("Ozuna");
+        alumno.setCorreoElectronico("iro@hotmail.com");
+        alumno.setTelefono("2281228021");
         alumno.setFechaNacimiento(fechaNacimiento);       
-        alumno.setRutaFoto("estudiantes-educación-muchacho-en-vidrios-niño-del-alumno-del-alumno-51535682.jpg");
+        alumno.setRutaFoto("dexter-19030.jpg");
         AlumnoDAO alumnoDAO = new AlumnoDAO();
-        boolean expResult = true;        
+        boolean expResult = false;        
         boolean result = alumnoDAO.editarAlumno(alumno);
         assertEquals(expResult, result);
     }
@@ -124,7 +124,7 @@ public class AlumnoDAOTest {
     @Test
     public void encontrarGruposAlumnoExitoso(){
         persistencia.Alumno alumno = new persistencia.Alumno();               
-        alumno.setIdAlumno(17);
+        alumno.setIdAlumno(45);
         AlumnoDAO alumnoDAO = new AlumnoDAO();
         List<String> expResult = new ArrayList<>();        
         List<String> result = alumnoDAO.encontrarGruposAlumno(alumno.getIdAlumno());

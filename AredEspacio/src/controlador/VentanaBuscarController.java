@@ -25,6 +25,7 @@ import negocio.Alumno;
 import negocio.AlumnoDAO;
 import negocio.ClienteDAO;
 import negocio.MaestroDAO;
+import negocio.PromocionDAO;
 import persistencia.Cliente;
 import persistencia.Maestro;
 
@@ -46,9 +47,6 @@ public class VentanaBuscarController implements Initializable {
     private ScrollPane scrollCoincidencias;
     @FXML
     private GridPane gridCoincidencias;
-    private String seccion = "";
-    private Pane panelPrincipal;
-    String nombreUsuarioActual;
     @FXML
     private TableView tabla;
     @FXML
@@ -59,10 +57,22 @@ public class VentanaBuscarController implements Initializable {
     private TableColumn<?, String> columnaCorreoElectronico;
     @FXML
     private TableColumn<?, String> columnaTelefono;
+    @FXML
+    private TableView tablaPromociones;
+    @FXML
+    private TableColumn<?, String> columnaNombrePromocion;
+    @FXML
+    private TableColumn<?, String> columnaDescripcion;
+    @FXML
+    private TableColumn<?, String> columnaTipoPromocion;
+    private String seccion = "";
+    private Pane panelPrincipal;
+    String nombreUsuarioActual;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        tabla.setVisible(false);
+        tablaPromociones.setVisible(false);
     }
 
     public void obtenerSeccion(String seccion, Pane panelPrincipal, String nombreUsuario) {
@@ -77,6 +87,21 @@ public class VentanaBuscarController implements Initializable {
     public void llenarTabla() {
         switch (seccion) {
             case "Alumnos":
+                List<persistencia.Alumno> alumnos;
+                AlumnoDAO alumnoDAO = new AlumnoDAO();
+
+                alumnos = alumnoDAO.obtenerAlumnos();
+
+                columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+
+                columnaApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
+
+                columnaCorreoElectronico.setCellValueFactory(new PropertyValueFactory<>("correoElectronico"));
+
+                columnaTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+
+                tabla.setItems(FXCollections.observableList(alumnos));
+                tabla.setVisible(true);
                 break;
 
             case "Maestros":
@@ -94,10 +119,39 @@ public class VentanaBuscarController implements Initializable {
                 columnaTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
 
                 tabla.setItems(FXCollections.observableList(maestros));
-
+                tabla.setVisible(true);
                 break;
 
             case "Clientes":
+                List<persistencia.Cliente> clientes;
+                ClienteDAO clienteDAO = new ClienteDAO();
+
+                clientes = clienteDAO.buscarTodosLosClientes();
+
+                columnaNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
+
+                columnaApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
+
+                columnaCorreoElectronico.setCellValueFactory(new PropertyValueFactory<>("correo"));
+
+                columnaTelefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+
+                tabla.setItems(FXCollections.observableList(clientes));
+                tabla.setVisible(true);
+                break;
+
+            case "Promociones":
+                List<persistencia.Promocion> promociones;
+                PromocionDAO promocionDAO = new PromocionDAO();
+
+                promociones = promocionDAO.obtenerPromociones();
+
+                columnaNombrePromocion.setCellValueFactory(new PropertyValueFactory<>("nombrePromocion"));
+                columnaDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+                columnaTipoPromocion.setCellValueFactory(new PropertyValueFactory<>("tipoPromocion"));
+
+                tablaPromociones.setItems(FXCollections.observableList(promociones));
+                tablaPromociones.setVisible(true);
                 break;
         }
 
@@ -130,6 +184,14 @@ public class VentanaBuscarController implements Initializable {
                 ventanaRegistrarCliente.llenarDatos(nombreUsuarioActual);
                 panelPrincipal.getChildren().add(root);
                 break;
+
+            case "Promociones":
+                loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaCrearPromocion.fxml"));
+                root = (Parent) loader.load();
+                VentanaCrearPromocionController ventanaCrearPromocion = loader.getController();
+                ventanaCrearPromocion.iniciarVentanaDesdeInscripcion(etiquetaIdentidicador.getText(), null, nombreUsuarioActual);
+                panelPrincipal.getChildren().clear();
+                panelPrincipal.getChildren().add(root);
             default:
                 break;
         }
@@ -265,5 +327,10 @@ public class VentanaBuscarController implements Initializable {
         } else {
             etiquetaNoCoincidencias.setText("Cliente no encontrado");
         }
+    }
+
+    public void ocultarComponentes() {
+        botonBuscar.setVisible(false);
+        campoBusqueda.setVisible(false);
     }
 }

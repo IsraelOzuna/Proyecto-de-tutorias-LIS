@@ -15,9 +15,9 @@
 
 <AnchorPane fx:id="panelTrasero" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="1120.0" style="-fx-background-color: #EDEDED;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentanaRegistrarMensualidadAlumnoController">
    <children>
-      <AnchorPane layoutX="430.0" layoutY="133.0" prefHeight="359.0" prefWidth="303.0" style="-fx-background-color: #FFFFFF;">
+      <AnchorPane layoutX="381.0" layoutY="106.0" prefHeight="412.0" prefWidth="358.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <GridPane prefHeight="182.0" prefWidth="303.0" AnchorPane.bottomAnchor="177.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <GridPane prefHeight="179.0" prefWidth="358.0" AnchorPane.bottomAnchor="233.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -37,16 +37,18 @@
             <GridPane layoutY="175.0" prefHeight="182.0" prefWidth="262.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="19.0" AnchorPane.topAnchor="175.0">
               <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="139.0" minWidth="10.0" prefWidth="137.0" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="108.0" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="83.0" minWidth="10.0" prefWidth="17.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="174.0" minWidth="10.0" prefWidth="174.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="83.0" minWidth="4.0" prefWidth="4.0" />
               </columnConstraints>
               <rowConstraints>
-                  <RowConstraints maxHeight="112.0" minHeight="10.0" prefHeight="62.0" valignment="CENTER" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="105.0" minHeight="10.0" prefHeight="83.0" valignment="CENTER" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="59.0" minHeight="10.0" prefHeight="54.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="112.0" minHeight="10.0" prefHeight="55.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="105.0" minHeight="10.0" prefHeight="58.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="105.0" minHeight="10.0" prefHeight="50.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="105.0" minHeight="10.0" prefHeight="23.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="52.0" valignment="CENTER" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXButton fx:id="botonCancelar" onAction="#cerrarDetalles" style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.rowIndex="2">
+                  <JFXButton fx:id="botonCancelar" onAction="#cerrarDetalles" style="-fx-background-color: #CDCDCD;" text="Cancelar" GridPane.rowIndex="4">
                      <font>
                         <Font name="Gill Sans MT Bold" size="15.0" />
                      </font>
@@ -54,7 +56,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
-                  <JFXButton fx:id="botonAceptar" onAction="#registrarMensualidad" style="-fx-background-color: #CDCDCD;" text="Aceptar" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <JFXButton fx:id="botonAceptar" onAction="#registrarMensualidad" style="-fx-background-color: #CDCDCD;" text="Aceptar" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font name="Gill Sans MT Bold" size="15.0" />
                      </font>
@@ -62,18 +64,18 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
-                  <TextField fx:id="campoMontoPagar" onKeyTyped="#limitarCampoMonto" prefHeight="25.0" prefWidth="107.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="campoMontoPagar" onKeyTyped="#limitarCampoMonto" prefHeight="25.0" prefWidth="156.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label fx:id="etiquetaMonto" alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="127.0" text="Monto a pagar:" GridPane.rowIndex="1">
                      <font>
                         <Font name="Gill Sans MT Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Label text="Grupo:">
+                  <Label alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="126.0" text="Grupo:">
                      <font>
-                        <Font name="Gill Sans MT Bold" size="16.0" />
+                        <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <JFXComboBox fx:id="comboGruposAlumno" prefHeight="25.0" prefWidth="139.0" GridPane.columnIndex="1">
+                  <JFXComboBox fx:id="comboGruposAlumno" prefHeight="25.0" prefWidth="209.0" GridPane.columnIndex="1">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></JFXComboBox>
@@ -93,6 +95,18 @@
                         <Insets top="43.0" />
                      </GridPane.margin>
                   </Label>
+                  <Label alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="132.0" text="Promoción:" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="Gill Sans MT Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <JFXComboBox fx:id="comboPromocion" onAction="#aplicarPromocion" prefHeight="25.0" prefWidth="205.0" promptText="Promociones..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="etiquetaMontoDescuento" prefHeight="17.0" prefWidth="162.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Gill Sans MT" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="etiquetaDescuento" prefHeight="17.0" prefWidth="125.0" text="Monto con descuento:" visible="false" GridPane.rowIndex="3" />
                </children>
             </GridPane>
          </children>

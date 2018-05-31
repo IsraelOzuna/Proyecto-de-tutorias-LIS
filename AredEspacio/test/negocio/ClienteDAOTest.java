@@ -75,12 +75,12 @@ public class ClienteDAOTest {
     @Test
     public void testBuscarClienteExitoso() {
         persistencia.Cliente cliente = new persistencia.Cliente();
-        cliente.setIdCliente(3);
+        cliente.setIdCliente(25);
         cliente.setNombre("Sheccid");
         cliente.setApellidos("Roque");
         cliente.setCorreo("sheccid@gmail.com");
         cliente.setTelefono("5949832489");    
-        cliente.setRutaFoto("9mle9ePd_400x400.jpg");
+        cliente.setRutaFoto("alumno.jpg");
         ClienteDAO clienteDAO = new ClienteDAO();
         List<persistencia.Cliente> expResult = new ArrayList<>();
         expResult.add(cliente);

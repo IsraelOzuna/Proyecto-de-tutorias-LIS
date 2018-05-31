@@ -119,11 +119,12 @@ public class VentanaMenuDirectorController implements Initializable {
     }
 
     @FXML
-    private void desplegarVentanaPromociones(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaCrearPromocion.fxml"));
+    public void desplegarVentanaPromociones(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
-        VentanaCrearPromocionController ventanaPromocion = loader.getController();
-       ventanaPromocion.iniciarVentanaDesdeInscripcion("menu", null, etiquetaNombreUsuario.getText());
+        VentanaBuscarController ventanaBuscar = loader.getController();
+        ventanaBuscar.obtenerSeccion("Promociones", panelPrincipal, etiquetaNombreUsuario.getText());
+        ventanaBuscar.ocultarComponentes();
         panelPrincipal.getChildren().clear();
         panelPrincipal.getChildren().add(root);
     }

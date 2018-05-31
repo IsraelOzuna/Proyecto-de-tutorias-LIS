@@ -21,6 +21,8 @@ import javafx.scene.layout.AnchorPane;
 import negocio.AlumnoDAO;
 import negocio.PagoMensualidadAlumnoDAO;
 import negocio.PagoMensualidadAlumno;
+import negocio.PromocionDAO;
+import persistencia.Promocion;
 
 /**
  * FXML Controller class
@@ -51,19 +53,27 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
     private Label etiquetaErrorGrupo;
     @FXML
     private Label etiquetaErrorMonto;
+    @FXML
+    private JFXComboBox<?> comboPromocion;
+    @FXML
+    private Label etiquetaMontoDescuento;    
+    private double montoDescueto;
+    @FXML
+    private Label etiquetaDescuento;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
     }
 
     @FXML
     private void registrarMensualidad(ActionEvent event) {
         etiquetaErrorGrupo.setText("");
         etiquetaErrorMonto.setText("");
+        etiquetaMontoDescuento.setText("");
         boolean cantidadValida = true;
         Date fechaPago = new Date();
         if (comboGruposAlumno.getSelectionModel().getSelectedItem() != null) {
@@ -71,14 +81,19 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
                 try {
                     Double.parseDouble(campoMontoPagar.getText());
                 } catch (NumberFormatException ex) {
-                    DialogosController.mostrarMensajeInformacion("Invalido", "Cantidad invalida", "Ingresa una cantidad valida");
+                    etiquetaErrorMonto.setText("Ingresa una cantidad valida");
                     cantidadValida = false;
                 }
                 if (cantidadValida) {
                     PagoMensualidadAlumno pagoAlumno = new PagoMensualidadAlumno();
                     PagoMensualidadAlumnoDAO pagoInscripcion = new PagoMensualidadAlumnoDAO();
 
-                    pagoAlumno.setCantidad(Double.parseDouble(campoMontoPagar.getText().trim()));
+                    if(aplicarPromocion(event)){
+                        pagoAlumno.setCantidad(montoDescueto);
+                    }else{
+                        pagoAlumno.setCantidad(Double.parseDouble(campoMontoPagar.getText().trim()));
+                    }
+                    
                     pagoAlumno.setFechaPagoInscripcion(fechaPago);
                     pagoAlumno.setIdAlumno(idAlumno);
                     pagoAlumno.setTipoPago('1');
@@ -110,6 +125,7 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
             Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesAlumnos\\" + rutaFotoAlumno, 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
+        llenarComboPromocion();
         llenarComboGrupos();
     }
 
@@ -130,6 +146,18 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
         comboGruposAlumno.setItems(nombreGrupos);
     }
 
+    private void llenarComboPromocion() {
+        PromocionDAO promocionDAO = new PromocionDAO();
+        List<Promocion> promociones;
+        promociones = promocionDAO.consultarPromociones("Mensualidad");
+        ObservableList promocionesCombo = FXCollections.observableArrayList();
+        promocionesCombo.add(0, comboPromocion.getPromptText());
+        for (int i = 0; i < promociones.size(); i++) {
+            promocionesCombo.add(promociones.get(i).getNombrePromocion());
+        }
+        comboPromocion.setItems(promocionesCombo);
+    }
+
     @FXML
     private void limitarCampoMonto(KeyEvent event) {
         char caracter = event.getCharacter().charAt(0);
@@ -137,5 +165,27 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
         if (campoMontoPagar.getText().trim().length() >= 10 || !Character.isDigit(caracter)) {
             event.consume();
         }
+    }
+
+    @FXML
+    private boolean aplicarPromocion(ActionEvent event) {
+        boolean aplicoPromocion = false;
+        etiquetaMontoDescuento.setText("");
+        etiquetaDescuento.setVisible(false);
+        if (comboPromocion.getSelectionModel().getSelectedItem() != null && !comboPromocion.getSelectionModel().getSelectedItem().equals(comboPromocion.getPromptText())) {
+            if (!campoMontoPagar.getText().equals("")) {
+                etiquetaDescuento.setVisible(true);
+                montoDescueto = Double.parseDouble(campoMontoPagar.getText());
+                PromocionDAO promocionDAO = new PromocionDAO();
+                Promocion promocionSeleccionada;
+                promocionSeleccionada = promocionDAO.adquirirPromocionPorNombre((String) comboPromocion.getValue());
+                double valor = promocionSeleccionada.getPorcentajeDescuento();
+                double descuento = montoDescueto * (valor / 100);
+                montoDescueto = montoDescueto - descuento;
+                etiquetaMontoDescuento.setText(Double.toString(montoDescueto));
+                aplicoPromocion= true;
+            }
+        }
+        return aplicoPromocion;
     }
 }

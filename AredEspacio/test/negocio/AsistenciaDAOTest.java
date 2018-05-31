@@ -1,5 +1,4 @@
 package negocio;
-import static java.lang.reflect.Array.set;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,7 +19,7 @@ import persistencia.Grupo;
  */
 
 public class AsistenciaDAOTest {
-    private static String unidadPersistenciaPruebas="PruebasAredEspacioPU";
+    private static String unidadPersistenciaPruebas="AredEspacioPU";
     
     public AsistenciaDAOTest() {
     }
@@ -45,17 +44,17 @@ public class AsistenciaDAOTest {
     public void testObtenerAsistenciaExitoso() {
         System.out.println("obtenerAsistencia");
         persistencia.Alumno nuevoAlumno = new persistencia.Alumno();
-        nuevoAlumno.setIdAlumno(1);
+        nuevoAlumno.setIdAlumno(48);
         Grupo nuevoGrupo = new Grupo();
-        nuevoGrupo.setIdGrupo(2);
+        nuevoGrupo.setIdGrupo(6);
         Date fecha = new GregorianCalendar(2018, Calendar.MAY, 10).getTime();
-        int idGrupo = 2;
+        int idGrupo = 6;
         Asistencia asistenciaComprobar = new Asistencia();
         asistenciaComprobar.setAsistio("1");
         asistenciaComprobar.setFecha(fecha);
         asistenciaComprobar.setIdAlumno(nuevoAlumno);
         asistenciaComprobar.setIdGrupo(nuevoGrupo);
-        asistenciaComprobar.setIdAsistencia(3);
+        asistenciaComprobar.setIdAsistencia(5);
         AsistenciaDAO instance = new AsistenciaDAO(unidadPersistenciaPruebas);
         List<Asistencia> expResult = new ArrayList<>();
         expResult.add(asistenciaComprobar);
@@ -66,8 +65,8 @@ public class AsistenciaDAOTest {
     @Test
     public void testRegistrarAsistenciaExitoso() {
         System.out.println("RegistrarAsistencia");
-        int idAlumno = 1;
-        int idGrupo = 2;
+        int idAlumno = 48;
+        int idGrupo = 6;
         Date fecha = new Date();
         String asistio = "1";
         AsistenciaDAO instance = new AsistenciaDAO(unidadPersistenciaPruebas);

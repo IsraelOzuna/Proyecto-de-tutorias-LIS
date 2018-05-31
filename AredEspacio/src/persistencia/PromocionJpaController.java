@@ -134,4 +134,27 @@ public class PromocionJpaController implements Serializable {
         }
     }
     
+    public List<Promocion> obtenerPromocionesMensualidad(String tipoPromocion) {
+        List<persistencia.Promocion> promocion;
+        String consulta = "Select a from Promocion a where a.tipoPromocion = :tipoPromocion";
+        EntityManager em = getEntityManager();
+        try {
+            promocion = em.createQuery(consulta).setParameter("tipoPromocion", tipoPromocion).getResultList();
+        } finally {
+            em.close();
+        }
+        return promocion;
+    }
+    
+    public List<Promocion> obtenerPromocionesInscripcion(String tipoPromocion) {
+        List<persistencia.Promocion> promocion;
+        String consulta = "Select a from Promocion a where a.tipoPromocion = :tipoPromocion";
+        EntityManager em = getEntityManager();
+        try {
+            promocion = em.createQuery(consulta).setParameter("tipoPromocion", tipoPromocion).getResultList();
+        } finally {
+            em.close();
+        }
+        return promocion;
+    }
 }

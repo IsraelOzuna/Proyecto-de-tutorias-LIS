@@ -23,7 +23,7 @@ import persistencia.exceptions.NonexistentEntityException;
  * @author Renato
  */
 public class PromocionDAOTest {
-    private static String unidadPersistenciaPruebas="PruebasAredEspacioPU";
+    private static String unidadPersistenciaPruebas="AredEspacioPU";
     
     public PromocionDAOTest() {
     }
@@ -101,7 +101,7 @@ public class PromocionDAOTest {
         
         List<Promocion> expResult = listaPromociones;
         
-        List<Promocion> result = instance.consultarPromociones();
+        List<Promocion> result = instance.consultarPromociones("Mensualidad");
         assertEquals(expResult, result);
     }
 

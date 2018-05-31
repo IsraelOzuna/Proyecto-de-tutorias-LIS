@@ -2,8 +2,8 @@
    <dia nombre="Domingo">
         <ocho-ochoMedia>Disponible</ocho-ochoMedia>
         <ochoMedia-nueve>Disponible</ochoMedia-nueve>
-        <nueve-nueveMedia>Disponible</nueve-nueveMedia>
-        <nueveMedia-diez>Disponible</nueveMedia-diez>
+        <nueve-nueveMedia>grupo1</nueve-nueveMedia>
+        <nueveMedia-diez>grupo1</nueveMedia-diez>
         <diez-diezMedia>Disponible</diez-diezMedia>
         <diezMedia-once>Disponible</diezMedia-once>
         <once-onceMedia>Disponible</once-onceMedia>
@@ -70,11 +70,11 @@
         <ochoMedia-nueve>Disponible</ochoMedia-nueve>
         <nueve-nueveMedia>Disponible</nueve-nueveMedia>
         <nueveMedia-diez>Disponible</nueveMedia-diez>
-        <diez-diezMedia>Disponible</diez-diezMedia>
-        <diezMedia-once>Disponible</diezMedia-once>
-        <once-onceMedia>Disponible</once-onceMedia>
-        <onceMedia-doce>Disponible</onceMedia-doce>
-        <doce-doceMedia>Disponible</doce-doceMedia>
+        <diez-diezMedia>Salsa</diez-diezMedia>
+        <diezMedia-once>Salsa</diezMedia-once>
+        <once-onceMedia>Salsa</once-onceMedia>
+        <onceMedia-doce>Salsa</onceMedia-doce>
+        <doce-doceMedia>Salsa</doce-doceMedia>
         <doceMedia-una>Disponible</doceMedia-una>
         <una-unaMedia>Disponible</una-unaMedia>
         <unaMedia-dos>Disponible</unaMedia-dos>
@@ -103,9 +103,9 @@
         <ochoMedia-nueve>Disponible</ochoMedia-nueve>
         <nueve-nueveMedia>Disponible</nueve-nueveMedia>
         <nueveMedia-diez>Disponible</nueveMedia-diez>
-        <diez-diezMedia>Disponible</diez-diezMedia>
-        <diezMedia-once>Disponible</diezMedia-once>
-        <once-onceMedia>Disponible</once-onceMedia>
+        <diez-diezMedia>grupo1</diez-diezMedia>
+        <diezMedia-once>grupo1</diezMedia-once>
+        <once-onceMedia>grupo1</once-onceMedia>
         <onceMedia-doce>Disponible</onceMedia-doce>
         <doce-doceMedia>Disponible</doce-doceMedia>
         <doceMedia-una>Disponible</doceMedia-una>
