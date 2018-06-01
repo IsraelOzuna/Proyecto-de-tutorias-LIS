@@ -17,6 +17,7 @@ public interface IRenta {
     public List<persistencia.Renta> obtenerRentas();
 
     public List<persistencia.Renta> obtenerRentasPorFecha(Date fecha);
+    public List<persistencia.Renta> obtenerRentasPorMesAllo(int mes, int allo);
 
     public boolean registrarRenta(Renta renta);
 

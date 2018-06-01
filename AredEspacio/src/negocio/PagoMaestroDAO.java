@@ -5,10 +5,17 @@
  */
 package negocio;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import persistencia.Pagoalumno;
+import persistencia.PagoalumnoJpaController;
+import persistencia.Pagomaestro;
 import persistencia.PagomaestroJpaController;
 
 /**
@@ -43,4 +50,27 @@ public class PagoMaestroDAO implements IPagoMaestro {
         return registroPagoExitoso;
     }
 
+    @Override
+    public List<Pagomaestro> obtenerPagosMaestros(int allo, int mes) {
+        int alloRegistrado=0;
+        int mesRegistrado=0;
+        LocalDate localDate;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        PagomaestroJpaController pagomaestroController = new PagomaestroJpaController(entityManagerFactory);
+        List<Pagomaestro> listaPagosTotales=pagomaestroController.findPagomaestroEntities();
+        List<Pagomaestro> listaRegreso= new ArrayList();
+        for(int i=0; i<listaPagosTotales.size(); i++){
+            localDate=Utileria.mostrarFecha(listaPagosTotales.get(i).getFecha());       
+            if((localDate.getYear()==allo) && (localDate.getMonthValue()==mes)){
+                listaRegreso.add(listaPagosTotales.get(i));
+            }
+        }
+        return listaRegreso;
+    }
+    
+
+
 }
+
+
+

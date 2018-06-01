@@ -3,7 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/iro19/Documents/GitHub/Repositorio-Desarrollo-de-Software/AredEspacio/src/controlador/VentanaRegistrarMensualidadAlumnoController.java</file>
+            <file>file:/C:/Users/Renato/Documents/GitHub/Repositorio-Desarrollo-de-Software/AredEspacio/src/negocio/EgresoDAO.java</file>
+            <file>file:/C:/Users/Renato/Documents/GitHub/Repositorio-Desarrollo-de-Software/AredEspacio/src/negocio/IEgreso.java</file>
+            <file>file:/C:/Users/Renato/Documents/GitHub/Repositorio-Desarrollo-de-Software/AredEspacio/src/negocio/PagoMaestroDAO.java</file>
+            <file>file:/C:/Users/Renato/Documents/GitHub/Repositorio-Desarrollo-de-Software/AredEspacio/src/controlador/VentanaGenerarReporteController.java</file>
+            <file>file:/C:/Users/Renato/Documents/GitHub/Repositorio-Desarrollo-de-Software/AredEspacio/src/negocio/Egreso.java</file>
         </group>
     </open-files>
 </project-private>

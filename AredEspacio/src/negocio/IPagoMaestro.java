@@ -5,6 +5,9 @@
  */
 package negocio;
 
+import java.util.List;
+import persistencia.Pagomaestro;
+
 /**
  *
  * @author Irdevelo
@@ -12,5 +15,6 @@ package negocio;
 public interface IPagoMaestro {
     
     public boolean registrarPagoMaestro(PagoMaestro pagoMaestro);
+    public List<Pagomaestro> obtenerPagosMaestros(int allo, int mes);
     
 }

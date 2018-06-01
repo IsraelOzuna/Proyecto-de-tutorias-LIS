@@ -1,5 +1,6 @@
 package negocio;
 
+import static java.time.temporal.TemporalQueries.localDate;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -9,6 +10,9 @@ import javax.persistence.Persistence;
 import persistencia.Renta;
 import persistencia.RentaJpaController;
 import persistencia.exceptions.NonexistentEntityException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 
 public class RentaDAO implements IRenta {
 
@@ -120,6 +124,36 @@ public class RentaDAO implements IRenta {
         }
 
         return modificaciónCorrecta;
+    }
+
+    @Override
+    public List<Renta> obtenerRentasPorMesAllo(int mes, int allo) {
+        List<persistencia.Renta> listaRentas = null;
+        List<persistencia.Renta> listaRegreso= new ArrayList();
+        LocalDate localDate;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        RentaJpaController rentaJpaController = new RentaJpaController(entityManagerFactory);
+        persistencia.Renta nuevaRenta = new persistencia.Renta();
+        
+        try {
+
+            listaRentas = rentaJpaController.findRentaEntities();
+            
+            
+            
+            for(int i=0; i<listaRentas.size(); i++){
+            localDate=Utileria.mostrarFecha(listaRentas.get(i).getFecha());       
+            if((localDate.getYear()==allo) && (localDate.getMonthValue()==mes)){
+                listaRegreso.add(listaRentas.get(i));
+            }
+        }
+
+        } catch (Exception ex) {
+
+            Logger.getLogger(RentaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return listaRegreso;
     }
 
 }

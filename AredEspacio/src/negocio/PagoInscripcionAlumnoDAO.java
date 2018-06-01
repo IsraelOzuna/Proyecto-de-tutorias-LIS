@@ -1,6 +1,7 @@
 package negocio;
 
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -56,10 +57,7 @@ public class PagoInscripcionAlumnoDAO implements IPagoInscripcionAlumno{
                 Logger.getLogger(PagoMensualidadAlumnoDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
-
         return pagoInscripcionExitoso;
     }
-    
-    
+
 }

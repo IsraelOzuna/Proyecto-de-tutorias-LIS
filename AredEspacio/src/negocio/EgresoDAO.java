@@ -1,5 +1,8 @@
 package negocio;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -73,6 +76,25 @@ public class EgresoDAO implements IEgreso {
             egresoRegistradoExitosamente = false;
         }
         return egresoRegistradoExitosamente;
+    }
+
+    @Override
+    public List<persistencia.Egreso> obtenerTodosLosEgresos(int allo, int mes) {
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        EgresoJpaController egresoJpaController = new EgresoJpaController(entityManagerFactory);
+        LocalDate localDate;
+        List<persistencia.Egreso> listaEgresosTotales=egresoJpaController.findEgresoEntities();
+        List<persistencia.Egreso> listaRegreso= new ArrayList();
+        for(int i=0; i<listaEgresosTotales.size(); i++){
+            localDate=Utileria.mostrarFecha(listaEgresosTotales.get(i).getFechaRegistro());       
+            if((localDate.getYear()==allo) && (localDate.getMonthValue()==mes)){
+                listaRegreso.add(listaEgresosTotales.get(i));
+            }
+        }
+        
+        return listaRegreso;
+        
+        
     }
 
 }

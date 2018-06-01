@@ -114,6 +114,7 @@ public class VentanaMenuDirectorController implements Initializable {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaGenerarReporte.fxml"));
         Parent root = (Parent) loader.load();
         VentanaGenerarReporteController ventanaReporte = loader.getController();
+        ventanaReporte.iniciarVentana();
         panelPrincipal.getChildren().clear();
         panelPrincipal.getChildren().add(root);
     }

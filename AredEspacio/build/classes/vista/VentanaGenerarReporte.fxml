@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -16,26 +18,18 @@
    <children>
       <GridPane layoutY="6.0" prefHeight="55.0" prefWidth="1120.0" AnchorPane.bottomAnchor="569.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
-            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.33331298828125" minWidth="10.0" prefWidth="275.33331298828125" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0000610351562" minWidth="10.0" prefWidth="638.0000610351562" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="10.0" prefWidth="48.99993896484375" />
+            <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="392.0" minWidth="10.0" prefWidth="392.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.33331298828125" minWidth="10.0" prefWidth="56.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0000610351562" minWidth="10.0" prefWidth="140.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0000610351562" minWidth="10.0" prefWidth="78.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="638.0000610351562" minWidth="10.0" prefWidth="276.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="320.0" minWidth="10.0" prefWidth="179.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label prefHeight="39.0" prefWidth="200.0" text="Reporte Mensual " GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
-               <font>
-                  <Font name="Gill Sans MT" size="27.0" />
-               </font>
-            </Label>
-            <Label fx:id="etiquetaPeriodoReporte" prefHeight="46.0" prefWidth="643.0" text="del 31 de septiembre a 31 de septiembre" GridPane.columnIndex="2" GridPane.valignment="CENTER">
-               <font>
-                  <Font name="Gill Sans MT Bold" size="27.0" />
-               </font>
-            </Label>
-            <JFXButton onAction="#desplegarVentanaEgreso" text="Registrar egreso" textFill="#1208d7" underline="true">
+            <JFXButton onAction="#desplegarVentanaEgreso" text="Registrar egreso" textFill="#1208d7" underline="true" GridPane.halignment="LEFT">
                <font>
                   <Font name="Gill Sans MT" size="14.0" />
                </font>
@@ -46,6 +40,26 @@
                   <Insets />
                </GridPane.margin>
             </JFXButton>
+            <Label fx:id="etiquetaMes" text="Septiembre" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="etiquetaAllo" text="2018" GridPane.columnIndex="3">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="botonAnterior" mnemonicParsing="false" onAction="#regresarMes" GridPane.columnIndex="1">
+               <graphic>
+                  <FontAwesomeIconView glyphName="ARROW_LEFT" size="20" />
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#siguienteMes" GridPane.columnIndex="4">
+               <graphic>
+                  <FontAwesomeIconView glyphName="ARROW_RIGHT" size="20" />
+               </graphic>
+            </Button>
          </children>
       </GridPane>
       <GridPane layoutX="232.0" layoutY="64.0" prefHeight="431.0" prefWidth="1120.0" AnchorPane.bottomAnchor="129.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="64.0">
