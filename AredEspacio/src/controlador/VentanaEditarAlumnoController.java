@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.sql.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -91,13 +92,7 @@ public class VentanaEditarAlumnoController implements Initializable {
         if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono, campoFechaNacimiennto)) {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreo.getText().trim())) {
-                    if (esTelefonoValido(campoTelefono.getText().trim())) {
-                        StringBuilder comando = new StringBuilder();
-                        comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-                        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-                        builder.redirectErrorStream(true);
-                        Process process = builder.start();
-
+                    if (esTelefonoValido(campoTelefono.getText().trim())) {                        
                         AlumnoDAO nuevosDatosAlumno = new AlumnoDAO();
 
                         alumno.setNombre(campoNombre.getText().trim());
@@ -137,21 +132,30 @@ public class VentanaEditarAlumnoController implements Initializable {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        File directorio = new File(System.getProperty("user.dir") + "\\imagenesAlumnos");
+        File directorio = new File(System.getProperty("user.dir") + "/imagenesAlumnos");
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
             nombreFoto = archivoSeleccionado.getName();
-            
+
             if (!directorio.exists()) {
-                directorio.mkdirs();
+                directorio.mkdir();
             }
-            
-            rutaNueva = System.getProperty("user.dir") + "\\imagenesAlumnos";
-            
+
+            rutaNueva = System.getProperty("user.dir") + "/imagenesAlumnos";
+            directorio = new File(System.getProperty("user.dir") + "/imagenesAlumnos/" + nombreFoto);
+
             if (!nombreFoto.equals("")) {
                 Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
                 fotoSeleccionada.setImage(foto);
+            }
+
+            try {
+                if (!directorio.exists()) {
+                    Files.copy(archivoSeleccionado.toPath(), directorio.toPath());
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
 
@@ -159,7 +163,7 @@ public class VentanaEditarAlumnoController implements Initializable {
     }
 
     public void llenarCampos(Alumno alumno, String nombreUsuario) {
-        nombreUsuarioActual=nombreUsuario;
+        nombreUsuarioActual = nombreUsuario;
         this.alumno = alumno;
         campoNombre.setText(alumno.getNombre());
         campoApellidos.setText(alumno.getApellidos());
@@ -168,7 +172,7 @@ public class VentanaEditarAlumnoController implements Initializable {
         campoTelefono.setText(alumno.getTelefono());
         if (alumno.getRutaFoto() != null) {
             nombreFoto = alumno.getRutaFoto();
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesAlumnos\\" + alumno.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
             fotoSeleccionada.setImage(foto);
         }
     }

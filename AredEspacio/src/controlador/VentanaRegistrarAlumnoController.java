@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -83,9 +84,9 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         nombreFoto = "";
     }
-    
-    public void llenarDatos(String nombreUsuario){
-        nombreUsuarioActual=nombreUsuario;
+
+    public void llenarDatos(String nombreUsuario) {
+        nombreUsuarioActual = nombreUsuario;
     }
 
     @FXML
@@ -95,12 +96,6 @@ public class VentanaRegistrarAlumnoController implements Initializable {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreo.getText().trim())) {
                     if (esTelefonoValido(campoTelefono.getText().trim())) {
-                        StringBuilder comando = new StringBuilder();
-                        comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-                        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-                        builder.redirectErrorStream(true);
-                        Process process = builder.start();
-
                         AlumnoDAO nuevoAlumnoDAO = new AlumnoDAO();
                         nuevoAlumno = new Alumno();
                         nuevoAlumno.setNombre(campoNombre.getText().trim());
@@ -140,21 +135,29 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        File directorio = new File(System.getProperty("user.dir") + "\\imagenesAlumnos");
+        File directorio = new File(System.getProperty("user.dir") + "/imagenesAlumnos");
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
             nombreFoto = archivoSeleccionado.getName();
-            
+
             if (!directorio.exists()) {
-                directorio.mkdirs();
+                directorio.mkdir();
             }
 
-            rutaNueva = System.getProperty("user.dir") + "\\imagenesAlumnos";
+            rutaNueva = System.getProperty("user.dir") + "/imagenesAlumnos";
+            directorio = new File(System.getProperty("user.dir") + "/imagenesAlumnos/" + nombreFoto);
 
             if (!nombreFoto.equals("")) {
                 Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
                 fotoSeleccionada.setImage(foto);
+            }
+            try {
+                if (!directorio.exists()) {
+                    Files.copy(archivoSeleccionado.toPath(), directorio.toPath());
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
 

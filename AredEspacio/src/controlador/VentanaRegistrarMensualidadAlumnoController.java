@@ -27,7 +27,7 @@ import persistencia.Promocion;
 /**
  * FXML Controller class
  *
- * @author iro19
+ * @author Israel Reyes Ozuna
  */
 public class VentanaRegistrarMensualidadAlumnoController implements Initializable {
 
@@ -122,7 +122,7 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
         this.idAlumno = idAlumno;
         etiquetaNombreAlumno.setText(nombreAlumno + " " + apellidosAlumno);
         if (rutaFotoAlumno != null) {
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesAlumnos\\" + rutaFotoAlumno, 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesAlumnos/" + rutaFotoAlumno, 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
         llenarComboPromocion();

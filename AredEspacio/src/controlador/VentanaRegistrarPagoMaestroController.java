@@ -63,7 +63,7 @@ public class VentanaRegistrarPagoMaestroController implements Initializable {
     public void llenarCamposInformacion() throws MalformedURLException {
         etiquetaNombre.setText(maestro.getNombre() + " " + maestro.getApellidos());
         if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesMaestros\\" + maestro.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
     }

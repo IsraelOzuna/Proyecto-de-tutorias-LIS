@@ -9,9 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -22,7 +20,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -33,9 +30,7 @@ import negocio.AsistenciaDAO;
 import negocio.GrupoDAO;
 import negocio.Utileria;
 import persistencia.Alumno;
-import persistencia.Asistencia;
 import persistencia.Grupo;
-import persistencia.Horario;
 
 /**
  * FXML Controller class

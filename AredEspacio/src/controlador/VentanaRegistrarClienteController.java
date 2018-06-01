@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -75,9 +76,9 @@ public class VentanaRegistrarClienteController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         nombreFoto = "";
     }
-    
-    public void llenarDatos(String nombreUsuario){
-        nombreUsuarioActual=nombreUsuario;
+
+    public void llenarDatos(String nombreUsuario) {
+        nombreUsuarioActual = nombreUsuario;
     }
 
     @FXML
@@ -86,13 +87,7 @@ public class VentanaRegistrarClienteController implements Initializable {
         if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreo.getText().trim())) {
-                    if (esTelefonoValido(campoTelefono.getText().trim())) {
-                        StringBuilder comando = new StringBuilder();
-                        comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-                        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-                        builder.redirectErrorStream(true);
-                        Process process = builder.start();
-
+                    if (esTelefonoValido(campoTelefono.getText().trim())) {                        
                         ClienteDAO nuevoClienteDAO = new ClienteDAO();
                         nuevoCliente = new Cliente();
                         nuevoCliente.setNombre(campoNombre.getText().trim());
@@ -119,22 +114,31 @@ public class VentanaRegistrarClienteController implements Initializable {
     private String seleccionarImagen(ActionEvent event) throws IOException {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
-        File archivoSeleccionado = explorador.showOpenDialog(null);  
-        File directorio = new File(System.getProperty("user.dir") + "\\imagenesClientes");
+        File archivoSeleccionado = explorador.showOpenDialog(null);
+        File directorio = new File(System.getProperty("user.dir") + "/imagenesClientes");
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
             nombreFoto = archivoSeleccionado.getName();
-            
+
             if (!directorio.exists()) {
-                directorio.mkdirs();
+                directorio.mkdir();
             }
 
-            rutaNueva = System.getProperty("user.dir") + "\\imagenesClientes";
-            
+            rutaNueva = System.getProperty("user.dir") + "/imagenesClientes";
+            directorio = new File(System.getProperty("user.dir") + "/imagenesClientes/" + nombreFoto);
+
             if (!nombreFoto.equals("")) {
                 Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
                 fotoSeleccionada.setImage(foto);
+            }
+
+            try {
+                if (!directorio.exists()) {
+                    Files.copy(archivoSeleccionado.toPath(), directorio.toPath());
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
 

@@ -73,7 +73,7 @@ public class VentanaEditarRentaController implements Initializable {
 
     ObservableList<Horario> horarios;
 
-    private String rutaXML = System.getProperty("user.dir") + "\\Archivos\\Horarios.xml";
+    private String rutaXML = System.getProperty("user.dir") + "/Archivos/Horarios.xml";
 
     String diaDeLaSemanaSeleccionado;
 

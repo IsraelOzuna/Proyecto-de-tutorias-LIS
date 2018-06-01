@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -109,14 +110,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
                     }
                     if (cantidadCorrecta) {
 
-                        if (esTelefonoValido(campoTelefono.getText())) {
-
-                            StringBuilder comando = new StringBuilder();
-                            comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-                            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-                            builder.redirectErrorStream(true);
-                            Process process = builder.start();
-
+                        if (esTelefonoValido(campoTelefono.getText())) {                            
                             MaestroDAO maestroDAO = new MaestroDAO();
 
                             maestroNuevo.setNombre(campoNombre.getText().trim());
@@ -149,22 +143,33 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        File directorio = new File(System.getProperty("user.dir") + "\\imagenesMaestros");
+        File directorio = new File(System.getProperty("user.dir") + "/imagenesMaestros");
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
             nombreFoto = archivoSeleccionado.getName();
 
             if (!directorio.exists()) {
-                directorio.mkdirs();
+                directorio.mkdir();
             }
-            rutaNueva = System.getProperty("user.dir") + "\\imagenesMaestros";
+            rutaNueva = System.getProperty("user.dir") + "/imagenesMaestros";
         }
 
         if (nombreFoto != null) {
             Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
             imagenPerfil.setImage(foto);
         }
+
+        directorio = new File(System.getProperty("user.dir") + "/imagenesMaestros/" + nombreFoto);
+
+        try {
+            if (!directorio.exists()) {
+                Files.copy(archivoSeleccionado.toPath(), directorio.toPath());
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
         return nombreFoto;
     }
 
@@ -259,7 +264,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
     }
 
     public void llenarCamposInformacion(String nombreUsuario) {
-        nombreUsuarioActual=nombreUsuario;
+        nombreUsuarioActual = nombreUsuario;
         campoNombre.setText(maestro.getNombre());
         campoApellidos.setText(maestro.getApellidos());
         campoCorreoElectronico.setText(maestro.getCorreoElectronico());
@@ -268,7 +273,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
 
         if (maestro.getRutaFoto() != null) {
             nombreFoto = maestro.getRutaFoto();
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesMaestros\\" + maestro.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
 

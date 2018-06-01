@@ -1,11 +1,11 @@
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
-import com.sun.javafx.util.Utils;
 import java.io.File;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -97,10 +97,9 @@ public class VentanaRegistrarMaestroController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         rutaImagen = "";
     }
-    
-    
-    public void llenarDatos(String nombreUsuario){
-        nombreUsuarioActual=nombreUsuario;
+
+    public void llenarDatos(String nombreUsuario) {
+        nombreUsuarioActual = nombreUsuario;
     }
 
     @FXML
@@ -128,23 +127,6 @@ public class VentanaRegistrarMaestroController implements Initializable {
 
                             if (!cuentaDAO.verificarNombreUsuarioRepetido(campoUsuario.getText().trim())) {
 
-                                System.out.println(Utils.isWindows());
-
-                                if (Utils.isWindows()) {
-
-                                    StringBuilder comando = new StringBuilder();
-                                    comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-                                    ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-                                    builder.redirectErrorStream(true);
-                                    Process process = builder.start();
-
-                                } else {
-                                    StringBuilder comando = new StringBuilder();
-                                    comando.append("cp ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-                                    ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-                                    builder.redirectErrorStream(true);
-                                    Process process = builder.start();
-                                }
                                 cuenta.setTipoCuenta("Maestro");
                                 cuenta.setUsuario(campoUsuario.getText().trim());
                                 cuenta.setContraseña(Utileria.cifrarContrasena(campoContraseña.getText()));
@@ -304,22 +286,31 @@ public class VentanaRegistrarMaestroController implements Initializable {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        File directorio = new File(System.getProperty("user.dir") + "\\imagenesMaestros");
-        
+        File directorio = new File(System.getProperty("user.dir") + "/imagenesMaestros");
+
         if (archivoSeleccionado != null) {
 
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
             rutaImagen = archivoSeleccionado.getName();
 
             if (!directorio.exists()) {
-                directorio.mkdirs();
+                directorio.mkdir();
             }
 
-            rutaNueva = System.getProperty("user.dir") + "\\imagenesMaestros";
+            rutaNueva = System.getProperty("user.dir") + "/imagenesMaestros";
+            directorio = new File(System.getProperty("user.dir") + "/imagenesMaestros/" + rutaImagen);
 
             if (!rutaImagen.equals("")) {
                 Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
                 imagenPerfil.setImage(foto);
+            }
+
+            try {
+                if (!directorio.exists()) {
+                    Files.copy(archivoSeleccionado.toPath(), directorio.toPath());
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
 

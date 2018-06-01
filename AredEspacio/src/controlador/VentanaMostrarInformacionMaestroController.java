@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
@@ -76,7 +71,7 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
         }
         etiquetaTelefono.setText(maestro.getTelefono());
         if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesMaestros\\" + maestro.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
     }

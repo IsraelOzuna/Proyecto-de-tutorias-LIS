@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ import negocio.Utileria;
  *
  * @author iro19
  */
-public class VentanaEditarClienteController implements Initializable{
+public class VentanaEditarClienteController implements Initializable {
 
     @FXML
     private AnchorPane panelPrincipal;
@@ -67,15 +68,15 @@ public class VentanaEditarClienteController implements Initializable{
     private String rutaOrigen;
     private String rutaNueva;
     private String nombreUsuarioActual;
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         nombreFoto = "";
-    } 
-    
+    }
+
     @FXML
     private void editarCliente(ActionEvent event) throws IOException {
         limpiarEtiquetas();
@@ -83,14 +84,8 @@ public class VentanaEditarClienteController implements Initializable{
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreo.getText().trim())) {
                     if (esTelefonoValido(campoTelefono.getText().trim())) {
-                        StringBuilder comando = new StringBuilder();
-                        comando.append("copy ").append('"' + rutaOrigen + '"').append(" ").append('"' + rutaNueva + '"');
-                        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", comando.toString());
-                        builder.redirectErrorStream(true);
-                        Process process = builder.start();
+                       ClienteDAO nuevosDatosCliente = new ClienteDAO();
 
-                        ClienteDAO nuevosDatosCliente = new ClienteDAO();
-                        
                         cliente.setNombre(campoNombre.getText().trim());
                         cliente.setApellidos(campoApellidos.getText().trim());
                         cliente.setCorreo(campoCorreo.getText().trim());
@@ -111,27 +106,35 @@ public class VentanaEditarClienteController implements Initializable{
         }
     }
 
-
     @FXML
     private String seleccionarImagen(ActionEvent event) throws IOException {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        File directorio = new File(System.getProperty("user.dir") + "\\imagenesClientes");
+        File directorio = new File(System.getProperty("user.dir") + "/imagenesClientes");
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
             nombreFoto = archivoSeleccionado.getName();
-            
+
             if (!directorio.exists()) {
-                directorio.mkdirs();
+                directorio.mkdir();
             }
-            
-            rutaNueva = System.getProperty("user.dir") + "\\imagenesClientes";
+
+            rutaNueva = System.getProperty("user.dir") + "/imagenesClientes";
+            directorio = new File(System.getProperty("user.dir") + "/imagenesClientes/" + nombreFoto);
 
             if (!nombreFoto.equals("")) {
                 Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
                 fotoSeleccionada.setImage(foto);
+            }
+
+            try {
+                if (!directorio.exists()) {
+                    Files.copy(archivoSeleccionado.toPath(), directorio.toPath());
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
 
@@ -170,7 +173,6 @@ public class VentanaEditarClienteController implements Initializable{
         }
     }
 
-    
     @FXML
     private void cancelarRegistro(ActionEvent event) throws IOException {
         if (existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
@@ -235,7 +237,7 @@ public class VentanaEditarClienteController implements Initializable{
     }
 
     public void llenarCampos(Cliente cliente, String nombreUsuario) {
-        nombreUsuarioActual=nombreUsuario;
+        nombreUsuarioActual = nombreUsuario;
         this.cliente = cliente;
         campoNombre.setText(cliente.getNombre());
         campoApellidos.setText(cliente.getApellidos());
@@ -243,7 +245,7 @@ public class VentanaEditarClienteController implements Initializable{
         campoTelefono.setText(cliente.getTelefono());
         if (cliente.getRutaFoto() != null) {
             nombreFoto = cliente.getRutaFoto();
-            Image foto = new Image("file:" +System.getProperty("user.dir")+ "\\imagenesClientes\\" + cliente.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesClientes/" + cliente.getRutaFoto(), 100, 100, false, true, true);
             fotoSeleccionada.setImage(foto);
         }
     }

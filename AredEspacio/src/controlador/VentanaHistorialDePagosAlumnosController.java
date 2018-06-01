@@ -1,7 +1,6 @@
 package controlador;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -17,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import negocio.PagoMensualidadAlumnoDAO;
 import persistencia.Alumno;
 import persistencia.Pagoalumno;
 
@@ -56,7 +54,7 @@ public class VentanaHistorialDePagosAlumnosController implements Initializable {
         
 
         if (rutaFoto != null) {
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "\\imagenesAlumnos\\" + rutaFoto, 100, 100, false, true, true);
+            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesAlumnos/" + rutaFoto, 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
 

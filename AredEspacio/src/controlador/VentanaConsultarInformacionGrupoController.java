@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,7 +21,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -30,8 +28,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
@@ -100,7 +96,7 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     
     private int idGrupo;
     private String nombreGrupo;
-    private String rutaXML=System.getProperty("user.dir") + "\\Archivos\\Horarios.xml";
+    private String rutaXML=System.getProperty("user.dir") + "/Archivos/Horarios.xml";
     private String unidadPersistencia="AredEspacioPU";
     @FXML
     private JFXButton botonRegistrarAsistencia;

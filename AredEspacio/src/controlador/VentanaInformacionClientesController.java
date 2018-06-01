@@ -75,7 +75,7 @@ public class VentanaInformacionClientesController {
         etiquetaCorreo.setText(cliente.getCorreo());
         etiquetaTelefono.setText(cliente.getTelefono());        
         if (cliente.getRutaFoto() != null) {
-            Image foto = new Image("file:"+ System.getProperty("user.dir") + "\\imagenesClientes\\" + cliente.getRutaFoto(), 100, 100, false, true, true);
+            Image foto = new Image("file:"+ System.getProperty("user.dir") + "/imagenesClientes/" + cliente.getRutaFoto(), 100, 100, false, true, true);
             imagenPerfil.setImage(foto);
         }
     }
