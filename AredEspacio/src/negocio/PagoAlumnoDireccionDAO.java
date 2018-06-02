@@ -5,6 +5,7 @@
  */
 package negocio;
 
+import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import persistencia.Pagoalumnodireccion;
@@ -38,6 +39,16 @@ public class PagoAlumnoDireccionDAO implements IPagoAlumnoDireccion{
         }
         
         return pagoRegistrado;
+    }
+
+    @Override
+    public List<Pagoalumnodireccion> obtenerPagos(persistencia.Cuenta usuario) {
+        List<Pagoalumnodireccion> listaPagos;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(unidadPersistencia, null);
+        PagoalumnodireccionJpaController pagoController;
+        pagoController = new PagoalumnodireccionJpaController(entityManagerFactory);
+        listaPagos=pagoController.obtenerPagosPorUsuario(usuario);
+        return listaPagos;
     }
     
 }

@@ -5,10 +5,13 @@
  */
 package negocio;
 
+import java.util.List;
+
 /**
  *
  * @author Renato
  */
 public interface IPagoAlumnoDireccion {
     boolean registrarPagoDireccion(persistencia.Pagoalumnodireccion pago);
+    List<persistencia.Pagoalumnodireccion> obtenerPagos(persistencia.Cuenta usuario);
 }

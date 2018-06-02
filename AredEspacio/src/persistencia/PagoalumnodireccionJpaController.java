@@ -219,4 +219,17 @@ public class PagoalumnodireccionJpaController implements Serializable {
         }
     }
     
+    public List<Pagoalumnodireccion>  obtenerPagosPorUsuario(Cuenta usuario){
+        List<Pagoalumnodireccion> listaPagos;
+        EntityManager em = getEntityManager();
+        String consulta = "select a from Pagoalumnodireccion a where a.usuario =:usuario";
+        try {
+            listaPagos = em.createQuery(consulta).setParameter("usuario", usuario).getResultList();
+        } finally {
+            em.close();
+        }
+        
+        return listaPagos;
+    }
+    
 }

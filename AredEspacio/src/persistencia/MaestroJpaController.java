@@ -11,6 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -220,5 +221,17 @@ public class MaestroJpaController implements Serializable {
             em.close();
         }
         return listaAlumnos;
+    }
+    
+    public List<persistencia.Maestro> obtenerMaestrosPorFechaCorte(Date fecha) {
+        List<persistencia.Maestro> listaMaestros = null;
+        String consulta = "select a from Maestro a where a.fechaCorte =:fechaCorte";
+        EntityManager em = getEntityManager();
+        try {
+            listaMaestros = em.createQuery(consulta).setParameter("fechaCorte", fecha).getResultList();
+        } finally {
+            em.close();
+        }
+        return listaMaestros;
     }
 }

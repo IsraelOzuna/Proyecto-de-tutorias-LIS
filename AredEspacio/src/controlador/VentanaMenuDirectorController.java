@@ -1,17 +1,41 @@
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
+import java.awt.Color;
+import java.awt.Insets;
+import java.awt.Panel;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import javafx.stage.PopupWindow;
+import javax.swing.BorderFactory;
+import negocio.CuentaDAO;
 import negocio.MaestroDAO;
+import negocio.Notificador;
+import org.controlsfx.control.PopOver;
+import org.controlsfx.control.textfield.TextFields;
+import persistencia.Cuenta;
+
+
 
 public class VentanaMenuDirectorController implements Initializable {
 
@@ -30,18 +54,24 @@ public class VentanaMenuDirectorController implements Initializable {
     @FXML
     private Pane panelPrincipal;
     @FXML
-    private Label etiquetaUsuario;
-    @FXML
     private JFXButton botonClientes;
     @FXML
     private JFXButton botonAnuncios;
+    @FXML
+    private Button botonNotificaciones;
+
+    
+    
+    
+    
+    
+    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
     }
 
     @FXML
@@ -140,6 +170,32 @@ public class VentanaMenuDirectorController implements Initializable {
         botonRecursosReportes.setVisible(false);
         botonRenta.setVisible(false);
         botonAnuncios.setVisible(false);
+    }
+
+    @FXML
+    private void mostrarNotificaciones(ActionEvent event) {
+        CuentaDAO cuentaDAO = new CuentaDAO();
+        Cuenta cuentaUsuario=cuentaDAO.obtenerCuenta(etiquetaNombreUsuario.getText());
+        
+        Notificador notificador = new Notificador();
+        PopOver pop = new PopOver();
+
+        VBox box = new VBox();
+        box.setStyle("-fx-background-color: white;");
+
+        if(cuentaUsuario.getTipoCuenta().equals("Director")){
+            box.getChildren().addAll(notificador.generarNotificacionesDirector());
+        }else{
+            box.getChildren().addAll(notificador.generarNotificacionesMaestro(cuentaUsuario));
+        }
+        
+        
+        pop.setContentNode(box);
+        pop.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
+        pop.show(botonNotificaciones);
+        
+        
+        
     }
 
 }

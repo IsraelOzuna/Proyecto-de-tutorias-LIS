@@ -47,7 +47,7 @@
                   <Font name="Gill Sans MT Bold" size="20.0" />
                </font>
             </Label>
-            <Button layoutX="1277.0" layoutY="15.0" mnemonicParsing="false" style="-fx-background-color: #740808;">
+            <Button fx:id="botonNotificaciones" layoutX="1277.0" layoutY="15.0" mnemonicParsing="false" onAction="#mostrarNotificaciones" style="-fx-background-color: #740808;">
                <graphic>
                   <FontAwesomeIconView fill="#d4ac0d" glyphName="BELL" size="20">
                      <cursor>

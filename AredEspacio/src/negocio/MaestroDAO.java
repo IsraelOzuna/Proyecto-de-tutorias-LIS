@@ -6,6 +6,7 @@
 package negocio;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -145,5 +146,23 @@ public class MaestroDAO implements IMaestro {
         MaestroJpaController maestroJpaController = new MaestroJpaController(entityManagerFactory);
         maestroAdquirido=maestroJpaController.findMaestro(nombreMaestro);
         return maestroAdquirido;
+    }
+
+    @Override
+    public List<persistencia.Maestro> adquirirMaestrosPorFechaCorte(Date fechaCorte) {
+        List<persistencia.Maestro> listaMaestros = null;
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("AredEspacioPU", null);
+        MaestroJpaController maestroJpaController = new MaestroJpaController(entityManagerFactory);
+
+        try {
+
+            listaMaestros = maestroJpaController.obtenerMaestrosPorFechaCorte(fechaCorte);
+
+        } catch (Exception ex) {
+
+            Logger.getLogger(RentaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return listaMaestros;
     }
 }
