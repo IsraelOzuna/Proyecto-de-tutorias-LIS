@@ -21,7 +21,7 @@ import persistencia.Grupo;
  *
  * @author Renato
  */
-public class AsistenciaDAO implements IAsistenciaDAO{
+public class AsistenciaDAO implements IAsistencia{
     private String unidadPersistencia="AredEspacioPU";
     
     public AsistenciaDAO(){

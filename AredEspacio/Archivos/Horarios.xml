@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><Horario>
    <dia nombre="Domingo">
-        <ocho-ochoMedia>Disponible</ocho-ochoMedia>
-        <ochoMedia-nueve>Disponible</ochoMedia-nueve>
-        <nueve-nueveMedia>Disponible</nueve-nueveMedia>
-        <nueveMedia-diez>Disponible</nueveMedia-diez>
-        <diez-diezMedia>Disponible</diez-diezMedia>
+        <ocho-ochoMedia>Salsa</ocho-ochoMedia>
+        <ochoMedia-nueve>Salsa</ochoMedia-nueve>
+        <nueve-nueveMedia>Salsa</nueve-nueveMedia>
+        <nueveMedia-diez>Salsa</nueveMedia-diez>
+        <diez-diezMedia>Salsa</diez-diezMedia>
         <diezMedia-once>Disponible</diezMedia-once>
         <once-onceMedia>Disponible</once-onceMedia>
         <onceMedia-doce>Disponible</onceMedia-doce>

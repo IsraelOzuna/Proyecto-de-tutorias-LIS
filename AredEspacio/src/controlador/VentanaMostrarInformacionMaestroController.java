@@ -1,10 +1,15 @@
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.CodeSource;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,16 +68,27 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
     }
 
     public void llenarCamposInformacion(String nombreUsuario) throws MalformedURLException {
-        nombreUsuarioActual = nombreUsuario;
-        etiquetaNombre.setText(maestro.getNombre() + " " + maestro.getApellidos());
-        etiquetaCorreo.setText(maestro.getCorreoElectronico());
-        if (maestro.getMensualidad() != null) {
-            etiquetaMontoAPagar.setText(Double.toString(maestro.getMensualidad()));
-        }
-        etiquetaTelefono.setText(maestro.getTelefono());
-        if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
-            imagenPerfil.setImage(foto);
+        try {
+            nombreUsuarioActual = nombreUsuario;
+            etiquetaNombre.setText(maestro.getNombre() + " " + maestro.getApellidos());
+            etiquetaCorreo.setText(maestro.getCorreoElectronico());
+            if (maestro.getMensualidad() != null) {
+                etiquetaMontoAPagar.setText(Double.toString(maestro.getMensualidad()));
+            }
+            etiquetaTelefono.setText(maestro.getTelefono());
+            
+            CodeSource direccion = VentanaMostrarInformacionMaestroController.class.getProtectionDomain().getCodeSource();
+            File fileJar = new File(direccion.getLocation().toURI().getPath());
+            File fileDir = fileJar.getParentFile();
+            File fileProperties = new File(fileDir.getAbsolutePath());
+            
+            String rutaFoto = fileProperties.getAbsolutePath();
+            if (maestro.getRutaFoto() != null) {
+                Image foto = new Image("file:" + rutaFoto + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
+                imagenPerfil.setImage(foto);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaMostrarInformacionMaestroController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -1,38 +1,28 @@
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
-import java.awt.Color;
-import java.awt.Insets;
-import java.awt.Panel;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
-import javafx.stage.PopupWindow;
-import javax.swing.BorderFactory;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import negocio.CuentaDAO;
 import negocio.MaestroDAO;
 import negocio.Notificador;
 import org.controlsfx.control.PopOver;
-import org.controlsfx.control.textfield.TextFields;
 import persistencia.Cuenta;
 
 
@@ -59,14 +49,9 @@ public class VentanaMenuDirectorController implements Initializable {
     private JFXButton botonAnuncios;
     @FXML
     private Button botonNotificaciones;
-
+    @FXML
+    private JFXButton botonCerrarSesion;
     
-    
-    
-    
-    
-    
-
     /**
      * Initializes the controller class.
      */
@@ -192,10 +177,24 @@ public class VentanaMenuDirectorController implements Initializable {
         
         pop.setContentNode(box);
         pop.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
-        pop.show(botonNotificaciones);
-        
-        
-        
+        pop.show(botonNotificaciones);                        
+    }
+    
+    @FXML
+    private void cerrarSesion(ActionEvent event){
+        FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaInicioSesion.fxml"));
+        Parent root = null;
+        try {
+            root = (Parent) loger.load();
+        } catch (IOException ex) {
+            Logger.getLogger(VentanaMenuDirectorController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Stage iniciarSesion = new Stage();
+        iniciarSesion.setScene(new Scene(root));
+        iniciarSesion.initStyle(StageStyle.UNDECORATED);
+        iniciarSesion.show();
+        Stage ventanaRegistrar = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        ventanaRegistrar.close();
     }
 
 }

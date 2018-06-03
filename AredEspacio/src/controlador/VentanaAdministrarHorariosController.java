@@ -3,9 +3,13 @@ package controlador;
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.CodeSource;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -61,7 +65,7 @@ public class VentanaAdministrarHorariosController implements Initializable {
     @FXML
     private JFXButton botonGuardar;
     ObservableList<Horario> horarios;
-    private String rutaXML=System.getProperty("user.dir") + "/Archivos/Horarios.xml";
+    private String rutaXML;
     private String nombreUsuario;
     @FXML
     private JFXButton botonRgresar;
@@ -69,12 +73,12 @@ public class VentanaAdministrarHorariosController implements Initializable {
     private static int columna;
     @FXML
     private AnchorPane panelAdministrarHorario;
-    private String unidadPersistencia="AredEspacioPU";
-    private String [] etiquetasHorasXML;
-    private String [] horasNumericas;
- 
-    public void inicializarTablaHorario(){
-        
+    private String unidadPersistencia = "AredEspacioPU";
+    private String[] etiquetasHorasXML;
+    private String[] horasNumericas;
+
+    public void inicializarTablaHorario() {
+
         columnaHora.setCellValueFactory(new PropertyValueFactory<Horario, String>("hora"));
         columnaDomingo.setCellValueFactory(new PropertyValueFactory<Horario, String>("domingo"));
         columnaLunes.setCellValueFactory(new PropertyValueFactory<Horario, String>("lunes"));
@@ -90,24 +94,32 @@ public class VentanaAdministrarHorariosController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-    }  
-    
-    public void iniciarVentana(String nombreUsuarioActual){
-        nombreUsuario=nombreUsuarioActual;
-        ObservableList<String> grupos =FXCollections.observableArrayList();
-        List<Grupo> listaGrupos=null;
+        try {
+            CodeSource direccion = VentanaAdministrarHorariosController.class.getProtectionDomain().getCodeSource();
+            File fileJar = new File(direccion.getLocation().toURI().getPath());
+            File fileDir = fileJar.getParentFile();
+            File fileProperties = new File(fileDir.getAbsolutePath() + "/Archivos/Horarios.xml");
+            rutaXML = fileProperties.getAbsolutePath();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaAdministrarHorariosController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void iniciarVentana(String nombreUsuarioActual) {
+        nombreUsuario = nombreUsuarioActual;
+        ObservableList<String> grupos = FXCollections.observableArrayList();
+        List<Grupo> listaGrupos = null;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         Cuenta usuario = new Cuenta();
-        listaGrupos=grupoDAO.adquirirGrupos(usuario);
-        etiquetasHorasXML= new String[30];
-        etiquetasHorasXML=establecerEtiquetas();
-        horasNumericas= new String [30];
-        horasNumericas= establecerHoras();
-        for(int i=0; i<listaGrupos.size(); i++){
-            if(listaGrupos.get(i).getEstaActivo()==1){
+        listaGrupos = grupoDAO.adquirirGrupos(usuario);
+        etiquetasHorasXML = new String[30];
+        etiquetasHorasXML = establecerEtiquetas();
+        horasNumericas = new String[30];
+        horasNumericas = establecerHoras();
+        for (int i = 0; i < listaGrupos.size(); i++) {
+            if (listaGrupos.get(i).getEstaActivo() == 1) {
                 grupos.add(listaGrupos.get(i).getNombreGrupo());
-            } 
+            }
         }
         comboGrupos.setItems(grupos);
         this.inicializarTablaHorario();
@@ -116,122 +128,125 @@ public class VentanaAdministrarHorariosController implements Initializable {
             @Override
             public void handle(MouseEvent event) {
                 //int columna;
-                boolean clickIzquierdo=false;
-                boolean clickDerecho=false;
-                if(event.isPrimaryButtonDown()){
-                    clickIzquierdo=true;
-                    clickDerecho=false;
-                }else if(event.isSecondaryButtonDown()){
-                    clickIzquierdo=false;
-                    clickDerecho=true;
+                boolean clickIzquierdo = false;
+                boolean clickDerecho = false;
+                if (event.isPrimaryButtonDown()) {
+                    clickIzquierdo = true;
+                    clickDerecho = false;
+                } else if (event.isSecondaryButtonDown()) {
+                    clickIzquierdo = false;
+                    clickDerecho = true;
                 }
-                boolean banderaEditar=true;
-                String nombreGrupoElegido=comboGrupos.getValue();
-                
+                boolean banderaEditar = true;
+                String nombreGrupoElegido = comboGrupos.getValue();
 
-                fila=tablaHorario.getFocusModel().getFocusedCell().getRow();
-                columna=tablaHorario.getFocusModel().getFocusedCell().getColumn();
-                if(columna!=0 && clickIzquierdo){
-                    Horario nuevoHorario= new Horario();
-                    switch(columna){
+                fila = tablaHorario.getFocusModel().getFocusedCell().getRow();
+                columna = tablaHorario.getFocusModel().getFocusedCell().getColumn();
+                if (columna != 0 && clickIzquierdo) {
+                    Horario nuevoHorario = new Horario();
+                    switch (columna) {
                         case 1:
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();;//////////
-                            if (nombreGrupoElegido!=null){
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
+                            ;//////////
+                            if (nombreGrupoElegido != null) {
                                 nuevoHorario.setDomingo(nombreGrupoElegido);
                             }
-                        break;
+                            break;
                         case 2:
 
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();;//////////
-                            if (nombreGrupoElegido!=null){
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
+                            ;//////////
+                            if (nombreGrupoElegido != null) {
                                 nuevoHorario.setLunes(nombreGrupoElegido);
                             }
 
-                        break;
+                            break;
                         case 3:
 
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();;//////////
-                            if (nombreGrupoElegido!=null){
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
+                            ;//////////
+                            if (nombreGrupoElegido != null) {
                                 nuevoHorario.setMartes(nombreGrupoElegido);
                             }
 
-                        break;
+                            break;
                         case 4:
 
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();;//////////
-                            if (nombreGrupoElegido!=null){
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
+                            ;//////////
+                            if (nombreGrupoElegido != null) {
                                 nuevoHorario.setMiercoles(nombreGrupoElegido);
                             }
 
-                        break;
+                            break;
                         case 5:
 
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();;//////////
-                            if (nombreGrupoElegido!=null){
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
+                            ;//////////
+                            if (nombreGrupoElegido != null) {
                                 nuevoHorario.setJueves(nombreGrupoElegido);
                             }
-                        break;
+                            break;
                         case 6:
 
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();;//////////
-                            if (nombreGrupoElegido!=null){
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
+                            ;//////////
+                            if (nombreGrupoElegido != null) {
                                 nuevoHorario.setViernes(nombreGrupoElegido);
                             }
-                        break;
+                            break;
                         case 7:
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();;//////////
-                            if (nombreGrupoElegido!=null){
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
+                            ;//////////
+                            if (nombreGrupoElegido != null) {
                                 nuevoHorario.setSabado(nombreGrupoElegido);
                             }
-                        break;
+                            break;
 
                     }
                     horarios.set(fila, nuevoHorario);
-                    
-                    
-                }else if(columna!=0 && clickDerecho){
-                    Horario nuevoHorario= new Horario();
-                    switch(columna){
+
+                } else if (columna != 0 && clickDerecho) {
+                    Horario nuevoHorario = new Horario();
+                    switch (columna) {
                         case 1:
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
                             nuevoHorario.setDomingo("Disponible");
-                        break;
+                            break;
                         case 2:
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
                             nuevoHorario.setLunes("Disponible");
-                        break;
+                            break;
                         case 3:
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
                             nuevoHorario.setMartes("Disponible");
-                        break;
+                            break;
                         case 4:
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
                             nuevoHorario.setMiercoles("Disponible");
-                        break;
+                            break;
                         case 5:
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
                             nuevoHorario.setJueves("Disponible");
-                        break;
+                            break;
                         case 6:
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
                             nuevoHorario.setViernes("Disponible");
-                        break;
+                            break;
                         case 7:
-                            nuevoHorario=tablaHorario.getSelectionModel().getSelectedItem();
+                            nuevoHorario = tablaHorario.getSelectionModel().getSelectedItem();
                             nuevoHorario.setSabado("Disponible");
-                        break;
+                            break;
                     }
                     horarios.set(fila, nuevoHorario);
                 }
-            }   
-            });
-        
-        
-        
+            }
+        });
+
     }
-    
-    public void llenarTabla(){
-        try{
+
+    public void llenarTabla() {
+        try {
             File inputFile = new File(rutaXML);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -240,53 +255,53 @@ public class VentanaAdministrarHorariosController implements Initializable {
             NodeList nList = doc.getElementsByTagName("dia");
             for (int i = 0; i < 30; i++) {
                 Horario h1 = new Horario();
-                h1=establecerFila(i, h1, nList);
-                horarios.add(h1);            
+                h1 = establecerFila(i, h1, nList);
+                horarios.add(h1);
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
-    public Horario establecerFila(int i, Horario h1, NodeList nList){
-        String nombreEtiqueta="";
+
+    public Horario establecerFila(int i, Horario h1, NodeList nList) {
+        String nombreEtiqueta = "";
         h1.setHora(horasNumericas[i]);
-        nombreEtiqueta=etiquetasHorasXML[i];
+        nombreEtiqueta = etiquetasHorasXML[i];
 
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node nNode = nList.item(temp);
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element eElement = (Element) nNode;
-                
-                switch(eElement.getAttribute("nombre")){
+
+                switch (eElement.getAttribute("nombre")) {
                     case "Domingo":
                         h1.setDia(eElement.getAttribute("nombre"));
                         h1.setDomingo(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                    break;
+                        break;
                     case "Lunes":
                         h1.setDia(eElement.getAttribute("nombre"));
                         h1.setLunes(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                    break;
+                        break;
                     case "Martes":
                         h1.setDia(eElement.getAttribute("nombre"));
                         h1.setMartes(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                    break;
+                        break;
                     case "Miercoles":
                         h1.setDia(eElement.getAttribute("nombre"));
                         h1.setMiercoles(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                    break;
+                        break;
                     case "Jueves":
                         h1.setDia(eElement.getAttribute("nombre"));
                         h1.setJueves(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                    break;
+                        break;
                     case "Viernes":
                         h1.setDia(eElement.getAttribute("nombre"));
                         h1.setViernes(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                    break;
+                        break;
                     case "Sabado":
                         h1.setDia(eElement.getAttribute("nombre"));
                         h1.setSabado(eElement.getElementsByTagName(nombreEtiqueta).item(0).getTextContent());
-                    break;
+                        break;
 
                 }
 
@@ -302,27 +317,26 @@ public class VentanaAdministrarHorariosController implements Initializable {
         VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
         ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
         panelAdministrarHorario.getChildren().add(root);
-        
+
     }
 
     @FXML
     private void guardarHorario(ActionEvent event) throws IOException {
-        ObservableList<Horario> lista=tablaHorario.getItems();
-        //System.out.println();
-        for(int i=0; i<30; i++){
-            //System.out.println(lista.get(0).getHora());
-            Horario horarioActualizar= lista.get(i);
-           
+        ObservableList<Horario> lista = tablaHorario.getItems();
+        
+        for (int i = 0; i < 30; i++) {            
+            Horario horarioActualizar = lista.get(i);
+
             try {
-                    File inputFile = new File(rutaXML);
-                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                    Document doc = dBuilder.parse(inputFile);
-                    doc.getDocumentElement().normalize();
-                    NodeList nList = doc.getElementsByTagName("dia");
-                    actualizarFila(nList, doc, etiquetasHorasXML[i], horarioActualizar);
-            }catch (Exception e) {
-               e.printStackTrace();
+                File inputFile = new File(rutaXML);
+                DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                Document doc = dBuilder.parse(inputFile);
+                doc.getDocumentElement().normalize();
+                NodeList nList = doc.getElementsByTagName("dia");
+                actualizarFila(nList, doc, etiquetasHorasXML[i], horarioActualizar);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         DialogosController.mostrarMensajeInformacion("Modificado", "El horario del grupo ha sido modificado", "");
@@ -330,39 +344,40 @@ public class VentanaAdministrarHorariosController implements Initializable {
         Parent root = (Parent) loader.load();
         VentanaConsultarGruposController ventanaConsultarGruposController = loader.getController();
         ventanaConsultarGruposController.iniciarVentana(nombreUsuario);
-        panelAdministrarHorario.getChildren().add(root); 
-        
+        panelAdministrarHorario.getChildren().add(root);
+
     }
-    public void actualizarFila(NodeList nList,  Document doc, String nombreFila, Horario horarioActualizar) throws TransformerException{
-        
+
+    public void actualizarFila(NodeList nList, Document doc, String nombreFila, Horario horarioActualizar) throws TransformerException {
+
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node nNode = nList.item(temp); //cada item es un dia de la semana
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element eElement = (Element) nNode;
-                switch(temp){
+                switch (temp) {
                     case 0:
                         eElement.getElementsByTagName(nombreFila).item(0).setTextContent(horarioActualizar.getDomingo());
-                    break;
+                        break;
                     case 1:
-                      eElement.getElementsByTagName(nombreFila).item(0).setTextContent(horarioActualizar.getLunes());
-                    break;
+                        eElement.getElementsByTagName(nombreFila).item(0).setTextContent(horarioActualizar.getLunes());
+                        break;
                     case 2:
-                      eElement.getElementsByTagName(nombreFila).item(0).setTextContent(horarioActualizar.getMartes());
-                    break;
+                        eElement.getElementsByTagName(nombreFila).item(0).setTextContent(horarioActualizar.getMartes());
+                        break;
                     case 3:
-                      eElement.getElementsByTagName(nombreFila).item(0).setTextContent(horarioActualizar.getMiercoles());
-                    break;
+                        eElement.getElementsByTagName(nombreFila).item(0).setTextContent(horarioActualizar.getMiercoles());
+                        break;
                     case 4:
-                      eElement.getElementsByTagName(nombreFila).item(0).setTextContent(horarioActualizar.getJueves());
-                    break;
+                        eElement.getElementsByTagName(nombreFila).item(0).setTextContent(horarioActualizar.getJueves());
+                        break;
                     case 5:
-                      eElement.getElementsByTagName(nombreFila).item(0).setTextContent(horarioActualizar.getViernes());
-                    break;
+                        eElement.getElementsByTagName(nombreFila).item(0).setTextContent(horarioActualizar.getViernes());
+                        break;
                     case 6:
-                      eElement.getElementsByTagName(nombreFila).item(0).setTextContent(horarioActualizar.getSabado());
-                    break;
+                        eElement.getElementsByTagName(nombreFila).item(0).setTextContent(horarioActualizar.getSabado());
+                        break;
                 }
-                
+
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();
                 DOMSource source = new DOMSource(doc);
@@ -371,76 +386,75 @@ public class VentanaAdministrarHorariosController implements Initializable {
             }
         }
     }
-    
-    public String[] establecerEtiquetas(){
+
+    public String[] establecerEtiquetas() {
         String[] etiquetas = new String[30];
-        etiquetas[0]="ocho-ochoMedia";
-        etiquetas[1]="ochoMedia-nueve";
-        etiquetas[2]="nueve-nueveMedia";
-        etiquetas[3]="nueveMedia-diez";
-        etiquetas[4]="diez-diezMedia";
-        etiquetas[5]="diezMedia-once";
-        etiquetas[6]="once-onceMedia";
-        etiquetas[7]="onceMedia-doce";
-        etiquetas[8]="doce-doceMedia";
-        etiquetas[9]="doceMedia-una";
-        etiquetas[10]="una-unaMedia";
-        etiquetas[11]="unaMedia-dos";
-        etiquetas[12]="dos-dosMedia";
-        etiquetas[13]="dosMedia-tres";
-        etiquetas[14]="tres-tresMedia";
-        etiquetas[15]="tresMedia-cuatro";
-        etiquetas[16]="cuatro-cuatroMedia";
-        etiquetas[17]="cuatroMedia-cinco";
-        etiquetas[18]="cinco-cincoMedia";
-        etiquetas[19]="cincoMedia-seis";
-        etiquetas[20]="seis-seisMedia";
-        etiquetas[21]="seisMedia-siete";
-        etiquetas[22]="siete-sieteMedia";
-        etiquetas[23]="sieteMedia-ocho";
-        etiquetas[24]="ocho-ochoMediaPm";
-        etiquetas[25]="ochoMedia-nuevePm";
-        etiquetas[26]="nueve-nueveMediaPm";
-        etiquetas[27]="nueveMedia-diezPm";
-        etiquetas[28]="diez-diezMediaPm";
-        etiquetas[29]="diezMedia-oncePm";
-        return etiquetas;
-    }
-    
-    public String[] establecerHoras(){
-        String[] etiquetas = new String[30];
-        etiquetas[0]="8:00-8:30";
-        etiquetas[1]="8:30-9:00";
-        etiquetas[2]="9:00-9:30";
-        etiquetas[3]="9:30-10:00";
-        etiquetas[4]="10:00-10:30";
-        etiquetas[5]="10:30-11:00";
-        etiquetas[6]="11:00-11:30";
-        etiquetas[7]="11:30-12:00";
-        etiquetas[8]="12:00-12:30";
-        etiquetas[9]="12:30-13:00";
-        etiquetas[10]="13:00-13:30";
-        etiquetas[11]="13:30-14:00";
-        etiquetas[12]="14:00-14:30";
-        etiquetas[13]="14:30-15:00";
-        etiquetas[14]="15:00-15:30";
-        etiquetas[15]="15:30-16:00";
-        etiquetas[16]="16:00-16:30";
-        etiquetas[17]="16:30-17:00";
-        etiquetas[18]="17:00-17:30";
-        etiquetas[19]="17:30-18:00";
-        etiquetas[20]="18:00-18:30";
-        etiquetas[21]="18:30-19:00";
-        etiquetas[22]="19:00-19:30";
-        etiquetas[23]="19:30-20:00";
-        etiquetas[24]="20:00-20:30";
-        etiquetas[25]="20:30-21:00";
-        etiquetas[26]="21:00-21:30";
-        etiquetas[27]="21:30-22:00";
-        etiquetas[28]="22:00-22:30";
-        etiquetas[29]="22:30-23:00";
+        etiquetas[0] = "ocho-ochoMedia";
+        etiquetas[1] = "ochoMedia-nueve";
+        etiquetas[2] = "nueve-nueveMedia";
+        etiquetas[3] = "nueveMedia-diez";
+        etiquetas[4] = "diez-diezMedia";
+        etiquetas[5] = "diezMedia-once";
+        etiquetas[6] = "once-onceMedia";
+        etiquetas[7] = "onceMedia-doce";
+        etiquetas[8] = "doce-doceMedia";
+        etiquetas[9] = "doceMedia-una";
+        etiquetas[10] = "una-unaMedia";
+        etiquetas[11] = "unaMedia-dos";
+        etiquetas[12] = "dos-dosMedia";
+        etiquetas[13] = "dosMedia-tres";
+        etiquetas[14] = "tres-tresMedia";
+        etiquetas[15] = "tresMedia-cuatro";
+        etiquetas[16] = "cuatro-cuatroMedia";
+        etiquetas[17] = "cuatroMedia-cinco";
+        etiquetas[18] = "cinco-cincoMedia";
+        etiquetas[19] = "cincoMedia-seis";
+        etiquetas[20] = "seis-seisMedia";
+        etiquetas[21] = "seisMedia-siete";
+        etiquetas[22] = "siete-sieteMedia";
+        etiquetas[23] = "sieteMedia-ocho";
+        etiquetas[24] = "ocho-ochoMediaPm";
+        etiquetas[25] = "ochoMedia-nuevePm";
+        etiquetas[26] = "nueve-nueveMediaPm";
+        etiquetas[27] = "nueveMedia-diezPm";
+        etiquetas[28] = "diez-diezMediaPm";
+        etiquetas[29] = "diezMedia-oncePm";
         return etiquetas;
     }
 
-    
+    public String[] establecerHoras() {
+        String[] etiquetas = new String[30];
+        etiquetas[0] = "8:00-8:30";
+        etiquetas[1] = "8:30-9:00";
+        etiquetas[2] = "9:00-9:30";
+        etiquetas[3] = "9:30-10:00";
+        etiquetas[4] = "10:00-10:30";
+        etiquetas[5] = "10:30-11:00";
+        etiquetas[6] = "11:00-11:30";
+        etiquetas[7] = "11:30-12:00";
+        etiquetas[8] = "12:00-12:30";
+        etiquetas[9] = "12:30-13:00";
+        etiquetas[10] = "13:00-13:30";
+        etiquetas[11] = "13:30-14:00";
+        etiquetas[12] = "14:00-14:30";
+        etiquetas[13] = "14:30-15:00";
+        etiquetas[14] = "15:00-15:30";
+        etiquetas[15] = "15:30-16:00";
+        etiquetas[16] = "16:00-16:30";
+        etiquetas[17] = "16:30-17:00";
+        etiquetas[18] = "17:00-17:30";
+        etiquetas[19] = "17:30-18:00";
+        etiquetas[20] = "18:00-18:30";
+        etiquetas[21] = "18:30-19:00";
+        etiquetas[22] = "19:00-19:30";
+        etiquetas[23] = "19:30-20:00";
+        etiquetas[24] = "20:00-20:30";
+        etiquetas[25] = "20:30-21:00";
+        etiquetas[26] = "21:00-21:30";
+        etiquetas[27] = "21:30-22:00";
+        etiquetas[28] = "22:00-22:30";
+        etiquetas[29] = "22:30-23:00";
+        return etiquetas;
+    }
+
 }

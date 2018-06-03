@@ -4,10 +4,14 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.security.CodeSource;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +25,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import negocio.CuentaDAO;
 import negocio.Maestro;
 import negocio.MaestroDAO;
@@ -283,13 +286,23 @@ public class VentanaRegistrarMaestroController implements Initializable {
 
     @FXML
     private String elegirImagen(ActionEvent event) throws IOException {
+        File fileJar;
+        File fileDir = null;
+        File directorio = null;
         FileChooser explorador = new FileChooser();
-        explorador.getExtensionFilters().addAll(new ExtensionFilter("*.png", "*.jpg"));
+        explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        File directorio = new File(System.getProperty("user.dir") + "/imagenesMaestros");
+        
+        try {
+            CodeSource direccion = VentanaRegistrarMaestroController.class.getProtectionDomain().getCodeSource();
+            fileJar = new File(direccion.getLocation().toURI().getPath());
+            fileDir = fileJar.getParentFile();
+            directorio = new File(fileDir.getAbsolutePath() + "/imagenesMaestros/");            
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaConsultarInformacionGrupoController.class.getName()).log(Level.SEVERE, null, ex);
+        }       
 
         if (archivoSeleccionado != null) {
-
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
             rutaImagen = archivoSeleccionado.getName();
 
@@ -297,14 +310,13 @@ public class VentanaRegistrarMaestroController implements Initializable {
                 directorio.mkdir();
             }
 
-            rutaNueva = System.getProperty("user.dir") + "/imagenesMaestros";
-            directorio = new File(System.getProperty("user.dir") + "/imagenesMaestros/" + rutaImagen);
+            rutaNueva = directorio.getAbsolutePath();
+            directorio = new  File(fileDir.getAbsolutePath() + "/imagenesMaestros/" + rutaImagen);
 
             if (!rutaImagen.equals("")) {
                 Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
                 imagenPerfil.setImage(foto);
             }
-
             try {
                 if (!directorio.exists()) {
                     Files.copy(archivoSeleccionado.toPath(), directorio.toPath());

@@ -2,9 +2,13 @@ package controlador;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.security.CodeSource;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -115,10 +119,21 @@ public class VentanaRegistrarAlumnoController implements Initializable {
 
     @FXML
     public String seleccionarImagen(ActionEvent event) throws IOException {
+        File fileJar;
+        File fileDir = null;
+        File directorio = null;
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        File directorio = new File(System.getProperty("user.dir") + "/imagenesAlumnos/");        
+        
+        try {
+            CodeSource direccion = VentanaRegistrarAlumnoController.class.getProtectionDomain().getCodeSource();
+            fileJar = new File(direccion.getLocation().toURI().getPath());
+            fileDir = fileJar.getParentFile();
+            directorio = new File(fileDir.getAbsolutePath() + "/imagenesAlumnos/");            
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaConsultarInformacionGrupoController.class.getName()).log(Level.SEVERE, null, ex);
+        }       
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
@@ -128,8 +143,8 @@ public class VentanaRegistrarAlumnoController implements Initializable {
                 directorio.mkdir();
             }
 
-            rutaNueva = System.getProperty("user.dir") + "/imagenesAlumnos";
-            directorio = new File(System.getProperty("user.dir") + "/imagenesAlumnos/" + nombreFoto);
+            rutaNueva = directorio.getAbsolutePath();
+            directorio = new  File(fileDir.getAbsolutePath() + "/imagenesAlumnos/" + nombreFoto);
 
             if (!nombreFoto.equals("")) {
                 Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);

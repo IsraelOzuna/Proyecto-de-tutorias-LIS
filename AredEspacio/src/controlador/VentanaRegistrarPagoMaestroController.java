@@ -1,8 +1,11 @@
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
+import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.CodeSource;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,10 +64,21 @@ public class VentanaRegistrarPagoMaestroController implements Initializable {
     }
 
     public void llenarCamposInformacion() throws MalformedURLException {
-        etiquetaNombre.setText(maestro.getNombre() + " " + maestro.getApellidos());
-        if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
-            imagenPerfil.setImage(foto);
+        try {
+            etiquetaNombre.setText(maestro.getNombre() + " " + maestro.getApellidos());
+            
+            CodeSource direccion = VentanaRegistrarPagoMaestroController.class.getProtectionDomain().getCodeSource();
+            File fileJar = new File(direccion.getLocation().toURI().getPath());
+            File fileDir = fileJar.getParentFile();
+            File fileProperties = new File(fileDir.getAbsolutePath());
+            
+            String rutaFoto = fileProperties.getAbsolutePath();
+            if (maestro.getRutaFoto() != null) {
+                Image foto = new Image("file:" + rutaFoto + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
+                imagenPerfil.setImage(foto);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaRegistrarPagoMaestroController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

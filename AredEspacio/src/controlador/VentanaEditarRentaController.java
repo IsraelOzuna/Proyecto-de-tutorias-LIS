@@ -3,7 +3,9 @@ package controlador;
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.CodeSource;
 import java.sql.Time;
 import java.util.HashMap;
 import java.util.List;
@@ -73,7 +75,7 @@ public class VentanaEditarRentaController implements Initializable {
 
     ObservableList<Horario> horarios;
 
-    private String rutaXML = System.getProperty("user.dir") + "/Archivos/Horarios.xml";
+    private String rutaXML;
 
     String diaDeLaSemanaSeleccionado;
 
@@ -104,7 +106,16 @@ public class VentanaEditarRentaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        botonGuardar.setDisable(true);
+        try {
+            CodeSource direccion = VentanaEditarRentaController.class.getProtectionDomain().getCodeSource();
+            File fileJar = new File(direccion.getLocation().toURI().getPath());
+            File fileDir = fileJar.getParentFile();
+            File fileProperties = new File(fileDir.getAbsolutePath() + "/Archivos/Horarios.xml");
+            rutaXML = fileProperties.getAbsolutePath();
+            botonGuardar.setDisable(true);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaEditarRentaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @FXML

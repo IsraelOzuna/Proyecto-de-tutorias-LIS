@@ -1,13 +1,18 @@
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -94,21 +99,32 @@ public class VentanaInformacionAlumnosController implements Initializable {
         panelPrincipal.getChildren().add(root);
     }
 
-    public void llenarCamposInformacion(String nombreUsuario) {
-        nombreUsuarioActual = nombreUsuario;
-        Calendar fechaNacimiento = Calendar.getInstance();
-        fechaNacimiento.setTime(alumno.getFechaNacimiento());
-        int dia = fechaNacimiento.get(Calendar.DAY_OF_MONTH);
-        int mes = fechaNacimiento.get(Calendar.MONTH);
-        int anio = fechaNacimiento.get(Calendar.YEAR);
-
-        etiquetaNombre.setText(alumno.getNombre() + " " + alumno.getApellidos());
-        etiquetaCorreo.setText(alumno.getCorreoElectronico());
-        etiquetaTelefono.setText(alumno.getTelefono());
-        etiquetaFechaNacimiento.setText(dia + " de " + Utileria.convertirMeses(mes) + " de " + anio);
-        if (alumno.getRutaFoto() != null) {
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
-            imagenPerfil.setImage(foto);
+    public void llenarCamposInformacion(String nombreUsuario) {        
+        try {
+            nombreUsuarioActual = nombreUsuario;
+            Calendar fechaNacimiento = Calendar.getInstance();
+            fechaNacimiento.setTime(alumno.getFechaNacimiento());
+            int dia = fechaNacimiento.get(Calendar.DAY_OF_MONTH);
+            int mes = fechaNacimiento.get(Calendar.MONTH);
+            int anio = fechaNacimiento.get(Calendar.YEAR);
+            
+            CodeSource direccion = VentanaInformacionAlumnosController.class.getProtectionDomain().getCodeSource();
+            File fileJar = new File(direccion.getLocation().toURI().getPath());
+            File fileDir = fileJar.getParentFile();
+            File fileProperties = new File(fileDir.getAbsolutePath());
+            
+            String rutaFoto = fileProperties.getAbsolutePath();
+            
+            etiquetaNombre.setText(alumno.getNombre() + " " + alumno.getApellidos());
+            etiquetaCorreo.setText(alumno.getCorreoElectronico());
+            etiquetaTelefono.setText(alumno.getTelefono());
+            etiquetaFechaNacimiento.setText(dia + " de " + Utileria.convertirMeses(mes) + " de " + anio);
+            if (alumno.getRutaFoto() != null) {
+                Image foto = new Image("file:" +  rutaFoto + "/imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
+                imagenPerfil.setImage(foto);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaInformacionAlumnosController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

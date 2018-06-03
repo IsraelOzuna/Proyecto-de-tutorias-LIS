@@ -3,9 +3,13 @@ package controlador;
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.security.CodeSource;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -110,7 +114,7 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
                     }
                     if (cantidadCorrecta) {
 
-                        if (esTelefonoValido(campoTelefono.getText())) {                            
+                        if (esTelefonoValido(campoTelefono.getText())) {
                             MaestroDAO maestroDAO = new MaestroDAO();
 
                             maestroNuevo.setNombre(campoNombre.getText().trim());
@@ -140,10 +144,21 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
 
     @FXML
     public String seleccionarImagen(ActionEvent event) throws IOException {
+        File fileJar;
+        File fileDir = null;
+        File directorio = null;
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        File directorio = new File(System.getProperty("user.dir") + "/imagenesMaestros");
+
+        try {
+            CodeSource direccion = VentanaEditarInformacionMaestroController.class.getProtectionDomain().getCodeSource();
+            fileJar = new File(direccion.getLocation().toURI().getPath());
+            fileDir = fileJar.getParentFile();
+            directorio = new File(fileDir.getAbsolutePath() + "/imagenesMaestros/");
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaConsultarInformacionGrupoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
@@ -152,22 +167,21 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
             if (!directorio.exists()) {
                 directorio.mkdir();
             }
-            rutaNueva = System.getProperty("user.dir") + "/imagenesMaestros";
-        }
 
-        if (nombreFoto != null) {
-            Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
-            imagenPerfil.setImage(foto);
-        }
+            rutaNueva = directorio.getAbsolutePath();
+            directorio = new File(fileDir.getAbsolutePath() + "/imagenesMaestros/" + nombreFoto);
 
-        directorio = new File(System.getProperty("user.dir") + "/imagenesMaestros/" + nombreFoto);
-
-        try {
-            if (!directorio.exists()) {
-                Files.copy(archivoSeleccionado.toPath(), directorio.toPath());
+            if (!nombreFoto.equals("")) {
+                Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
+                imagenPerfil.setImage(foto);
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            try {
+                if (!directorio.exists()) {
+                    Files.copy(archivoSeleccionado.toPath(), directorio.toPath());
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
 
         return nombreFoto;
@@ -264,17 +278,28 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
     }
 
     public void llenarCamposInformacion(String nombreUsuario) {
-        nombreUsuarioActual = nombreUsuario;
-        campoNombre.setText(maestro.getNombre());
-        campoApellidos.setText(maestro.getApellidos());
-        campoCorreoElectronico.setText(maestro.getCorreoElectronico());
-        campoTelefono.setText(maestro.getTelefono());
-        campoCantidadAPagar.setText(String.valueOf(maestro.getMensualidad()));
-
-        if (maestro.getRutaFoto() != null) {
-            nombreFoto = maestro.getRutaFoto();
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
-            imagenPerfil.setImage(foto);
+        try {
+            nombreUsuarioActual = nombreUsuario;
+            campoNombre.setText(maestro.getNombre());
+            campoApellidos.setText(maestro.getApellidos());
+            campoCorreoElectronico.setText(maestro.getCorreoElectronico());
+            campoTelefono.setText(maestro.getTelefono());
+            campoCantidadAPagar.setText(String.valueOf(maestro.getMensualidad()));
+            
+            CodeSource direccion = VentanaEditarInformacionMaestroController.class.getProtectionDomain().getCodeSource();
+            File fileJar = new File(direccion.getLocation().toURI().getPath());
+            File fileDir = fileJar.getParentFile();
+            File fileProperties = new File(fileDir.getAbsolutePath());
+            
+            String rutaFoto = fileProperties.getAbsolutePath();
+            
+            if (maestro.getRutaFoto() != null) {
+                nombreFoto = maestro.getRutaFoto();
+                Image foto = new Image("file:" + rutaFoto + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
+                imagenPerfil.setImage(foto);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaEditarInformacionMaestroController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

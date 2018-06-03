@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Renato
  */
-public interface IPagoInscripcionAlumno {
+public interface IPagoInscripcionAlumno {    
     public boolean registrarInscripcion(double monto, int idAlumno, String nombreGrupo, Date fecha);
     
 }

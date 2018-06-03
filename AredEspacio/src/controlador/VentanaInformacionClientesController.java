@@ -1,12 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.CodeSource;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -60,7 +60,7 @@ public class VentanaInformacionClientesController {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaEditarCliente.fxml"));
         Parent root = (Parent) loader.load();
         VentanaEditarClienteController ventanaEditar = loader.getController();
-        ventanaEditar.llenarCampos(cliente, nombreUsuarioActual);        
+        ventanaEditar.llenarCampos(cliente, nombreUsuarioActual);
         panelPrincipal.getChildren().add(root);
     }
 
@@ -70,13 +70,24 @@ public class VentanaInformacionClientesController {
     }
 
     public void llenarCamposInformacion(String nombreUsuario) {
-        nombreUsuarioActual=nombreUsuario;
-        etiquetaNombre.setText(cliente.getNombre() + " " + cliente.getApellidos());
-        etiquetaCorreo.setText(cliente.getCorreo());
-        etiquetaTelefono.setText(cliente.getTelefono());        
-        if (cliente.getRutaFoto() != null) {
-            Image foto = new Image("file:"+ System.getProperty("user.dir") + "/imagenesClientes/" + cliente.getRutaFoto(), 100, 100, false, true, true);
-            imagenPerfil.setImage(foto);
+        try {
+            nombreUsuarioActual = nombreUsuario;
+            etiquetaNombre.setText(cliente.getNombre() + " " + cliente.getApellidos());
+            etiquetaCorreo.setText(cliente.getCorreo());
+            etiquetaTelefono.setText(cliente.getTelefono());
+            
+            CodeSource direccion = VentanaInformacionClientesController.class.getProtectionDomain().getCodeSource();
+            File fileJar = new File(direccion.getLocation().toURI().getPath());
+            File fileDir = fileJar.getParentFile();
+            File fileProperties = new File(fileDir.getAbsolutePath());
+            
+            String rutaFoto = fileProperties.getAbsolutePath();
+            if (cliente.getRutaFoto() != null) {
+                Image foto = new Image("file:" + rutaFoto + "/imagenesClientes/" + cliente.getRutaFoto(), 100, 100, false, true, true);
+                imagenPerfil.setImage(foto);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaInformacionClientesController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

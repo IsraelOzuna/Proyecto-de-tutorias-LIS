@@ -42,21 +42,28 @@
                   <Font name="Gill Sans MT" size="27.0" />
                </font>
             </Label>
-            <Label fx:id="etiquetaNombreUsuario" contentDisplay="CENTER" layoutX="1094.0" layoutY="14.0" prefHeight="31.0" prefWidth="157.0" text="Usuario" textFill="WHITE">
+            <Label fx:id="etiquetaNombreUsuario" contentDisplay="CENTER" layoutX="1006.0" layoutY="12.0" prefHeight="31.0" prefWidth="157.0" text="Usuario" textFill="WHITE">
                <font>
                   <Font name="Gill Sans MT Bold" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="botonNotificaciones" layoutX="1277.0" layoutY="15.0" mnemonicParsing="false" onAction="#mostrarNotificaciones" style="-fx-background-color: #740808;">
+            <Button fx:id="botonNotificaciones" layoutX="1121.0" layoutY="13.0" mnemonicParsing="false" onAction="#mostrarNotificaciones" style="-fx-background-color: #740808;">
                <graphic>
                   <FontAwesomeIconView fill="#d4ac0d" glyphName="BELL" size="20">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </FontAwesomeIconView>
-               </graphic>
-            </Button>
-            <MaterialDesignIconView fill="WHITE" glyphName="ACCOUNT_CIRCLE" layoutX="1067.0" layoutY="39.0" size="25" text="" />
+               </graphic></Button>
+            <MaterialDesignIconView fill="WHITE" glyphName="ACCOUNT_CIRCLE" layoutX="979.0" layoutY="37.0" size="25" text="" />
+            <JFXButton fx:id="botonCerrarSesion" layoutX="1193.0" layoutY="16.0" onAction="#cerrarSesion" text="Cerrar sesión" textFill="WHITE" underline="true">
+               <font>
+                  <Font name="Gill Sans MT" size="12.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
          </children>
       </Pane>
       <GridPane layoutY="51.0" prefHeight="688.0" prefWidth="207.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1213.0" AnchorPane.topAnchor="51.0">

@@ -2,7 +2,6 @@ package controlador;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -25,14 +24,10 @@ import negocio.Egreso;
 import negocio.EgresoDAO;
 import negocio.Ingreso;
 import negocio.MaestroDAO;
-import negocio.PagoInscripcionAlumnoDAO;
 import negocio.PagoMaestroDAO;
-import negocio.PagoMensualidadAlumnoDAO;
 import negocio.RentaDAO;
 import negocio.Utileria;
-import persistencia.Horario;
 import persistencia.Maestro;
-import persistencia.Pagoalumno;
 import persistencia.Pagomaestro;
 import persistencia.Renta;
 

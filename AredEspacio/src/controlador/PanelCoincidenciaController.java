@@ -1,8 +1,13 @@
 package controlador;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.CodeSource;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,7 +52,7 @@ public class PanelCoincidenciaController implements Initializable {
     }
 
     public void obtenerSeccion(String seccion, Pane panelPrincipal, String nombreUsuario) {
-        nombreUsuarioActual=nombreUsuario;
+        nombreUsuarioActual = nombreUsuario;
         this.seccion = seccion;
         this.panelPrincipal = panelPrincipal;
     }
@@ -91,35 +96,66 @@ public class PanelCoincidenciaController implements Initializable {
     }
 
     public void llenarDatosAlumno(Alumno alumno) {
-        this.alumno = alumno;
-        String nombre = alumno.getNombre();
-        String apellidos = alumno.getApellidos();
-        etiquetaNombre.setText(nombre + " " + apellidos);             
-        if (alumno.getRutaFoto() != null) {
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
-            fotoPerfil.setImage(foto);
+        try {
+            CodeSource direccion = PanelCoincidenciaController.class.getProtectionDomain().getCodeSource();
+            File fileJar = new File(direccion.getLocation().toURI().getPath());
+            File fileDir = fileJar.getParentFile();
+            File fileProperties = new File(fileDir.getAbsolutePath());
+            
+            String rutaFoto = fileProperties.getAbsolutePath();
+            
+            this.alumno = alumno;
+            String nombre = alumno.getNombre();
+            String apellidos = alumno.getApellidos();
+            etiquetaNombre.setText(nombre + " " + apellidos);
+            if (alumno.getRutaFoto() != null) {
+                Image foto = new Image("file:" + rutaFoto + "/imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
+                fotoPerfil.setImage(foto);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(PanelCoincidenciaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void llenarDatosMaestro(Maestro maestro) {
-        this.maestro = maestro;
-        String nombre = maestro.getNombre();
-        String apellidos = maestro.getApellidos();
-        etiquetaNombre.setText(nombre + " " + apellidos);
-        if (maestro.getRutaFoto() != null) {
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
-            fotoPerfil.setImage(foto);
+        try {
+            CodeSource direccion = PanelCoincidenciaController.class.getProtectionDomain().getCodeSource();
+            File fileJar = new File(direccion.getLocation().toURI().getPath());
+            File fileDir = fileJar.getParentFile();
+            File fileProperties = new File(fileDir.getAbsolutePath());
+            
+            String rutaFoto = fileProperties.getAbsolutePath();
+            this.maestro = maestro;
+            String nombre = maestro.getNombre();
+            String apellidos = maestro.getApellidos();
+            etiquetaNombre.setText(nombre + " " + apellidos);
+            if (maestro.getRutaFoto() != null) {
+                Image foto = new Image("file:" + rutaFoto + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
+                fotoPerfil.setImage(foto);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(PanelCoincidenciaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void llenarDatosCliente(Cliente cliente) {
-        this.cliente = cliente;
-        String nombre = cliente.getNombre();
-        String apellidos = cliente.getApellidos();
-        etiquetaNombre.setText(nombre + " " + apellidos);
-        if(cliente.getRutaFoto() != null){
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesClientes/" + cliente.getRutaFoto(), 100, 100, false, true, true);
-            fotoPerfil.setImage(foto);
+        try {
+            CodeSource direccion = PanelCoincidenciaController.class.getProtectionDomain().getCodeSource();
+            File fileJar = new File(direccion.getLocation().toURI().getPath());
+            File fileDir = fileJar.getParentFile();
+            File fileProperties = new File(fileDir.getAbsolutePath());
+            
+            String rutaFoto = fileProperties.getAbsolutePath();
+            this.cliente = cliente;
+            String nombre = cliente.getNombre();
+            String apellidos = cliente.getApellidos();
+            etiquetaNombre.setText(nombre + " " + apellidos);
+            if (cliente.getRutaFoto() != null) {
+                Image foto = new Image("file:" + rutaFoto + "/imagenesClientes/" + cliente.getRutaFoto(), 100, 100, false, true, true);
+                fotoPerfil.setImage(foto);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(PanelCoincidenciaController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

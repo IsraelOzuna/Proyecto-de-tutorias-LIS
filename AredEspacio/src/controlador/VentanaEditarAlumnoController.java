@@ -3,10 +3,14 @@ package controlador;
 import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.security.CodeSource;
 import java.sql.Date;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -129,10 +133,21 @@ public class VentanaEditarAlumnoController implements Initializable {
 
     @FXML
     public String seleccionarImagen(ActionEvent event) throws IOException {
+        File fileJar;
+        File fileDir = null;
+        File directorio = null;
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        File directorio = new File(System.getProperty("user.dir") + "/imagenesAlumnos");
+        
+        try {
+            CodeSource direccion = VentanaEditarAlumnoController.class.getProtectionDomain().getCodeSource();
+            fileJar = new File(direccion.getLocation().toURI().getPath());
+            fileDir = fileJar.getParentFile();
+            directorio = new File(fileDir.getAbsolutePath() + "/imagenesAlumnos/");            
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaConsultarInformacionGrupoController.class.getName()).log(Level.SEVERE, null, ex);
+        }       
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
@@ -142,14 +157,13 @@ public class VentanaEditarAlumnoController implements Initializable {
                 directorio.mkdir();
             }
 
-            rutaNueva = System.getProperty("user.dir") + "/imagenesAlumnos";
-            directorio = new File(System.getProperty("user.dir") + "/imagenesAlumnos/" + nombreFoto);
+            rutaNueva = directorio.getAbsolutePath();
+            directorio = new  File(fileDir.getAbsolutePath() + "/imagenesAlumnos/" + nombreFoto);
 
             if (!nombreFoto.equals("")) {
                 Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
                 fotoSeleccionada.setImage(foto);
             }
-
             try {
                 if (!directorio.exists()) {
                     Files.copy(archivoSeleccionado.toPath(), directorio.toPath());
@@ -163,17 +177,28 @@ public class VentanaEditarAlumnoController implements Initializable {
     }
 
     public void llenarCampos(Alumno alumno, String nombreUsuario) {
-        nombreUsuarioActual = nombreUsuario;
-        this.alumno = alumno;
-        campoNombre.setText(alumno.getNombre());
-        campoApellidos.setText(alumno.getApellidos());
-        campoCorreo.setText(alumno.getCorreoElectronico());
-        campoFechaNacimiennto.setValue(Utileria.mostrarFechaNacimiento(alumno.getFechaNacimiento()));
-        campoTelefono.setText(alumno.getTelefono());
-        if (alumno.getRutaFoto() != null) {
-            nombreFoto = alumno.getRutaFoto();
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
-            fotoSeleccionada.setImage(foto);
+        try {
+            nombreUsuarioActual = nombreUsuario;
+            this.alumno = alumno;
+            campoNombre.setText(alumno.getNombre());
+            campoApellidos.setText(alumno.getApellidos());
+            campoCorreo.setText(alumno.getCorreoElectronico());
+            campoFechaNacimiennto.setValue(Utileria.mostrarFechaNacimiento(alumno.getFechaNacimiento()));
+            campoTelefono.setText(alumno.getTelefono());
+            
+            CodeSource direccion = VentanaEditarAlumnoController.class.getProtectionDomain().getCodeSource();
+            File fileJar = new File(direccion.getLocation().toURI().getPath());
+            File fileDir = fileJar.getParentFile();
+            File fileProperties = new File(fileDir.getAbsolutePath());
+            
+            String rutaFoto = fileProperties.getAbsolutePath();
+            if (alumno.getRutaFoto() != null) {
+                nombreFoto = alumno.getRutaFoto();
+                Image foto = new Image("file:" + rutaFoto + "/imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
+                fotoSeleccionada.setImage(foto);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaEditarAlumnoController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -2,11 +2,16 @@ package controlador;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -119,14 +124,24 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
     }
 
     public void llenarDatos(String rutaFotoAlumno, String nombreAlumno, String apellidosAlumno, int idAlumno) {
-        this.idAlumno = idAlumno;
-        etiquetaNombreAlumno.setText(nombreAlumno + " " + apellidosAlumno);
-        if (rutaFotoAlumno != null) {
-            Image foto = new Image("file:" + System.getProperty("user.dir") + "/imagenesAlumnos/" + rutaFotoAlumno, 100, 100, false, true, true);
-            imagenPerfil.setImage(foto);
+        try {
+            this.idAlumno = idAlumno;
+            etiquetaNombreAlumno.setText(nombreAlumno + " " + apellidosAlumno);
+            CodeSource direccion = VentanaRegistrarMensualidadAlumnoController.class.getProtectionDomain().getCodeSource();
+            File fileJar = new File(direccion.getLocation().toURI().getPath());
+            File fileDir = fileJar.getParentFile();
+            File fileProperties = new File(fileDir.getAbsolutePath());
+            
+            String rutaFoto = fileProperties.getAbsolutePath();
+            if (rutaFotoAlumno != null) {
+                Image foto = new Image("file:" + rutaFoto + "/imagenesAlumnos/" + rutaFotoAlumno, 100, 100, false, true, true);
+                imagenPerfil.setImage(foto);
+            }
+            llenarComboPromocion();
+            llenarComboGrupos();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentanaRegistrarMensualidadAlumnoController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        llenarComboPromocion();
-        llenarComboGrupos();
     }
 
     private ArrayList<String> obtenerNombreGrupos(List<String> gruposAlumno) {
