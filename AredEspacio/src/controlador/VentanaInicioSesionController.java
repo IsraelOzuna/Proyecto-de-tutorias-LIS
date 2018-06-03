@@ -1,5 +1,6 @@
 package controlador;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
@@ -36,22 +37,24 @@ public class VentanaInicioSesionController implements Initializable {
     private Label etiquetaErrorUsuario;
     @FXML
     private Label etiquetaErrorContrasena;
+    @FXML
+    private JFXButton botonCerrar;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+
     }
 
     @FXML
-    public void ingresar(ActionEvent event) {
+    private void ingresar(ActionEvent event) {
         CuentaDAO cuentaDAO = new CuentaDAO();
         limpiarEtiquetas();
         if (!existenCamposVacios() && !existenCamposExcedidos()) {
             try {
-                switch (cuentaDAO.iniciarSesion(campoUsuario.getText().trim(), Utileria.cifrarContrasena(campoContrasena.getText()))){
+                switch (cuentaDAO.iniciarSesion(campoUsuario.getText().trim(), Utileria.cifrarContrasena(campoContrasena.getText()))) {
                     case "Director":
                         desplegarMenuDirector(event);
                         break;
@@ -77,7 +80,7 @@ public class VentanaInicioSesionController implements Initializable {
         }
     }
 
-    public boolean existenCamposVacios() {
+    private boolean existenCamposVacios() {
         boolean camposVacios = false;
 
         if (campoUsuario.getText().trim().isEmpty()) {
@@ -93,7 +96,7 @@ public class VentanaInicioSesionController implements Initializable {
         return camposVacios;
     }
 
-    public boolean existenCamposExcedidos() {
+    private boolean existenCamposExcedidos() {
         boolean camposExedidos = false;
         if (campoUsuario.getText().trim().length() > 50) {
             etiquetaErrorUsuario.setText("El usuario solo puede tener 50 caracteres");
@@ -101,12 +104,12 @@ public class VentanaInicioSesionController implements Initializable {
         return camposExedidos;
     }
 
-    public void limpiarEtiquetas() {
+    private void limpiarEtiquetas() {
         etiquetaErrorUsuario.setText("");
         etiquetaErrorContrasena.setText("");
     }
 
-    public void desplegarMenuDirector(ActionEvent event) {
+    private void desplegarMenuDirector(ActionEvent event) {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaMenuDirector.fxml"));
         Parent root = null;
         try {
@@ -117,13 +120,13 @@ public class VentanaInicioSesionController implements Initializable {
         VentanaMenuDirectorController menuDirector = loger.getController();
         menuDirector.obtenerUsuario(campoUsuario.getText());
         Stage menu = new Stage();
-        menu.setScene(new Scene(root));        
+        menu.setScene(new Scene(root));
         menu.show();
         Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaAnterior.close();
     }
 
-    public void desplegarMenuMaestro(ActionEvent event) {
+    private void desplegarMenuMaestro(ActionEvent event) {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaMenuDirector.fxml"));
         Parent root = null;
         try {
@@ -135,9 +138,15 @@ public class VentanaInicioSesionController implements Initializable {
         menuMaestro.obtenerUsuario(campoUsuario.getText());
         menuMaestro.ocultarBotones();
         Stage menu = new Stage();
-        menu.setScene(new Scene(root));        
+        menu.setScene(new Scene(root));
         menu.show();
         Stage ventanaAnterior = (Stage) ((Node) event.getSource()).getScene().getWindow();
         ventanaAnterior.close();
+    }
+
+    @FXML
+    private void cerrarVentana(ActionEvent event) {
+        Stage stage = (Stage) botonCerrar.getScene().getWindow();        
+        stage.close();
     }
 }

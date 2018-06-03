@@ -1,8 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*Sistema Ared espacio. Desarrollado para la escuela de danza
+con el mismo nombre
+Desarrollado por: Renato Vargas Gomez
+                  Irvin Dereb Vera López
+                  Israel Reyes Ozuna
+*/
+
+
 package aredespacio;
 
 import javafx.application.Application;
@@ -10,11 +13,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-/**
- *
- * @author iro19
- */
 public class AredEspacio extends Application {
     
     @Override
@@ -23,13 +23,11 @@ public class AredEspacio extends Application {
         
         Scene scene = new Scene(root);
         
-        stage.setScene(scene);        
+        stage.setScene(scene);      
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
     }
-
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
         launch(args);
     }

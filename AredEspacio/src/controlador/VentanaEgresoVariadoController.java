@@ -1,8 +1,8 @@
 package controlador;
 
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -21,9 +21,7 @@ import negocio.EgresoDAO;
  * @author Israel Reyes Ozuna
  */
 public class VentanaEgresoVariadoController implements Initializable {
-    
-    @FXML
-    private Label etiquetaFecha;
+        
     @FXML
     private JFXTextField campoGasto;
     @FXML
@@ -39,18 +37,17 @@ public class VentanaEgresoVariadoController implements Initializable {
     String fechaActual;
     @FXML
     private AnchorPane panelPrincipal;
+    @FXML
+    private JFXDatePicker campoFechaRegistro;
+    @FXML
+    private Label etiquetaFechaRegistro;
 
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        Calendar fecha = Calendar.getInstance();
-        int dia = fecha.get(Calendar.DATE);
-        int mes = fecha.get(Calendar.MONTH);
-        int anio = fecha.get(Calendar.YEAR);
-        fechaActual = dia + "/" + (mes + 1) + "/" + "/" + anio;
-        etiquetaFecha.setText(fechaActual);
+    public void initialize(URL url, ResourceBundle rb) {       
+        
     }
     
     @FXML
@@ -78,6 +75,7 @@ public class VentanaEgresoVariadoController implements Initializable {
                     
                     if (nuevoEgreso.registrarEgresoVariado(egreso)) {
                         DialogosController.mostrarMensajeInformacion("Registrado", "Egreso registrado", "El egreso de ha registrado correctamente");                        
+                        panelPrincipal.setVisible(false);
                     } else {
                         DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "El egreso no se pudo registrar");
                     }
@@ -120,6 +118,10 @@ public class VentanaEgresoVariadoController implements Initializable {
             camposExcedidos = true;
             etiquetaGasto.setText("Campo obligatorio");            
         }
+        if(campoFechaRegistro.getValue() == null){
+            camposExcedidos = true;
+            etiquetaFechaRegistro.setText("Campo obligatorio");
+        }   
         return camposExcedidos;
     }
     
@@ -140,7 +142,7 @@ public class VentanaEgresoVariadoController implements Initializable {
             limiteExcedido = true;
             etiquetaDescripcion.setText("Solo 500 caracteres");
         }
-        
+             
         return limiteExcedido;
     }
     
@@ -148,6 +150,7 @@ public class VentanaEgresoVariadoController implements Initializable {
         etiquetaCosto.setText("");
         etiquetaDescripcion.setText("");
         etiquetaGasto.setText("");
+        etiquetaFechaRegistro.setText("");
     }        
 
     @FXML

@@ -4,7 +4,6 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -30,8 +29,6 @@ import negocio.Utileria;
 public class VentanaEgresosFbController implements Initializable {
 
     @FXML
-    private Label etiquetaFechaActual;
-    @FXML
     private JFXDatePicker campoFehcaInicioPub;
     @FXML
     private JFXDatePicker campoFechaFinPub;
@@ -56,18 +53,16 @@ public class VentanaEgresosFbController implements Initializable {
     private Label etiquetaCreador;
     @FXML
     private Label etiquetaDescripcion;
+    @FXML
+    private JFXDatePicker campoFechaRegistro;
+    @FXML
+    private Label etiquetaFechaRegistro;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Calendar fecha = Calendar.getInstance();
-        int dia = fecha.get(Calendar.DATE);
-        int mes = fecha.get(Calendar.MONTH);
-        int anio = fecha.get(Calendar.YEAR);
-        fechaActual = dia + "/" + (mes + 1) + "/" + anio;
-        etiquetaFechaActual.setText(fechaActual);
         llenarComboMaestros();
     }
 
@@ -94,7 +89,9 @@ public class VentanaEgresosFbController implements Initializable {
                     egresoFb.setDescripcion(campoDescripcion.getText().trim());
                     egresoFb.setFechaFinPublicacion(Utileria.convertirFecha(campoFechaFinPub.getValue()));
                     egresoFb.setFechaInicioPublicacion(Utileria.convertirFecha(campoFehcaInicioPub.getValue()));
-                    egresoFb.setFechaRegistro(fechaRegistro);
+
+                    egresoFb.setFechaRegistro(Utileria.convertirFecha(campoFechaRegistro.getValue()));
+
                     egresoFb.setUrl(campoLink.getText().trim());
 
                     if (nuevoEgresoFb.registrarEgresoFb(egresoFb, (String) comboCreador.getValue())) {
@@ -164,6 +161,10 @@ public class VentanaEgresosFbController implements Initializable {
             camposVacios = true;
             etiquetaCreador.setText("Campo obligatorio");
         }
+        if (campoFechaRegistro.getValue() == null) {
+            camposVacios = true;
+            etiquetaFechaRegistro.setText("Campo obligatorio");
+        }
         return camposVacios;
     }
 
@@ -188,6 +189,7 @@ public class VentanaEgresosFbController implements Initializable {
         etiquetaFechaFin.setText("");
         etiquetaFechaPublicacion.setText("");
         etiquetaLink.setText("");
+        etiquetaFechaRegistro.setText("");
     }
 
     public void limpiarCampos() {
@@ -197,5 +199,6 @@ public class VentanaEgresosFbController implements Initializable {
         campoFehcaInicioPub.setValue(null);
         campoLink.setText("");
         comboCreador.setValue(null);
+        campoFechaRegistro.setValue(null);
     }
 }

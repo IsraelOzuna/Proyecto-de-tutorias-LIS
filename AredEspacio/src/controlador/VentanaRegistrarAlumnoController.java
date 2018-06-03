@@ -1,6 +1,5 @@
 package controlador;
 
-import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -31,18 +30,6 @@ import negocio.Utileria;
 public class VentanaRegistrarAlumnoController implements Initializable {
 
     @FXML
-    private JFXButton botonSeleccionarImagen;
-    @FXML
-    private Label etiquetaNombre;
-    @FXML
-    private Label etiquetaApellidos;
-    @FXML
-    private Label etiquetaFechaNacimiento;
-    @FXML
-    private Label etiquetaCorreo;
-    @FXML
-    private Label etiquetaTelefono;
-    @FXML
     private TextField campoNombre;
     @FXML
     private TextField campoApellidos;
@@ -52,10 +39,6 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     private TextField campoTelefono;
     @FXML
     private DatePicker campoFechaNacimiennto;
-    @FXML
-    private JFXButton botonCancelar;
-    @FXML
-    private JFXButton botonRegistrar;
     @FXML
     private ImageView fotoSeleccionada;
     @FXML
@@ -135,7 +118,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        File directorio = new File(System.getProperty("user.dir") + "/imagenesAlumnos");
+        File directorio = new File(System.getProperty("user.dir") + "/imagenesAlumnos/");        
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();

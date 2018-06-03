@@ -199,6 +199,8 @@ public class VentanaBuscarController implements Initializable {
 
     @FXML
     public void buscarCoincidencias() {
+        tabla.setVisible(false);
+        tablaPromociones.setVisible(false);
         etiquetaNoCoincidencias.setText("");
         gridCoincidencias.getChildren().clear();
         if (!campoBusqueda.getText().isEmpty()) {

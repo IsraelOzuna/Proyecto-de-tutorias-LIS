@@ -33,11 +33,11 @@
    </dia>
    
    <dia nombre="Lunes">
-        <ocho-ochoMedia>Tango</ocho-ochoMedia>
-        <ochoMedia-nueve>Tango</ochoMedia-nueve>
-        <nueve-nueveMedia>Tango</nueve-nueveMedia>
-        <nueveMedia-diez>Tango</nueveMedia-diez>
-        <diez-diezMedia>Disponible</diez-diezMedia>
+        <ocho-ochoMedia>Ballet</ocho-ochoMedia>
+        <ochoMedia-nueve>Ballet</ochoMedia-nueve>
+        <nueve-nueveMedia>Ballet</nueve-nueveMedia>
+        <nueveMedia-diez>Ballet</nueveMedia-diez>
+        <diez-diezMedia>Ballet</diez-diezMedia>
         <diezMedia-once>Disponible</diezMedia-once>
         <once-onceMedia>Disponible</once-onceMedia>
         <onceMedia-doce>Disponible</onceMedia-doce>
@@ -66,11 +66,11 @@
    </dia>
    
    <dia nombre="Martes">
-        <ocho-ochoMedia>Disponible</ocho-ochoMedia>
-        <ochoMedia-nueve>Disponible</ochoMedia-nueve>
-        <nueve-nueveMedia>Disponible</nueve-nueveMedia>
-        <nueveMedia-diez>Disponible</nueveMedia-diez>
-        <diez-diezMedia>Disponible</diez-diezMedia>
+        <ocho-ochoMedia>Ballet</ocho-ochoMedia>
+        <ochoMedia-nueve>Ballet</ochoMedia-nueve>
+        <nueve-nueveMedia>Ballet</nueve-nueveMedia>
+        <nueveMedia-diez>Ballet</nueveMedia-diez>
+        <diez-diezMedia>Ballet</diez-diezMedia>
         <diezMedia-once>Disponible</diezMedia-once>
         <once-onceMedia>Disponible</once-onceMedia>
         <onceMedia-doce>Disponible</onceMedia-doce>
@@ -99,13 +99,13 @@
    </dia>
    
    <dia nombre="Miercoles">
-        <ocho-ochoMedia>Tango</ocho-ochoMedia>
-        <ochoMedia-nueve>Tango</ochoMedia-nueve>
-        <nueve-nueveMedia>Tango</nueve-nueveMedia>
-        <nueveMedia-diez>Tango</nueveMedia-diez>
-        <diez-diezMedia>grupo1</diez-diezMedia>
-        <diezMedia-once>grupo1</diezMedia-once>
-        <once-onceMedia>grupo1</once-onceMedia>
+        <ocho-ochoMedia>Ballet</ocho-ochoMedia>
+        <ochoMedia-nueve>Ballet</ochoMedia-nueve>
+        <nueve-nueveMedia>Ballet</nueve-nueveMedia>
+        <nueveMedia-diez>Ballet</nueveMedia-diez>
+        <diez-diezMedia>Disponible</diez-diezMedia>
+        <diezMedia-once>Disponible</diezMedia-once>
+        <once-onceMedia>Disponible</once-onceMedia>
         <onceMedia-doce>Disponible</onceMedia-doce>
         <doce-doceMedia>Disponible</doce-doceMedia>
         <doceMedia-una>Disponible</doceMedia-una>
@@ -132,10 +132,10 @@
    </dia>
    
    <dia nombre="Jueves">
-        <ocho-ochoMedia>Disponible</ocho-ochoMedia>
-        <ochoMedia-nueve>Disponible</ochoMedia-nueve>
-        <nueve-nueveMedia>Disponible</nueve-nueveMedia>
-        <nueveMedia-diez>Disponible</nueveMedia-diez>
+        <ocho-ochoMedia>Ballet</ocho-ochoMedia>
+        <ochoMedia-nueve>Ballet</ochoMedia-nueve>
+        <nueve-nueveMedia>Ballet</nueve-nueveMedia>
+        <nueveMedia-diez>Ballet</nueveMedia-diez>
         <diez-diezMedia>Disponible</diez-diezMedia>
         <diezMedia-once>Disponible</diezMedia-once>
         <once-onceMedia>Disponible</once-onceMedia>
@@ -165,10 +165,10 @@
    </dia>
    
    <dia nombre="Viernes">
-        <ocho-ochoMedia>Tango</ocho-ochoMedia>
-        <ochoMedia-nueve>Tango</ochoMedia-nueve>
-        <nueve-nueveMedia>Tango</nueve-nueveMedia>
-        <nueveMedia-diez>Tango</nueveMedia-diez>
+        <ocho-ochoMedia>Ballet</ocho-ochoMedia>
+        <ochoMedia-nueve>Ballet</ochoMedia-nueve>
+        <nueve-nueveMedia>Ballet</nueve-nueveMedia>
+        <nueveMedia-diez>Ballet</nueveMedia-diez>
         <diez-diezMedia>Disponible</diez-diezMedia>
         <diezMedia-once>Disponible</diezMedia-once>
         <once-onceMedia>Disponible</once-onceMedia>
