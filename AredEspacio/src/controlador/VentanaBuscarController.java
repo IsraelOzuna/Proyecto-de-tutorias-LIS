@@ -13,12 +13,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import negocio.Alumno;
@@ -29,22 +27,24 @@ import negocio.PromocionDAO;
 import persistencia.Cliente;
 import persistencia.Maestro;
 
+/**
+ * Este controlador es usado para desplegar una lista de alumnos, clientes,
+ * maestros o promociones según sea el caso y también para realizar busquedas
+ * especificas de alguno de estos
+ *
+ * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
+ */
 public class VentanaBuscarController implements Initializable {
 
     @FXML
-    private JFXButton botonRegistrarNuevo;
-    @FXML
     private Label etiquetaIdentidicador;
-    @FXML
-    private AnchorPane panelBuscar;
     @FXML
     private JFXButton botonBuscar;
     @FXML
     private TextField campoBusqueda;
     @FXML
     private Label etiquetaNoCoincidencias;
-    @FXML
-    private ScrollPane scrollCoincidencias;
     @FXML
     private GridPane gridCoincidencias;
     @FXML
@@ -75,6 +75,15 @@ public class VentanaBuscarController implements Initializable {
         tablaPromociones.setVisible(false);
     }
 
+    /**
+     * Este método ayuda a saber que es lo que el usuario quiere buscar en el
+     * sistema
+     *
+     * @param seccion el nombre de la sección dónde el usuario quiere buscar
+     * @param panelPrincipal panel para insertar los componentes
+     * @param nombreUsuario usuario el cual realiza las busquedas
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void obtenerSeccion(String seccion, Pane panelPrincipal, String nombreUsuario) {
         nombreUsuarioActual = nombreUsuario;
         this.seccion = seccion;
@@ -84,6 +93,12 @@ public class VentanaBuscarController implements Initializable {
 
     }
 
+    /**
+     * Este método llena la tabla en donde se visualizaran los alumnos,
+     * maestros, clientes o promociones
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void llenarTabla() {
         switch (seccion) {
             case "Alumnos":
@@ -158,7 +173,7 @@ public class VentanaBuscarController implements Initializable {
     }
 
     @FXML
-    public void desplegarNuevoRegistro() throws IOException {
+    private void desplegarNuevoRegistro() throws IOException {
         FXMLLoader loader;
         Parent root;
         switch (seccion) {
@@ -166,7 +181,7 @@ public class VentanaBuscarController implements Initializable {
                 loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRegistrarAlumno.fxml"));
                 root = (Parent) loader.load();
                 VentanaRegistrarAlumnoController ventanaRegistrarAlumno = loader.getController();
-                ventanaRegistrarAlumno.llenarDatos(nombreUsuarioActual);
+                ventanaRegistrarAlumno.obtenerUsuario(nombreUsuarioActual);
                 panelPrincipal.getChildren().add(root);
                 break;
             case "Maestros":
@@ -181,7 +196,7 @@ public class VentanaBuscarController implements Initializable {
                 loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRegistrarCliente.fxml"));
                 root = (Parent) loader.load();
                 VentanaRegistrarClienteController ventanaRegistrarCliente = loader.getController();
-                ventanaRegistrarCliente.llenarDatos(nombreUsuarioActual);
+                ventanaRegistrarCliente.obtenerUsuario(nombreUsuarioActual);
                 panelPrincipal.getChildren().add(root);
                 break;
 
@@ -198,7 +213,7 @@ public class VentanaBuscarController implements Initializable {
     }
 
     @FXML
-    public void buscarCoincidencias() {
+    private void buscarCoincidencias() {
         tabla.setVisible(false);
         tablaPromociones.setVisible(false);
         etiquetaNoCoincidencias.setText("");
@@ -222,6 +237,12 @@ public class VentanaBuscarController implements Initializable {
         }
     }
 
+    /**
+     * Este método ayuda llenar el panel de las busquedas con los alumnos que se
+     * han encontrado con el nombre que fue ingresado
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void mostrarCoincidenciasAlumno() {
         AlumnoDAO alumnoDAO = new AlumnoDAO();
         Alumno alumno = new Alumno();
@@ -258,6 +279,12 @@ public class VentanaBuscarController implements Initializable {
         }
     }
 
+    /**
+     * Este método ayuda llenar el panel de las busquedas con los Maestros que
+     * se han encontrado con el nombre que fue ingresado
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void mostrarCoincidenciasMaestro() {
         MaestroDAO maestroDAO = new MaestroDAO();
         Maestro maestro = new Maestro();
@@ -295,6 +322,12 @@ public class VentanaBuscarController implements Initializable {
         }
     }
 
+    /**
+     * Este método ayuda llenar el panel de las busquedas con los clientes que
+     * se han encontrado con el nombre que fue ingresado
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void mostrarCoincidenciasCliente() {
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente = new Cliente();
@@ -331,6 +364,11 @@ public class VentanaBuscarController implements Initializable {
         }
     }
 
+    /**
+     * Este método oculta funcionalidades al maestro que son únicas del Director
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void ocultarComponentes() {
         botonBuscar.setVisible(false);
         campoBusqueda.setVisible(false);

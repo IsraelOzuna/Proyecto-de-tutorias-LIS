@@ -3,10 +3,15 @@ package negocio;
 import java.util.Date;
 
 /**
+ * Esta clase contiene todos los atributos necesarios para los pagos de
+ * mensualidades de los alumnos en los diferentes grupos a los que podría
+ * encontrarse inscrito
  *
- * @author iro19
+ * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
  */
 public class PagoMensualidadAlumno {
+
     private Date fechaPagoInscripcion;
     private char tipoPago;
     private Double cantidad;
@@ -19,7 +24,7 @@ public class PagoMensualidadAlumno {
 
     public void setIdGrupo(int idGrupo) {
         this.idGrupo = idGrupo;
-    }    
+    }
 
     public int getIdAlumno() {
         return idAlumno;
@@ -27,7 +32,7 @@ public class PagoMensualidadAlumno {
 
     public void setIdAlumno(int idAlumno) {
         this.idAlumno = idAlumno;
-    }    
+    }
 
     public Date getFechaPagoInscripcion() {
         return fechaPagoInscripcion;
@@ -51,5 +56,5 @@ public class PagoMensualidadAlumno {
 
     public void setCantidad(Double cantidad) {
         this.cantidad = cantidad;
-    }        
+    }
 }

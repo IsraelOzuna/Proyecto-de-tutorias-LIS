@@ -25,14 +25,16 @@ import negocio.Notificador;
 import org.controlsfx.control.PopOver;
 import persistencia.Cuenta;
 
-
-
+/**
+ * Este controlador es usado para manipular la vista en la que el director
+ * realiza diferentes tareas. También la usa el maestro pero sin funcionalidades
+ * que son exclusivas del director
+ *
+ * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
+ */
 public class VentanaMenuDirectorController implements Initializable {
 
-    @FXML
-    private JFXButton botonGrupos;
-    @FXML
-    private JFXButton botonAlumnos;
     @FXML
     private JFXButton botonRecursosReportes;
     @FXML
@@ -49,18 +51,13 @@ public class VentanaMenuDirectorController implements Initializable {
     private JFXButton botonAnuncios;
     @FXML
     private Button botonNotificaciones;
-    @FXML
-    private JFXButton botonCerrarSesion;
-    
-    /**
-     * Initializes the controller class.
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }
 
     @FXML
-    public void desplegarVentanaBusquedaAlumno(ActionEvent event) throws IOException {
+    private void desplegarVentanaBusquedaAlumno(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
@@ -70,7 +67,7 @@ public class VentanaMenuDirectorController implements Initializable {
     }
 
     @FXML
-    public void desplegarVentanaBusquedaMaestro(ActionEvent event) throws IOException {
+    private void desplegarVentanaBusquedaMaestro(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
@@ -80,7 +77,7 @@ public class VentanaMenuDirectorController implements Initializable {
     }
 
     @FXML
-    public void desplegarVentanaBusquedaRenta(ActionEvent event) throws IOException {
+    private void desplegarVentanaBusquedaRenta(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRentas.fxml"));
         Parent root = (Parent) loader.load();
         VentanaRentasController ventanaRentas = loader.getController();
@@ -91,7 +88,7 @@ public class VentanaMenuDirectorController implements Initializable {
     }
 
     @FXML
-    public void desplegarVentanaBusquedaGrupos(ActionEvent event) throws IOException {
+    private void desplegarVentanaBusquedaGrupos(ActionEvent event) throws IOException {
         MaestroDAO maestroDAO = new MaestroDAO();
         if (maestroDAO.obtenerNumeroMaestros() > 0) {
             FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaConsultarGrupos.fxml"));
@@ -106,7 +103,7 @@ public class VentanaMenuDirectorController implements Initializable {
     }
 
     @FXML
-    public void desplegarVentanaBusquedaClientes(ActionEvent event) throws IOException {
+    private void desplegarVentanaBusquedaClientes(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
@@ -116,7 +113,7 @@ public class VentanaMenuDirectorController implements Initializable {
     }
 
     @FXML
-    public void desplegarVentanaFacebook(ActionEvent event) throws IOException {
+    private void desplegarVentanaFacebook(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaEgresosFb.fxml"));
         Parent root = (Parent) loader.load();
         VentanaEgresosFbController ventanaEgresosFb = loader.getController();
@@ -135,7 +132,7 @@ public class VentanaMenuDirectorController implements Initializable {
     }
 
     @FXML
-    public void desplegarVentanaPromociones(ActionEvent event) throws IOException {
+    private void desplegarVentanaPromociones(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
         VentanaBuscarController ventanaBuscar = loader.getController();
@@ -144,11 +141,25 @@ public class VentanaMenuDirectorController implements Initializable {
         panelPrincipal.getChildren().clear();
         panelPrincipal.getChildren().add(root);
     }
-    
+
+    /**
+     * Este método permite obtener el usuario que ingresó al sistema para poner
+     * su nombre y además otorgar o quitar permisos en el sistema de acuerdo a
+     * su rol
+     *
+     * @param usuario quien ingresó al sistema
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void obtenerUsuario(String usuario) {
         etiquetaNombreUsuario.setText(usuario);
     }
 
+    /**
+     * Este método oculta funcionalidades a los maestros que son exclusivas del
+     * director
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void ocultarBotones() {
         botonClientes.setVisible(false);
         botonMaestros.setVisible(false);
@@ -160,28 +171,27 @@ public class VentanaMenuDirectorController implements Initializable {
     @FXML
     private void mostrarNotificaciones(ActionEvent event) {
         CuentaDAO cuentaDAO = new CuentaDAO();
-        Cuenta cuentaUsuario=cuentaDAO.obtenerCuenta(etiquetaNombreUsuario.getText());
-        
+        Cuenta cuentaUsuario = cuentaDAO.obtenerCuenta(etiquetaNombreUsuario.getText());
+
         Notificador notificador = new Notificador();
         PopOver pop = new PopOver();
 
         VBox box = new VBox();
         box.setStyle("-fx-background-color: white;");
 
-        if(cuentaUsuario.getTipoCuenta().equals("Director")){
+        if (cuentaUsuario.getTipoCuenta().equals("Director")) {
             box.getChildren().addAll(notificador.generarNotificacionesDirector());
-        }else{
+        } else {
             box.getChildren().addAll(notificador.generarNotificacionesMaestro(cuentaUsuario));
         }
-        
-        
+
         pop.setContentNode(box);
         pop.setArrowLocation(PopOver.ArrowLocation.TOP_CENTER);
-        pop.show(botonNotificaciones);                        
+        pop.show(botonNotificaciones);
     }
-    
+
     @FXML
-    private void cerrarSesion(ActionEvent event){
+    private void cerrarSesion(ActionEvent event) {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaInicioSesion.fxml"));
         Parent root = null;
         try {

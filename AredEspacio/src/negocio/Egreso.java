@@ -3,10 +3,14 @@ package negocio;
 import java.util.Date;
 
 /**
+ * Esta clase contiene todos los atributos necesarios para el manejo de los
+ * egresos que son registrados en el sistema
  *
  * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
  */
 public class Egreso {
+
     private Date fechaRegistro;
     private Date fechaInicioPublicacion;
     private Date fechaFinPublicacion;
@@ -23,7 +27,7 @@ public class Egreso {
     public void setNombreGasto(String nombreGasto) {
         this.nombreGasto = nombreGasto;
     }
-    
+
     public Date getFechaRegistro() {
         return fechaRegistro;
     }
@@ -79,6 +83,5 @@ public class Egreso {
     public void setUrl(String url) {
         this.url = url;
     }
-    
-    
+
 }

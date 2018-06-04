@@ -1,6 +1,5 @@
 package controlador;
 
-import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import java.io.File;
 import java.net.URISyntaxException;
@@ -30,20 +29,15 @@ import negocio.PromocionDAO;
 import persistencia.Promocion;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para registrar las mensualidades de los alumnos
  *
  * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaRegistrarMensualidadAlumnoController implements Initializable {
 
     @FXML
     private Label etiquetaNombreAlumno;
-    @FXML
-    private JFXButton botonCancelar;
-    @FXML
-    private JFXButton botonAceptar;
-    @FXML
-    private Label etiquetaMonto;
     @FXML
     private JFXComboBox<String> comboGruposAlumno;
     @FXML
@@ -61,17 +55,14 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
     @FXML
     private JFXComboBox<?> comboPromocion;
     @FXML
-    private Label etiquetaMontoDescuento;    
+    private Label etiquetaMontoDescuento;
     private double montoDescueto;
     @FXML
     private Label etiquetaDescuento;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
     }
 
     @FXML
@@ -93,12 +84,12 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
                     PagoMensualidadAlumno pagoAlumno = new PagoMensualidadAlumno();
                     PagoMensualidadAlumnoDAO pagoInscripcion = new PagoMensualidadAlumnoDAO();
 
-                    if(aplicarPromocion(event)){
+                    if (aplicarPromocion(event)) {
                         pagoAlumno.setCantidad(montoDescueto);
-                    }else{
+                    } else {
                         pagoAlumno.setCantidad(Double.parseDouble(campoMontoPagar.getText().trim()));
                     }
-                    
+
                     pagoAlumno.setFechaPagoInscripcion(fechaPago);
                     pagoAlumno.setIdAlumno(idAlumno);
                     pagoAlumno.setTipoPago('1');
@@ -123,6 +114,15 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
         panelTrasero.setVisible(false);
     }
 
+    /**
+     * Este método carga la foto y el nombre del alumno seleccionado
+     *
+     * @param rutaFotoAlumno ruta de donde se obtendrá la foto del alumno
+     * @param nombreAlumno que se mostrará
+     * @param apellidosAlumno que se mostrará
+     * @param idAlumno para encontrar el alumno y registrarle un pago
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void llenarDatos(String rutaFotoAlumno, String nombreAlumno, String apellidosAlumno, int idAlumno) {
         try {
             this.idAlumno = idAlumno;
@@ -131,7 +131,7 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
             File fileJar = new File(direccion.getLocation().toURI().getPath());
             File fileDir = fileJar.getParentFile();
             File fileProperties = new File(fileDir.getAbsolutePath());
-            
+
             String rutaFoto = fileProperties.getAbsolutePath();
             if (rutaFotoAlumno != null) {
                 Image foto = new Image("file:" + rutaFoto + "/imagenesAlumnos/" + rutaFotoAlumno, 100, 100, false, true, true);
@@ -144,7 +144,16 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
         }
     }
 
-    private ArrayList<String> obtenerNombreGrupos(List<String> gruposAlumno) {
+    /**
+     * Este método carga los grupos en los que se encuentra inscrito el alumno
+     * para seleccionar a cual se le hará el pago
+     *
+     * @param gruposAlumno lista de grupos encontrados que están relacionados
+     * con el alumno
+     * @return List con todos grupos obtenidos
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public ArrayList<String> obtenerNombreGrupos(List<String> gruposAlumno) {
         ArrayList<String> nombreGrupos = new ArrayList();
         AlumnoDAO alumnoDAO = new AlumnoDAO();
 
@@ -155,13 +164,25 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
         return nombreGrupos;
     }
 
-    private void llenarComboGrupos() {
+    /**
+     * Este método carga el nombre de los grupos en donde el alumno está
+     * inscrito
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public void llenarComboGrupos() {
         ObservableList<String> nombreGrupos = FXCollections.observableArrayList();
         nombreGrupos.addAll(obtenerNombreGrupos(gruposAlumno));
         comboGruposAlumno.setItems(nombreGrupos);
     }
 
-    private void llenarComboPromocion() {
+    /**
+     * Este método carga las promociones que pueden ser aplicadas para las
+     * mensualidades
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public void llenarComboPromocion() {
         PromocionDAO promocionDAO = new PromocionDAO();
         List<Promocion> promociones;
         promociones = promocionDAO.consultarPromociones("Mensualidad");
@@ -198,7 +219,7 @@ public class VentanaRegistrarMensualidadAlumnoController implements Initializabl
                 double descuento = montoDescueto * (valor / 100);
                 montoDescueto = montoDescueto - descuento;
                 etiquetaMontoDescuento.setText(Double.toString(montoDescueto));
-                aplicoPromocion= true;
+                aplicoPromocion = true;
             }
         }
         return aplicoPromocion;

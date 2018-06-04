@@ -16,18 +16,19 @@ import negocio.Egreso;
 import negocio.EgresoDAO;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para registrar diferentes tipos de egresos
  *
  * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaEgresoVariadoController implements Initializable {
-        
+
     @FXML
     private JFXTextField campoGasto;
     @FXML
     private JFXTextField campoCosto;
     @FXML
-    private TextArea campoDescripcion;    
+    private TextArea campoDescripcion;
     @FXML
     private Label etiquetaGasto;
     @FXML
@@ -42,19 +43,16 @@ public class VentanaEgresoVariadoController implements Initializable {
     @FXML
     private Label etiquetaFechaRegistro;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {       
-        
+    public void initialize(URL url, ResourceBundle rb) {
+
     }
-    
+
     @FXML
     private void registrarEgreso(ActionEvent event) {
         limpiarEtiquetas();
-        if(!existenCamposVacios()){
-            if(!existeCamposExcedidos()){
+        if (!existenCamposVacios()) {
+            if (!existeCamposExcedidos()) {
                 Date fechaRegistro = new Date();
                 Egreso egreso = new Egreso();
                 EgresoDAO nuevoEgreso = new EgresoDAO();
@@ -66,31 +64,31 @@ public class VentanaEgresoVariadoController implements Initializable {
                     cantidadValida = false;
                     etiquetaCosto.setText("Solo ingresa números");
                 }
-                
-                if(cantidadValida){
+
+                if (cantidadValida) {
                     egreso.setCosto(Double.parseDouble(campoCosto.getText().trim()));
                     egreso.setFechaRegistro(fechaRegistro);
                     egreso.setNombreGasto(campoGasto.getText().trim());
                     egreso.setDescripcion(campoDescripcion.getText().trim());
-                    
+
                     if (nuevoEgreso.registrarEgresoVariado(egreso)) {
-                        DialogosController.mostrarMensajeInformacion("Registrado", "Egreso registrado", "El egreso de ha registrado correctamente");                        
+                        DialogosController.mostrarMensajeInformacion("Registrado", "Egreso registrado", "El egreso de ha registrado correctamente");
                         panelPrincipal.setVisible(false);
                     } else {
                         DialogosController.mostrarMensajeAdvertencia("Error", "Error al registrar", "El egreso no se pudo registrar");
                     }
                 }
             }
-        }        
+        }
     }
-    
+
     @FXML
     private void limitarNombreGasto(KeyEvent event) {
         if (campoDescripcion.getText().length() >= 30) {
             event.consume();
         }
     }
-    
+
     @FXML
     private void limitarCosto(KeyEvent event) {
         char caracter = event.getCharacter().charAt(0);
@@ -98,60 +96,80 @@ public class VentanaEgresoVariadoController implements Initializable {
             event.consume();
         }
     }
-    
+
     @FXML
     private void limitarDescripcion(KeyEvent event) {
         if (campoDescripcion.getText().length() >= 500) {
             event.consume();
         }
     }
-    
+
+    /**
+     * Este método permite que no se dejen campos obligatorios del gasto en
+     * blanco
+     *
+     * @return boolean que verifica si existen o no campos vacíos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existenCamposVacios() {
         boolean camposExcedidos = false;
-        
+
         if (campoCosto.getText().trim().isEmpty()) {
             camposExcedidos = true;
             etiquetaCosto.setText("Campo obligatorio");
         }
-        
+
         if (campoGasto.getText().trim().isEmpty()) {
             camposExcedidos = true;
-            etiquetaGasto.setText("Campo obligatorio");            
+            etiquetaGasto.setText("Campo obligatorio");
         }
-        if(campoFechaRegistro.getValue() == null){
+        if (campoFechaRegistro.getValue() == null) {
             camposExcedidos = true;
             etiquetaFechaRegistro.setText("Campo obligatorio");
-        }   
+        }
         return camposExcedidos;
     }
-    
+
+    /**
+     * Este método verifica que los datos ingresados por el usuario no excedan
+     * el limite para poder almacenarlos correctamente
+     *
+     * @return boolean que verifica si existen o no campos excedidos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existeCamposExcedidos() {
         boolean limiteExcedido = false;
-        
+
         if (campoCosto.getText().trim().length() > 10) {
             limiteExcedido = true;
             etiquetaCosto.setText("Campo excedido");
         }
-        
+
         if (campoGasto.getText().trim().length() > 30) {
             limiteExcedido = true;
             etiquetaGasto.setText("Campo excedido. Solo 30 caracteres");
         }
-        
+
         if (campoDescripcion.getText().trim().length() > 500) {
             limiteExcedido = true;
             etiquetaDescripcion.setText("Solo 500 caracteres");
         }
-             
+
         return limiteExcedido;
     }
-    
-    public void limpiarEtiquetas(){
+
+    /**
+     * Este método quita el contenido de las etiquetas que se muestran en caso
+     * de algún error
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public void limpiarEtiquetas() {
         etiquetaCosto.setText("");
         etiquetaDescripcion.setText("");
         etiquetaGasto.setText("");
         etiquetaFechaRegistro.setText("");
-    }        
+    }
 
     @FXML
     private void cerrarVentana(ActionEvent event) {

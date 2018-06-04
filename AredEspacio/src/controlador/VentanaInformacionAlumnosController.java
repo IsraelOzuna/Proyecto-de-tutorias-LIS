@@ -1,6 +1,5 @@
 package controlador;
 
-import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -18,7 +17,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -35,20 +33,16 @@ import persistencia.Grupo;
 import persistencia.Pagoalumno;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para manipular la vista en la que se muestran los
+ * detalles de un alumno y también puede llevar a otras funcionalidades
  *
  * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaInformacionAlumnosController implements Initializable {
 
     @FXML
     private ImageView imagenPerfil;
-    @FXML
-    private JFXButton botonCerrar;
-    @FXML
-    private Button botonDarBaja;
-    @FXML
-    private Button botonEditar;
     @FXML
     private Label etiquetaNombre;
     @FXML
@@ -58,24 +52,28 @@ public class VentanaInformacionAlumnosController implements Initializable {
     @FXML
     private Label etiquetaTelefono;
     @FXML
-    private AnchorPane panelInformacionAlumno;
-    @FXML
     private AnchorPane panelTrasero;
-    @FXML
-    private Button botonRegistrarPago;
     private Alumno alumno;
     private Pane panelPrincipal;
-    @FXML
-    private Button botonDarBaja1;
-    @FXML
-    private Button botonInscribir;
-    List<String> grupos;
+    private List<String> grupos;
     private String nombreUsuarioActual;
 
+    /**
+     * Este método permite obtener el alumno de la busqueda para ver sus datos
+     *
+     * @param alumno obtenido en la busqueda
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void obtenerAlumno(Alumno alumno) {
         this.alumno = alumno;
     }
 
+    /**
+     * Este método permite obtener el panel anterior para poder manipularlo
+     *
+     * @param panelPrincipal
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void obtenerPanel(Pane panelPrincipal) {
         this.panelPrincipal = panelPrincipal;
     }
@@ -86,12 +84,12 @@ public class VentanaInformacionAlumnosController implements Initializable {
     }
 
     @FXML
-    public void cerrarDetalles(ActionEvent event) {
+    private void cerrarDetalles(ActionEvent event) {
         panelTrasero.setVisible(false);
     }
 
     @FXML
-    public void desplegarVentanaEditar(ActionEvent event) throws IOException {
+    private void desplegarVentanaEditar(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaEditarAlumno.fxml"));
         Parent root = (Parent) loader.load();
         VentanaEditarAlumnoController ventanaEditar = loader.getController();
@@ -99,7 +97,13 @@ public class VentanaInformacionAlumnosController implements Initializable {
         panelPrincipal.getChildren().add(root);
     }
 
-    public void llenarCamposInformacion(String nombreUsuario) {        
+    /**
+     * Este método carga los datos existentes del alumno
+     *
+     * @param nombreUsuario usuario el cual revisa los datos del alumno
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public void llenarCamposInformacion(String nombreUsuario) {
         try {
             nombreUsuarioActual = nombreUsuario;
             Calendar fechaNacimiento = Calendar.getInstance();
@@ -107,20 +111,20 @@ public class VentanaInformacionAlumnosController implements Initializable {
             int dia = fechaNacimiento.get(Calendar.DAY_OF_MONTH);
             int mes = fechaNacimiento.get(Calendar.MONTH);
             int anio = fechaNacimiento.get(Calendar.YEAR);
-            
+
             CodeSource direccion = VentanaInformacionAlumnosController.class.getProtectionDomain().getCodeSource();
             File fileJar = new File(direccion.getLocation().toURI().getPath());
             File fileDir = fileJar.getParentFile();
             File fileProperties = new File(fileDir.getAbsolutePath());
-            
+
             String rutaFoto = fileProperties.getAbsolutePath();
-            
+
             etiquetaNombre.setText(alumno.getNombre() + " " + alumno.getApellidos());
             etiquetaCorreo.setText(alumno.getCorreoElectronico());
             etiquetaTelefono.setText(alumno.getTelefono());
             etiquetaFechaNacimiento.setText(dia + " de " + Utileria.convertirMeses(mes) + " de " + anio);
             if (alumno.getRutaFoto() != null) {
-                Image foto = new Image("file:" +  rutaFoto + "/imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
+                Image foto = new Image("file:" + rutaFoto + "/imagenesAlumnos/" + alumno.getRutaFoto(), 100, 100, false, true, true);
                 imagenPerfil.setImage(foto);
             }
         } catch (URISyntaxException ex) {
@@ -129,7 +133,7 @@ public class VentanaInformacionAlumnosController implements Initializable {
     }
 
     @FXML
-    public void desplegarVentanaRegistrarMensualidad(ActionEvent event) throws IOException {
+    private void desplegarVentanaRegistrarMensualidad(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRegistrarMensualidadAlumno.fxml"));
         Parent root = (Parent) loader.load();
         VentanaRegistrarMensualidadAlumnoController ventanaRegistrarMensualidad = loader.getController();
@@ -186,6 +190,14 @@ public class VentanaInformacionAlumnosController implements Initializable {
         }
     }
 
+    /**
+     * Este método se obtienen los grupos donde está inscrito el alumno en caso
+     * de que el usuario desee darlo de baja de alguno de los grupos
+     *
+     * @param nombreGrupo el nombre del grupo donde se encuentra inscrito
+     * @return Grupo con todos los datos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public Grupo obtenerGrupo(String nombreGrupo) {
         GrupoDAO grupoDAO = new GrupoDAO("AredEspacioPU");
         List<Grupo> listaGrupos;
@@ -200,7 +212,15 @@ public class VentanaInformacionAlumnosController implements Initializable {
         return grupoObtenido;
     }
 
-    private ArrayList<String> obtenerNombreGrupos(List<String> grupos) {
+    /**
+     * Este método obtiene unicamente el nombre de los grupos en donde el alumno
+     * se encuentra inscrito
+     *
+     * @param grupos con todos los grupos encontrados con todos sus datos
+     * @return List con todos los nombres de grupos encontrados para ese alumno
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public ArrayList<String> obtenerNombreGrupos(List<String> grupos) {
         ArrayList<String> nombreGrupos = new ArrayList();
         AlumnoDAO alumnoDAO = new AlumnoDAO();
 

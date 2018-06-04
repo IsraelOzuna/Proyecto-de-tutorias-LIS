@@ -22,9 +22,11 @@ import negocio.MaestroDAO;
 import negocio.Utileria;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para registrar los gastos que son consecuencia de
+ * los anuncios en Facebook
  *
  * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaEgresosFbController implements Initializable {
 
@@ -58,9 +60,6 @@ public class VentanaEgresosFbController implements Initializable {
     @FXML
     private Label etiquetaFechaRegistro;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         llenarComboMaestros();
@@ -120,7 +119,13 @@ public class VentanaEgresosFbController implements Initializable {
         }
     }
 
-    private void llenarComboMaestros() {
+    /**
+     * Este método llena el combo box del creador para saber cual de los
+     * maestros fue el que realizó la publicación
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public void llenarComboMaestros() {
         ObservableList maestros = FXCollections.observableArrayList();
         MaestroDAO maestroDAO = new MaestroDAO();
         List<Maestro> listaMaestros;
@@ -138,6 +143,13 @@ public class VentanaEgresosFbController implements Initializable {
         }
     }
 
+    /**
+     * Este método permite que no se dejen campos obligatorios del gasto en
+     * blanco
+     *
+     * @return boolean que verifica si existen o no campos vacíos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existenCamposVacios() {
         boolean camposVacios = false;
 
@@ -168,6 +180,13 @@ public class VentanaEgresosFbController implements Initializable {
         return camposVacios;
     }
 
+    /**
+     * Este método verifica que los datos ingresados por el usuario no excedan
+     * el limite para poder almacenarlos correctamente
+     *
+     * @return boolean que verifica si existen o no campos excedidos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existenCamposExcedidos() {
         boolean camposExcedidos = false;
 
@@ -182,6 +201,12 @@ public class VentanaEgresosFbController implements Initializable {
         return camposExcedidos;
     }
 
+    /**
+     * Este método quita el contenido de las etiquetas que se muestran en caso
+     * de algún error
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void limpiarEtiquetas() {
         etiquetaCosto.setText("");
         etiquetaCreador.setText("");
@@ -192,6 +217,12 @@ public class VentanaEgresosFbController implements Initializable {
         etiquetaFechaRegistro.setText("");
     }
 
+    /**
+     * Este método quita el contenido de los campos después de que el egreso se
+     * registró correctamente
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void limpiarCampos() {
         campoCosto.setText("");
         campoDescripcion.setText("");

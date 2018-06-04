@@ -1,8 +1,11 @@
 package negocio;
 
 /**
+ * Esta clase contiene todos los atributos necesarios para manipular un cliente
+ * a través del sistema para poder realizar diversas funciones
  *
  * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
  */
 public class Cliente {
 
@@ -11,7 +14,7 @@ public class Cliente {
     private String correo;
     private String telefono;
     private String rutaFoto;
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -50,5 +53,5 @@ public class Cliente {
 
     public void setRutaFoto(String rutaFoto) {
         this.rutaFoto = rutaFoto;
-    }    
+    }
 }

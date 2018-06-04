@@ -1,6 +1,5 @@
 package controlador;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.fxml.Initializable;
 import java.io.File;
 import java.io.IOException;
@@ -27,8 +26,10 @@ import negocio.ClienteDAO;
 import negocio.Utileria;
 
 /**
+ * Este controlador es usado para modificar los datos de algún cliente
  *
- * @author iro19
+ * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaEditarClienteController implements Initializable {
 
@@ -37,27 +38,13 @@ public class VentanaEditarClienteController implements Initializable {
     @FXML
     private ImageView fotoSeleccionada;
     @FXML
-    private JFXButton botonSeleccionarImagen;
-    @FXML
-    private Label etiquetaNombre;
-    @FXML
     private TextField campoNombre;
-    @FXML
-    private Label etiquetaApellidos;
     @FXML
     private TextField campoApellidos;
     @FXML
-    private Label etiquetaCorreo;
-    @FXML
     private TextField campoCorreo;
     @FXML
-    private Label etiquetaTelefono;
-    @FXML
     private TextField campoTelefono;
-    @FXML
-    private JFXButton botonRegistrar;
-    @FXML
-    private JFXButton botonCancelar;
     @FXML
     private Label etiquetaErrorNombre;
     @FXML
@@ -66,16 +53,12 @@ public class VentanaEditarClienteController implements Initializable {
     private Label etiquetaErrorCorreo;
     @FXML
     private Label etiquetaErrorTelefono;
-
     private String nombreFoto;
     private Cliente cliente;
     private String rutaOrigen;
     private String rutaNueva;
     private String nombreUsuarioActual;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         nombreFoto = "";
@@ -88,7 +71,7 @@ public class VentanaEditarClienteController implements Initializable {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreo.getText().trim())) {
                     if (esTelefonoValido(campoTelefono.getText().trim())) {
-                       ClienteDAO nuevosDatosCliente = new ClienteDAO();
+                        ClienteDAO nuevosDatosCliente = new ClienteDAO();
 
                         cliente.setNombre(campoNombre.getText().trim());
                         cliente.setApellidos(campoApellidos.getText().trim());
@@ -118,15 +101,15 @@ public class VentanaEditarClienteController implements Initializable {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        
+
         try {
             CodeSource direccion = VentanaEditarClienteController.class.getProtectionDomain().getCodeSource();
             fileJar = new File(direccion.getLocation().toURI().getPath());
             fileDir = fileJar.getParentFile();
-            directorio = new File(fileDir.getAbsolutePath() + "/imagenesClientes/");            
+            directorio = new File(fileDir.getAbsolutePath() + "/imagenesClientes/");
         } catch (URISyntaxException ex) {
             Logger.getLogger(VentanaConsultarInformacionGrupoController.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+        }
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
@@ -137,7 +120,7 @@ public class VentanaEditarClienteController implements Initializable {
             }
 
             rutaNueva = directorio.getAbsolutePath();
-            directorio = new  File(fileDir.getAbsolutePath() + "/imagenesClientes/" + nombreFoto);
+            directorio = new File(fileDir.getAbsolutePath() + "/imagenesClientes/" + nombreFoto);
 
             if (!nombreFoto.equals("")) {
                 Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
@@ -198,6 +181,17 @@ public class VentanaEditarClienteController implements Initializable {
         }
     }
 
+    /**
+     * Este método permite que no se dejen campos obligatorios del cliente en
+     * blanco
+     *
+     * @param campoNombre nombre del cliente
+     * @param campoApellidos apellidos del cliente
+     * @param campoCorreo correo del cliente
+     * @param campoTelefono telefono del cliente
+     * @return boolean que verifica si existen o no campos vacíos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existenCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono) {
         boolean camposVacios = false;
 
@@ -220,6 +214,17 @@ public class VentanaEditarClienteController implements Initializable {
         return camposVacios;
     }
 
+    /**
+     * Este método verifica que los datos ingresados por el usuario no excedan
+     * el limite para poder almacenarlos correctamente
+     *
+     * @param campoNombre nombre del cliente
+     * @param campoApellidos apellidos del cliente
+     * @param campoCorreo correo del cliente
+     * @param campoTelefono telefono del cliente
+     * @return boolean que verifica si existen o no campos excedidos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existenCamposExcedidos(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono) {
         boolean campoExcedido = false;
 
@@ -242,6 +247,12 @@ public class VentanaEditarClienteController implements Initializable {
         return campoExcedido;
     }
 
+    /**
+     * Este método lanza la ventana de los clientes cuando la edición se
+     * completó
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     private void desplegarVentanaBusquedaCliente() throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
@@ -250,6 +261,13 @@ public class VentanaEditarClienteController implements Initializable {
         panelPrincipal.getChildren().add(root);
     }
 
+    /**
+     * Este método carga los datos existentes del cliente a editar
+     *
+     * @param cliente El cliente con todos los atributos actuales
+     * @param nombreUsuario usuario el cual realiza la modificación
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void llenarCampos(Cliente cliente, String nombreUsuario) {
         try {
             nombreUsuarioActual = nombreUsuario;
@@ -258,14 +276,14 @@ public class VentanaEditarClienteController implements Initializable {
             campoApellidos.setText(cliente.getApellidos());
             campoCorreo.setText(cliente.getCorreo());
             campoTelefono.setText(cliente.getTelefono());
-            
+
             CodeSource direccion = VentanaEditarClienteController.class.getProtectionDomain().getCodeSource();
             File fileJar = new File(direccion.getLocation().toURI().getPath());
             File fileDir = fileJar.getParentFile();
             File fileProperties = new File(fileDir.getAbsolutePath());
-            
+
             String rutaFoto = fileProperties.getAbsolutePath();
-            
+
             if (cliente.getRutaFoto() != null) {
                 nombreFoto = cliente.getRutaFoto();
                 Image foto = new Image("file:" + rutaFoto + "/imagenesClientes/" + cliente.getRutaFoto(), 100, 100, false, true, true);
@@ -276,6 +294,15 @@ public class VentanaEditarClienteController implements Initializable {
         }
     }
 
+    /**
+     * Este método verifica que los caracteres ingresados en el télefono sean
+     * únicamente números
+     *
+     * @param telefono cadena ingresada por el usuario en el campo del telefono
+     * @return boolean que verifica si existen o no campos caracteres no
+     * numericos
+     * @since 1.0 / 5 de junio de 2018
+     */
     private boolean esTelefonoValido(String telefono) {
         boolean telefonoValido = true;
         for (int i = 0; i < telefono.length(); i++) {
@@ -288,6 +315,12 @@ public class VentanaEditarClienteController implements Initializable {
         return telefonoValido;
     }
 
+    /**
+     * Este método quita el contenido de las etiquetas que se muestran en caso
+     * de algún error
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     private void limpiarEtiquetas() {
         etiquetaErrorApellidos.setText("");
         etiquetaErrorCorreo.setText("");

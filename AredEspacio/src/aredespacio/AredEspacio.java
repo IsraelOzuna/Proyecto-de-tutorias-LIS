@@ -1,10 +1,14 @@
-/*Sistema Ared espacio. Desarrollado para la escuela de danza
-con el mismo nombre
-Desarrollado por: Renato Vargas Gomez
-                  Irvin Dereb Vera López
-                  Israel Reyes Ozuna
-*/
-
+/*--------------------------------------------------------*/
+/*Programa: Ared Espacio
+  Desarrolladores: Irvin Dereb Vera López
+                   Renato Vargas Gómez
+                   Israel Reyes Ozuna
+  Fecha: 5 de junio de 2018
+  Descripción: El programa a continuación presentado permite
+               Llevar el control de la escuela de danza 
+               "Ared espacio" con el fin de automatizar
+               tareas que ayuden el manejo de la escuela  */
+/*--------------------------------------------------------*/      
 
 package aredespacio;
 

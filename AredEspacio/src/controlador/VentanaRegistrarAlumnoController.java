@@ -27,9 +27,10 @@ import negocio.AlumnoDAO;
 import negocio.Utileria;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para realizar registros de un alumno nuevo
  *
  * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaRegistrarAlumnoController implements Initializable {
 
@@ -64,15 +65,18 @@ public class VentanaRegistrarAlumnoController implements Initializable {
     private String rutaNueva;
     private String nombreUsuarioActual;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         nombreFoto = "";
     }
 
-    public void llenarDatos(String nombreUsuario) {
+    /**
+     * Este método permite obtener el usuario que registrara un nuevo alumno
+     *
+     * @param nombreUsuario quien hará el registro
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public void obtenerUsuario(String nombreUsuario) {
         nombreUsuarioActual = nombreUsuario;
     }
 
@@ -125,15 +129,15 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        
+
         try {
             CodeSource direccion = VentanaRegistrarAlumnoController.class.getProtectionDomain().getCodeSource();
             fileJar = new File(direccion.getLocation().toURI().getPath());
             fileDir = fileJar.getParentFile();
-            directorio = new File(fileDir.getAbsolutePath() + "/imagenesAlumnos/");            
+            directorio = new File(fileDir.getAbsolutePath() + "/imagenesAlumnos/");
         } catch (URISyntaxException ex) {
             Logger.getLogger(VentanaConsultarInformacionGrupoController.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+        }
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
@@ -144,7 +148,7 @@ public class VentanaRegistrarAlumnoController implements Initializable {
             }
 
             rutaNueva = directorio.getAbsolutePath();
-            directorio = new  File(fileDir.getAbsolutePath() + "/imagenesAlumnos/" + nombreFoto);
+            directorio = new File(fileDir.getAbsolutePath() + "/imagenesAlumnos/" + nombreFoto);
 
             if (!nombreFoto.equals("")) {
                 Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
@@ -162,6 +166,18 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         return nombreFoto;
     }
 
+    /**
+     * Este método permite que no se dejen campos obligatorios del alumno en
+     * blanco
+     *
+     * @param campoNombre nombre del alumno
+     * @param campoApellidos apellidos del alumno
+     * @param campoCorreo correo del alumno
+     * @param campoTelefono telefono del alumno
+     * @param campoFechaNacimiento fecha de nacimiento del alumno
+     * @return boolean que verifica si existen o no campos vacíos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existenCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono, DatePicker campoFechaNacimiento) {
         boolean camposVacios = false;
 
@@ -188,6 +204,17 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         return camposVacios;
     }
 
+    /**
+     * Este método verifica que los datos ingresados por el usuario no excedan
+     * el limite para poder almacenarlos correctamente
+     *
+     * @param campoNombre nombre del alumno
+     * @param campoApellidos apellidos del alumno
+     * @param campoCorreo correo del alumno
+     * @param campoTelefono telefono del alumno
+     * @return boolean que verifica si existen o no campos excedidos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existenCamposExcedidos(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono) {
         boolean campoExcedido = false;
 
@@ -210,6 +237,15 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         return campoExcedido;
     }
 
+    /**
+     * Este método verifica que los caracteres ingresados en el télefono sean
+     * únicamente números
+     *
+     * @param telefono cadena ingresada por el usuario en el campo del telefono
+     * @return boolean que verifica si existen o no campos caracteres no
+     * numericos
+     * @since 1.0 / 5 de junio de 2018
+     */
     private boolean esTelefonoValido(String telefono) {
         boolean telefonoValido = true;
         for (int i = 0; i < telefono.length(); i++) {
@@ -222,6 +258,11 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         return telefonoValido;
     }
 
+    /**
+     * Este método lanza la ventana de los alumnos cuando la edición se completó
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     private void desplegarVentanaBusquedaAlumno() throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
@@ -230,6 +271,12 @@ public class VentanaRegistrarAlumnoController implements Initializable {
         panelPrincipal.getChildren().add(root);
     }
 
+    /**
+     * Este método quita el contenido de las etiquetas que se muestran en caso
+     * de algún error
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     private void limpiarEtiquetas() {
         etiquetaErrorApellidos.setText("");
         etiquetaErrorCorreo.setText("");

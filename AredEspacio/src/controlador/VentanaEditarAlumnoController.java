@@ -1,6 +1,5 @@
 package controlador;
 
-import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -29,43 +28,27 @@ import negocio.Utileria;
 import persistencia.Alumno;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para modificar los datos de algún alumno
  *
  * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaEditarAlumnoController implements Initializable {
 
     @FXML
-    private Label etiquetaNombre;
-    @FXML
     private TextField campoNombre;
-    @FXML
-    private Label etiquetaApellidos;
     @FXML
     private TextField campoApellidos;
     @FXML
     private DatePicker campoFechaNacimiennto;
     @FXML
-    private Label etiquetaFechaNacimiento;
-    @FXML
-    private Label etiquetaCorreo;
-    @FXML
     private TextField campoCorreo;
-    @FXML
-    private Label etiquetaTelefono;
     @FXML
     private TextField campoTelefono;
     @FXML
-    private JFXButton botonGuardar;
-    @FXML
-    private JFXButton botonCancelar;
-    @FXML
     private ImageView fotoSeleccionada;
     @FXML
-    private JFXButton botonSeleccionarImagen;
-    @FXML
     private AnchorPane panelPrincipal;
-
     private Alumno alumno;
     private String nombreFoto;
     @FXML
@@ -82,21 +65,18 @@ public class VentanaEditarAlumnoController implements Initializable {
     private String rutaNueva;
     private String nombreUsuarioActual;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         nombreFoto = "";
     }
 
     @FXML
-    public void guardarNuevosDatos(ActionEvent event) throws IOException {
+    private void guardarNuevosDatos(ActionEvent event) throws IOException {
         limpiarEtiquetas();
         if (!existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono, campoFechaNacimiennto)) {
             if (!existenCamposExcedidos(campoNombre, campoApellidos, campoCorreo, campoTelefono)) {
                 if (Utileria.validarCorreo(campoCorreo.getText().trim())) {
-                    if (esTelefonoValido(campoTelefono.getText().trim())) {                        
+                    if (esTelefonoValido(campoTelefono.getText().trim())) {
                         AlumnoDAO nuevosDatosAlumno = new AlumnoDAO();
 
                         alumno.setNombre(campoNombre.getText().trim());
@@ -121,7 +101,7 @@ public class VentanaEditarAlumnoController implements Initializable {
     }
 
     @FXML
-    public void cancelarRegistro(ActionEvent event) throws IOException {
+    private void cancelarRegistro(ActionEvent event) throws IOException {
         if (existenCamposVacios(campoNombre, campoApellidos, campoCorreo, campoTelefono, campoFechaNacimiennto)) {
             desplegarVentanaBusquedaAlumno();
         } else {
@@ -132,22 +112,22 @@ public class VentanaEditarAlumnoController implements Initializable {
     }
 
     @FXML
-    public String seleccionarImagen(ActionEvent event) throws IOException {
+    private String seleccionarImagen(ActionEvent event) throws IOException {
         File fileJar;
         File fileDir = null;
         File directorio = null;
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        
+
         try {
             CodeSource direccion = VentanaEditarAlumnoController.class.getProtectionDomain().getCodeSource();
             fileJar = new File(direccion.getLocation().toURI().getPath());
             fileDir = fileJar.getParentFile();
-            directorio = new File(fileDir.getAbsolutePath() + "/imagenesAlumnos/");            
+            directorio = new File(fileDir.getAbsolutePath() + "/imagenesAlumnos/");
         } catch (URISyntaxException ex) {
             Logger.getLogger(VentanaConsultarInformacionGrupoController.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+        }
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
@@ -158,7 +138,7 @@ public class VentanaEditarAlumnoController implements Initializable {
             }
 
             rutaNueva = directorio.getAbsolutePath();
-            directorio = new  File(fileDir.getAbsolutePath() + "/imagenesAlumnos/" + nombreFoto);
+            directorio = new File(fileDir.getAbsolutePath() + "/imagenesAlumnos/" + nombreFoto);
 
             if (!nombreFoto.equals("")) {
                 Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
@@ -176,6 +156,13 @@ public class VentanaEditarAlumnoController implements Initializable {
         return nombreFoto;
     }
 
+    /**
+     * Este método carga los datos existentes del alumno a editar
+     *
+     * @param alumno El alumno con todos los atributos actuales
+     * @param nombreUsuario usuario el cual realiza la modificación
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void llenarCampos(Alumno alumno, String nombreUsuario) {
         try {
             nombreUsuarioActual = nombreUsuario;
@@ -185,12 +172,12 @@ public class VentanaEditarAlumnoController implements Initializable {
             campoCorreo.setText(alumno.getCorreoElectronico());
             campoFechaNacimiennto.setValue(Utileria.mostrarFechaNacimiento(alumno.getFechaNacimiento()));
             campoTelefono.setText(alumno.getTelefono());
-            
+
             CodeSource direccion = VentanaEditarAlumnoController.class.getProtectionDomain().getCodeSource();
             File fileJar = new File(direccion.getLocation().toURI().getPath());
             File fileDir = fileJar.getParentFile();
             File fileProperties = new File(fileDir.getAbsolutePath());
-            
+
             String rutaFoto = fileProperties.getAbsolutePath();
             if (alumno.getRutaFoto() != null) {
                 nombreFoto = alumno.getRutaFoto();
@@ -202,6 +189,18 @@ public class VentanaEditarAlumnoController implements Initializable {
         }
     }
 
+    /**
+     * Este método permite que no se dejen campos obligatorios del alumno en
+     * blanco
+     *
+     * @param campoNombre nombre del alumno
+     * @param campoApellidos apellidos del alumno
+     * @param campoCorreo correo del alumno
+     * @param campoTelefono telefono del alumno
+     * @param campoFechaNacimiento fecha de nacimiento del alumno
+     * @return boolean que verifica si existen o no campos vacíos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existenCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono, DatePicker campoFechaNacimiento) {
         boolean camposVacios = false;
 
@@ -228,6 +227,17 @@ public class VentanaEditarAlumnoController implements Initializable {
         return camposVacios;
     }
 
+    /**
+     * Este método verifica que los datos ingresados por el usuario no excedan
+     * el limite para poder almacenarlos correctamente
+     *
+     * @param campoNombre nombre del alumno
+     * @param campoApellidos apellidos del alumno
+     * @param campoCorreo correo del alumno
+     * @param campoTelefono telefono del alumno
+     * @return boolean que verifica si existen o no campos excedidos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existenCamposExcedidos(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono) {
         boolean campoExcedido = false;
 
@@ -250,7 +260,16 @@ public class VentanaEditarAlumnoController implements Initializable {
         return campoExcedido;
     }
 
-    private boolean esTelefonoValido(String telefono) {
+    /**
+     * Este método verifica que los caracteres ingresados en el télefono sean
+     * únicamente números
+     *
+     * @param telefono cadena ingresada por el usuario en el campo del telefono
+     * @return boolean que verifica si existen o no campos caracteres no
+     * numericos
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public boolean esTelefonoValido(String telefono) {
         boolean telefonoValido = true;
         for (int i = 0; i < telefono.length(); i++) {
             char caracter = telefono.charAt(i);
@@ -262,6 +281,11 @@ public class VentanaEditarAlumnoController implements Initializable {
         return telefonoValido;
     }
 
+    /**
+     * Este método lanza la ventana de los alumnos cuando la edición se completó
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void desplegarVentanaBusquedaAlumno() throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
@@ -270,7 +294,13 @@ public class VentanaEditarAlumnoController implements Initializable {
         panelPrincipal.getChildren().add(root);
     }
 
-    private void limpiarEtiquetas() {
+    /**
+     * Este método quita el contenido de las etiquetas que se muestran en caso
+     * de algún error
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public void limpiarEtiquetas() {
         etiquetaErrorApellidos.setText("");
         etiquetaErrorCorreo.setText("");
         etiquetaErrorFecha.setText("");

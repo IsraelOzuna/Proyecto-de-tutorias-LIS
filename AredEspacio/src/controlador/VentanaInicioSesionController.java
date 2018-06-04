@@ -23,9 +23,11 @@ import negocio.CuentaDAO;
 import negocio.Utileria;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para manipular la vista del inicio de sesión de los
+ * usuarios
  *
- * @author iro19
+ * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaInicioSesionController implements Initializable {
 
@@ -40,9 +42,6 @@ public class VentanaInicioSesionController implements Initializable {
     @FXML
     private JFXButton botonCerrar;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -80,7 +79,14 @@ public class VentanaInicioSesionController implements Initializable {
         }
     }
 
-    private boolean existenCamposVacios() {
+    /**
+     * Este método permite que no se dejen campos obligatorios del cliente en
+     * blanco
+     *
+     * @return boolean que verifica si existen o no campos vacíos
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public boolean existenCamposVacios() {
         boolean camposVacios = false;
 
         if (campoUsuario.getText().trim().isEmpty()) {
@@ -96,7 +102,14 @@ public class VentanaInicioSesionController implements Initializable {
         return camposVacios;
     }
 
-    private boolean existenCamposExcedidos() {
+    /**
+     * Este método verifica que los datos ingresados por el usuario no excedan
+     * el limite para poder buscarlos en el sistema
+     *
+     * @return boolean que verifica si existen o no campos excedidos
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public boolean existenCamposExcedidos() {
         boolean camposExedidos = false;
         if (campoUsuario.getText().trim().length() > 50) {
             etiquetaErrorUsuario.setText("El usuario solo puede tener 50 caracteres");
@@ -104,12 +117,25 @@ public class VentanaInicioSesionController implements Initializable {
         return camposExedidos;
     }
 
-    private void limpiarEtiquetas() {
+    /**
+     * Este método quita el contenido de las etiquetas que se muestran en caso
+     * de algún error
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public void limpiarEtiquetas() {
         etiquetaErrorUsuario.setText("");
         etiquetaErrorContrasena.setText("");
     }
 
-    private void desplegarMenuDirector(ActionEvent event) {
+    /**
+     * Este método lanza la ventana del menú cuando se ingresa al sistema como
+     * director
+     *
+     * @param event
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public void desplegarMenuDirector(ActionEvent event) {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaMenuDirector.fxml"));
         Parent root = null;
         try {
@@ -126,7 +152,14 @@ public class VentanaInicioSesionController implements Initializable {
         ventanaAnterior.close();
     }
 
-    private void desplegarMenuMaestro(ActionEvent event) {
+    /**
+     * Este método lanza la ventana del menú cuando se ingresa al sistema como
+     * maestro
+     *
+     * @param event
+     * @since 1.0 / 5 de junio de 2018
+     */
+    public void desplegarMenuMaestro(ActionEvent event) {
         FXMLLoader loger = new FXMLLoader(getClass().getResource("/vista/VentanaMenuDirector.fxml"));
         Parent root = null;
         try {
@@ -146,7 +179,7 @@ public class VentanaInicioSesionController implements Initializable {
 
     @FXML
     private void cerrarVentana(ActionEvent event) {
-        Stage stage = (Stage) botonCerrar.getScene().getWindow();        
+        Stage stage = (Stage) botonCerrar.getScene().getWindow();
         stage.close();
     }
 }

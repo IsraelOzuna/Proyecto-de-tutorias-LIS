@@ -2,15 +2,22 @@ package negocio;
 
 import java.util.Date;
 
+/**
+ * Esta clase contiene todos los atributos necesarios para manipular un alumno a
+ * través del sistema
+ *
+ * @author Israel Reyes Ozuna
+ * @version 1.0 / 5 de junio de 2018
+ */
 public class Alumno {
-    
+
     private String nombre;
     private String apellidos;
     private String telefono;
     private String correoElectronico;
     private Date fechaNacimiento;
     private String rutaFoto;
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -57,5 +64,5 @@ public class Alumno {
 
     public void setRutaFoto(String rutaFoto) {
         this.rutaFoto = rutaFoto;
-    }             
+    }
 }
