@@ -24,9 +24,11 @@ import javafx.scene.layout.Pane;
 import persistencia.Maestro;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para manipular la interfaz gráfica al mostrar la
+ * información de un maestro
  *
- * @author Irdevelo
+ * @author Irvin Vera
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaMostrarInformacionMaestroController implements Initializable {
 
@@ -54,10 +56,22 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
     private AnchorPane panelInformacionMaestro;
     private String nombreUsuarioActual;
 
+    /**
+     * Este método permite obtener el maestro de cual se mostrara la información
+     *
+     * @param maestro
+     */
     public void obtenerMaestro(Maestro maestro) {
         this.maestro = maestro;
     }
 
+    /**
+     * Este método permite obtener el panel sobre el cual se mostrará la
+     * información del maestro
+     *
+     * @param panelPrincipal sobre el cual se mostrará la ventana de la
+     * información del maestro
+     */
     public void obtenerPanel(Pane panelPrincipal) {
         this.panelPrincipal = panelPrincipal;
     }
@@ -67,6 +81,13 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
 
     }
 
+    /**
+     * Este método llena los campos con la información del maestro
+     *
+     * @param nombreUsuario identificador único del maestro del cual se mostrará
+     * la información
+     * 
+     */
     public void llenarCamposInformacion(String nombreUsuario) throws MalformedURLException {
         try {
             nombreUsuarioActual = nombreUsuario;
@@ -76,12 +97,12 @@ public class VentanaMostrarInformacionMaestroController implements Initializable
                 etiquetaMontoAPagar.setText(Double.toString(maestro.getMensualidad()));
             }
             etiquetaTelefono.setText(maestro.getTelefono());
-            
+
             CodeSource direccion = VentanaMostrarInformacionMaestroController.class.getProtectionDomain().getCodeSource();
             File fileJar = new File(direccion.getLocation().toURI().getPath());
             File fileDir = fileJar.getParentFile();
             File fileProperties = new File(fileDir.getAbsolutePath());
-            
+
             String rutaFoto = fileProperties.getAbsolutePath();
             if (maestro.getRutaFoto() != null) {
                 Image foto = new Image("file:" + rutaFoto + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);

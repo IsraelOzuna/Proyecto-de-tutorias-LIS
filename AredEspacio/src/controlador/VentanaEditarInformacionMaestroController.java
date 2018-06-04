@@ -26,6 +26,13 @@ import negocio.MaestroDAO;
 import negocio.Utileria;
 import persistencia.Maestro;
 
+/**
+ * Este controlador es usado para manipular la interfaz gráfica al editar la
+ * información de un maestro
+ *
+ * @author Irvin Vera
+ * @version 1.0 / 5 de junio de 2018
+ */
 public class VentanaEditarInformacionMaestroController implements Initializable {
 
     @FXML
@@ -77,13 +84,27 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
     private String nombreFoto;
     private String nombreUsuarioActual;
 
+    /**
+     * Este método permite obtener los datos del maestro que se desea modificar
+     *
+     * @param maestro contiene los dato del maestro
+     * @param nombreUsuario identificador único de las pesona que está ocupado
+     * el sistema
+     */
     public void obtenerMaestro(Maestro maestro, String nombreUsuario) {
         this.maestro = maestro;
 
         llenarCamposInformacion(nombreUsuario);
-
     }
 
+    /**
+     * Este método permite obtener como referencia el panel de la pantalla
+     * anterior en donde se mostrara la ventana de editar maestro
+     *
+     * @param panelPrincipal sobre el que se mostrarán la ventana de editar
+     * renta
+     *
+     */
     public void obtenerPanel(Pane panelPrincipal) {
         this.panelPrincipal = panelPrincipal;
     }
@@ -187,6 +208,23 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         return nombreFoto;
     }
 
+    /**
+     * Este método verifica si alguno de los capos excede el límite permitido
+     *
+     * @param campoNombre campo donde el usuario ingresa el nombre del nuevo
+     * maestro
+     * @param campoApellidos campo donde el usuario ingresa los apellidos del
+     * nuevo maestro
+     * @param campoCorreoElectronico campo donde el usuario ingresa el correo
+     * electrónico del nuevo maestro
+     * @param campoTelefono campo donde el usuario ingresa el teléfono del nuevo
+     * maestro
+     * @param campoCantidadAPagar campo donde el usuario ingresa la cantidad que
+     * el maestro pagará mensualmente
+     *
+     * @return boolean que indica si uno de los campos excede la logitud
+     * permitida
+     */
     public boolean verificarLongitudExcedida(TextField campoNombre, TextField campoApellidos, TextField campoCorreoElectronico, TextField campoTelefono, TextField campoCantidadAPagar) {
         boolean longitudExcedida = false;
 
@@ -232,6 +270,22 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         return longitudExcedida;
     }
 
+    /**
+     * Este método permite verificar si alguno de los campos esta vacio
+     *
+     * @param campoNombre campo donde el usuario ingresa el nombre del nuevo
+     * maestro
+     * @param campoApellidos campo donde el usuario ingresa los apellidos del
+     * nuevo maestro
+     * @param campoCorreo campo donde el usuario ingresa el correo electrónico
+     * del nuevo maestro
+     * @param campoTelefono campo donde el usuario ingresa el teléfono del nuevo
+     * maestro
+     * @param campoCantidadAPagar campo donde el usuario ingresa lo que el nuevo
+     * maestro deberá pagar mensualmente
+     *
+     * @return un boolean que indica si el alguno de los campos está vacío
+     */
     public boolean existenCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreo, TextField campoTelefono, TextField campoCantidadAPagar) {
         boolean camposVacios = false;
 
@@ -277,6 +331,11 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         return camposVacios;
     }
 
+    /**
+     * Este método carga los datos del maestro antes de modificarlos
+     *
+     * @param nombreUsuario identificador único del maestro que se modificará
+     */
     public void llenarCamposInformacion(String nombreUsuario) {
         try {
             nombreUsuarioActual = nombreUsuario;
@@ -285,14 +344,14 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
             campoCorreoElectronico.setText(maestro.getCorreoElectronico());
             campoTelefono.setText(maestro.getTelefono());
             campoCantidadAPagar.setText(String.valueOf(maestro.getMensualidad()));
-            
+
             CodeSource direccion = VentanaEditarInformacionMaestroController.class.getProtectionDomain().getCodeSource();
             File fileJar = new File(direccion.getLocation().toURI().getPath());
             File fileDir = fileJar.getParentFile();
             File fileProperties = new File(fileDir.getAbsolutePath());
-            
+
             String rutaFoto = fileProperties.getAbsolutePath();
-            
+
             if (maestro.getRutaFoto() != null) {
                 nombreFoto = maestro.getRutaFoto();
                 Image foto = new Image("file:" + rutaFoto + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
@@ -304,6 +363,10 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
 
     }
 
+    /**
+     * Este método permite regresar a la ventana de búsqueda
+     *
+     */
     public void desplegarVentanaBusqueda() throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaBuscar.fxml"));
         Parent root = (Parent) loader.load();
@@ -312,14 +375,32 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         panelPrincipal.getChildren().add(root);
     }
 
+    /**
+     * Este método muestra una señalización a una etiqueta como advertencia
+     *
+     * @param etiqueta a la que se desea hacer referencia
+     */
     public void mandarAdvertencia(Label etiqueta) {
         etiqueta.setText("*");
     }
 
+    /**
+     * Este método quita la señalización a una etiqueta como advertencia
+     *
+     * @param etiqueta a la que se desea hacer referencia
+     */
     public void desactivarAdvertencia(Label etiqueta) {
         etiqueta.setText("");
     }
 
+    /**
+     * Este método permite limitar los caracteres permitidos en un campo de
+     * texto
+     *
+     * @param event Ingreso de un valor del usuario
+     * @param campo que se desea limitar
+     * @param caracteresMaximos numero de caracteres permitidos en ese campo
+     */
     public void limitarCaracteres(KeyEvent event, TextField campo, int caracteresMaximos) {
         if (campo.getText().trim().length() >= caracteresMaximos) {
             event.consume();
@@ -371,6 +452,12 @@ public class VentanaEditarInformacionMaestroController implements Initializable 
         }
     }
 
+    /**
+     * Este método corrobora si el telefono ingresado tiene el formato correcto
+     *
+     * @param telefono ingresado por el usuario
+     * @return boolean indica si el formato del telefono es correcto
+     */
     private boolean esTelefonoValido(String telefono) {
         boolean telefonoValido = true;
         for (int i = 0; i < telefono.length(); i++) {

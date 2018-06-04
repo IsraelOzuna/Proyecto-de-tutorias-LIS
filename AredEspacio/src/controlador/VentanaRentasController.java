@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import com.jfoenix.controls.JFXButton;
@@ -31,6 +26,13 @@ import javafx.stage.StageStyle;
 import negocio.RentaDAO;
 import persistencia.Renta;
 
+/**
+ * Este controlador es usado para manipular la interfaz gráfica para la
+ * administración de las rentas
+ *
+ * @author Irvin Vera
+ * @version 1.0 / 5 de junio de 2018
+ */
 public class VentanaRentasController implements Initializable {
 
     private Pane panelPrincipal;
@@ -56,6 +58,13 @@ public class VentanaRentasController implements Initializable {
     @FXML
     private Button botonEditarRenta;
 
+    /**
+     * Este método permite obtener el panel sobre el cual se mostrará la ventana
+     * de las rentas
+     *
+     * @param panelPrincipal sobre el cual se mostrará la ventana de las rentas
+     *
+     */
     public void obtenerPanel(Pane panelPrincipal) {
         this.panelPrincipal = panelPrincipal;
 
@@ -66,6 +75,10 @@ public class VentanaRentasController implements Initializable {
 
     }
 
+    /**
+     * Este método sirve para llenar la tabla con los datos de las rentas
+     * existentes
+     */
     public void llenarTablaRentas() {
 
         RentaDAO rentaDAO = new RentaDAO();
@@ -109,6 +122,10 @@ public class VentanaRentasController implements Initializable {
         }
     }
 
+    /**
+     * Ete método sirve para actualizar la tabla de las rentas después de alguna
+     * modificacion
+     */
     public void actualizarTablaRentas() throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRentas.fxml"));
         Parent root = (Parent) loader.load();
@@ -118,6 +135,12 @@ public class VentanaRentasController implements Initializable {
         panelPrincipal.getChildren().add(root);
     }
 
+    /**
+     * Este método sirve para preguntar al usaurio si esta seguro de querer
+     * eliminar la renta, en casí de que sea que sí, la renta es eliminada.
+     *
+     * @param renta contiene los datos de la renta
+     */
     public void mostrarMensajeConfirmacion(Renta renta) {
 
         Alert alert = new Alert(AlertType.CONFIRMATION);

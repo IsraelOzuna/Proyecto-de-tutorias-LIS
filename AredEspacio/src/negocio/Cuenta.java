@@ -1,16 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package negocio;
 
 /**
+ * Esta clase contiene todos los atributos necesarios para manipular una cuenta
+ * en el sistema
  *
- * @author Irdevelo
+ * @author Irvin Vera
+ * @version 1.0 / 5 de junio de 2018
  */
 public class Cuenta {
-    
+
     private String usuario;
     private String contraseña;
     private String tipoCuenta;
@@ -38,6 +36,5 @@ public class Cuenta {
     public void setTipoCuenta(String tipoCuenta) {
         this.tipoCuenta = tipoCuenta;
     }
-    
-    
+
 }

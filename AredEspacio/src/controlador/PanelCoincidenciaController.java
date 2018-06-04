@@ -24,9 +24,11 @@ import persistencia.Cliente;
 import persistencia.Maestro;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para manipular la interfaz gráfica de las
+ * coincidencias de búsqueda de una persona
  *
- * @author Israel Reyes Ozuna
+ * @author Irvin Vera
+ * @version 1.0 / 5 de junio de 2018
  */
 public class PanelCoincidenciaController implements Initializable {
 
@@ -51,6 +53,15 @@ public class PanelCoincidenciaController implements Initializable {
 
     }
 
+    /**
+     * Este método permite obtener los datos de la ventana anterior
+     *
+     * @param seccion especifica si lo que se buscara son alumnos, maestros o
+     * clientes
+     * @param panelPrincipal sobre el que se mostrarán las coincidencias
+     * @param nombreUsuario identificador único del la persona que está usando
+     * el sistema
+     */
     public void obtenerSeccion(String seccion, Pane panelPrincipal, String nombreUsuario) {
         nombreUsuarioActual = nombreUsuario;
         this.seccion = seccion;
@@ -58,7 +69,7 @@ public class PanelCoincidenciaController implements Initializable {
     }
 
     @FXML
-    public void desplegarDetalles(ActionEvent event) throws IOException {
+    private void desplegarDetalles(ActionEvent event) throws IOException {
         FXMLLoader loader;
         Parent root;
         switch (seccion) {
@@ -95,15 +106,21 @@ public class PanelCoincidenciaController implements Initializable {
         }
     }
 
+    /**
+     * Este método permite llenar los el panel de coincidencias con los datos de
+     * los alumnos obtenidos de la búsqueda
+     *
+     * @param alumno contiene los datos el alumno
+     */
     public void llenarDatosAlumno(Alumno alumno) {
         try {
             CodeSource direccion = PanelCoincidenciaController.class.getProtectionDomain().getCodeSource();
             File fileJar = new File(direccion.getLocation().toURI().getPath());
             File fileDir = fileJar.getParentFile();
             File fileProperties = new File(fileDir.getAbsolutePath());
-            
+
             String rutaFoto = fileProperties.getAbsolutePath();
-            
+
             this.alumno = alumno;
             String nombre = alumno.getNombre();
             String apellidos = alumno.getApellidos();
@@ -117,13 +134,19 @@ public class PanelCoincidenciaController implements Initializable {
         }
     }
 
+    /**
+     * Este método permite llenar los el panel de coincidencias con los datos de
+     * los maestros obtenidos de la búsqueda
+     *
+     * @param maestro contiene los datos del maestro
+     */
     public void llenarDatosMaestro(Maestro maestro) {
         try {
             CodeSource direccion = PanelCoincidenciaController.class.getProtectionDomain().getCodeSource();
             File fileJar = new File(direccion.getLocation().toURI().getPath());
             File fileDir = fileJar.getParentFile();
             File fileProperties = new File(fileDir.getAbsolutePath());
-            
+
             String rutaFoto = fileProperties.getAbsolutePath();
             this.maestro = maestro;
             String nombre = maestro.getNombre();
@@ -138,13 +161,19 @@ public class PanelCoincidenciaController implements Initializable {
         }
     }
 
+    /**
+     * Este método permite llenar los el panel de coincidencias con los datos de
+     * los clientes obtenidos de la búsqueda
+     *
+     * @param cliente contiene los datos del cliente
+     */
     public void llenarDatosCliente(Cliente cliente) {
         try {
             CodeSource direccion = PanelCoincidenciaController.class.getProtectionDomain().getCodeSource();
             File fileJar = new File(direccion.getLocation().toURI().getPath());
             File fileDir = fileJar.getParentFile();
             File fileProperties = new File(fileDir.getAbsolutePath());
-            
+
             String rutaFoto = fileProperties.getAbsolutePath();
             this.cliente = cliente;
             String nombre = cliente.getNombre();

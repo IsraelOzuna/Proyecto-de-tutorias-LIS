@@ -31,6 +31,13 @@ import negocio.MaestroDAO;
 import negocio.Utileria;
 import negocio.Cuenta;
 
+/**
+ * Este controlador es usado para manipular la interfaz gráfica al registrar a
+ * un maestro
+ *
+ * @author Irvin Vera
+ * @version 1.0 / 5 de junio de 2018
+ */
 public class VentanaRegistrarMaestroController implements Initializable {
 
     @FXML
@@ -101,6 +108,11 @@ public class VentanaRegistrarMaestroController implements Initializable {
         rutaImagen = "";
     }
 
+    /**
+     * Este método obtiene el usuario en el cambio de ventanas
+     *
+     * @param nombreUsuario
+     */
     public void llenarDatos(String nombreUsuario) {
         nombreUsuarioActual = nombreUsuario;
     }
@@ -173,6 +185,25 @@ public class VentanaRegistrarMaestroController implements Initializable {
         }
     }
 
+    /**
+     * Este método permite verificar si alguno de los campos esta vacio
+     *
+     * @param campoNombre campo donde el usuario ingresa el nombre del nuevo
+     * maestro
+     * @param campoApellidos campo donde el usuario ingresa los apellidos del
+     * nuevo maestro
+     * @param campoCorreoElectronico campo donde el usuario ingresa el correo
+     * electrónico del nuevo maestro
+     * @param campoTelefono campo donde el usuario ingresa el teléfono del nuevo
+     * maestro
+     * @param campoCantidadAPagar campo donde el usuario ingresa lo que el nuevo
+     * maestro deberá pagar mensualmente
+     * @param campoUsuario campo donde el usuario ingresa el identificador único
+     * del nuevo maestro
+     * @param campoContraseña campo donde el usuario ingresa la contraseña de la
+     * cuenta del nuevo maestro
+     * @return un boolean que indica si el alguno de los campos está vacío
+     */
     public boolean verificarCamposVacios(TextField campoNombre, TextField campoApellidos, TextField campoCorreoElectronico, TextField campoTelefono, TextField campoCantidadAPagar, TextField campoUsuario, PasswordField campoContraseña) {
         boolean camposVacios = false;
 
@@ -232,6 +263,22 @@ public class VentanaRegistrarMaestroController implements Initializable {
         return camposVacios;
     }
 
+    /**
+     * Este método verifica si alguno de los capos excede el límite permitido
+     *
+     * @param campoNombre campo donde el usuario ingresa el nombre del nuevo
+     * maestro
+     * @param campoApellidos campo donde el usuario ingresa los apellidos del
+     * nuevo maestro
+     * @param campoCorreoElectronico campo donde el usuario ingresa el correo
+     * electrónico del nuevo maestro
+     * @param campoTelefono campo donde el usuario ingresa el teléfono del nuevo
+     * maestro
+     * @param campoUsuario campo donde el usuario ingresa el identificador único
+     * del nuevo maestro
+     * @return boolean que indica si uno de los campos excede la logitud
+     * permitida
+     */
     public boolean verificarLongitudExcedida(TextField campoNombre, TextField campoApellidos, TextField campoCorreoElectronico, TextField campoTelefono, TextField campoUsuario) {
         boolean longitudExcedida = false;
 
@@ -292,15 +339,15 @@ public class VentanaRegistrarMaestroController implements Initializable {
         FileChooser explorador = new FileChooser();
         explorador.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("*.png", "*.jpg"));
         File archivoSeleccionado = explorador.showOpenDialog(null);
-        
+
         try {
             CodeSource direccion = VentanaRegistrarMaestroController.class.getProtectionDomain().getCodeSource();
             fileJar = new File(direccion.getLocation().toURI().getPath());
             fileDir = fileJar.getParentFile();
-            directorio = new File(fileDir.getAbsolutePath() + "/imagenesMaestros/");            
+            directorio = new File(fileDir.getAbsolutePath() + "/imagenesMaestros/");
         } catch (URISyntaxException ex) {
             Logger.getLogger(VentanaConsultarInformacionGrupoController.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+        }
 
         if (archivoSeleccionado != null) {
             rutaOrigen = archivoSeleccionado.getAbsolutePath();
@@ -311,7 +358,7 @@ public class VentanaRegistrarMaestroController implements Initializable {
             }
 
             rutaNueva = directorio.getAbsolutePath();
-            directorio = new  File(fileDir.getAbsolutePath() + "/imagenesMaestros/" + rutaImagen);
+            directorio = new File(fileDir.getAbsolutePath() + "/imagenesMaestros/" + rutaImagen);
 
             if (!rutaImagen.equals("")) {
                 Image foto = new Image("file:" + rutaOrigen, 140, 140, false, true, true);
@@ -338,14 +385,32 @@ public class VentanaRegistrarMaestroController implements Initializable {
         panelPrincipal.getChildren().add(root);
     }
 
+    /**
+     * Este método muestra una señalización a una etiqueta como advertencia
+     *
+     * @param etiqueta a la que se desea hacer referencia
+     */
     public void mandarAdvertencia(Label etiqueta) {
         etiqueta.setText("*");
     }
 
+    /**
+     * Este método quita la señalización a una etiqueta como advertencia
+     *
+     * @param etiqueta a la que se desea hacer referencia
+     */
     public void desactivarAdvertencia(Label etiqueta) {
         etiqueta.setText("");
     }
 
+    /**
+     * Este método permite limitar los caracteres permitidos en un campo de
+     * texto
+     *
+     * @param event Ingreso de un valor del usuario
+     * @param campo que se desea limitar
+     * @param caracteresMaximos numero de caracteres permitidos en ese campo
+     */
     public void limitarCaracteres(KeyEvent event, TextField campo, int caracteresMaximos) {
         if (campo.getText().trim().length() >= caracteresMaximos) {
             event.consume();
@@ -393,6 +458,12 @@ public class VentanaRegistrarMaestroController implements Initializable {
         }
     }
 
+    /**
+     * Este método corrobora si el telefono ingresado tiene el formato correcto
+     *
+     * @param telefono ingresado por el usuario
+     * @return boolean indica si el formato del telefono es correcto
+     */
     private boolean esTelefonoValido(String telefono) {
         boolean telefonoValido = true;
         for (int i = 0; i < telefono.length(); i++) {

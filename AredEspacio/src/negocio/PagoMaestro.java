@@ -1,18 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package negocio;
 
 import java.util.Date;
 
 /**
+ * Esta clase contiene todos los atributos necesarios para manipular el pago de
+ * un maestro en el sistema
  *
- * @author Irdevelo
+ * @author Irvin Vera
+ * @version 1.0 / 5 de junio de 2018
  */
 public class PagoMaestro {
-    
+
     private String usuario;
     private Date fecha;
     private Double cantidad;
@@ -40,6 +38,5 @@ public class PagoMaestro {
     public void setCantidad(Double cantidad) {
         this.cantidad = cantidad;
     }
-    
-    
+
 }

@@ -3,6 +3,13 @@ package negocio;
 import java.sql.Time;
 import java.util.Date;
 
+/**
+ * Esta clase contiene todos los atributos necesarios para manipular las rentas
+ * en el sistema
+ *
+ * @author Irvin Vera
+ * @version 1.0 / 5 de junio de 2018
+ */
 public class Renta {
 
     private String nombreCliente;

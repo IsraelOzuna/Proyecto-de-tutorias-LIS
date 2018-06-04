@@ -25,6 +25,13 @@ import negocio.PagoMaestroDAO;
 import negocio.Utileria;
 import persistencia.Maestro;
 
+/**
+ * Este controlador es usado para manipular la interfaz gráfica al registrar el
+ * pago de un maestro
+ *
+ * @author Irvin Vera
+ * @version 1.0 / 5 de junio de 2018
+ */
 public class VentanaRegistrarPagoMaestroController implements Initializable {
 
     @FXML
@@ -46,6 +53,11 @@ public class VentanaRegistrarPagoMaestroController implements Initializable {
     @FXML
     private DatePicker campoFechaPago;
 
+    /**
+     * Este método permite obtener el maestro de cual se realizará el pago
+     *
+     * @param maestro que contiene los datos del maestro
+     */
     public void obtenerMaestro(Maestro maestro) {
         this.maestro = maestro;
         try {
@@ -55,6 +67,13 @@ public class VentanaRegistrarPagoMaestroController implements Initializable {
         }
     }
 
+    /**
+     * Este método permite obtener el panel sobre el cual se mostrará la ventana
+     * del pago del maestro
+     *
+     * @param panelPrincipal sobre el cual se mostrará la ventana del pago del
+     * maestro
+     */
     public void obtenerPanel(Pane panelPrincipal) {
         this.panelPrincipal = panelPrincipal;
     }
@@ -63,15 +82,19 @@ public class VentanaRegistrarPagoMaestroController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     }
 
+    /**
+     * Este método sierve para cargar los datos de maestro en la interfaz
+     *
+     */
     public void llenarCamposInformacion() throws MalformedURLException {
         try {
             etiquetaNombre.setText(maestro.getNombre() + " " + maestro.getApellidos());
-            
+
             CodeSource direccion = VentanaRegistrarPagoMaestroController.class.getProtectionDomain().getCodeSource();
             File fileJar = new File(direccion.getLocation().toURI().getPath());
             File fileDir = fileJar.getParentFile();
             File fileProperties = new File(fileDir.getAbsolutePath());
-            
+
             String rutaFoto = fileProperties.getAbsolutePath();
             if (maestro.getRutaFoto() != null) {
                 Image foto = new Image("file:" + rutaFoto + "/imagenesMaestros/" + maestro.getRutaFoto(), 100, 100, false, true, true);
@@ -132,6 +155,14 @@ public class VentanaRegistrarPagoMaestroController implements Initializable {
         }
     }
 
+    /**
+     * Este método permite limitar los caracteres permitidos en un campo de
+     * texto
+     *
+     * @param event Ingreso de un valor del usuario
+     * @param campo que se desea limitar
+     * @param caracteresMaximos numero de caracteres permitidos en ese campo
+     */
     public void limitarCaracteres(KeyEvent event, TextField campo, int caracteresMaximos) {
         if (campo.getText().trim().length() >= caracteresMaximos) {
             event.consume();

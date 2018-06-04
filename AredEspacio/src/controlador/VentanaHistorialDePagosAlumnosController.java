@@ -24,6 +24,13 @@ import javafx.scene.layout.Pane;
 import persistencia.Alumno;
 import persistencia.Pagoalumno;
 
+/**
+ * Este controlador es usado para manipular la interfaz gráfica para consultar
+ * el historial de pago de los alumnos
+ *
+ * @author Irvin Vera
+ * @version 1.0 / 5 de junio de 2018
+ */
 public class VentanaHistorialDePagosAlumnosController implements Initializable {
 
     private Pane panelPrincipal;
@@ -47,33 +54,48 @@ public class VentanaHistorialDePagosAlumnosController implements Initializable {
 
     private Alumno alumno;
 
+    /**
+     * Este método permite obtener el panel sobre el cual se mostrará la ventana
+     * del hostorial de pago de los alumnos
+     *
+     * @param panelPrincipal sobre el cual se mostrará la ventana del hostorial
+     * de pago de los alumnos
+     * @param nombreAlumno nombre del alumno
+     * @param rutaFoto ruta de almacenamiento de la doto del alumno
+     */
     public void obtenerDatos(Pane panelPrincipal, String nombreAlumno, String rutaFoto) {
         this.panelPrincipal = panelPrincipal;
         this.nombreAlumno = nombreAlumno;
         this.rutaFoto = rutaFoto;
-      
+
     }
 
+    /**
+     * Este método servie para llenar la tabla con los pagos de los alumnos
+     *
+     * @param pagosAlumnos una lista que contiene la informacción de los pagos
+     * del alumno
+     */
     public void llenarTablaPagos(List<Pagoalumno> pagosAlumnos) {
         try {
             etiquetaNombreAlumno.setText(nombreAlumno);
-            
+
             CodeSource direccion = VentanaHistorialDePagosAlumnosController.class.getProtectionDomain().getCodeSource();
             File fileJar = new File(direccion.getLocation().toURI().getPath());
             File fileDir = fileJar.getParentFile();
             File fileProperties = new File(fileDir.getAbsolutePath());
-            
+
             String ruta = fileProperties.getAbsolutePath();
-            
+
             if (rutaFoto != null) {
                 Image foto = new Image("file:" + ruta + "/imagenesAlumnos/" + rutaFoto, 100, 100, false, true, true);
                 imagenPerfil.setImage(foto);
             }
-            
+
             columnaFechaPago.setCellValueFactory(new PropertyValueFactory<persistencia.Pagoalumno, String>("formatoFecha"));
-            
+
             columnaCantidad.setCellValueFactory(new PropertyValueFactory<persistencia.Pagoalumno, Double>("cantidad"));
-            
+
             tablaPagos.setItems(FXCollections.observableList(pagosAlumnos));
         } catch (URISyntaxException ex) {
             Logger.getLogger(VentanaHistorialDePagosAlumnosController.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,7 +104,7 @@ public class VentanaHistorialDePagosAlumnosController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
     }
 
     @FXML

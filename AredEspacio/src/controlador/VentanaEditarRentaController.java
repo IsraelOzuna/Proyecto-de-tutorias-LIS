@@ -40,6 +40,13 @@ import org.w3c.dom.NodeList;
 import persistencia.Horario;
 import persistencia.Renta;
 
+/**
+ * Este controlador es usado para manipular la interfaz gráfica al editar una
+ * renta
+ *
+ * @author Irvin Vera
+ * @version 1.0 / 5 de junio de 2018
+ */
 public class VentanaEditarRentaController implements Initializable {
 
     @FXML
@@ -81,12 +88,26 @@ public class VentanaEditarRentaController implements Initializable {
 
     private int idRenta;
 
+    /**
+     * Este método permite obtener como referencia el panel de la pantalla
+     * anterior en donde se mostrara la ventana de editar renta, así como los
+     * datos de la renta que se desea modificar
+     *
+     * @param panelPrincipal sobre el que se mostrarán la ventana de editar
+     * renta
+     * @param renta que contiene lo datos de la renta que se modificarán
+     *
+     */
     public void obtenerPanel(Pane panelPrincipal, Renta renta) {
         this.panelPrincipal = panelPrincipal;
         this.renta = renta;
         this.idRenta = renta.getIdRenta();
     }
 
+    /**
+     * Este método sirve para precargar toda la interfaz con los valores de la
+     * renta antes de su modifiación
+     */
     public void llenarDatos() {
         etiquetaNombreCliente.setText(renta.getNombreCliente());
         campoFecha.setValue(Utileria.mostrarFecha(renta.getFecha()));
@@ -127,6 +148,15 @@ public class VentanaEditarRentaController implements Initializable {
         }
     }
 
+    /**
+     * Este método permite limitar los caracteres permitidos en un campo de
+     * texto
+     *
+     * @param event Ingreso de un valor del usuario
+     * @param campo que se desea limitar
+     * @param caracteresMaximos numero de caracteres permitidos en ese campo
+     *
+     */
     public void limitarCaracteres(KeyEvent event, TextField campo, int caracteresMaximos) {
         if (campo.getText().length() >= caracteresMaximos) {
             event.consume();
@@ -152,6 +182,10 @@ public class VentanaEditarRentaController implements Initializable {
         botonGuardar.setDisable(false);
     }
 
+    /**
+     * Este método permite marcar en la tabla de horarios como NO DISPONIBLE las
+     * horas que está ocupadas por una renta
+     */
     public void marcarNoDisponibles() {
         for (int i = 0; i < listaRentas.size(); i++) {
 
@@ -178,6 +212,10 @@ public class VentanaEditarRentaController implements Initializable {
 
     }
 
+    /**
+     * Este método permite llenar la tabla de las rentas al seleccionar una
+     * fecha
+     */
     public void llenarTablaRentas() {
         RentaDAO rentaDAO = new RentaDAO();
         listaRentas = rentaDAO.obtenerRentasPorFecha(Utileria.convertirFecha(campoFecha.getValue()));
@@ -188,6 +226,10 @@ public class VentanaEditarRentaController implements Initializable {
         tablaRentas.setItems(FXCollections.observableList(listaRentas));
     }
 
+    /**
+     * Este método permite inicializar la tabla de los horarios indicando que
+     * tipo de objeto recibirá
+     */
     public void inicializarTablaHorario() {
         columnaHorarioGrupo.setCellValueFactory(new PropertyValueFactory<Horario, String>("hora"));
         columnaNombreGrupo.setCellValueFactory(new PropertyValueFactory<Horario, String>("dia"));
@@ -195,6 +237,10 @@ public class VentanaEditarRentaController implements Initializable {
         tablaGrupos.setItems(horarios);
     }
 
+    /**
+     * Este método permite llenar la tabla del horario de la semana al
+     * seleccionar una día
+     */
     public void llenarTablaHorario() {
         try {
             File inputFile = new File(rutaXML);
@@ -213,6 +259,15 @@ public class VentanaEditarRentaController implements Initializable {
         }
     }
 
+    /**
+     * Este método permite llenar una fila con los datos del horario
+     * correspondiente a la fila
+     *
+     * @param i contador de la fila en la que va
+     * @param h1 objeto que contiene los datos del horario
+     * @param nList nodo en el que buscará en el documento de los horarios
+     * @return un objeto con los datos del horario
+     */
     public Horario establecerFila(int i, Horario h1, NodeList nList) {
         String nombreEtiqueta = "";
         switch (i) {
@@ -369,6 +424,12 @@ public class VentanaEditarRentaController implements Initializable {
         return h1;
     }
 
+    /**
+     * Este método permite generar valor a partir de un dia selccionado
+     *
+     * @param elementoSeleccionado dia de la semana seleccionado
+     * @return un valor entero que está asociado al dia seleccionado
+     */
     public int generarDia(String elementoSeleccionado) {
         int dia = 0;
         switch (elementoSeleccionado) {
@@ -464,6 +525,14 @@ public class VentanaEditarRentaController implements Initializable {
 
     }
 
+    /**
+     * Este método permite evaluar si el horario elegido para una renta está
+     * disponible
+     *
+     * @param horaInicio de la renta
+     * @param horaFin de la renta
+     * @return boolean que indica si el horario elegido está disponible
+     */
     public boolean revisarDsiponibilidadDeHorario(int horaInicio, int horaFin) {
         boolean horarioDisponible = true;
 
@@ -486,18 +555,30 @@ public class VentanaEditarRentaController implements Initializable {
         return horarioDisponible;
     }
 
+    /**
+     * Este método llena un combo con las horas del día para iniciar una renta
+     */
     public void llenarComboHorasInicio() {
         ObservableList<String> horas = FXCollections.observableArrayList();
         horas.addAll("08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30");
         comboBoxHoraInicio.setItems(horas);
     }
 
+    /**
+     * Este método llena un combo con las horas del día para finalizar una renta
+     */
     public void llenarComboHorasFin() {
         ObservableList<String> horas = FXCollections.observableArrayList();
         horas.addAll("08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00");
         comboBoxHoraFin.setItems(horas);
     }
 
+    /**
+     * Este método permite generar un número a partir de una hora seleccionada
+     *
+     * @param horaRenta hora seleccionada por el usuario
+     * @return un valor entero que corresponde a la hora seleccionada
+     */
     public int generarCoordenada(String horaRenta) {
         int coordenada;
         Map<String, Integer> coordenadas = new HashMap<>();
@@ -542,6 +623,11 @@ public class VentanaEditarRentaController implements Initializable {
         regresarVentanaAnterior();
     }
 
+    /**
+     * Este método permite regresar a la ventana anterior
+     *
+     *
+     */
     public void regresarVentanaAnterior() throws IOException {
         FXMLLoader loader = new FXMLLoader(VentanaMenuDirectorController.class.getResource("/vista/VentanaRentas.fxml"));
         Parent root = (Parent) loader.load();
