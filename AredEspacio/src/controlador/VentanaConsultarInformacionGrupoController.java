@@ -47,9 +47,11 @@ import persistencia.Horario;
 import persistencia.Maestro;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para establecer las acciones disponibles cuando se
+ * consulta un horario y para presentar la información de dicho grupo
  *
- * @author Equipo
+ * @author Renato Vargas
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaConsultarInformacionGrupoController implements Initializable {
 
@@ -101,9 +103,6 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
     boolean esMaestro = false;
     private String nombreCuentaMaestro;
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
@@ -117,19 +116,35 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         }
     }
 
+    /**
+     * Este método establece el tipo de valores que tendrá una tabla de horarios
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void iniciarTablaHorario() {
         columnaDia.setCellValueFactory(new PropertyValueFactory<Horario, String>("dia"));
         columnaHora.setCellValueFactory(new PropertyValueFactory<Horario, String>("hora"));
         horarios = FXCollections.observableArrayList();
         tablaHorario.setItems(horarios);
     }
-
+    
+    /**
+     * Este método establece el tipo de valores que tendrá una tabla de alumnos
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void iniciarTablaAlumnos() {
         columnaAlumnos.setCellValueFactory(new PropertyValueFactory<Horario, String>("nombre"));
         alumnos = FXCollections.observableArrayList();
         tablaAlumnos.setItems(alumnos);
     }
-
+    
+    /**
+     * Este método llenará una tabla en base a los valores de un archivo XML
+     *
+     * @param nombreGrupo grupo del que se adquiriran lso datos del horario
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void llenarTablaHorario(String nombreGrupo) {
         int numeroClases = 0;
         Horario[] arregloHorarios;
@@ -153,7 +168,14 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
             e.printStackTrace();
         }
     }
-
+    
+    /**
+     * Este método llenará una tabla de alumnos basandose de los alumnos que 
+     * están inscritos a un grupo
+     *
+     * @param nombreGrupo del que se adquiriran los alumnos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void llenarTablaAlumnos(String nombreGrupo) {
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         List<Alumno> listaAlumnos = null;
@@ -163,7 +185,16 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         }
 
     }
-
+    
+    /**
+     * Este método adquiere el numero de clases que tendrá un grupo dentro de un
+     * horario
+     *
+     * @param nList lista de nodos con los datos del xml
+     * @param nombreGrupo grupo del que se adquirirán los horarios
+     * @return int que representa el numero de clases
+     * @since 1.0 / 5 de junio de 2018
+     */
     public int conseguirNumeroDeClases(NodeList nList, String nombreGrupo) {
         int numeroClases = 0;
         String nombreElemento;
@@ -182,7 +213,16 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         return numeroClases;
 
     }
-
+    
+    /**
+     * Este método adquiere los valores que se añadiran a una tabla
+     *
+     * @param nList lsita con los datos de un archivo xml
+     * @param numeroClases nuemro total de clases en un horario en base a un grupo
+     * @param nombreGrupo grupo del que se realizará el establecimiento del arreglo
+     * @return Horario[] que serán instroducidos en una tabla
+     * @since 1.0 / 5 de junio de 2018
+     */
     public Horario[] establecerArreglo(NodeList nList, int numeroClases, String nombreGrupo) {
         Horario[] arregloHorarios;
         arregloHorarios = new Horario[numeroClases];
@@ -205,6 +245,13 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         return arregloHorarios;
     }
 
+    /**
+     * Este método establece un día de acuerdo a un valor numerico
+     *
+     * @param temp valor nuerico del día
+     * @return String del valor que tendrá el día
+     * @since 1.0 / 5 de junio de 2018
+     */
     public String establecerDia(int temp) {
         String dia = "";
         switch (temp) {
@@ -232,7 +279,15 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         }
         return dia;
     }
-
+    
+    /**
+     * Este método establece los valores que tendrá una fila de una tabla
+     *
+     * @param temp valor numerico del dia
+     * @param horaNumerica valor de la cadena de la hora
+     * @return Horario que será introducido a una tabla
+     * @since 1.0 / 5 de junio de 2018
+     */
     public Horario establecerElementoHorario(int temp, String horaNumerica) {
         Horario nuevoHorario = new Horario();
         nuevoHorario = new Horario();
@@ -241,7 +296,14 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         return nuevoHorario;
 
     }
-
+    
+    /**
+     * Este método establece los valores de un areglo de etiquetas que será
+     * recorrido durante el llenado de la tabla
+     *
+     * @return String[] que alamacena los valores de todas las etiquetas del xml
+     * @since 1.0 / 5 de junio de 2018
+     */
     public String[] establecerEtiquetas() {
         String[] etiquetas = new String[30];
         etiquetas[0] = "ocho-ochoMedia";
@@ -277,6 +339,14 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         return etiquetas;
     }
 
+    /**
+     * Este método establece los valores de un areglo de cadenas que 
+     * representarán los valores numericos de las horas que se presentarán
+     * en el horario.
+     *
+     * @return String[] donde se guardan los valores numericos de las horas
+     * @since 1.0 / 5 de junio de 2018
+     */
     public String[] establecerHoras() {
         String[] etiquetas = new String[30];
         etiquetas[0] = "8:00-8:30";
@@ -311,7 +381,15 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         etiquetas[29] = "22:30-23:00";
         return etiquetas;
     }
-
+    
+    /**
+     * Este método establece los datos del grupo que serán mostrados
+     *
+     * @param idGrupo id del grupo que se consulta
+     * @param nombreUsuarioActual datos del usuario actual para establecer
+     * permisos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void establecerGrupo(int idGrupo, String nombreUsuarioActual) {
         nombreUsuario = nombreUsuarioActual;
         CuentaDAO cuentaDAO = new CuentaDAO();
@@ -370,8 +448,6 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
             Logger.getLogger(VentanaConsultarGruposController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        /*Stage stage = (Stage) panelConsultarInfo.getScene().getWindow();
-        stage.close();*/
     }
 
     @FXML
@@ -431,6 +507,11 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
         }
     }
 
+    /**
+     * Este metodo eliminar a un grupo de un Horario
+     * 
+     * @since 1.0 / 5 de junio de 2018
+     */
     private void eliminarHorarioGrupo() {
         try {
             File inputFile = new File(rutaXML);
@@ -448,6 +529,11 @@ public class VentanaConsultarInformacionGrupoController implements Initializable
 
     }
 
+    /**
+     * Este método reestablece los valores que tendrá una fila de una tabla
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void actualizarFilaEliminar(NodeList nList, Document doc, String nombreFila) throws TransformerException {
         for (int temp = 0; temp < nList.getLength(); temp++) {
             Node nNode = nList.item(temp); //cada item es un dia de la semana

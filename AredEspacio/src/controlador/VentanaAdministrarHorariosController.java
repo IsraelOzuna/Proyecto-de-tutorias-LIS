@@ -40,6 +40,14 @@ import persistencia.Cuenta;
 import persistencia.Grupo;
 import persistencia.Horario;
 
+/**
+ * Este controlador es usado para manipular de forma gráfica la organización y 
+ * estructura de los horarios
+ *
+ * @author Renato Vargas
+ * @version 1.0 / 5 de junio de 2018
+ */
+
 public class VentanaAdministrarHorariosController implements Initializable {
 
     @FXML
@@ -77,6 +85,13 @@ public class VentanaAdministrarHorariosController implements Initializable {
     private String[] etiquetasHorasXML;
     private String[] horasNumericas;
 
+    
+    /**
+     * Este método inicializa todas las tablas que se utilizarán con el tipo de
+     * objeto que se espera que tengan
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void inicializarTablaHorario() {
 
         columnaHora.setCellValueFactory(new PropertyValueFactory<Horario, String>("hora"));
@@ -105,6 +120,14 @@ public class VentanaAdministrarHorariosController implements Initializable {
         }
     }
 
+    /**
+     * Este método establece los valores que se encontrarán en la tabla y en el
+     * combo de maestros, de igual manera, establece las acciones disponibles 
+     * para el usuario y los procedimientos que siguen a estas acciones 
+     * 
+     * @param nombreUsuarioActual usuarioActual para proceder a la página siguiente
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void iniciarVentana(String nombreUsuarioActual) {
         nombreUsuario = nombreUsuarioActual;
         ObservableList<String> grupos = FXCollections.observableArrayList();
@@ -244,7 +267,12 @@ public class VentanaAdministrarHorariosController implements Initializable {
         });
 
     }
-
+    
+    /**
+     * Este método llena la tabla completa con los datos adquiridos de un XML
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void llenarTabla() {
         try {
             File inputFile = new File(rutaXML);
@@ -262,6 +290,16 @@ public class VentanaAdministrarHorariosController implements Initializable {
             e.printStackTrace();
         }
     }
+    
+    /**
+     * Este método establece los valores que tendrá una fila de una tabla
+     *
+     * @param i numero de fila
+     * @param h1 datos de la fila
+     * @param nList lista de nodos de donde se adquirirrán los datos
+     * @return Horario que será introducido a una tabla
+     * @since 1.0 / 5 de junio de 2018
+     */
 
     public Horario establecerFila(int i, Horario h1, NodeList nList) {
         String nombreEtiqueta = "";
@@ -347,6 +385,17 @@ public class VentanaAdministrarHorariosController implements Initializable {
         panelAdministrarHorario.getChildren().add(root);
 
     }
+    
+    /**
+     * Este método actualizará los datos que se presentarán en una fila en base
+     * a los cambios realizados.
+     * 
+     * @param nList lista de nodos con los datos del xml
+     * @param doc documento donde se almacenarán los nuevos datos
+     * @param nombreFila enacbezado de la fila que se actualizará
+     * @param horarioActualizar la fila que se actuzalizará
+     * @since 1.0 / 5 de junio de 2018
+     */
 
     public void actualizarFila(NodeList nList, Document doc, String nombreFila, Horario horarioActualizar) throws TransformerException {
 
@@ -386,6 +435,14 @@ public class VentanaAdministrarHorariosController implements Initializable {
             }
         }
     }
+    
+    /**
+     * Este método establece los valores de un areglo de etiquetas que será
+     * recorrido durante el llenado de la tabla
+     *
+     * @return String[] que alamacena los valores de todas las etiquetas del xml
+     * @since 1.0 / 5 de junio de 2018
+     */
 
     public String[] establecerEtiquetas() {
         String[] etiquetas = new String[30];
@@ -422,6 +479,14 @@ public class VentanaAdministrarHorariosController implements Initializable {
         return etiquetas;
     }
 
+    /**
+     * Este método establece los valores de un areglo de cadenas que 
+     * representarán los valores numericos de las horas que se presentarán
+     * en el horario.
+     *
+     * @return String[] donde se guardan los valores numericos de las horas
+     * @since 1.0 / 5 de junio de 2018
+     */
     public String[] establecerHoras() {
         String[] etiquetas = new String[30];
         etiquetas[0] = "8:00-8:30";

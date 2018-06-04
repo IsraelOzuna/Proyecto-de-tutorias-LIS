@@ -32,9 +32,11 @@ import persistencia.Pagomaestro;
 import persistencia.Renta;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para presentar un reporte simple de los ingresos y
+ * egresos registrados
  *
- * @author Renato
+ * @author Renato Vargas
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaGenerarReporteController implements Initializable {
 
@@ -68,7 +70,9 @@ public class VentanaGenerarReporteController implements Initializable {
     ObservableList<negocio.Egreso> perdidas;
 
     /**
-     * Initializes the controller class.
+     * Este método establece el tipo de datos que pueden tener las tablas
+     *
+     * @since 1.0 / 5 de junio de 2018
      */
     public void iniciarTablaGanancias(){
         columnaRazonGanancia.setCellValueFactory(new PropertyValueFactory<Ingreso, String>("razon"));
@@ -83,10 +87,14 @@ public class VentanaGenerarReporteController implements Initializable {
     }
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    public void initialize(URL url, ResourceBundle rb) {}    
     
+    /**
+     * Este método establece tdos los datos dentro de la ventana desde que 
+     * se despliega por primera vez
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void iniciarVentana(){
         Date fecha = new Date();
         LocalDate localDate = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -140,6 +148,7 @@ public class VentanaGenerarReporteController implements Initializable {
         actualizarTablas();
     }
     
+
     private void actualizarTablas(){
         
         PagoMaestroDAO pagoDAO = new PagoMaestroDAO();
@@ -147,7 +156,6 @@ public class VentanaGenerarReporteController implements Initializable {
         MaestroDAO maestroDAO = new MaestroDAO();
         EgresoDAO egresoDAO = new EgresoDAO();
         List<persistencia.Egreso> listaEgresos= egresoDAO.obtenerTodosLosEgresos(alloActual, mesActual);
-        
         
         List<Pagomaestro> listaPagos=pagoDAO.obtenerPagosMaestros(alloActual, mesActual);
         List<Renta> listaRentas = rentaDAO.obtenerRentasPorMesAllo(mesActual, alloActual);
@@ -184,15 +192,9 @@ public class VentanaGenerarReporteController implements Initializable {
             egreso.setNombreGasto(listaEgresos.get(i).getNombreGasto());
             egreso.setCosto(listaEgresos.get(i).getCosto());
             egreso.setFechaRegistro(listaEgresos.get(i).getFechaRegistro());
-
-            
             perdidas.add(egreso);
-            
         }
-        
-        
-        
-        
+
         for(int i=0; i<ganancias.size(); i++){
             if(ganancias.get(i).getMes()!=mesActual){
                 ganancias.remove(i);

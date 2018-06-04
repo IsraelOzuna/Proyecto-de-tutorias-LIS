@@ -6,7 +6,12 @@ import java.util.Date;
 import java.util.List;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-
+/**
+ * Esta clase contiene todos los metodos necesarios para la generación de 
+ * notificaciones en el sistema
+ * @author Renato Vargas Gómez
+ * @version 1.0 / 5 de junio de 2018
+ */
 public class Notificador {
     
     public List<TextFlow> generarNotificacionesMaestro(persistencia.Cuenta usuario){

@@ -33,9 +33,11 @@ import persistencia.Alumno;
 import persistencia.Grupo;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para el registro y la presentación de listas de 
+ * asistencia de un grupo
  *
- * @author Renato
+ * @author Renato Vargas
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaRegistrarAsistenciaController implements Initializable {
 
@@ -59,14 +61,15 @@ public class VentanaRegistrarAsistenciaController implements Initializable {
     @FXML
     private AnchorPane panelAsistencia;
     private String nombreUsuario;
-    /**
-     * Initializes the controller class.
-     */
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    public void initialize(URL url, ResourceBundle rb) {}    
     
+    /**
+     * Este método establece el tipo de valor que la tabla de asistencia tendrá
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void inicializarTablaAsistencia(){
         columnaAlumno.setCellValueFactory(new PropertyValueFactory<negocio.Asistencia, String>("nombreAlumno"));
         columnaAsistencia.setCellValueFactory(new PropertyValueFactory<negocio.Asistencia, CheckBox>("asistio"));
@@ -74,6 +77,12 @@ public class VentanaRegistrarAsistenciaController implements Initializable {
         tablaAsistencia.setItems(listaAsistencia);
     }
     
+    /**
+     * Este método establece los datos que se presentrán cuando se genere la
+     * ventana
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void iniciarVentana(int idGrupo, String nombreUsuarioActual){
         nombreUsuario=nombreUsuarioActual;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
@@ -84,6 +93,11 @@ public class VentanaRegistrarAsistenciaController implements Initializable {
         selectorFecha.setEditable(false);
     }
     
+    /**
+     * Este método establece los datos que tendrá la tabla de asistencia
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void iniciarTablaAsistencia (int idGrupo){
         idGrupoGlobal=idGrupo;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
@@ -103,6 +117,13 @@ public class VentanaRegistrarAsistenciaController implements Initializable {
         }
     }
     
+    /**
+     * Este método verifica si el checkbox de una sistencia especifica necesita
+     * ser llenado
+     *
+     * @return boolean usado para saber si el checkbox será llenado
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean llenarCheckBox(int idAlumno, List<persistencia.Asistencia>lista){
         boolean campoLleno = false;
         AsistenciaDAO asistenciaDAO = new AsistenciaDAO();
@@ -116,7 +137,6 @@ public class VentanaRegistrarAsistenciaController implements Initializable {
                 break;
             }
         }
-        //campoLleno=asistenciaDAO.obtenerAsistencia(fechaActual, idAlumno, idGrupo);
         return campoLleno;   
     }
     
@@ -124,10 +144,7 @@ public class VentanaRegistrarAsistenciaController implements Initializable {
     @FXML
     private void actualizarTabla(ActionEvent event) {
         listaAsistencia.clear();
-        /*for(int c=0; c<listaAsistencia.size();c++){
-            listaAsistencia.remove(c);
-        }*/
-        
+
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         AsistenciaDAO asistenciaDAO = new AsistenciaDAO();
         List<Alumno> listaAlumnos=new ArrayList();

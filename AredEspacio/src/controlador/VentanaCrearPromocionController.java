@@ -20,9 +20,11 @@ import persistencia.Alumno;
 import persistencia.Promocion;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para crear una nueva promoción dentro del sistema
+ * verificando su existencia y validez
  *
- * @author Renato
+ * @author Renato Vargas
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaCrearPromocionController implements Initializable {
 
@@ -52,6 +54,16 @@ public class VentanaCrearPromocionController implements Initializable {
         comboPromocion.setItems(promociones);
     }
 
+    /**
+     * Este método establece los datos que se utilizaran para regresar a la
+     * pantalla anterior
+     *
+     * @param pantallaAnterior la cadena que determina de que ventana se proviene
+     * @param alumnoSeleccionado el alumno con el que se decidio realizar el 
+     * registro de la promoción
+     * @param nombreUsuario el nombre del usuario actual para limitar sus capacidades
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void iniciarVentanaDesdeInscripcion(String pantallaAnterior, persistencia.Alumno alumnoSeleccionado, String nombreUsuario) {
         nombreUsuarioActual = nombreUsuario;
         this.pantallaAnterior = pantallaAnterior;
@@ -61,6 +73,7 @@ public class VentanaCrearPromocionController implements Initializable {
         }
     }
 
+    
     @FXML
     private void registrarPromocion(ActionEvent event) throws IOException {
         if (camposLlenos()) {
@@ -106,6 +119,11 @@ public class VentanaCrearPromocionController implements Initializable {
 
     }
 
+    /**
+     * Este método reestablece los campos de la ventana
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void limpiarCampos() {
         campoDescripcion.setText("");
         campoMonto.setText("");
@@ -168,6 +186,14 @@ public class VentanaCrearPromocionController implements Initializable {
         }
     }
 
+    /**
+     * Este método limita el nuero de caracteres que pueden ser ingresados
+     *
+     * @param event evento que se realizó en el campo
+     * @param campo campo al que se le ingresaran los datos
+     * @param caracteresMaximos numero maximo de caracteres aceptados
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void limitarCaracteres(KeyEvent event, TextField campo, int caracteresMaximos) {
         if (campo.getText().length() >= caracteresMaximos) {
             event.consume();

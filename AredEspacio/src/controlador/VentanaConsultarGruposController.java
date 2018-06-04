@@ -27,6 +27,13 @@ import javafx.scene.layout.AnchorPane;
 import negocio.CuentaDAO;
 import negocio.GrupoDAO;
 import persistencia.Cuenta;
+/**
+ * Este controlador es usado para mostrar los grupos que se encuentran activos
+ * en el sistema
+ *
+ * @author Renato Vargas
+ * @version 1.0 / 5 de junio de 2018
+ */
 
 public class VentanaConsultarGruposController implements Initializable {
 
@@ -49,7 +56,11 @@ public class VentanaConsultarGruposController implements Initializable {
     private String unidadPersistencia="AredEspacioPU";
 
     
-    
+    /**
+     * Este método establece el tipo de valores que tendrá una tabla de grupos
+     *
+     * @since 1.0 / 5 de junio de 2018
+     */
     private void inicializarTablaGrupos(){
         columnaNombre.setCellValueFactory(new PropertyValueFactory<Grupo, String>("nombreGrupo"));
         grupos = FXCollections.observableArrayList();
@@ -57,6 +68,13 @@ public class VentanaConsultarGruposController implements Initializable {
         
     }
     
+    /**
+     * Este método establece los grupos que se mostraran en cada fila dentro de 
+     * la tabla.
+     *
+     * @param nombreUsuario para generar la siguiente y la anteriro ventana
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void iniciarVentana(String nombreUsuario){
         usuario=nombreUsuario;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);

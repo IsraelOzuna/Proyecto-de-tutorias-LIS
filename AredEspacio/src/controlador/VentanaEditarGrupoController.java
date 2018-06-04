@@ -26,9 +26,11 @@ import persistencia.Grupo;
 import persistencia.Maestro;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para establecer los procedimientos que se seguiran 
+ * para la edición exitosa de un grupo existente
  *
- * @author Equipo
+ * @author Renato Vargas
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaEditarGrupoController implements Initializable {
 
@@ -63,7 +65,13 @@ public class VentanaEditarGrupoController implements Initializable {
     List<Maestro> listaMaestros=new ArrayList();
    
     
-
+    /**
+     * Este método establece los datos que se mostraán para ser editados
+     * 
+     * @param idGrupo el id del grupo que será editado
+     * @param nombreUsuarioActual el nombre del usuario para añadir su nombre
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void establecerGrupo(int idGrupo, String nombreUsuarioActual){
         nombreUsuario=nombreUsuarioActual;
         ObservableList<String> maestros =FXCollections.observableArrayList();
@@ -174,6 +182,13 @@ public class VentanaEditarGrupoController implements Initializable {
         panelEditarGrupo.getChildren().add(root);
     }
     
+    
+    /**
+     * Este método verifica la existencia de campos excedios
+     *
+     * @return boolean que comprueba la existencia de los campos excedidos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existenCamposExcedidos() {
         boolean campoExcedido = false;
 
@@ -187,6 +202,12 @@ public class VentanaEditarGrupoController implements Initializable {
         return campoExcedido;
     }
     
+    /**
+     * Este método verifica la existencia de campos vacios
+     *
+     * @return boolean que comprueba la existencia de los campos vacios
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existenCamposVacios(){
         boolean camposVacios=false;
         if(campoInscripcion.getText().isEmpty()){
@@ -205,6 +226,12 @@ public class VentanaEditarGrupoController implements Initializable {
         return camposVacios;
     }
     
+    /**
+     * Este método verifica si el nombre del grupo ya existe
+     *
+     * @return boolean que comprueba la existencia del grupo
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean nombreGrupoRepetido(){
         boolean repetido=false;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
@@ -230,8 +257,12 @@ public class VentanaEditarGrupoController implements Initializable {
         return repetido;
     }
     
-    
-    
+    /**
+     * Este método verifica si el nombre del grupo ya existe pero está inactivo
+     *
+     * @return boolean que comprueba la existencia del grupo
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean nombreGrupoRepetidoInactivo(){
         boolean repetido=false;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);

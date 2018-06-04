@@ -29,6 +29,13 @@ import negocio.MaestroDAO;
 import persistencia.Cuenta;
 import persistencia.Grupo;
 
+/**
+ * Este controlador es usado para establecer los procedimientos que se seguiran 
+ * para la creción exitosa de un grupo nuevo
+ *
+ * @author Renato Vargas
+ * @version 1.0 / 5 de junio de 2018
+ */
 public class VentanaCrearGrupoController implements Initializable {
 
     @FXML
@@ -59,6 +66,13 @@ public class VentanaCrearGrupoController implements Initializable {
     private String unidadPersistencia = "AredEspacioPU";
     List<Maestro> listaMaestros = new ArrayList();
 
+    /**
+     * Este método establece los valores que se usaran durante el proceso de
+     * creación de un grupo
+     *
+     * @param nombreUsuarioActual para saber qué usuario utiliza este metodo
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void iniciarVentana(String nombreUsuarioActual) {
         nombreUsuario = nombreUsuarioActual;
         ObservableList<String> maestros = FXCollections.observableArrayList();
@@ -85,8 +99,7 @@ public class VentanaCrearGrupoController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-    }
+    public void initialize(URL url, ResourceBundle rb) {}
 
     @FXML
     private void registrarGrupo(ActionEvent event) throws IOException {
@@ -214,6 +227,12 @@ public class VentanaCrearGrupoController implements Initializable {
         panelCrearGrupos.getChildren().add(root);
     }
 
+    /**
+     * Este método verifica la existencia de campos vacios
+     *
+     * @return boolean que comprueba la existencia de los campos vacios
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existenCamposVacios() {
         boolean camposVacios = false;
         if (campoInscripcion.getText().isEmpty()) {
@@ -232,6 +251,12 @@ public class VentanaCrearGrupoController implements Initializable {
         return camposVacios;
     }
 
+    /**
+     * Este método verifica la existencia de campos excedios
+     *
+     * @return boolean que comprueba la existencia de los campos excedidos
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean existenCamposExcedidos() {
         boolean campoExcedido = false;
 
@@ -245,6 +270,12 @@ public class VentanaCrearGrupoController implements Initializable {
         return campoExcedido;
     }
 
+    /**
+     * Este método verifica si el nombre del grupo ya existe
+     *
+     * @return boolean que comprueba la existencia del grupo
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean nombreGrupoRepetido() {
         boolean repetido = false;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
@@ -264,6 +295,12 @@ public class VentanaCrearGrupoController implements Initializable {
         return repetido;
     }
 
+    /**
+     * Este método verifica si el nombre del grupo ya existe pero está inactivo
+     *
+     * @return boolean que comprueba la existencia del grupo
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean nombreGrupoRepetidoInactivo() {
         boolean repetido = false;
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
@@ -283,6 +320,12 @@ public class VentanaCrearGrupoController implements Initializable {
         return repetido;
     }
 
+    /**
+     * Este método obtiene el id de un grupo inactivo
+     *
+     * @return int del id del grupo
+     * @since 1.0 / 5 de junio de 2018
+     */
     public int idGrupoRepetidoInactivo() {
         boolean repetido = true;
         int idGrupo = 0;

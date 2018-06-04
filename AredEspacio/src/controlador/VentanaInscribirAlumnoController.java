@@ -29,9 +29,11 @@ import persistencia.Grupo;
 import persistencia.Promocion;
 
 /**
- * FXML Controller class
+ * Este controlador es usado para la inscripción de un alumno a un grupo, 
+ * tomando en cuenta los datos del alumno, del grupo y de las promociones
  *
- * @author Renato
+ * @author Renato Vargas
+ * @version 1.0 / 5 de junio de 2018
  */
 public class VentanaInscribirAlumnoController implements Initializable {
 
@@ -59,10 +61,16 @@ public class VentanaInscribirAlumnoController implements Initializable {
     private Alumno alumnoInscribir;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
+    public void initialize(URL url, ResourceBundle rb) {}
 
+    /**
+     * Este método establece los datos que se tendrán cuando se despliegue la
+     * ventana, incluyendo grupos y promociones
+     *
+     * @param alumno sobre el que se llenarán los campos
+     * @param nombreUsuario para determinar que tipo de usuario realiza el proceso
+     * @since 1.0 / 5 de junio de 2018
+     */
     public void llenarCampos(Alumno alumno, String nombreUsuario) {
         nombreUsuarioActual = nombreUsuario;
         etiquetaNombreAlumno.setText(alumno.getNombre() + " " + alumno.getApellidos());
@@ -168,6 +176,13 @@ public class VentanaInscribirAlumnoController implements Initializable {
 
     }
 
+    /**
+     * Este método obtiene los datos de un grupo con solo su nombre
+     *
+     * @param nombreGrupo el nombre del grupo cuyos datos se desean obtener
+     * @return Grupo con todos los datos del grupo
+     * @since 1.0 / 5 de junio de 2018
+     */
     public Grupo obtenerGrupo(String nombreGrupo) {
         GrupoDAO grupoDAO = new GrupoDAO(unidadPersistencia);
         List<Grupo> listaGrupos;
@@ -182,6 +197,14 @@ public class VentanaInscribirAlumnoController implements Initializable {
         return grupoObtenido;
     }
 
+    /**
+     * Este realiza el registro de un pago de inscripcion
+     *
+     * @param monto monto que se pagará por la inscripción
+     * @param nombreGrupo grupo al que se inscribirá al alumno 
+     * @return boolean que valida que una pago se haya registrado exitosamente
+     * @since 1.0 / 5 de junio de 2018
+     */
     public boolean registrarPagoInscripcion(double monto, String nombreGrupo) {
         boolean pagoRegistrado = false;
         PagoInscripcionAlumnoDAO pagoInscripcion = new PagoInscripcionAlumnoDAO();
